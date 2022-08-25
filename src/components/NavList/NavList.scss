@@ -1,0 +1,14 @@
+@import '../../styles/mixins.scss';
+
+.navbar-nav {
+    letter-spacing: 1px;
+    margin: 12px 0;
+
+    @include responsive(xs) {
+        display: none;
+    }
+
+    @include responsive(sm) {
+        display: none;
+    }
+}

@@ -1,0 +1,64 @@
+@import './styles/index';
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+input,
+textarea {
+  font-family: "Roboto", "Segoe UI", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+}
+
+code {
+  background-color: transparent;
+  color: inherit;
+  font-family: Menlo, Monaco, 'Courier New',
+    monospace;
+}
+
+.pageContainer {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.embed {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--c-primary-dark);
+  border-radius: 0.35rem;
+  border: 2px solid var(--c-primary-lighter);
+
+  &-vertical {
+    height: 620px;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.notVisible {
+  visibility: hidden;
+  height: 0!important;
+  width: 0!important;
+}
+
+.currencySelect {
+  & > ul > li > a {
+    padding: 10px 20px;
+  }
+}
+
+// Padding & margin helpers
+.mb-20 {
+  margin-bottom: 20px;
+}
