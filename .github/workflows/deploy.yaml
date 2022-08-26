@@ -4,6 +4,8 @@ on:
   # Triggers the workflow on push to master branch
   push:
     branches: [ master ]
+  # Allows to trigger workflow manually
+  workflow_dispatch:
 
 jobs:
   deploy:
