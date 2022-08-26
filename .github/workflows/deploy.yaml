@@ -26,4 +26,7 @@ jobs:
         npm ci
 
     - name: Deploy
-      run: npm run deploy
+      run: |
+        git config user.email ${{ github.event.head_commit.author.email }}
+        git config user.name ${{ github.event.head_commit.author.name }}
+        npm run deploy
