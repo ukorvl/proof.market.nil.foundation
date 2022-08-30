@@ -35,7 +35,7 @@ export const SelectOption = <T extends unknown>({
     const handleSelectOption = (): void => onSelectOption({title, value});
 
     useEffect(() => {
-        !disabled && defaultSelected && handleSelectOption();
+        defaultSelected && handleSelectOption();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultSelected]);
 

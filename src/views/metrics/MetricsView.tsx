@@ -1,14 +1,19 @@
 import { ReactElement, useState, useEffect } from 'react';
-import { Container, Row, Col, Select, Jumbotron } from '../../components';
+import { Icon, Button } from '@nilfoundation/react-components';
+import { Container, Row, Col, Select, SelectOption, Jumbotron } from '../../components';
 import { Size } from '../../enums';
 import { CurrencyMetricsFactory } from './CurrencyMetricsFactory';
 import { CurrencySelectOption } from './components';
-import { Currency } from './enums';
+import { Currency, getRepositoryName, ProofSystem } from './enums';
 
 const baseDocumentTitle = '=nil; Foundation';
+const badgeHrefPrefix = 'https://github.com/';
 
 export const MetricsView = (): ReactElement => {
     const [currency, setCurrency] = useState<Currency>();
+    const badgeHref = currency ? `${badgeHrefPrefix}${getRepositoryName(currency)}` : '';
+
+    const [proofSystem, setProofSystem] = useState<ProofSystem>();
 
     const capitalizeFirstLetter = (text: string): string =>
         text.charAt(0).toUpperCase() + text.slice(1);
@@ -26,7 +31,7 @@ export const MetricsView = (): ReactElement => {
     return (
         <Container>
             <Row className="mb-20" >
-                <Col md={12} sm={12}>
+                <Col md={6} sm={12}>
                     <Select
                         onSelect={setCurrency}
                         className="currencySelect"
@@ -52,10 +57,51 @@ export const MetricsView = (): ReactElement => {
                         />
                     </Select>
                 </Col>
+                <Col md={6} sm={12}>
+                    <Select
+                        onSelect={setProofSystem}
+                        className="currencySelect"
+                        size={Size.lg}
+                    >
+                        <SelectOption
+                            disabled
+                            value={ProofSystem.Placeholder}
+                            title={ProofSystem.Placeholder}
+                            defaultSelected
+                        />
+                        <SelectOption
+                            disabled
+                            value={ProofSystem.Kimchi}
+                            title={ProofSystem.Kimchi}
+                        />
+                        <SelectOption
+                            disabled
+                            value={ProofSystem.Stark}
+                            title={ProofSystem.Stark}
+                        />
+                    </Select>
+                </Col>
             </Row>
             <Row>
                 <Col md={12} sm={12}>
                     <Jumbotron>
+                        <Container>
+                            <Row>
+                                <Col md={12} sm={12}>
+                                    <h3>
+                                        <a href={badgeHref} target="_blank" rel="noreferrer">
+                                            <Button
+                                                className="githubBadge"
+                                                block
+                                            >
+                                                <Icon iconName="github" />
+                                                {currency && getRepositoryName(currency)}
+                                            </Button>
+                                        </a>
+                                    </h3>
+                                </Col>
+                            </Row>
+                        </Container>
                        <CurrencyMetricsFactory currency={currency} />
                     </Jumbotron>
                 </Col>
