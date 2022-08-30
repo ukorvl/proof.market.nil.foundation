@@ -13,6 +13,7 @@ export const MetricsView = (): ReactElement => {
     const [currency, setCurrency] = useState<Currency>();
     const badgeHref = currency ? `${badgeHrefPrefix}${getRepositoryName(currency)}` : '';
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [proofSystem, setProofSystem] = useState<ProofSystem>();
 
     const capitalizeFirstLetter = (text: string): string =>
