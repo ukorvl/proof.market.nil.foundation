@@ -58,7 +58,33 @@ code {
   }
 }
 
+.githubBadge {
+  background-color: var(--c-primary-dark);
+  color: var(--c-primary-light);
+  border: 2px solid var(--c-primary-lighter);
+  font-weight: 400;
+  display: block;
+
+  i {
+    margin-right: 8px;
+  }
+
+  &:hover, &:active:focus, &:active, &:focus {
+    background-color: var(--c-primary-darker);
+    color: var(--c-primary-light);
+    border: 2px solid var(--c-primary-lighter);
+  }
+}
+
+.icon-md {
+  font-size: inherit!important;
+}
+
 // Padding & margin helpers
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
 }
