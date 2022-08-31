@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Container, Row, Col } from '..';
+import { Container, Row, Col } from '@nilfoundation/react-components';
 
 export const Footer = (): ReactElement =>
     <footer className="text-center">

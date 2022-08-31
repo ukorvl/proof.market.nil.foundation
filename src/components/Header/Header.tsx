@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
-import { Navbar, Container, Logo } from '..';
+import { Container } from '@nilfoundation/react-components';
+import { Navbar, Logo } from '..';
 import { MobileMenu } from '../MobileMenu';
 import { NavList } from '../NavList';
 import { navigationLinks } from '../../constants';

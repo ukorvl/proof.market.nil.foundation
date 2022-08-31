@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import { Spinner } from '../../../../components';
+import { Spinner } from '@nilfoundation/react-components';
 import './Embed.scss';
 
 /**

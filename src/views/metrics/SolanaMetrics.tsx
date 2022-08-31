@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Container, Row, Col } from '../../components';
+import { Container, Row, Col } from '@nilfoundation/react-components';
 import { Embed } from './components';
     
 export const SolanaMetrics = (): ReactElement => {

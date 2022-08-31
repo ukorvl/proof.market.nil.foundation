@@ -6,8 +6,7 @@
 import React, { ReactElement, useRef, useState } from 'react';
 import { Size } from '../../enums';
 import clsx from 'clsx';
-import { InputGroup } from '../InputGroup';
-import { Input } from '../Input';
+import { InputGroup, Input } from '@nilfoundation/react-components';
 import { Menu } from '../Menu';
 import { SelectOption, SelectOptionProps } from './SelectOption';
 import { SelectOptionModel } from './SelectOptionModel';

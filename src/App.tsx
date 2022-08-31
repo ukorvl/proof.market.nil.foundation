@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Header, Footer, Layout } from "./components";
+import { Layout } from "@nilfoundation/react-components";
+import { Header, Footer } from "./components";
 import { MetricsView } from './views';
 
 function App() {
