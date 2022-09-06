@@ -8,7 +8,7 @@ export const SolanaMetrics = (): ReactElement => {
             <Row>
                 <Col md={7} sm={12}>
                     <Embed
-                        panelId="10"
+                        panelId="13"
                         title="Proof time gen"
                         height={350}
                     />
