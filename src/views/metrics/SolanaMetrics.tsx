@@ -17,17 +17,22 @@ export const SolanaMetrics = (): ReactElement => {
                         title="Mem usage"
                         height={350}
                     />
+                    <Embed
+                        panelId="10"
+                        title="Proof cost"
+                        height={350}
+                    />
                 </Col>
                 <Col md={5} sm={12}>
                     <Embed
                         panelId="2"
                         title="Proof time gen"
-                        height={450}
+                        height={720}
                     />
                     <Embed
                         panelId="12"
                         title="Proof"
-                        height={250}
+                        height={350}
                     />
                 </Col>
             </Row>
