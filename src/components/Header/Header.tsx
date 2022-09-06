@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
-import { Container } from '@nilfoundation/react-components';
-import { Navbar, Logo } from '..';
+import { Container, NavList, Navbar } from '@nilfoundation/react-components';
+import { Logo } from '..';
 import { MobileMenu } from '../MobileMenu';
-import { NavList } from '../NavList';
 import { navigationLinks } from '../../constants';
+import './Header.scss';
 
 export const Header = (): ReactElement =>
     <Navbar>
         <Container>
             <Logo />
-            <NavList className="navbar-right">
+            <NavList className="navbar-right navbar-nav">
                 {
                     navigationLinks.map(({title, link}) =>
                         <NavList.Link

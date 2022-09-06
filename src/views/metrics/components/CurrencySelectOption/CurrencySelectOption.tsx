@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { SelectOption, SelectOptionProps } from "../../../../components";
+import { SelectOption, SelectOptionProps } from "@nilfoundation/react-components";
 import { Currency } from "../../enums";
 import './CurrencySelectOption.scss'
 

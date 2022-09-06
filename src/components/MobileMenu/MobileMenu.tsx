@@ -11,8 +11,8 @@ export const MobileMenu = ({className}: MobileMenuProps): ReactElement => {
     return (
         <Dropdown className={`mobileMenu ${className ? className : ''}`}>
             <Dropdown.Button
-                iconNameDropdownClosed="bars"
-                iconNameDropdownOpend="times"
+                iconNameDropdownClosed="fa fa-bars"
+                iconNameDropdownOpend="fa fa-times"
             />
             <Dropdown.Menu>
                 {

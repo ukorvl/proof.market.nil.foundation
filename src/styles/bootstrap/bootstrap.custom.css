@@ -118,6 +118,7 @@ footer .footer-below {
   background-color: var(--c-primary-dark);
   color: var(--c-primary-light);
   border-color: var(--c-primary-lighter);
+  border-width: 2px;
 }
 
 .input-group-btn .btn {

@@ -1,6 +1,5 @@
 import { ReactElement, useState, useEffect } from 'react';
-import { Icon, Button, Jumbotron, Container, Row, Col } from '@nilfoundation/react-components';
-import { Select, SelectOption,  } from '../../components';
+import { Icon, Button, Jumbotron, Container, Row, Col, Select, SelectOption } from '@nilfoundation/react-components';
 import { Size } from '../../enums';
 import { CurrencyMetricsFactory } from './CurrencyMetricsFactory';
 import { CurrencySelectOption } from './components';
@@ -95,7 +94,7 @@ export const MetricsView = (): ReactElement => {
                                                 className="githubBadge"
                                                 block
                                             >
-                                                <Icon iconName="github" />
+                                                <Icon iconName="fa fa-github" />
                                                 {currency && getRepositoryName(currency)}
                                             </Button>
                                         </a>
