@@ -1,2 +1,2 @@
-export * from './Embed';
+export * from './GrafanaEmbed';
 export * from './CurrencySelectOption';
