@@ -1,6 +1,5 @@
 import { ReactElement, useState, useEffect } from 'react';
-import { Icon, Button, Jumbotron, Container, Row, Col, Select, SelectOption } from '@nilfoundation/react-components';
-import { Size } from '../../enums';
+import { Icon, Button, Jumbotron, Container, Row, Col, Select, SelectOption, Size } from '@nilfoundation/react-components';
 import { CurrencyMetricsFactory } from './CurrencyMetricsFactory';
 import { CurrencySelectOption } from './components';
 import { Currency, getRepositoryName, ProofSystem } from './enums';
