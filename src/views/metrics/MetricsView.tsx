@@ -93,7 +93,7 @@ export const MetricsView = (): ReactElement => {
                                                 className="githubBadge"
                                                 block
                                             >
-                                                <Icon iconName="fa fa-github" />
+                                                <Icon iconName="fa-brands fa-github" />
                                                 {currency && getRepositoryName(currency)}
                                             </Button>
                                         </a>
