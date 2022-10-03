@@ -9,17 +9,16 @@ type GrafanaEmbedProps = {
     panelId: string;
     title: string;
     height?: number;
-}
+};
 
-export const GrafanaEmbed = ({
-    panelId,
-    title,
-    height
-}: GrafanaEmbedProps): ReactElement => {
+export const GrafanaEmbed = ({ panelId, title, height }: GrafanaEmbedProps): ReactElement => {
     const srcUrl = `${process.env.REACT_APP_API_URL}&panelId=${panelId}`;
 
     return (
-        <div className="embedContainer" style={{height: `${height}px`}}>
+        <div
+            className="embedContainer"
+            style={{ height: `${height}px` }}
+        >
             <Embed
                 className="grafanaEmbed"
                 title={title}

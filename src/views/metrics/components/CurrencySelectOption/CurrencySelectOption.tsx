@@ -1,18 +1,18 @@
-import { ReactElement } from "react";
-import { SelectOption, SelectOptionProps } from "@nilfoundation/react-components";
-import { Currency } from "../../enums";
-import './CurrencySelectOption.scss'
+import { ReactElement } from 'react';
+import { SelectOption, SelectOptionProps } from '@nilfoundation/react-components';
+import { Currency } from '../../enums';
+import './CurrencySelectOption.scss';
 
 type CurrencySelectOptionProps = {
     imageSrc?: string;
-} & SelectOptionProps<Currency>
+} & SelectOptionProps<Currency>;
 
 export const CurrencySelectOption = ({
     title,
     value,
     imageSrc,
     disabled,
-    defaultSelected
+    defaultSelected,
 }: CurrencySelectOptionProps): ReactElement => {
     return (
         <SelectOption

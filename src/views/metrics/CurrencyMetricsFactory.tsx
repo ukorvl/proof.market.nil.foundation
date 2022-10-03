@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Currency } from './enums';
-import { SolanaMetrics } from './SolanaMetrics'
+import { SolanaMetrics } from './SolanaMetrics';
 
 /*
  * Props.
@@ -17,5 +17,5 @@ export const CurrencyMetricsFactory = ({ currency }: MetricsViewFactoryProps): R
         case Currency.Ethereum:
         default:
             return <h1>No data here...</h1>;
-    };
+    }
 };

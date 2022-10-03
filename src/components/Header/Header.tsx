@@ -4,7 +4,7 @@ import { MobileMenu } from '../MobileMenu';
 import { navigationLinks } from '../../constants';
 import './Header.scss';
 
-export const Header = (): ReactElement =>
+export const Header = (): ReactElement => (
     <Navbar>
         <Container>
             <a
@@ -14,24 +14,22 @@ export const Header = (): ReactElement =>
             >
                 <ol className="navbar-brand breadcrumb">
                     <li>
-                        <code>
-                            =nil;
-                        </code>
+                        <code>=nil;</code>
                         Foundation
                     </li>
                 </ol>
             </a>
             <Nav className="navbar-right navbar-nav">
-                {
-                    navigationLinks.map(({title, link}) =>
-                        <Nav.Item
-                            key={title}
-                            href={link}
-                        >
-                            {title}
-                        </Nav.Item>)
-                }
+                {navigationLinks.map(({ title, link }) => (
+                    <Nav.Item
+                        key={title}
+                        href={link}
+                    >
+                        {title}
+                    </Nav.Item>
+                ))}
             </Nav>
             <MobileMenu className="pull-right" />
         </Container>
-    </Navbar>;
+    </Navbar>
+);

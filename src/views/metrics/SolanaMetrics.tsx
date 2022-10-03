@@ -5,7 +5,10 @@ import { GrafanaEmbed } from './components';
 export const SolanaMetrics = (): ReactElement => {
     return (
         <Row>
-            <Col md={7} xs={12}>
+            <Col
+                md={7}
+                xs={12}
+            >
                 <GrafanaEmbed
                     panelId="13"
                     title="Proof Generation Time"
@@ -22,7 +25,10 @@ export const SolanaMetrics = (): ReactElement => {
                     height={350}
                 />
             </Col>
-            <Col md={5} xs={12}>
+            <Col
+                md={5}
+                xs={12}
+            >
                 <GrafanaEmbed
                     panelId="2"
                     title="Input Solana's Light-Client State"
@@ -36,4 +42,4 @@ export const SolanaMetrics = (): ReactElement => {
             </Col>
         </Row>
     );
-}
+};

@@ -18,5 +18,5 @@ export const socialLinks = [
     {
         icon: 'discord',
         url: 'https://discord.gg/KmTAEjbmM3',
-    }
+    },
 ];

@@ -1,5 +1,15 @@
 import { ReactElement, useState, useEffect } from 'react';
-import { Icon, Button, Jumbotron, Container, Row, Col, Select, SelectOption, Size } from '@nilfoundation/react-components';
+import {
+    Icon,
+    Button,
+    Jumbotron,
+    Container,
+    Row,
+    Col,
+    Select,
+    SelectOption,
+    Size,
+} from '@nilfoundation/react-components';
 import { CurrencyMetricsFactory } from './CurrencyMetricsFactory';
 import { CurrencySelectOption } from './components';
 import { Currency, getRepositoryName, ProofSystem } from './enums';
@@ -24,13 +34,16 @@ export const MetricsView = (): ReactElement => {
 
         const capitalizedCurrency = capitalizeFirstLetter(currency);
 
-        document.title = `${baseDocumentTitle} - ${capitalizedCurrency} Verification`
+        document.title = `${baseDocumentTitle} - ${capitalizedCurrency} Verification`;
     }, [currency]);
 
     return (
         <Container fluid>
-            <Row className="mb-20" >
-                <Col md={6} sm={12}>
+            <Row className="mb-20">
+                <Col
+                    md={6}
+                    sm={12}
+                >
                     <Select
                         onChange={setCurrency}
                         className="currencySelect"
@@ -56,7 +69,10 @@ export const MetricsView = (): ReactElement => {
                         />
                     </Select>
                 </Col>
-                <Col md={6} sm={12}>
+                <Col
+                    md={6}
+                    sm={12}
+                >
                     <Select
                         onChange={setProofSystem}
                         className="currencySelect"
@@ -85,24 +101,27 @@ export const MetricsView = (): ReactElement => {
                 <Col xs={12}>
                     <Jumbotron>
                         <Container fluid>
-                            {
-                                currency &&
-                                    <Row>
-                                        <Col xs={12}>
-                                            <h3>
-                                                <a href={badgeHref} target="_blank" rel="noreferrer">
-                                                    <Button
-                                                        className="githubBadge"
-                                                        block
-                                                    >
-                                                        <Icon iconName="fa-brands fa-github" />
-                                                        {getRepositoryName(currency)}
-                                                    </Button>
-                                                </a>
-                                            </h3>
-                                        </Col>
-                                    </Row>
-                            }
+                            {currency && (
+                                <Row>
+                                    <Col xs={12}>
+                                        <h3>
+                                            <a
+                                                href={badgeHref}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                <Button
+                                                    className="githubBadge"
+                                                    block
+                                                >
+                                                    <Icon iconName="fa-brands fa-github" />
+                                                    {getRepositoryName(currency)}
+                                                </Button>
+                                            </a>
+                                        </h3>
+                                    </Col>
+                                </Row>
+                            )}
                             <CurrencyMetricsFactory currency={currency} />
                         </Container>
                     </Jumbotron>

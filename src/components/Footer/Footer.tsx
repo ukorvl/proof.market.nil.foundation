@@ -3,7 +3,7 @@ import { Container, Row, Col } from '@nilfoundation/react-components';
 import './Footer.scss';
 import { SocialLinks } from './SocialLinks';
 
-export const Footer = (): ReactElement =>
+export const Footer = (): ReactElement => (
     <footer className="text-center">
         <div className="footer-below">
             <Container>
@@ -13,10 +13,9 @@ export const Footer = (): ReactElement =>
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
-                        {`Copyright © =nil; Foundation ${ new Date().getFullYear() }`}
-                    </Col>
+                    <Col>{`Copyright © =nil; Foundation ${new Date().getFullYear()}`}</Col>
                 </Row>
             </Container>
         </div>
-    </footer>;
+    </footer>
+);
