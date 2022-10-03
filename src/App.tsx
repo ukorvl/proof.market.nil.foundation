@@ -6,7 +6,7 @@ import { MetricsView } from './views';
 function App() {
   return (
     <BrowserRouter>
-        <Layout navbar={<Header />} footer={<Footer />}>
+        <Layout header={<Header />} footer={<Footer />}>
             <Routes>
                 <Route path="/" element={ <MetricsView/> } />
             </Routes>

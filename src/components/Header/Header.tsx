@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
-import { Container, NavList, Navbar } from '@nilfoundation/react-components';
-import { Logo } from '..';
+import { Container, Nav, Navbar } from '@nilfoundation/react-components';
 import { MobileMenu } from '../MobileMenu';
 import { navigationLinks } from '../../constants';
 import './Header.scss';
@@ -8,18 +7,31 @@ import './Header.scss';
 export const Header = (): ReactElement =>
     <Navbar>
         <Container>
-            <Logo />
-            <NavList className="navbar-right navbar-nav">
+            <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://nil.foundation"
+            >
+                <ol className="navbar-brand breadcrumb">
+                    <li>
+                        <code>
+                            =nil;
+                        </code>
+                        Foundation
+                    </li>
+                </ol>
+            </a>
+            <Nav className="navbar-right navbar-nav">
                 {
                     navigationLinks.map(({title, link}) =>
-                        <NavList.Link
+                        <Nav.Item
                             key={title}
                             href={link}
                         >
                             {title}
-                        </NavList.Link>)
+                        </Nav.Item>)
                 }
-            </NavList>
+            </Nav>
             <MobileMenu className="pull-right" />
         </Container>
     </Navbar>;

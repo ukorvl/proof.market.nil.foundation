@@ -1,6 +1,7 @@
 .embedContainer {
   margin: 20px 0;
 }
+
 .grafanaEmbed {
   display: flex;
   height: 100%;
@@ -9,4 +10,5 @@
   background-color: var(--c-primary-dark);
   border-radius: 0.35rem;
   border: 2px solid var(--c-primary-lighter);
+  padding-bottom: 0;
 }

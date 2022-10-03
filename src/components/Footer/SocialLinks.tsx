@@ -1,32 +1,10 @@
 import { ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
-
-const links = [
-    {
-        icon: 'twitter',
-        url: 'https://twitter.com/nil_foundation',
-    },
-    {
-        icon: 'linkedin',
-        url: 'https://www.linkedin.com/company/nil-foundation',
-    },
-    {
-        icon: 'github',
-        url: 'http://github.com/nilfoundation',
-    },
-    {
-        icon: 'telegram',
-        url: 'https://t.me/nilfoundation',
-    },
-    {
-        icon: 'discord',
-        url: 'https://discord.gg/KmTAEjbmM3',
-    }
-];
+import { socialLinks } from '../../constants';
 
 export const SocialLinks = (): ReactElement =>
     <ul className="socialLinks">
-        {links.map(({icon, url}) =>
+        {socialLinks.map(({icon, url}) =>
         <li key={icon}>
             <a href={url}>
                 <Icon

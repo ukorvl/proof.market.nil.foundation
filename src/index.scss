@@ -5,6 +5,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--c-primary-dark);
 }
 
 body,
@@ -13,6 +14,10 @@ textarea {
   font-family: "Roboto", "Segoe UI", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
+}
+
+main, footer, header {
+  background-color: var(--c-primary-dark);
 }
 
 code {

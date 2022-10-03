@@ -115,7 +115,7 @@ footer .footer-below {
 .input-group-addon,
 .form-control[readonly],
 .input-group-btn .btn {
-  background-color: var(--c-primary-dark);
+  background-color: var(--c-primary-dark)!important;
   color: var(--c-primary-light);
   border-color: var(--c-primary-lighter);
   border-width: 2px;

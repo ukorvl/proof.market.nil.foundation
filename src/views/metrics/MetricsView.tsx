@@ -28,11 +28,11 @@ export const MetricsView = (): ReactElement => {
     }, [currency]);
 
     return (
-        <Container>
+        <Container fluid>
             <Row className="mb-20" >
                 <Col md={6} sm={12}>
                     <Select
-                        onSelect={setCurrency}
+                        onChange={setCurrency}
                         className="currencySelect"
                         size={Size.lg}
                     >
@@ -58,7 +58,7 @@ export const MetricsView = (): ReactElement => {
                 </Col>
                 <Col md={6} sm={12}>
                     <Select
-                        onSelect={setProofSystem}
+                        onChange={setProofSystem}
                         className="currencySelect"
                         size={Size.lg}
                     >
@@ -82,26 +82,29 @@ export const MetricsView = (): ReactElement => {
                 </Col>
             </Row>
             <Row>
-                <Col md={12} sm={12}>
+                <Col xs={12}>
                     <Jumbotron>
-                        <Container>
-                            <Row>
-                                <Col md={12} sm={12}>
-                                    <h3>
-                                        <a href={badgeHref} target="_blank" rel="noreferrer">
-                                            <Button
-                                                className="githubBadge"
-                                                block
-                                            >
-                                                <Icon iconName="fa-brands fa-github" />
-                                                {currency && getRepositoryName(currency)}
-                                            </Button>
-                                        </a>
-                                    </h3>
-                                </Col>
-                            </Row>
+                        <Container fluid>
+                            {
+                                currency &&
+                                    <Row>
+                                        <Col xs={12}>
+                                            <h3>
+                                                <a href={badgeHref} target="_blank" rel="noreferrer">
+                                                    <Button
+                                                        className="githubBadge"
+                                                        block
+                                                    >
+                                                        <Icon iconName="fa-brands fa-github" />
+                                                        {getRepositoryName(currency)}
+                                                    </Button>
+                                                </a>
+                                            </h3>
+                                        </Col>
+                                    </Row>
+                            }
+                            <CurrencyMetricsFactory currency={currency} />
                         </Container>
-                       <CurrencyMetricsFactory currency={currency} />
                     </Jumbotron>
                 </Col>
             </Row>
