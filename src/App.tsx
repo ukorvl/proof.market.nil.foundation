@@ -9,6 +9,7 @@ function App() {
             <Layout
                 header={<Header />}
                 footer={<Footer />}
+                stickyHeader
             >
                 <Routes>
                     <Route

@@ -4,19 +4,19 @@ import { memoize } from 'lodash';
 
 type ApiMethod = 'get' | 'put' | 'post' | 'delete';
 
-declare var frontendConfig: { [key: string]: any };
-declare var dbmsHelper: { [key: string]: any };
+const url = process.env.REACT_APP_DBMS_HOST;
+const port = process.env.REACT_APP_DBMS_PORT;
+const database = process.env.REACT_APP_DBMS_DATABASE;
 
-const url = process.env.REACT_APP_DBMS_HOST || window.location.origin;
+if ([url, port, database].some(x => x === undefined)) {
+    throw new Error('Environment variables are not set.');
+}
 
 export const getDB = memoize(
     (db: string) =>
         new Database({
             url,
             databaseName: db,
-            auth: {
-                token: dbmsHelper.getCurrentJwt(),
-            },
         }),
 );
 
@@ -25,7 +25,7 @@ export const getRouteForDB = memoize(
     (db: string, route: string) => `${db}/${route}`,
 );
 
-export const getApiRouteForCurrentDB = () => getRouteForDB(frontendConfig.db, '_api');
+export const getApiRouteForCurrentDB = () => getRouteForDB(database!, '_api');
 
 export const useAPIFetch = (path: string | null, method: ApiMethod = 'get', body?: any) =>
     useSWR(path, () => {
