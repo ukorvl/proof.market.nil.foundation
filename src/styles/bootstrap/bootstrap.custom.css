@@ -17,9 +17,6 @@ body {
   --spacing-toast: 16px;
 }
 
-body [data-theme-dark] {
-  /* Todo - rewrite variables when toggle themes */
-}
 
 /* Reset link styles */
 a:hover, a:focus {
@@ -86,11 +83,6 @@ a:hover, a:focus {
   color: var(--c-secondary);
 }
 
-
-footer .footer-below {
-  padding: 25px 0 50px;
-}
-
 .breadcrumb > li:not(:first-child) {
   padding-left: 24px!important;
   position: relative;
@@ -117,14 +109,11 @@ footer .footer-below {
 .form-control[readonly],
 .input-group-btn .btn {
   background-color: var(--c-primary-dark)!important;
-  color: var(--c-primary-light);
-  border-color: var(--c-primary-lighter);
-  border-width: 2px;
 }
 
 .input-group-btn .btn {
-  border-width: 2px;
   border-left-width: 1.5px;
+  color: var(--c-secondary);
 }
 
 .input-group-btn .btn:hover {
@@ -132,42 +121,3 @@ footer .footer-below {
   color: var(--c-secondary);
 }
 
-/* .form-control[role="select"] {
-  cursor: pointer;
-} */
-
-.form-control:focus {
-  box-shadow: none;
-  border-color: var(--c-primary-lighter);
-}
-
-.input-group-addon {
-  border-width: 2px;
-}
-
-.jumbotron {
-  background-color: var(--c-base);
-}
-
-.dropdown-menu {
-  display: block;
-  width: 100%;
-  background-color: var(--c-base);
-  border: 2px solid var(--c-primary-lighter);
-}
-
-.dropdown-menu > li > a {
-  color: var(--c-secondary);
-}
-
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-  background-color: var(--c-primary-darker);
-  color: var(--c-secondary);
-}
-
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:focus,
-.dropdown-menu > .active > a:hover {
-  background-color: var(--c-primary-dark);
-}

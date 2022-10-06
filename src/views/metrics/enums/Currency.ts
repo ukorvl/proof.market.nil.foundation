@@ -1,14 +1,14 @@
 export enum Currency {
-    Solana = 'solana',
-    Mina = 'mina',
-    Ethereum = 'ethereum',
+    Solana = 'Solana',
+    Mina = 'Mina',
+    Ethereum = 'Ethereum',
 }
 
 export const getRepositoryName = (currency: Currency) => {
     switch (currency) {
         case Currency.Solana:
-            return `${repoPrefix}solana-state-proof`;
+            return `${repoOwner}/solana-state-proof`;
     }
 };
 
-const repoPrefix = 'NilFoundation/';
+const repoOwner = 'NilFoundation';

@@ -1,4 +1,4 @@
-@import '../../styles/mixins.scss';
+@import '../../../styles/mixins.scss';
 
 .navbar-nav {
   letter-spacing: 1px;
@@ -11,8 +11,4 @@
   @include responsive(sm) {
     display: none;
   }
-}
-
-header {
-  margin-bottom: 20px;
 }

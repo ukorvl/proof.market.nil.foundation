@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { Container, Nav, Navbar } from '@nilfoundation/react-components';
 import { MobileMenu } from '../MobileMenu';
-import { navigationLinks } from '../../constants';
+import { navigationLinks } from '../../../constants';
 import './Header.scss';
 
 export const Header = (): ReactElement => (

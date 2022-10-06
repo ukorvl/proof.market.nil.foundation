@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Dropdown } from '@nilfoundation/react-components';
-import { navigationLinks } from '../../constants';
+import { navigationLinks } from '../../../constants';
 import './MobileMenu.scss';
 
 type MobileMenuProps = {

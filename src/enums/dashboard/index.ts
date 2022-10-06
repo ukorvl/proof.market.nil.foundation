@@ -3,5 +3,5 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-export * from './metrics';
-export * from './dashboard';
+export * from './ProofSystem';
+export * from './Currency';

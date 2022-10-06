@@ -1,41 +1,7 @@
 @import './styles/index';
 
-body {
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--c-primary-dark);
-}
-
-body,
-input,
-textarea {
-  font-family: "Roboto", "Segoe UI", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
-}
-
-main, footer, header {
-  background-color: var(--c-primary-dark);
-}
-
-code {
-  background-color: transparent;
-  color: inherit;
-  font-family: Menlo, Monaco, 'Courier New',
-    monospace;
-}
-
-.pageContainer {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.notVisible {
-  visibility: hidden;
-  height: 0!important;
-  width: 0!important;
+main {
+  padding: 20px 0;
 }
 
 .currencySelect {
@@ -44,33 +10,3 @@ code {
   }
 }
 
-.githubBadge {
-  background-color: var(--c-primary-dark);
-  color: var(--c-primary-light);
-  border: 2px solid var(--c-primary-lighter);
-  font-weight: 400;
-  display: block;
-
-  i {
-    margin-right: 8px;
-  }
-
-  &:hover, &:active:focus, &:active, &:focus {
-    background-color: var(--c-primary-darker);
-    color: var(--c-primary-light);
-    border: 2px solid var(--c-primary-lighter);
-  }
-}
-
-.icon-md {
-  font-size: inherit!important;
-}
-
-// Padding & margin helpers
-.mb-20 {
-  margin-bottom: 20px;
-}
-
-.mb-16 {
-  margin-bottom: 16px;
-}
