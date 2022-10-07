@@ -10,14 +10,14 @@ import {
     Row,
     Col,
 } from '@nilfoundation/react-components';
-import { DashboardCard, ProofSystemSelect, CurrenciesList } from '../../components';
+import { DashboardCard, ProofSystemSelect, CurrenciesList } from '../components';
 
 /**
  * Dashboard view.
  *
  * @returns React component.
  */
-export const DashboardView = (): ReactElement => (
+const DashboardView = (): ReactElement => (
     <Container as="main" fluid>
         <Row>
             <Col xs={12} md={3}>
@@ -30,3 +30,5 @@ export const DashboardView = (): ReactElement => (
         </Row>
     </Container>
 );
+
+export default DashboardView;

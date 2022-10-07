@@ -38,13 +38,12 @@ export const getCurrencyImage = (currency: Currency) => `${process.env.PUBLIC_UR
  * @param proofSystem Proff system.
  * @returns Avaliable currencies for provided proof system.
  */
-export const getByProofSystem = (proofSystem: ProofSystem) => {
-    switch (proofSystem) {
-        case ProofSystem.Placeholder:
-            return [Currency.Solana, Currency.Mina, Currency.Ethereum];
-        default:
-            return [];
-    }
-}
+export const getByProofSystem = (proofSystem: ProofSystem) => currencyByProofSystemDict[proofSystem] ?? [];
 
 const repoOwner = 'NilFoundation';
+
+const currencyByProofSystemDict: Record<ProofSystem, Currency[]> = {
+    [ProofSystem.Placeholder]: [Currency.Solana, Currency.Mina, Currency.Ethereum],
+    [ProofSystem.Kimchi]: [],
+    [ProofSystem.Stark]: []
+};

@@ -5,7 +5,9 @@
 
 import { ReactElement } from 'react';
 import { Image, ListGroup, Media } from '@nilfoundation/react-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { Currency, getCurrencyImage } from '../../../enums';
+import { RootStateType, UpdateCurrency } from '../../../redux';
 
 /**
  * Props.
@@ -21,8 +23,16 @@ type CurrencyListItemProps = {
  * @returns React component.
  */
 export const CurrenciesListItem = ({currency}: CurrencyListItemProps): ReactElement => {
+    const dispatch = useDispatch();
+    const selectedCurrency = useSelector((s: RootStateType) => s.currencyState.currency);
+    const onSelectItem = () => { dispatch(UpdateCurrency(currency)) };
+
     return (
-        <ListGroup.Item href={`#${currency}`} disabled={currency !== Currency.Solana}>
+        <ListGroup.Item
+            disabled={currency !== Currency.Solana}
+            active={currency === selectedCurrency}
+            onClick={onSelectItem}
+        >
             <Media>
                 <Media.Item>
                     <Image

@@ -6,12 +6,11 @@
 import { ReactElement, useRef } from 'react';
 import { ListGroup } from '@nilfoundation/react-components';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
-import { getByProofSystem, ProofSystem } from '../../../enums';
+import { useSelector } from 'react-redux';
+import { RootStateType } from '../../../redux';
+import { getByProofSystem } from '../../../enums';
 import { CurrenciesListItem } from './CurrenciesListItem';
 import './CurrenciesList.scss';
-
-// TODO - get from redux
-const selectedProofSystem = ProofSystem.Placeholder;
 
 /**
  * Currencies list.
@@ -20,6 +19,7 @@ const selectedProofSystem = ProofSystem.Placeholder;
  */
 export const CurrenciesList = (): ReactElement => {
     const nodeRef = useRef<HTMLDivElement>(null);
+    const selectedProofSystem = useSelector((s: RootStateType) => s.proofSystemState.proofSystem);
 
     return (
         <SwitchTransition mode="out-in">

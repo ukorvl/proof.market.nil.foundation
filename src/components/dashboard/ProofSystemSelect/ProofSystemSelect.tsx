@@ -5,7 +5,9 @@
 
 import { ReactElement, useRef } from 'react';
 import { Select, Size, uniqueId } from '@nilfoundation/react-components';
+import { useSelector } from 'react-redux';
 import { ProofSystem } from '../../../enums';
+import { RootStateType } from '../../../redux';
 import './ProofSystemSelect.scss';
 
 /**
@@ -15,6 +17,7 @@ import './ProofSystemSelect.scss';
  */
 export const ProofSystemSelect = (): ReactElement => {
     const {current: selectId} = useRef(uniqueId('proof-system-select'));
+    const selectedProofSystem = useSelector((s: RootStateType) => s.proofSystemState.proofSystem);
 
     return (
         <nav className="verificationSystemSelect">
@@ -28,10 +31,10 @@ export const ProofSystemSelect = (): ReactElement => {
                 {Object.keys(ProofSystem).map(x =>
                     <Select.Option
                         key={x}
-                        disabled
+                        disabled={x !== ProofSystem.Placeholder}
                         value={x}
                         title={x}
-                        defaultSelected={x === ProofSystem.Placeholder}
+                        defaultSelected={x === selectedProofSystem}
                     />
                 )}
             </Select>

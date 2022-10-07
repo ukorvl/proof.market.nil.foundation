@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, ErrorBoundary } from '@nilfoundation/react-components';
 import { Header, Footer } from './components';
-import { DashboardView } from './views/dashboard';
+import { routes } from './routing';
 
 /**
  * @returns App.
@@ -20,12 +21,12 @@ function App() {
                     footer={<Footer />}
                     stickyHeader
                 >
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<DashboardView />}
-                        />
-                    </Routes>
+                    <Suspense fallback="loading">
+                        <Routes>
+                            {routes.map(({path, Component}) =>
+                                <Route key={path} path={path} element={<Component />} />)}
+                        </Routes>
+                    </Suspense>
                 </Layout>
             </BrowserRouter>
         </ErrorBoundary>
