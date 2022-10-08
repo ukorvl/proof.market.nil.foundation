@@ -4,7 +4,18 @@
  */
 
 import { ReactElement, useState } from 'react';
-import { Jumbotron, Image, InputGroup, Icon, Input, Size, Button, Variant, Form, Spinner } from '@nilfoundation/react-components';
+import {
+    Jumbotron,
+    Image,
+    InputGroup,
+    Icon,
+    Input,
+    Size,
+    Button,
+    Variant,
+    Form,
+    Spinner,
+} from '@nilfoundation/react-components';
 import { useForm } from 'react-hook-form';
 import { LoginData } from '../../../models';
 import './LoginForm.scss';
@@ -26,8 +37,26 @@ export const LoginForm = (): ReactElement => {
     const switchPwdInputType = () =>
         setPwdInputType(pwdInputType === 'password' ? 'text' : 'password');
 
-    const {register, formState: {isSubmitting}} = useForm<LoginData>({
-        mode: 'onChange'
+    const {
+        register,
+        formState: { isSubmitting, isValid },
+        handleSubmit,
+    } = useForm<LoginData>({
+        mode: 'onChange',
+    });
+
+    const onSubmitLogin = handleSubmit(async (data: LoginData): Promise<void> => {
+        try {
+            console.log('hahah', data);
+            await new Promise(r =>
+                setTimeout(() => {
+                    console.log('jajaj');
+                    r(1);
+                }, 3000),
+            );
+        } catch {
+            setErrorMessage('cdcdcdc');
+        }
     });
 
     return (
@@ -39,7 +68,7 @@ export const LoginForm = (): ReactElement => {
                 rounded
             />
             <Form onSubmit={undefined}>
-                <Form.Group hasError={true}>
+                <Form.Group hasError={!isValid}>
                     <Form.Label htmlFor="userName">Username</Form.Label>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>
@@ -48,7 +77,7 @@ export const LoginForm = (): ReactElement => {
                         <Input
                             type="text"
                             id="userName"
-                            {...register('userName')}
+                            {...register('userName', { required: true })}
                         />
                     </InputGroup>
                 </Form.Group>
@@ -75,6 +104,8 @@ export const LoginForm = (): ReactElement => {
                     block
                     variant={Variant.success}
                     size={Size.lg}
+                    onClick={onSubmitLogin}
+                    disabled={!isValid || isSubmitting}
                 >
                     Login
                     {isSubmitting && <Spinner />}

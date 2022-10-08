@@ -1,4 +1,3 @@
-
 /**
  * @file React component.
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
@@ -16,7 +15,11 @@ import { LoginContainer, LoginForm } from '../components';
 const LoginView = (): ReactElement => (
     <LoginContainer>
         <Row>
-            <Col xs={12} sm={4} md={3}>
+            <Col
+                xs={12}
+                sm={5}
+                md={3}
+            >
                 <LoginForm />
             </Col>
         </Row>

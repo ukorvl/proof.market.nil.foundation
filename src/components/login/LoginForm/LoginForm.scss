@@ -9,4 +9,20 @@
     margin-bottom: 14px;
     width: 100%;
   }
+
+  i {
+    width: 20px;
+  }
+
+  button .spinner-border {
+    margin-left: 12px;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    caret-color: $c-secondary;
+    -webkit-text-fill-color: $c-secondary;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }
