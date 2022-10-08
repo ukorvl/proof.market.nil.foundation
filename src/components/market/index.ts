@@ -7,4 +7,4 @@ export * from './DashboardCard';
 export * from './CurcuitsList';
 export * from './CircuitDetailedInfo';
 export * from './OrderBook';
-export * from './OrderManagementPanel';
+export * from './OrderManagementPanel/OrderManagementPanel';

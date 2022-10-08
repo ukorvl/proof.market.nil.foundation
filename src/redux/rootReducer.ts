@@ -4,16 +4,16 @@
  */
 
 import { combineReducers } from 'redux';
-import {
-    CircuitsReducer,
-} from './market';
+import { UserReducer } from './login/reducers';
+import { CircuitsReducer } from './market';
 import { RootStateType } from './RootStateType';
 
 /**
  * Root reducer.
  */
 export const RootReducer = combineReducers<RootStateType>({
-    circuitsState: CircuitsReducer
+    circuitsState: CircuitsReducer,
+    userState: UserReducer,
 });
 
 /**

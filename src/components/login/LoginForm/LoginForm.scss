@@ -1,7 +1,6 @@
 @import '../../../styles/constants.scss';
 
 .loginForm {
-  border: 1px solid $c-base-light;
   padding: 24px!important;
 
   img {
@@ -18,11 +17,8 @@
     margin-left: 12px;
   }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    caret-color: $c-secondary;
-    -webkit-text-fill-color: $c-secondary;
-    transition: background-color 5000s ease-in-out 0s;
+  .errorMessage {
+    padding-top: 12px;
+    color: $c-danger
   }
 }

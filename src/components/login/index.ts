@@ -5,4 +5,4 @@
 
 export * from './LoginForm';
 export * from './LoginContainer';
-export * from './AuthRenderPolicy/AuthRenderPolicy';
+export * from './ProtectedRoute';

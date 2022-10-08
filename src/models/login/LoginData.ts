@@ -10,9 +10,9 @@ export type LoginData = {
     /**
      * User name.
      */
-    userName: string;
+    username: string;
     /**
      * Password.
      */
     password: string;
-}
+};

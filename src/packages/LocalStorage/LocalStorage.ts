@@ -24,10 +24,10 @@ export const getItemFromLocalStorage = <T>(ItemKey: string): T | undefined => {
 /**
  * Set localStorage item.
  *
- * @param ItemValue - Vslue.
  * @param ItemKey - Key.
+ * @param ItemValue - Value.
  */
-export const setItemIntoLocalStorage = <T>(ItemValue: T, ItemKey: string): void => {
+export const setItemIntoLocalStorage = <T>(ItemKey: string, ItemValue: T): void => {
     try {
         const serialisedValue = JSON.stringify(ItemValue);
         localStorage.setItem(ItemKey, serialisedValue);

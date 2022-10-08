@@ -15,9 +15,17 @@ import {
     Variant,
     Form,
     Spinner,
+    Transition,
 } from '@nilfoundation/react-components';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { LoginData } from '../../../models';
+import { login } from '../../../api';
+import { setItemIntoLocalStorage } from '../../../packages/LocalStorage';
+import { Path } from '../../../routing';
+import { useGetUserFromJwt } from '../../../hooks';
+import { UpdateUser } from '../../../redux/login/actions';
 import './LoginForm.scss';
 
 /**
@@ -31,6 +39,9 @@ type PwdInputType = 'password' | 'text';
  * @returns React component.
  */
 export const LoginForm = (): ReactElement => {
+    const navigate = useNavigate();
+    const { getUser } = useGetUserFromJwt();
+    const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
     const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
@@ -46,16 +57,18 @@ export const LoginForm = (): ReactElement => {
     });
 
     const onSubmitLogin = handleSubmit(async (data: LoginData): Promise<void> => {
+        setErrorMessage('');
         try {
-            console.log('hahah', data);
-            await new Promise(r =>
-                setTimeout(() => {
-                    console.log('jajaj');
-                    r(1);
-                }, 3000),
-            );
-        } catch {
-            setErrorMessage('cdcdcdc');
+            const { jwt } = await login(data);
+            setItemIntoLocalStorage('jwt', jwt);
+
+            const user = getUser(jwt);
+            user && dispatch(UpdateUser(user));
+
+            navigate(Path.root, { replace: true });
+        } catch (e) {
+            console.log(e);
+            setErrorMessage('Login error');
         }
     });
 
@@ -77,7 +90,7 @@ export const LoginForm = (): ReactElement => {
                         <Input
                             type="text"
                             id="userName"
-                            {...register('userName', { required: true })}
+                            {...register('username', { required: true })}
                         />
                     </InputGroup>
                 </Form.Group>
@@ -110,6 +123,14 @@ export const LoginForm = (): ReactElement => {
                     Login
                     {isSubmitting && <Spinner />}
                 </Button>
+                {errorMessage && (
+                    <Transition
+                        name="fade"
+                        in={!!errorMessage}
+                    >
+                        <div className="errorMessage">{errorMessage}</div>
+                    </Transition>
+                )}
             </Form>
         </Jumbotron>
     );

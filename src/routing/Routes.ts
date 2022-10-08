@@ -12,19 +12,23 @@ const LoginView = lazy(() => import('../views/LoginView'));
 const Page404 = lazy(() => import('../views/404'));
 
 /**
+ * Login route.
+ */
+export const loginRoute: RouteModel = {
+    path: Path.login,
+    Component: LoginView,
+};
+
+/**
  * App routes.
  */
 export const routes: RouteModel[] = [
     {
         path: Path.root,
-        Component: MarketView
-    },
-    {
-        path: Path.login,
-        Component: LoginView
+        Component: MarketView,
     },
     {
         path: Path.any,
-        Component: Page404
-    }
+        Component: Page404,
+    },
 ];

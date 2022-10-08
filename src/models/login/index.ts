@@ -4,3 +4,4 @@
  */
 
 export * from './LoginData';
+export * from './dto';

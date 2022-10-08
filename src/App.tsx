@@ -6,8 +6,8 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, ErrorBoundary } from '@nilfoundation/react-components';
-import { Header, Footer, Fallback } from './components';
-import { routes } from './routing';
+import { Header, Footer, Fallback, ProtectedRoute } from './components';
+import { routes, loginRoute } from './routing';
 
 /**
  * @returns App.
@@ -23,8 +23,21 @@ function App() {
                 >
                     <Suspense fallback={<Fallback />}>
                         <Routes>
-                            {routes.map(({path, Component}) =>
-                                <Route key={path} path={path} element={<Component />} />)}
+                            <Route
+                                path={loginRoute.path}
+                                element={<loginRoute.Component />}
+                            />
+                            {routes.map(({ path, Component }) => (
+                                <Route
+                                    key={path}
+                                    path={path}
+                                    element={
+                                        <ProtectedRoute>
+                                            <Component />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                            ))}
                         </Routes>
                     </Suspense>
                 </Layout>
