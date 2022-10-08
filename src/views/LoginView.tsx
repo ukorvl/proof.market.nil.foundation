@@ -5,12 +5,8 @@
  */
 
 import { ReactElement } from 'react';
-import {
-    Container,
-    Row,
-    Col,
-} from '@nilfoundation/react-components';
-import { DashboardCard, CurcuitsList, CircuitDetailedInfo, OrderBook } from '../components';
+import { Row, Col } from '@nilfoundation/react-components';
+import { LoginContainer, LoginForm } from '../components';
 
 /**
  * Login view.
@@ -18,24 +14,13 @@ import { DashboardCard, CurcuitsList, CircuitDetailedInfo, OrderBook } from '../
  * @returns React component.
  */
 const LoginView = (): ReactElement => (
-    <Container as="main" fluid>
+    <LoginContainer>
         <Row>
-            <Col xs={12} md={3}>
-                <CurcuitsList />
-            </Col>
-            <Col xs={12} md={9}>
-                <DashboardCard>
-                    <h4>Dashboard</h4>
-                </DashboardCard>
-            </Col>
-            <Col xs={12} md={3}>
-                <CircuitDetailedInfo />
-            </Col>
-            <Col xs={12} md={3}>
-                <OrderBook />
+            <Col xs={12} sm={4} md={3}>
+                <LoginForm />
             </Col>
         </Row>
-    </Container>
+    </LoginContainer>
 );
 
 export default LoginView;

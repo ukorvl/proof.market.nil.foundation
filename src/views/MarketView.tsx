@@ -25,21 +25,19 @@ const MarketView = (): ReactElement => (
                 <CircuitDetailedInfo />
             </Col>
             <Col xs={12} md={9}>
-                <Container fluid>
-                    <Row>
-                        <Col xs={12}>
-                            <DashboardCard>
-                                <h4>Dashboard</h4>
-                            </DashboardCard>
-                        </Col>
-                        <Col xs={12} md={4}>
-                            <OrderBook />
-                        </Col>
-                        <Col xs={12} md={8}>
-                            <OrderManagementPanel />
-                        </Col>
-                    </Row>
-                </Container>
+                <Row>
+                    <Col xs={12}>
+                        <DashboardCard>
+                            <h4>Dashboard</h4>
+                        </DashboardCard>
+                    </Col>
+                    <Col xs={12} md={4}>
+                        <OrderBook />
+                    </Col>
+                    <Col xs={12} md={8}>
+                        <OrderManagementPanel />
+                    </Col>
+                </Row>
             </Col>
         </Row>
     </Container>

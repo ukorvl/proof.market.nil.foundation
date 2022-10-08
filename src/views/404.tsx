@@ -19,7 +19,7 @@ import {
 const Page404 = (): ReactElement => (
     <Container as="main" fluid>
         <Row>
-            <Col xs={12} className="text-centered">
+            <Col xs={12} className="text-center">
                 This page does not exist.
             </Col>
         </Row>

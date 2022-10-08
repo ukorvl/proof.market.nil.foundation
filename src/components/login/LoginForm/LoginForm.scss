@@ -1,0 +1,12 @@
+@import '../../../styles/constants.scss';
+
+.loginForm {
+  border: 1px solid $c-base-light;
+  padding: 24px!important;
+
+  img {
+    border: 1px solid $c-base-light;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+}
