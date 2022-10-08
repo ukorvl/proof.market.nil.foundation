@@ -45,8 +45,6 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps): ReactElement 
         return false;
     };
 
-    console.log(isAuthentificated());
-
     return (
         <>
             {isAuthentificated() ? (

@@ -21,11 +21,14 @@ export const CurcuitsList = (): ReactElement => {
 
     return (
         <DashboardCard>
+            <h4>Curcuits list</h4>
             <ListGroup className="currenciesList">
-                <h4>Curcuits</h4>
-                {circuitsList.map(x =>
-                    <CurcuitsListItem key={x.id} circuit={x} />
-                )}
+                {circuitsList.map(x => (
+                    <CurcuitsListItem
+                        key={x.id}
+                        circuit={x}
+                    />
+                ))}
             </ListGroup>
         </DashboardCard>
     );

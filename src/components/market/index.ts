@@ -4,7 +4,8 @@
  */
 
 export * from './DashboardCard';
-export * from './CurcuitsList';
+export * from './CircuitsList';
 export * from './CircuitDetailedInfo';
+export * from './CircuitDashboard';
 export * from './OrderBook';
-export * from './OrderManagementPanel/OrderManagementPanel';
+export * from './OrderManagementPanel';

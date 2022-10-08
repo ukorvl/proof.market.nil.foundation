@@ -2,8 +2,15 @@
 
 .customBreadcumbs {
   padding: 0;
-  margin-top: 24px;
+  margin-top: 12px;
+  margin-bottom: 12px;
   display: inline-block;
+
+  > li {
+    height: 64px;
+    display: inline-flex;
+    align-items: center;
+  }
 
   > li > a {
     padding: 15px;

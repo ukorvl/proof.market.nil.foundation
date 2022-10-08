@@ -34,7 +34,7 @@ export const Header = (): ReactElement => (
                 ))}
             </Nav>
             <UserMenu />
-            <MobileMenu className="pull-right" />
+            <MobileMenu />
         </Container>
     </Navbar>
 );

@@ -8,13 +8,14 @@ import { Dropdown } from '@nilfoundation/react-components';
 import { navigationLinks } from '../../../constants';
 import './MobileMenu.scss';
 
-type MobileMenuProps = {
-    className?: string;
-};
-
-export const MobileMenu = ({ className }: MobileMenuProps): ReactElement => {
+/**
+ * Mobile menu.
+ *
+ * @returns React component.
+ */
+export const MobileMenu = (): ReactElement => {
     return (
-        <Dropdown className={`mobileMenu ${className ? className : ''}`}>
+        <Dropdown className="mobileMenu pull-right">
             <Dropdown.Button
                 iconNameDropdownClosed="fa fa-bars"
                 iconNameDropdownOpend="fa fa-times"

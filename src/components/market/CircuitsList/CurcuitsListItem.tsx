@@ -15,7 +15,7 @@ import { Circuit } from '../../../models';
  */
 type CurcuitsListItemProps = {
     circuit: Circuit;
-}
+};
 
 /**
  * Currencies list item.
@@ -23,10 +23,14 @@ type CurcuitsListItemProps = {
  * @param {CurcuitsListItemProps} props - Props.
  * @returns React component.
  */
-export const CurcuitsListItem = ({circuit: {id, name}}: CurcuitsListItemProps): ReactElement => {
+export const CurcuitsListItem = ({
+    circuit: { id, name },
+}: CurcuitsListItemProps): ReactElement => {
     const dispatch = useDispatch();
     const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
-    const onSelectItem = () => { dispatch(UpdateSelectedid(id)) };
+    const onSelectItem = () => {
+        dispatch(UpdateSelectedid(id));
+    };
 
     return (
         <ListGroup.Item
