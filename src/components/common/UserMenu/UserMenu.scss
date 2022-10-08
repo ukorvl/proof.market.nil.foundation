@@ -1,0 +1,16 @@
+@import '../../../styles/constants.scss';
+
+.userMenu {
+  display: inline-block;
+
+  i:first-child {
+    margin-right: 12px;
+  }
+
+  button {
+    background: transparent!important;
+    border: none;
+    color: $c-secondary!important;
+    font-size: 20px;
+  }
+}

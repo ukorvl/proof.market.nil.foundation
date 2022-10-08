@@ -4,8 +4,9 @@
  */
 
 import { ReactElement } from 'react';
-import { Container, Nav, Navbar } from '@nilfoundation/react-components';
+import { Container, Navbar, Nav } from '@nilfoundation/react-components';
 import { MobileMenu } from '../MobileMenu';
+import { UserMenu } from '../UserMenu';
 import { navigationLinks } from '../../../constants';
 import { Breadcrumbs } from '../BreadCrumbs';
 import './Header.scss';
@@ -16,8 +17,11 @@ import './Header.scss';
  * @returns React component.
  */
 export const Header = (): ReactElement => (
-    <Navbar className="headerContainer">
-        <Container>
+    <Navbar>
+        <Container
+            className="headerContainer"
+            fluid
+        >
             <Breadcrumbs />
             <Nav className="navbar-right navbar-nav">
                 {navigationLinks.map(({ title, link }) => (
@@ -29,6 +33,7 @@ export const Header = (): ReactElement => (
                     </Nav.Item>
                 ))}
             </Nav>
+            <UserMenu />
             <MobileMenu className="pull-right" />
         </Container>
     </Navbar>
