@@ -6,7 +6,7 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, ErrorBoundary } from '@nilfoundation/react-components';
-import { Header, Footer } from './components';
+import { Header, Footer, Fallback } from './components';
 import { routes } from './routing';
 
 /**
@@ -21,7 +21,7 @@ function App() {
                     footer={<Footer />}
                     stickyHeader
                 >
-                    <Suspense fallback="loading">
+                    <Suspense fallback={<Fallback />}>
                         <Routes>
                             {routes.map(({path, Component}) =>
                                 <Route key={path} path={path} element={<Component />} />)}

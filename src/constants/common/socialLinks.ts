@@ -1,3 +1,8 @@
+/**
+ * @file Constant data.
+ * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ */
+
 export const socialLinks = [
     {
         icon: 'twitter',

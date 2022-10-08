@@ -4,14 +4,12 @@
  */
 
 import {
-    ProofSystemReducerState,
-    CurrencyReducerState
-} from './dahsboard';
+    CircuitsReducerState
+} from './market';
 
 /**
  * Root state type.
  */
 export interface RootStateType {
-    proofSystemState: ProofSystemReducerState;
-    currencyState: CurrencyReducerState;
+    circuitsState: CircuitsReducerState;
 }

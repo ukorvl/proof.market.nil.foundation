@@ -5,17 +5,15 @@
 
 import { combineReducers } from 'redux';
 import {
-    ProofSystemReducer,
-    CurrencyReducer,
-} from './dahsboard';
+    CircuitsReducer,
+} from './market';
 import { RootStateType } from './RootStateType';
 
 /**
  * Root reducer.
  */
 export const RootReducer = combineReducers<RootStateType>({
-    proofSystemState: ProofSystemReducer,
-    currencyState: CurrencyReducer
+    circuitsState: CircuitsReducer
 });
 
 /**

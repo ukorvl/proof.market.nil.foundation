@@ -1,0 +1,42 @@
+@import '../../../styles/constants.scss';
+
+.customBreadcumbs {
+  padding: 0;
+  margin-top: 24px;
+  display: inline-block;
+
+  > li > a {
+    padding: 15px;
+    font-size: 20px;
+    position: relative;
+    color: $c-secondary;
+
+    > span {
+      z-index: 2;
+      position: relative;
+    }
+
+    &::before {
+      position:absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.1s;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: $c-primary;
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:hover,
+      &:focus {
+        text-decoration: underline 1.5px;
+
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

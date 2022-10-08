@@ -8,5 +8,6 @@
  */
 export enum Path {
     root = '/',
-    any = '*'
+    any = '*',
+    login = 'login',
 }

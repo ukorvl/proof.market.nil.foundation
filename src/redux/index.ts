@@ -6,4 +6,4 @@
 export * from './RootReducer';
 export * from './RootStateType';
 export * from './Store';
-export * from './dahsboard';
+export * from './market';

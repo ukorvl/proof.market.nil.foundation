@@ -7,7 +7,8 @@ import { lazy } from 'react';
 import { RouteModel } from './RouteModel';
 import { Path } from './Paths';
 
-const DashboardView = lazy(() => import('../views/DashboardView'));
+const MarketView = lazy(() => import('../views/MarketView'));
+const LoginView = lazy(() => import('../views/LoginView'));
 const Page404 = lazy(() => import('../views/404'));
 
 /**
@@ -16,7 +17,11 @@ const Page404 = lazy(() => import('../views/404'));
 export const routes: RouteModel[] = [
     {
         path: Path.root,
-        Component: DashboardView
+        Component: MarketView
+    },
+    {
+        path: Path.login,
+        Component: LoginView
     },
     {
         path: Path.any,

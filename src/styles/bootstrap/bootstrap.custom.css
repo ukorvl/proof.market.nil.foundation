@@ -17,15 +17,9 @@ body {
   --spacing-toast: 16px;
 }
 
-
 /* Reset link styles */
 a:hover, a:focus {
   text-decoration: none;
-}
-
-.btn:active:focus,
-.btn:focus {
-  outline: none;
 }
 
 .navbar {
@@ -39,39 +33,6 @@ a:hover, a:focus {
   border-color: var(--c-primary-lighter);
 }
 
-.breadcrumb > li:hover {
-  background-color: var(--c-primary)!important;
-}
-
-.breadcrumb > li {
-  font-size: 1.2em;
-  font-weight: 400;
-  opacity: 1;
-  color: var(--c-secondary);
-}
-
-.breadcrumb {
-  padding-top: 0px;
-  padding-left: 0px;
-  margin-bottom: 0px;
-  height: 50px;
-  background-color: var(--c-primary-dark);
-  margin: 12px 0;
-}
-
-.breadcrumb > li {
-  margin: 0px;
-  padding: 15px;
-  padding-left: 0px;
-  text-shadow: none;
-  height: 50px!important;
-}
-
-.breadcrumb > li:first-child {
-  margin: 0px;
-  padding: 15px;
-}
-
 .nav > li > a {
   display: block;
   font-weight: 300;;
@@ -81,27 +42,6 @@ a:hover, a:focus {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:visited {
   color: var(--c-secondary);
-}
-
-.breadcrumb > li:not(:first-child) {
-  padding-left: 24px!important;
-  position: relative;
-  margin-left: 4px!important;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.breadcrumb > li:not(:first-child)::before {
-  content: '/';
-  font-size: 20px;
-  font-weight: 500;
-  position: absolute;
-  left: 4px;
-}
-
-.breadcrumb > li > a:hover, .breadcrumb > li > a:focus {
-  outline: 0;
-  text-decoration: underline;
 }
 
 .form-control,

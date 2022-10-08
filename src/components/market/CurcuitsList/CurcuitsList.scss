@@ -1,0 +1,23 @@
+.currenciesList {
+  $val: 12px;
+
+  margin-top: $val;
+  margin-bottom: 0;
+
+  .list-group-item {
+    border: none;
+    border-radius: $val;
+
+    + .list-group-item {
+      margin-top: $val;
+    }
+
+    .media-body {
+      vertical-align: middle;
+    }
+
+    .media-heading {
+      margin: 0;
+    }
+  }
+}

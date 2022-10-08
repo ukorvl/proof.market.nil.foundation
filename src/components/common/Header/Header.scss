@@ -1,5 +1,10 @@
 @import '../../../styles/mixins.scss';
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .navbar-nav {
   letter-spacing: 1px;
   margin: 12px 0;

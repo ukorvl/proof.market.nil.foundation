@@ -1,3 +1,8 @@
+/**
+ * @file Constant data.
+ * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ */
+
 export const navigationLinks = [
     { title: 'Blog', link: 'https://blog.nil.foundation' },
     { title: 'About', link: 'https://nil.foundation/#about' },
