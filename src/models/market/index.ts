@@ -4,3 +4,4 @@
  */
 
 export * from './Circuit';
+export * from './dto';

@@ -16,6 +16,7 @@ import {
     Form,
     Spinner,
     Transition,
+    notificationActions,
 } from '@nilfoundation/react-components';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -66,6 +67,10 @@ export const LoginForm = (): ReactElement => {
             user && dispatch(UpdateUser(user));
 
             navigate(Path.root, { replace: true });
+            notificationActions?.create({
+                title: `Successfully login as ${user}`,
+                variant: Variant.success,
+            });
         } catch (e) {
             console.log(e);
             setErrorMessage('Login error');

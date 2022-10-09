@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
 import { DashboardCard } from '../DashboardCard';
+import { Details } from '../../common';
 import { selectCurrentCircuit } from '../../../redux';
 import { jsonViewerTheme } from '../../../constants';
 
@@ -20,14 +21,15 @@ export const CircuitDetailedInfo = (): ReactElement => {
 
     return (
         <DashboardCard>
-            {currentSelectedCircuit?.id}
-            <ReactJson
-                src={{}}
-                collapsed={1}
-                name={null}
-                displayDataTypes={false}
-                theme={jsonViewerTheme}
-            />
+            <Details title={<h4>Detailed {currentSelectedCircuit?.id} info</h4>}>
+                <ReactJson
+                    src={{}}
+                    collapsed={1}
+                    name={null}
+                    displayDataTypes={false}
+                    theme={jsonViewerTheme}
+                />
+            </Details>
         </DashboardCard>
     );
 };

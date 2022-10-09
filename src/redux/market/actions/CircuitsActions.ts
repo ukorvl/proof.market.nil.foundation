@@ -15,3 +15,13 @@ export const UpdateCircuitsList = createAction<Circuit[]>('@circuits/UPDATE_CIRC
  * Update selected circuit id.
  */
 export const UpdateSelectedid = createAction<string>('@circuits/UPDATE_SELECTED_CIRCUIT_ID');
+
+/**
+ * Update circuits loading state.
+ */
+export const UpdateIsLoadingCircuits = createAction<boolean>('@circuits/UPDATE_IS_LOADING');
+
+/**
+ * Update circuits error state.
+ */
+export const UpdateCircuitsError = createAction<Error>('@circuits/UPDATE_ERROR');

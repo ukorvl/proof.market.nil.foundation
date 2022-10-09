@@ -4,7 +4,12 @@
  */
 
 import { ReactElement } from 'react';
+import { Spinner } from '@nilfoundation/react-components';
 import { DashboardCard } from '../DashboardCard';
+import { OrderBookTable } from './OrderBookTable';
+import { Details } from '../../common';
+import { useGetOrderBookData } from '../../../hooks';
+import './OrderBook.scss';
 
 /**
  * Order book.
@@ -12,9 +17,22 @@ import { DashboardCard } from '../DashboardCard';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
+    const { columns, data } = useGetOrderBookData();
+
     return (
         <DashboardCard>
-            OrderBook
+            <Details title={<h4>Order book</h4>}>
+                <div className="orderBook">
+                    {data ? (
+                        <OrderBookTable
+                            data={data}
+                            columns={columns}
+                        />
+                    ) : (
+                        <Spinner grow />
+                    )}
+                </div>
+            </Details>
         </DashboardCard>
     );
 };

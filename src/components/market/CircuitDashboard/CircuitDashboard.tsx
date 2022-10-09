@@ -32,7 +32,7 @@ export const CircuitDashboard = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <h4>Circuit info</h4>
+            <h4>Circuit dashboard</h4>
             <div
                 ref={ref}
                 style={{ height: '400px' }}

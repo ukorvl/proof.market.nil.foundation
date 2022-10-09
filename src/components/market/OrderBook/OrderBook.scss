@@ -1,0 +1,37 @@
+@import '../../../styles/constants.scss';
+
+.orderBook {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.orderBookTable {
+  margin-bottom: 0;
+
+  tbody td {
+    border-color:  $c-base-light!important;
+    border-width: 1px!important;
+    text-align: center;
+  }
+
+  th {
+    border-bottom: 1px solid $c-base-light!important;
+    text-align: center;
+  }
+
+  tbody tr {
+    cursor: pointer!important;
+
+    &:hover {
+      background-color: $c-base;
+    }
+
+    td:first-child {
+      color: $c-success;
+    }
+
+    td:last-child {
+      color: $c-danger;
+    }
+  }
+}

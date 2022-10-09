@@ -5,6 +5,7 @@
 
 import { ReactElement } from 'react';
 import { DashboardCard } from '../DashboardCard';
+import { Details } from '../../common';
 
 /**
  * Order management panel.
@@ -14,7 +15,7 @@ import { DashboardCard } from '../DashboardCard';
 export const OrderManagementPanel = (): ReactElement => {
     return (
         <DashboardCard>
-            OrderManagementPanel
+            <Details title={<h4>Manage orders</h4>}></Details>
         </DashboardCard>
     );
 };

@@ -17,4 +17,5 @@ export enum Currency {
  * @param currency Currency.
  * @returns Path to currency image.
  */
-export const getCurrencyImage = (currency: Currency) => `${process.env.PUBLIC_URL}currencies/${currency}-icon.svg`;
+export const getCurrencyImage = (currency: Currency): string =>
+    `${process.env.PUBLIC_URL}currencies/${currency}-icon.svg`;

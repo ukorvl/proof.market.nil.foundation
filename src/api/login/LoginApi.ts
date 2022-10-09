@@ -14,7 +14,7 @@ const httpFetcher = createBearerHttpClient();
  * @param loginData - Login data.
  * @returns .
  */
-export const login = (loginData: LoginData) =>
+export const login = (loginData: LoginData): Promise<LoginDto> =>
     httpFetcher.post<LoginDto, LoginData>(
         `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}/_open/auth`,
         loginData,

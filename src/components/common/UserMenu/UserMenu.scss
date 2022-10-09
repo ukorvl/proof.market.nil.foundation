@@ -12,5 +12,9 @@
     border: none;
     color: $c-secondary!important;
     font-size: 20px;
+
+    &:focus {
+      outline: 1.5px solid $c-secondary!important;
+    }
   }
 }

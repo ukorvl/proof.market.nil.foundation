@@ -3,45 +3,52 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Suspense } from 'react';
+import { ReactElement, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Layout, ErrorBoundary } from '@nilfoundation/react-components';
-import { Header, Footer, Fallback, ProtectedRoute } from './components';
+import {
+    Layout,
+    ErrorBoundary,
+    NotificationProvider,
+    Spinner,
+} from '@nilfoundation/react-components';
+import { Header, Footer, ProtectedRoute } from './components';
 import { routes, loginRoute } from './routing';
 
 /**
  * @returns App.
  */
-function App() {
+function App(): ReactElement {
     return (
         <ErrorBoundary>
-            <BrowserRouter>
-                <Layout
-                    header={<Header />}
-                    footer={<Footer />}
-                    stickyHeader
-                >
-                    <Suspense fallback={<Fallback />}>
-                        <Routes>
-                            <Route
-                                path={loginRoute.path}
-                                element={<loginRoute.Component />}
-                            />
-                            {routes.map(({ path, Component }) => (
+            <NotificationProvider>
+                <BrowserRouter>
+                    <Layout
+                        header={<Header />}
+                        footer={<Footer />}
+                        stickyHeader
+                    >
+                        <Suspense fallback={<Spinner grow />}>
+                            <Routes>
                                 <Route
-                                    key={path}
-                                    path={path}
-                                    element={
-                                        <ProtectedRoute>
-                                            <Component />
-                                        </ProtectedRoute>
-                                    }
+                                    path={loginRoute.path}
+                                    element={<loginRoute.Component />}
                                 />
-                            ))}
-                        </Routes>
-                    </Suspense>
-                </Layout>
-            </BrowserRouter>
+                                {routes.map(({ path, Component }) => (
+                                    <Route
+                                        key={path}
+                                        path={path}
+                                        element={
+                                            <ProtectedRoute>
+                                                <Component />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                ))}
+                            </Routes>
+                        </Suspense>
+                    </Layout>
+                </BrowserRouter>
+            </NotificationProvider>
         </ErrorBoundary>
     );
 }

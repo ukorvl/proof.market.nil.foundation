@@ -3,13 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useMemo } from 'react';
 import { createChart, ColorType, LineData } from 'lightweight-charts';
 
 /**
  * Default charts theme.
  */
-export const chartsTheme = {
+const chartsTheme = {
     background: '#151515',
     lineColor: '#2677f0',
     fontFamily: 'Roboto',
@@ -27,8 +27,12 @@ export const chartsTheme = {
 export const useCharts = <T extends HTMLElement>(
     ref: RefObject<T>,
     data?: LineData[],
-    theme: Partial<typeof chartsTheme> = chartsTheme,
-) => {
+    theme?: Partial<typeof chartsTheme>,
+): void => {
+    const mergedTheme = useMemo(() => {
+        return theme ? { ...chartsTheme, ...theme } : chartsTheme;
+    }, [theme]);
+
     useEffect(() => {
         if (!ref.current) {
             return;
@@ -40,20 +44,20 @@ export const useCharts = <T extends HTMLElement>(
 
         const chart = createChart(ref.current, {
             layout: {
-                background: { type: ColorType.Solid, color: theme.background },
-                fontFamily: theme.fontFamily,
-                textColor: theme.layoutTextColor,
+                background: { type: ColorType.Solid, color: mergedTheme.background },
+                fontFamily: mergedTheme.fontFamily,
+                textColor: mergedTheme.layoutTextColor,
             },
             width: ref.current.clientWidth,
             height: ref.current.clientHeight,
             grid: {
-                vertLines: { color: theme.gridLineColor },
-                horzLines: { color: theme.gridLineColor },
+                vertLines: { color: mergedTheme.gridLineColor },
+                horzLines: { color: mergedTheme.gridLineColor },
             },
         });
         chart.timeScale().fitContent();
 
-        const lineSeries = chart.addLineSeries({ color: theme.lineColor });
+        const lineSeries = chart.addLineSeries({ color: mergedTheme.lineColor });
         lineSeries.setData(data);
 
         const handleResize = () => {
@@ -67,5 +71,5 @@ export const useCharts = <T extends HTMLElement>(
 
             chart.remove();
         };
-    }, [ref, data, theme]);
+    }, [ref, data, mergedTheme]);
 };
