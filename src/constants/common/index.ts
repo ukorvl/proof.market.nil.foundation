@@ -5,3 +5,4 @@
 
 export * from './navigationLinks';
 export * from './socialLinks';
+export * from './jsonViewerTheme';

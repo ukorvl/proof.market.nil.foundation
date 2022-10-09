@@ -5,8 +5,10 @@
 
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
+import ReactJson from 'react-json-view';
 import { DashboardCard } from '../DashboardCard';
 import { selectCurrentCircuit } from '../../../redux';
+import { jsonViewerTheme } from '../../../constants';
 
 /**
  * Currencies list.
@@ -19,6 +21,13 @@ export const CircuitDetailedInfo = (): ReactElement => {
     return (
         <DashboardCard>
             {currentSelectedCircuit?.id}
+            <ReactJson
+                src={{}}
+                collapsed={1}
+                name={null}
+                displayDataTypes={false}
+                theme={jsonViewerTheme}
+            />
         </DashboardCard>
     );
 };
