@@ -28,7 +28,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps): ReactElement 
     const dispatch = useDispatch();
     const user = useSelector((s: RootStateType) => s.userState.user);
     const { getUser } = useGetUserFromJwt();
-    useCheckJwt();
+    // useCheckJwt();
 
     const isAuthentificated = () => {
         if (user) {

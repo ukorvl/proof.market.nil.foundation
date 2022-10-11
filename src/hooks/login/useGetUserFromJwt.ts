@@ -19,18 +19,14 @@ type GetUserFromJwtReturnType = {
  */
 export const useGetUserFromJwt = (): GetUserFromJwtReturnType => {
     const getUser = (jwt: string) => {
-        const jwtParts = jwt.split('.');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const decoded: any = jwt_decode(jwt);
 
-        const t = jwt_decode(jwt);
-        console.log(t);
-
-        if (!jwtParts[1]) {
-            throw 'invalid token!';
+        if (!decoded || !decoded.preferred_username) {
+            return null;
         }
 
-        const payload = JSON.parse(jwt_decode(jwtParts[1]));
-
-        return payload.preferred_username ?? null;
+        return decoded.preferred_username;
     };
 
     return { getUser };
