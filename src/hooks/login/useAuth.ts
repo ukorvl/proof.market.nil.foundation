@@ -49,7 +49,8 @@ export const useAuth = (): UseAuthReturnType => {
             navigate(Path.root, { replace: true });
 
             notificationActions?.create({
-                title: `Successfully login as ${user}`,
+                title: 'Login success',
+                message: `Successfully login as ${user}`,
                 variant: Variant.success,
             });
         },

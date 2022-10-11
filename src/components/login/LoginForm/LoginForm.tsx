@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import {
     Jumbotron,
     Image,
@@ -15,8 +15,8 @@ import {
     Variant,
     Form,
     Spinner,
-    Transition,
 } from '@nilfoundation/react-components';
+import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
 import { LoginData } from '../../../models';
 import { login } from '../../../api';
@@ -34,6 +34,7 @@ type PwdInputType = 'password' | 'text';
  * @returns React component.
  */
 export const LoginForm = (): ReactElement => {
+    const nodeRef = useRef(null);
     const { processLogin } = useAuth();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
@@ -110,14 +111,19 @@ export const LoginForm = (): ReactElement => {
                     Login
                     {isSubmitting && <Spinner />}
                 </Button>
-                {errorMessage && (
-                    <Transition
-                        name="fade"
-                        in={!!errorMessage}
+                <CSSTransition
+                    classNames="fade"
+                    timeout={300}
+                    in={!!errorMessage}
+                    nodeRef={nodeRef}
+                >
+                    <div
+                        ref={nodeRef}
+                        className="errorMessage"
                     >
-                        <div className="errorMessage">{errorMessage}</div>
-                    </Transition>
-                )}
+                        {errorMessage}
+                    </div>
+                </CSSTransition>
             </Form>
         </Jumbotron>
     );
