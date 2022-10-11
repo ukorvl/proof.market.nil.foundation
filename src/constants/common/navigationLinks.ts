@@ -9,6 +9,6 @@ export const navigationLinks = [
     { title: 'Projects', link: 'https://nil.foundation/#projects' },
     { title: 'Partners', link: 'https://nil.foundation/#partners' },
     { title: 'Teams', link: 'https://nil.foundation/#teams' },
-    { title: 'Careers', link: 'https://nil.foundation/careers' },
+    { title: 'Careers', link: 'https://nil.freshteam.com/jobs' },
     { title: 'Contact', link: 'https://nil.foundation/#contact' },
 ];

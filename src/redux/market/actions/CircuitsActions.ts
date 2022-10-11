@@ -24,4 +24,4 @@ export const UpdateIsLoadingCircuits = createAction<boolean>('@circuits/UPDATE_I
 /**
  * Update circuits error state.
  */
-export const UpdateCircuitsError = createAction<Error>('@circuits/UPDATE_ERROR');
+export const UpdateCircuitsError = createAction<true>('@circuits/UPDATE_ERROR');

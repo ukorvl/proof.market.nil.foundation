@@ -1,15 +1,12 @@
-
 /**
  * @file React component.
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
 import { ReactElement } from 'react';
-import {
-    Container,
-    Row,
-    Col,
-} from '@nilfoundation/react-components';
+import { Container, Row, Col, Button, Variant, Size } from '@nilfoundation/react-components';
+import { Link } from 'react-router-dom';
+import { Path } from '../routing';
 
 /**
  * 404 view.
@@ -17,10 +14,25 @@ import {
  * @returns React component.
  */
 const Page404 = (): ReactElement => (
-    <Container as="main" fluid>
+    <Container
+        as="main"
+        fluid
+    >
         <Row>
-            <Col xs={12} className="text-center">
+            <Col
+                xs={12}
+                className="text-center"
+            >
                 This page does not exist.
+                <p aria-hidden={true} />
+                <Link to={Path.root}>
+                    <Button
+                        variant={Variant.primary}
+                        size={Size.lg}
+                    >
+                        Back to main
+                    </Button>
+                </Link>
             </Col>
         </Row>
     </Container>

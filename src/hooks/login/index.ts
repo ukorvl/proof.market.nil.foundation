@@ -4,3 +4,5 @@
  */
 
 export * from './useGetUserFromJwt';
+export * from './useCheckJwt';
+export * from './useAuth';

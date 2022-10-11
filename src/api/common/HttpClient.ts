@@ -47,7 +47,7 @@ export class HttpClient {
      * @param config - Config.
      * @memberof HttpClient
      */
-    public async post<TResponse, TRequest>(
+    public async post<TResponse, TRequest = undefined>(
         url: string,
         data?: TRequest,
         config?: AxiosRequestConfig,
@@ -64,7 +64,7 @@ export class HttpClient {
      * @param config - Config.
      * @memberof HttpClient
      */
-    public async put<TResponse, TRequest>(
+    public async put<TResponse, TRequest = undefined>(
         url: string,
         payload?: TRequest,
         config?: AxiosRequestConfig,

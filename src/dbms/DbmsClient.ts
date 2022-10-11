@@ -8,11 +8,7 @@ import { Route } from '@nilfoundation/dbmsjs/build/route';
 import { memoize } from 'lodash';
 import { getItemFromLocalStorage } from '../packages/LocalStorage';
 
-const token = getItemFromLocalStorage<string>('jwt');
-
-if (!token) {
-    throw new Error('Unauthorized');
-}
+const token = getItemFromLocalStorage<string>('jwt') || '';
 
 const { REACT_APP_BASE_API_URL, REACT_APP_DBMS_DEFAULT_DATABASE } = process.env;
 

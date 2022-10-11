@@ -7,6 +7,7 @@ import { createBearerHttpClient } from '../common';
 import { LoginData, LoginDto } from '../../models';
 
 const httpFetcher = createBearerHttpClient();
+const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
 
 /**
  * Login.
@@ -15,7 +16,19 @@ const httpFetcher = createBearerHttpClient();
  * @returns .
  */
 export const login = (loginData: LoginData): Promise<LoginDto> =>
-    httpFetcher.post<LoginDto, LoginData>(
-        `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}/_open/auth`,
-        loginData,
-    );
+    httpFetcher.post<LoginDto, LoginData>(`${databaseUrl}/_open/auth`, loginData);
+
+/**
+ * Check jtw tocken.
+ *
+ * @returns .
+ */
+export const chekJwt = (): Promise<void> => httpFetcher.get(`${databaseUrl}/_api/version`);
+
+/**
+ * Renew jtw tocken.
+ *
+ * @returns .
+ */
+export const renewJwt = (): Promise<LoginDto> =>
+    httpFetcher.post<LoginDto>(`${databaseUrl}/_open/auth/renew`);

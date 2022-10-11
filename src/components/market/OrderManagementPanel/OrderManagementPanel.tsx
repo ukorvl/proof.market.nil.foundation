@@ -15,7 +15,7 @@ import { Details } from '../../common';
 export const OrderManagementPanel = (): ReactElement => {
     return (
         <DashboardCard>
-            <Details title={<h4>Manage orders</h4>}></Details>
+            <Details title={<h4>Manage orders</h4>}>OMP</Details>
         </DashboardCard>
     );
 };

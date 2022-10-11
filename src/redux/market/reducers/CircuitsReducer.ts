@@ -19,7 +19,7 @@ export type CircuitsReducerState = {
     circuits: Circuit[];
     selectedid?: string;
     isLoading: boolean;
-    error?: Error;
+    error?: boolean;
 };
 
 /**
@@ -29,7 +29,7 @@ const initialState: CircuitsReducerState = {
     circuits: [],
     selectedid: undefined,
     isLoading: false,
-    error: undefined,
+    error: false,
 };
 
 /**

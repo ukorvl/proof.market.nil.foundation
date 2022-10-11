@@ -3,6 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import jwt_decode from 'jwt-decode';
+
 /**
  * Return type.
  */
@@ -19,15 +21,14 @@ export const useGetUserFromJwt = (): GetUserFromJwtReturnType => {
     const getUser = (jwt: string) => {
         const jwtParts = jwt.split('.');
 
+        const t = jwt_decode(jwt);
+        console.log(t);
+
         if (!jwtParts[1]) {
             throw 'invalid token!';
         }
 
-        if (!window.atob) {
-            throw new Error('base64 support missing in browser');
-        }
-
-        const payload = JSON.parse(atob(jwtParts[1]));
+        const payload = JSON.parse(jwt_decode(jwtParts[1]));
 
         return payload.preferred_username ?? null;
     };
