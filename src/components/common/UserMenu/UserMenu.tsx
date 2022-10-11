@@ -5,10 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Dropdown, Icon, Variant } from '@nilfoundation/react-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootStateType } from '../../../redux';
-import { UpdateUser } from '../../../redux/login/actions';
-import { removeItemFromLocalStorage } from '../../../packages/LocalStorage';
+import { useAuth } from '../../../hooks';
 import './UserMenu.scss';
 
 /**
@@ -17,12 +14,7 @@ import './UserMenu.scss';
  * @returns React component.
  */
 export const UserMenu = (): ReactElement => {
-    const dispatch = useDispatch();
-    const user = useSelector((s: RootStateType) => s.userState.user);
-    const logout = () => {
-        dispatch(UpdateUser(null));
-        removeItemFromLocalStorage('jwt');
-    };
+    const { user, processLogout } = useAuth();
 
     return (
         <Dropdown className="userMenu">
@@ -31,7 +23,7 @@ export const UserMenu = (): ReactElement => {
                 {user}
             </Dropdown.Button>
             <Dropdown.Menu>
-                <Dropdown.Item onSelect={logout}>Logout</Dropdown.Item>
+                <Dropdown.Item onSelect={processLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

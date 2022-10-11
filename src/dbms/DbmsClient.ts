@@ -21,7 +21,7 @@ export const getDB = memoize(
         new Database({
             url: REACT_APP_BASE_API_URL,
             databaseName: db,
-            auth: { token },
+            auth: { username: 'root', password: '' },
         }),
 );
 

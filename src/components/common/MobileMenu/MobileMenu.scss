@@ -1,12 +1,13 @@
 @import '../../../styles/mixins.scss';
+@import '../../../styles//constants.scss';
 
 .mobileMenu {
   margin: 16px 0;
 
   .btn {
-    background-color: var(--c-primary-dark);
-    color: var(--c-secondary);
-    border-color: var(--c-primary-light);
+    background-color: $c-base;
+    color: $c-secondary;
+    border-color: $c-secondary-darker;
   }
 
   @include responsive(lg) {

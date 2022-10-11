@@ -3,16 +3,23 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import { useCallback, useMemo } from 'react';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import jwt_decode from 'jwt-decode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setItemIntoLocalStorage } from '../../packages/LocalStorage';
-import { UpdateUser } from '../../redux';
+import { removeItemFromLocalStorage, setItemIntoLocalStorage } from '../../packages/LocalStorage';
+import { RootStateType, UpdateUser } from '../../redux';
 import { Path } from '../../routing';
+import { getUserFromJwt } from '../../utils';
 
+/**
+ * Hook return type.
+ */
 type UseAuthReturnType = {
+    user: string | null;
+    isAuthentificated: boolean;
     processLogin: (jwt: string) => void;
+    processLogout: () => void;
 };
 
 /**
@@ -24,39 +31,43 @@ export const useAuth = (): UseAuthReturnType => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const processLogin = (jwt: string) => {
-        setItemIntoLocalStorage('jwt', jwt);
+    const user = useSelector((s: RootStateType) => s.userState.user);
+    const isAuthentificated = useMemo(() => {
+        return !!user;
+    }, [user]);
 
-        const user = getUserFromJwt(jwt);
-        user && dispatch(UpdateUser(user));
+    /**
+     * Login.
+     */
+    const processLogin = useCallback(
+        (jwt: string) => {
+            setItemIntoLocalStorage('jwt', jwt);
 
-        navigate(Path.root, { replace: true });
+            const user = getUserFromJwt(jwt);
+            user && dispatch(UpdateUser(user));
 
-        notificationActions?.create({
-            title: `Successfully login as ${user}`,
-            variant: Variant.success,
-        });
-    };
+            navigate(Path.root, { replace: true });
+
+            notificationActions?.create({
+                title: `Successfully login as ${user}`,
+                variant: Variant.success,
+            });
+        },
+        [dispatch, navigate],
+    );
+
+    /**
+     * Logout.
+     */
+    const processLogout = useCallback(() => {
+        dispatch(UpdateUser(null));
+        removeItemFromLocalStorage('jwt');
+    }, [dispatch]);
 
     return {
+        user,
+        isAuthentificated,
         processLogin,
+        processLogout,
     };
-};
-
-/**
- * Parse jwt to get username.
- *
- * @param jwt - Jwt.
- * @returns Username or null.
- */
-const getUserFromJwt = (jwt: string) => {
-    const jwtParts = jwt.split('.');
-
-    if (!jwtParts[1]) {
-        throw 'invalid token!';
-    }
-
-    const payload = JSON.parse(jwt_decode(jwtParts[1]));
-
-    return payload.preferred_username ?? null;
 };

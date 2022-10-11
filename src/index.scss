@@ -1,12 +1,21 @@
-@import './styles/index';
+@import './styles/constants.scss';
 
 main {
   padding: 20px 0;
 }
 
-.currencySelect {
-  & > ul > li > a {
-    padding: 10px 20px;
+.form-control,
+.input-group-addon,
+.form-control[readonly],
+.input-group-btn .btn {
+  background-color: $c-base!important;
+}
+
+.input-group-btn .btn {
+  color: $c-secondary;
+
+  &:hover {
+    background-color: $c-base-lighter!important;
   }
 }
 

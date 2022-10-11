@@ -7,7 +7,7 @@ import { Circuit } from '../../models';
 import { getApiRouteForCurrentDB } from '../../dbms';
 
 /**
- * Login.
+ * Get circuits.
  *
  * @returns .
  */
