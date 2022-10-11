@@ -1,14 +1,14 @@
 @import '../../../styles/constants.scss';
 
 .customBreadcumbs {
-  padding: 0;
+  padding: 0!important;
   margin-top: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 12px!important;
   display: inline-block;
 
   > li {
     height: 64px;
-    display: inline-flex;
+    display: inline-flex!important;
     align-items: center;
   }
 
