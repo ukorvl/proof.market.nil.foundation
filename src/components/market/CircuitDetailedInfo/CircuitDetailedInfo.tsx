@@ -22,13 +22,17 @@ export const CircuitDetailedInfo = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Detailed {currentSelectedCircuit?.id} info</h4>}>
-                <ReactJson
-                    src={{}}
-                    collapsed={1}
-                    name={null}
-                    displayDataTypes={false}
-                    theme={jsonViewerTheme}
-                />
+                {currentSelectedCircuit ? (
+                    <ReactJson
+                        src={currentSelectedCircuit}
+                        collapsed={1}
+                        name={null}
+                        displayDataTypes={false}
+                        theme={jsonViewerTheme}
+                    />
+                ) : (
+                    <div>Nothing is selected.</div>
+                )}
             </Details>
         </DashboardCard>
     );

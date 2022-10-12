@@ -7,6 +7,8 @@ import { AxiosRequestConfig } from 'axios';
 import { HttpClient } from './HttpClient';
 import { getItemFromLocalStorage } from '../../packages/LocalStorage';
 
+const { REACT_APP_BASE_API_URL } = process.env;
+
 /**
  * Creates HTTP client with authorization.
  *
@@ -17,9 +19,7 @@ import { getItemFromLocalStorage } from '../../packages/LocalStorage';
 export const createBearerHttpClient = (baseUrl?: string, withCredentials?: boolean): HttpClient =>
     new HttpClient(
         {
-            baseURL:
-                baseUrl ??
-                `${process.env.REACT_APP_BASE_API_URL}${process.env.REACT_APP_BASE_API_PORT}`,
+            baseURL: baseUrl ? `${REACT_APP_BASE_API_URL}/${baseUrl}` : `${REACT_APP_BASE_API_URL}`,
             withCredentials,
         },
         client => client.interceptors.request.use(injectJwtToken),

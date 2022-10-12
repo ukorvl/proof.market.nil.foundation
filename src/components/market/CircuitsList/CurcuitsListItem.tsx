@@ -24,7 +24,7 @@ type CurcuitsListItemProps = {
  * @returns React component.
  */
 export const CurcuitsListItem = ({
-    circuit: { id, name },
+    circuit: { id, name, describe },
 }: CurcuitsListItemProps): ReactElement => {
     const dispatch = useDispatch();
     const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
@@ -47,7 +47,8 @@ export const CurcuitsListItem = ({
                     />
                 </Media.Item>
                 <Media.Body>
-                    <Media.Heading>{id}</Media.Heading>
+                    <Media.Heading>{`${name}`}</Media.Heading>
+                    {describe}
                 </Media.Body>
             </Media>
         </ListGroup.Item>

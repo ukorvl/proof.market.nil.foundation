@@ -5,9 +5,9 @@
 
 import { call, put, delay, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
+import { getCircuits, getCircui, cursor } from 'src/api';
+import { Circuit } from 'src/models';
 import { UpdateCircuitsError, UpdateCircuitsList, UpdateIsLoadingCircuits } from '../actions';
-import { getCircuits } from '../../../api';
-import { Circuit } from '../../../models';
 import { RootStateType } from '../../RootStateType';
 import { UpdateUser } from '../../login';
 
@@ -21,6 +21,7 @@ const selectUser = (s: RootStateType) => s.userState.user;
  */
 export function* CircuitsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateUser, GetCircuitsSaga);
+    yield takeLatest(UpdateUser, Gea);
 }
 
 /**
@@ -38,13 +39,34 @@ function* GetCircuitsSaga(): SagaIterator<void> {
 
     try {
         yield put(UpdateIsLoadingCircuits(true));
-        const circuitsList: Circuit[] | undefined = yield call(getCircuits);
+        const circuitsList: Circuit[] | undefined = yield call(getCircui);
+        const cursorResult = yield call(cursor);
 
         if (circuitsList !== undefined) {
-            yield put(UpdateCircuitsList(circuitsList));
+            yield put(UpdateCircuitsList(cursorResult));
         }
 
         yield put(UpdateIsLoadingCircuits(false));
+    } catch (e) {
+        yield put(UpdateIsLoadingCircuits(false));
+        yield put(UpdateCircuitsError(true));
+    }
+
+    yield delay(Number(revalidateCurcuitsInterval));
+}
+
+function* Gea(): SagaIterator<void> {
+    console.log('gea');
+    const user: ReturnType<typeof selectUser> = yield select(selectUser);
+
+    if (!user) {
+        return;
+    }
+
+    try {
+        const c = yield call(getCircui);
+        const cursorResult = yield call(cursor);
+        console.log(cursorResult);
     } catch (e) {
         yield put(UpdateIsLoadingCircuits(false));
         yield put(UpdateCircuitsError(true));

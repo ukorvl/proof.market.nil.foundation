@@ -5,10 +5,10 @@
 
 import { useCallback, useMemo } from 'react';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
-import { RootStateType, UpdateUser } from 'src/redux';
+import { UpdateUser, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
 
@@ -31,7 +31,7 @@ export const useAuth = (): UseAuthReturnType => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = useSelector((s: RootStateType) => s.userState.user);
+    const user = useAppSelector(s => s.userState.user);
     const isAuthentificated = useMemo(() => {
         return !!user;
     }, [user]);

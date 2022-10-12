@@ -5,12 +5,10 @@
 
 import { ReactElement } from 'react';
 import { ListGroup, Spinner } from '@nilfoundation/react-components';
-import { useSelector } from 'react-redux';
+import { selectCircuits, useAppSelector } from 'src/redux';
 import { CurcuitsListItem } from './CurcuitsListItem';
 import { DashboardCard } from '../DashboardCard';
 import { Details } from '../../common';
-import { selectCircuits } from '../../../redux/market/selectors';
-import { RootStateType } from '../../../redux';
 import './CurcuitsList.scss';
 
 /**
@@ -19,8 +17,8 @@ import './CurcuitsList.scss';
  * @returns React component.
  */
 export const CurcuitsList = (): ReactElement => {
-    const circuitsList = useSelector(selectCircuits);
-    const loadingCircuits = useSelector((s: RootStateType) => s.circuitsState.isLoading);
+    const circuitsList = useAppSelector(selectCircuits);
+    const loadingCircuits = useAppSelector(s => s.circuitsState.isLoading);
 
     return (
         <DashboardCard>

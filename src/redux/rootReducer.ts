@@ -15,8 +15,3 @@ export const RootReducer = combineReducers<RootStateType>({
     circuitsState: CircuitsReducer,
     userState: UserReducer,
 });
-
-/**
- * Root state.
- */
-export type RootState = ReturnType<typeof RootReducer>;

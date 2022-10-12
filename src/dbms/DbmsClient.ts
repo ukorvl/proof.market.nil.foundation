@@ -21,7 +21,7 @@ export const getDB = memoize(
         new Database({
             url: REACT_APP_BASE_API_URL,
             databaseName: db,
-            auth: { username: 'root', password: '' },
+            auth: { token },
         }),
 );
 
@@ -34,5 +34,4 @@ export const getRouteForDB = memoize(
  *
  * @returns Route for current db.
  */
-export const getApiRouteForCurrentDB = (): Route =>
-    getRouteForDB(REACT_APP_DBMS_DEFAULT_DATABASE, '_api');
+export const getApiRouteForCurrentDB = (): Route => getRouteForDB('_system', '_api');
