@@ -5,8 +5,8 @@
 
 import { ReactElement, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Path } from '../../../routing';
-import { useAuth } from '../../../hooks';
+import { Path } from 'src/routing';
+import { useAuth } from 'src/hooks';
 
 /**
  * Props.

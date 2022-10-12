@@ -4,7 +4,7 @@
  */
 
 import { combineReducers } from 'redux';
-import { UserReducer } from './login/reducers';
+import { UserReducer } from './login';
 import { CircuitsReducer } from './market';
 import { RootStateType } from './RootStateType';
 

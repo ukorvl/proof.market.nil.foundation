@@ -7,10 +7,10 @@ import { useCallback, useMemo } from 'react';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { removeItemFromLocalStorage, setItemIntoLocalStorage } from '../../packages/LocalStorage';
-import { RootStateType, UpdateUser } from '../../redux';
-import { Path } from '../../routing';
-import { getUserFromJwt } from '../../utils';
+import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
+import { RootStateType, UpdateUser } from 'src/redux';
+import { Path } from 'src/routing';
+import { getUserFromJwt } from 'src/utils';
 
 /**
  * Hook return type.

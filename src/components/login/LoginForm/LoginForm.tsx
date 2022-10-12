@@ -18,9 +18,9 @@ import {
 } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
-import { LoginData } from '../../../models';
-import { login } from '../../../api';
-import { useAuth } from '../../../hooks';
+import { LoginData } from 'src/models';
+import { login } from 'src/api';
+import { useAuth } from 'src/hooks';
 import './LoginForm.scss';
 
 /**
