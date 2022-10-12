@@ -28,6 +28,7 @@ export const chekJwt = (): Promise<void> => httpFetcher.get(`${databaseUrl}/_api
 /**
  * Renew jtw tocken.
  *
+ * @deprecated
  * @returns .
  */
 export const renewJwt = (): Promise<LoginDto> =>

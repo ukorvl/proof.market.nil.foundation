@@ -36,3 +36,29 @@ export const cursor = (): Promise<void> =>
             batchSize: 10,
         })
         .then((x: any) => x.result);
+
+export const getOrders = () =>
+    httpFetcher
+        .post('cursor', {
+            query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
+            bindVars: {
+                '@relation': 'order',
+                offset: 0,
+                count: 10,
+            },
+            batchSize: 10,
+        })
+        .then((x: any) => x.result);
+
+export const getProposals = () =>
+    httpFetcher
+        .post('cursor', {
+            query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
+            bindVars: {
+                '@relation': 'proposal',
+                offset: 0,
+                count: 10,
+            },
+            batchSize: 10,
+        })
+        .then((x: any) => x.result);

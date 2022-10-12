@@ -5,7 +5,7 @@
 
 import { combineReducers } from 'redux';
 import { UserReducer } from './login';
-import { CircuitsReducer } from './market';
+import { CircuitsReducer, ProposalsReducer, OrdersReducer } from './market';
 import { RootStateType } from './RootStateType';
 
 /**
@@ -13,5 +13,7 @@ import { RootStateType } from './RootStateType';
  */
 export const RootReducer = combineReducers<RootStateType>({
     circuitsState: CircuitsReducer,
+    proposalsState: ProposalsReducer,
+    ordersState: OrdersReducer,
     userState: UserReducer,
 });

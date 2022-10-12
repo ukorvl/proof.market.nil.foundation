@@ -5,3 +5,4 @@
 
 export * from './useCharts';
 export * from './useGetOrderBookData';
+export * from './useGetCircuitDashboardData';

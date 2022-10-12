@@ -4,3 +4,5 @@
  */
 
 export * from './CircuitsReducer';
+export * from './ProposalsReducer';
+export * from './OrdersReducer';

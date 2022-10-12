@@ -4,21 +4,8 @@
  */
 
 import { ReactElement, useRef } from 'react';
-import { useCharts } from '../../../hooks';
+import { useCharts, useGetCircuitDashboardData } from 'src/hooks';
 import { DashboardCard } from '../DashboardCard';
-
-const data = [
-    { time: '2019-04-11', value: 80.01 },
-    { time: '2019-04-12', value: 96.63 },
-    { time: '2019-04-13', value: 76.64 },
-    { time: '2019-04-14', value: 81.89 },
-    { time: '2019-04-15', value: 74.43 },
-    { time: '2019-04-16', value: 80.01 },
-    { time: '2019-04-17', value: 96.63 },
-    { time: '2019-04-18', value: 76.64 },
-    { time: '2019-04-19', value: 81.89 },
-    { time: '2019-04-20', value: 74.43 },
-];
 
 /**
  * Circuit dashboard.
@@ -28,6 +15,7 @@ const data = [
 export const CircuitDashboard = (): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
 
+    const { data } = useGetCircuitDashboardData();
     useCharts(ref, data);
 
     return (
@@ -35,7 +23,7 @@ export const CircuitDashboard = (): ReactElement => {
             <h4>Circuit dashboard</h4>
             <div
                 ref={ref}
-                style={{ height: '400px' }}
+                style={{ height: '500px' }}
             ></div>
         </DashboardCard>
     );

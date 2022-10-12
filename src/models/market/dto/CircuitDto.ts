@@ -6,7 +6,7 @@
 import { Currency } from '../../../enums';
 
 /**
- * Circuit.
+ * Circuit dto.
  */
 export type CircuitDto = {
     /**

@@ -6,10 +6,12 @@
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
+import { Icon } from '@nilfoundation/react-components';
+import { selectCurrentCircuit } from 'src/redux';
+import { jsonViewerTheme } from 'src/constants';
 import { DashboardCard } from '../DashboardCard';
 import { Details } from '../../common';
-import { selectCurrentCircuit } from '../../../redux';
-import { jsonViewerTheme } from '../../../constants';
+import './CircuitDetailedInfo.scss';
 
 /**
  * Currencies list.
@@ -19,9 +21,24 @@ import { jsonViewerTheme } from '../../../constants';
 export const CircuitDetailedInfo = (): ReactElement => {
     const currentSelectedCircuit = useSelector(selectCurrentCircuit);
 
+    const renderTitle = () =>
+        currentSelectedCircuit && (
+            <div className="detailedTitle">
+                <h4>
+                    {`${currentSelectedCircuit.name} (${currentSelectedCircuit.describe})`} info
+                </h4>
+                <a href={currentSelectedCircuit.repository}>
+                    <Icon
+                        iconName="fa-brands fa-github"
+                        srOnlyText="github repository link"
+                    />
+                </a>
+            </div>
+        );
+
     return (
         <DashboardCard>
-            <Details title={<h4>Detailed {currentSelectedCircuit?.id} info</h4>}>
+            <Details title={renderTitle()}>
                 {currentSelectedCircuit ? (
                     <ReactJson
                         src={currentSelectedCircuit}

@@ -22,7 +22,7 @@ export const CurcuitsList = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <Details title={<h4>Curcuits list</h4>}>
+            <Details title={<h4>Curcuit list</h4>}>
                 {loadingCircuits && !circuitsList.length ? (
                     <Spinner grow />
                 ) : (

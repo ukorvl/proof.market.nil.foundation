@@ -4,4 +4,6 @@
  */
 
 export * from './Circuit';
+export * from './Order';
+export * from './Proposal';
 export * from './dto';

@@ -4,12 +4,14 @@
  */
 
 import { UserReducerState } from './login';
-import { CircuitsReducerState } from './market';
+import { CircuitsReducerState, OrdersReducerState, ProposalsReducerState } from './market';
 
 /**
  * Root state type.
  */
 export interface RootStateType {
     circuitsState: CircuitsReducerState;
+    proposalsState: ProposalsReducerState;
+    ordersState: OrdersReducerState;
     userState: UserReducerState;
 }

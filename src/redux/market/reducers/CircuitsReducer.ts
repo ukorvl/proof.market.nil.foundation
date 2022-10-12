@@ -7,7 +7,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { Circuit } from 'src/models';
 import {
     UpdateCircuitsList,
-    UpdateSelectedid,
+    UpdateSelectedCircuitId,
     UpdateIsLoadingCircuits,
     UpdateCircuitsError,
 } from '../actions';
@@ -41,7 +41,7 @@ export const CircuitsReducer = createReducer(initialState, builder =>
             ...state,
             circuits: payload,
         }))
-        .addCase(UpdateSelectedid, (state, { payload }) => ({
+        .addCase(UpdateSelectedCircuitId, (state, { payload }) => ({
             ...state,
             selectedid: payload,
         }))

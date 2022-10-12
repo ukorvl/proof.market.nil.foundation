@@ -6,9 +6,9 @@
 import { ReactElement } from 'react';
 import { Image, ListGroup, Media } from '@nilfoundation/react-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrencyImage } from '../../../enums';
-import { UpdateSelectedid, selectCurrentCircuit } from '../../../redux';
-import { Circuit } from '../../../models';
+import { getCurrencyImage } from 'src/enums';
+import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
+import { Circuit } from 'src/models';
 
 /**
  * Props.
@@ -29,7 +29,7 @@ export const CurcuitsListItem = ({
     const dispatch = useDispatch();
     const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
     const onSelectItem = () => {
-        dispatch(UpdateSelectedid(id));
+        dispatch(UpdateSelectedCircuitId(id));
     };
 
     return (
