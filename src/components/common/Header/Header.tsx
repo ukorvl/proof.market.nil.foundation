@@ -5,9 +5,10 @@
 
 import { ReactElement } from 'react';
 import { Container, Navbar, Nav } from '@nilfoundation/react-components';
+import { Link } from 'react-router-dom';
+import { navigationLinks } from 'src/constants';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../UserMenu';
-import { navigationLinks } from '../../../constants';
 import { Breadcrumbs } from '../BreadCrumbs';
 import './Header.scss';
 
@@ -24,13 +25,10 @@ export const Header = (): ReactElement => (
         >
             <Breadcrumbs />
             <Nav className="navbar-right navbar-nav">
-                {navigationLinks.map(({ title, link }) => (
-                    <Nav.Item
-                        key={title}
-                        href={link}
-                    >
-                        {title}
-                    </Nav.Item>
+                {navigationLinks.map(({ title, path }) => (
+                    <li key={title}>
+                        <Link to={path}>{title}</Link>
+                    </li>
                 ))}
             </Nav>
             <UserMenu />

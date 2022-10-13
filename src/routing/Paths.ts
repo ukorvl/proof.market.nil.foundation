@@ -9,5 +9,6 @@
 export enum Path {
     root = '/',
     any = '*',
-    login = 'login',
+    login = '/login',
+    portfolio = '/portfolio',
 }

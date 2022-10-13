@@ -9,8 +9,7 @@ import ReactJson from 'react-json-view';
 import { Icon, Label, Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
-import { DashboardCard } from '../DashboardCard';
-import { Details } from '../../common';
+import { Details, DashboardCard } from '../../common';
 import './CircuitDetailedInfo.scss';
 
 /**
@@ -38,9 +37,8 @@ export const CircuitDetailedInfo = (): ReactElement => {
                                 GitHub Repository
                             </Label>
                         </p>
-                        <h5>Public assignment:</h5>
                         <ReactJson
-                            src={currentSelectedCircuit.public_assignment}
+                            src={currentSelectedCircuit}
                             collapsed={1}
                             name={null}
                             displayDataTypes={false}

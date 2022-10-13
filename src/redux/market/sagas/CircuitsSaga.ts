@@ -29,7 +29,6 @@ export function* CircuitsSaga(): SagaIterator<void> {
  * @yields
  */
 function* GetCircuitsSaga(): SagaIterator<void> {
-    console.log('here');
     const user: ReturnType<typeof selectUser> = yield select(selectUser);
 
     if (!user) {

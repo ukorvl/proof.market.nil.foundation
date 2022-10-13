@@ -41,15 +41,15 @@ const MarketView = (): ReactElement => (
                     </Col>
                     <Col
                         xs={12}
-                        md={4}
-                    >
-                        <OrderBook />
-                    </Col>
-                    <Col
-                        xs={12}
                         md={8}
                     >
                         <OrderManagementPanel />
+                    </Col>
+                    <Col
+                        xs={12}
+                        md={4}
+                    >
+                        <OrderBook />
                     </Col>
                 </Row>
             </Col>

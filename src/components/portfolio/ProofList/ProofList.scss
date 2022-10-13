@@ -1,0 +1,17 @@
+.react-json-view {
+  word-break: break-all;
+  overflow-wrap:break-word;
+
+  + .react-json-view {
+    margin-top: 20px;
+  }
+
+  .object-content {
+    .variable-value {
+      overflow: auto;
+      width: 100%;
+    }
+  }
+
+
+}

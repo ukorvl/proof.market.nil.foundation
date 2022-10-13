@@ -12,7 +12,7 @@ import './DashboardCard.scss';
  */
 type DashboardCardProps = {
     children: ReactNode;
-}
+};
 
 /**
  * Dashboard card.
@@ -20,10 +20,6 @@ type DashboardCardProps = {
  * @param {DashboardCardProps} props - Props.
  * @returns React component.
  */
-export const DashboardCard = ({children}: DashboardCardProps): ReactElement => {
-    return (
-        <Jumbotron className="dashboardCard">
-            {children}
-        </Jumbotron>
-    );
+export const DashboardCard = ({ children }: DashboardCardProps): ReactElement => {
+    return <Jumbotron className="dashboardCard">{children}</Jumbotron>;
 };

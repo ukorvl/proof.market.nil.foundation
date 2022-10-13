@@ -2,6 +2,7 @@
 
 .circuitDashboard {
   height: 500px;
+  position: relative;
 
   .placeholder {
     background-color: $c-base-darker!important;
@@ -10,5 +11,11 @@
     > .wave {
       background-color: $c-secondary-darker;
     }
+  }
+
+  .chartLegend {
+    position: absolute;
+    top: 12px;
+    left: 12px;
   }
 }

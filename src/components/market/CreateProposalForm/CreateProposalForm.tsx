@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
@@ -20,6 +20,7 @@ import {
 import { ProposalDto } from 'src/models';
 import { AddProposal, useAppSelector } from 'src/redux';
 import { createProposal } from 'src/api/market/ProposalsApi';
+import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**
  * Create proposal form.
@@ -27,6 +28,7 @@ import { createProposal } from 'src/api/market/ProposalsApi';
  * @returns React component.
  */
 export const CreateProposalForm = (): ReactElement => {
+    const { setProcessing } = useContext(OrderManagementPanelContext);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useAppSelector(s => s.userState.user)!;
     const selectedOrderId = useAppSelector(s => s.ordersState.selectedOrderId);
@@ -47,12 +49,15 @@ export const CreateProposalForm = (): ReactElement => {
 
     const onSubmitProposal = handleSubmit(async (data: ProposalDto): Promise<void> => {
         setErrorMessage('');
+        setProcessing(true);
         try {
             const proposal = await createProposal(data);
             console.log(proposal);
             dispatch(AddProposal(proposal));
         } catch (e) {
             setErrorMessage('Create proposal error');
+        } finally {
+            setProcessing(false);
         }
     });
 

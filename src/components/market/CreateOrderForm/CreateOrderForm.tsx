@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useContext, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ReactJson, { InteractionProps } from 'react-json-view';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import { OrderDto } from 'src/models';
 import { AddOrder, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { createOrder } from 'src/api/market/OrdersApi';
+import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**
  * Create order form.
@@ -20,6 +21,7 @@ import { createOrder } from 'src/api/market/OrdersApi';
  * @returns React component.
  */
 export const CreateOrderForm = (): ReactElement => {
+    const { setProcessing } = useContext(OrderManagementPanelContext);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useAppSelector(s => s.userState.user)!;
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
@@ -43,12 +45,15 @@ export const CreateOrderForm = (): ReactElement => {
 
     const onSubmitOrder = handleSubmit(async (data: OrderDto): Promise<void> => {
         setErrorMessage('');
+        setProcessing(true);
         try {
             const order = await createOrder(data);
             console.log(order);
             dispatch(AddOrder(order));
         } catch (e) {
             setErrorMessage('Create order error');
+        } finally {
+            setProcessing(false);
         }
     });
 

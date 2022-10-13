@@ -7,8 +7,7 @@ import { ReactElement } from 'react';
 import { ListGroup, Spinner } from '@nilfoundation/react-components';
 import { selectCircuits, useAppSelector } from 'src/redux';
 import { CurcuitsListItem } from './CurcuitsListItem';
-import { DashboardCard } from '../DashboardCard';
-import { Details } from '../../common';
+import { Details, DashboardCard } from '../../common';
 import './CurcuitsList.scss';
 
 /**

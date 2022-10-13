@@ -1,7 +1,8 @@
 @import '../../../styles/constants.scss';
 
 .loginForm {
-  padding: 24px!important;
+  padding: 16px!important;
+  border: 1px solid $c-base-light;
 
   img {
     border: 1px solid $c-base-light;

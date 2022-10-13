@@ -5,9 +5,8 @@
 
 import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { DashboardCard } from '../DashboardCard';
 import { OrderBookTable } from './OrderBookTable';
-import { Details } from '../../common';
+import { Details, DashboardCard } from '../../common';
 import { useGetOrderBookData } from '../../../hooks';
 import './OrderBook.scss';
 

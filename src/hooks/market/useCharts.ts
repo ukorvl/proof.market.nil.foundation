@@ -3,8 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { RefObject, useEffect, useMemo } from 'react';
+import { RefObject, useEffect, useMemo, useState } from 'react';
 import { createChart, ColorType, LineData } from 'lightweight-charts';
+
+type UseChartsReturnType = {
+    price?: string;
+};
 
 /**
  * Default charts theme.
@@ -15,8 +19,6 @@ const chartsTheme = {
     fontFamily: 'Roboto',
     layoutTextColor: '#d3d3d3',
     gridLineColor: '#3c3c3c',
-    areaTopColor: '#2677f0',
-    areaBottomColor: 'rgba(41, 98, 255, 0.28)',
 };
 
 /**
@@ -25,12 +27,14 @@ const chartsTheme = {
  * @param ref - Ref.
  * @param data - Chart data.
  * @param theme - Theme.
+ * @returns {UseChartsReturnType}.
  */
 export const useCharts = <T extends HTMLElement>(
     ref: RefObject<T>,
     data?: LineData[],
     theme?: Partial<typeof chartsTheme>,
-): void => {
+): UseChartsReturnType => {
+    const [price, setPrice] = useState<string>();
     const mergedTheme = useMemo(() => {
         return theme ? { ...chartsTheme, ...theme } : chartsTheme;
     }, [theme]);
@@ -66,6 +70,13 @@ export const useCharts = <T extends HTMLElement>(
             ref.current && chart.applyOptions({ width: ref.current.clientWidth });
         };
 
+        chart.subscribeCrosshairMove(param => {
+            if (param.time) {
+                const price = param.seriesPrices.get(lineSeries);
+                setPrice(price && price.toString());
+            }
+        });
+
         window.addEventListener('resize', handleResize);
 
         return () => {
@@ -74,4 +85,6 @@ export const useCharts = <T extends HTMLElement>(
             chart.remove();
         };
     }, [ref, data, mergedTheme]);
+
+    return { price };
 };

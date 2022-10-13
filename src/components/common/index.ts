@@ -9,3 +9,4 @@ export * from './Header';
 export * from './MobileMenu';
 export * from './BreadCrumbs';
 export * from './Details';
+export * from './DashboardCard';

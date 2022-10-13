@@ -5,18 +5,18 @@
 
 import { ReactElement, useState } from 'react';
 import { Nav } from '@nilfoundation/react-components';
-import { DashboardCard } from '../DashboardCard';
-import { Details } from '../../common';
+import { DashboardCard, Details } from '../../common';
 import { CreateOrderForm } from '../CreateOrderForm';
 import { CreateProposalForm } from '../CreateProposalForm';
+import { OrderManagementPanelContext } from './OrderManagementPanelContext';
 import './OrderManagementPanel.scss';
 
 /**
  * Tab.
  */
 enum Tab {
-    orders = 'Create order',
-    proposals = 'Create proposal',
+    buy = 'BUY',
+    sell = 'SELL',
 }
 
 /**
@@ -25,13 +25,14 @@ enum Tab {
  * @returns React component.
  */
 export const OrderManagementPanel = (): ReactElement => {
-    const [tab, setTab] = useState<Tab>(Tab.orders);
+    const [tab, setTab] = useState<Tab>(Tab.buy);
+    const [processing, setProcessing] = useState(false);
 
     const tabFactory = () => {
         switch (tab) {
-            case Tab.orders:
+            case Tab.buy:
                 return <CreateOrderForm />;
-            case Tab.proposals:
+            case Tab.sell:
                 return <CreateProposalForm />;
             default:
                 return <></>;
@@ -47,12 +48,15 @@ export const OrderManagementPanel = (): ReactElement => {
                             key={t}
                             onClick={() => setTab(t)}
                             active={t === tab}
+                            disabled={processing}
                         >
                             {t}
                         </Nav.Item>
                     ))}
                 </Nav>
-                <div className="orderManagementPanel">{tabFactory()}</div>
+                <OrderManagementPanelContext.Provider value={{ processing, setProcessing }}>
+                    <div className="orderManagementPanel">{tabFactory()}</div>
+                </OrderManagementPanelContext.Provider>
             </Details>
         </DashboardCard>
     );

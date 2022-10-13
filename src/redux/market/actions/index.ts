@@ -6,3 +6,4 @@
 export * from './CircuitsActions';
 export * from './OrderActions';
 export * from './ProposalActions';
+export * from './ProofActions';

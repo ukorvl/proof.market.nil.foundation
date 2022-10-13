@@ -6,6 +6,7 @@
   margin-top: 12px;
   margin-bottom: 12px!important;
   display: inline-block;
+  margin-right: auto;
 
   @include responsive(sm) {
     > li:last-child {

@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Dropdown } from '@nilfoundation/react-components';
-import { navigationLinks } from '../../../constants';
+import { headerLinks } from '../../../constants';
 import './MobileMenu.scss';
 
 /**
@@ -21,7 +21,7 @@ export const MobileMenu = (): ReactElement => {
                 iconNameDropdownOpend="fa fa-times"
             />
             <Dropdown.Menu>
-                {navigationLinks.map(({ title, link }) => (
+                {headerLinks.map(({ title, link }) => (
                     <Dropdown.Item
                         href={link}
                         key={title}

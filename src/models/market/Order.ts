@@ -4,6 +4,7 @@
  */
 
 import { OrderDto } from './dto';
+import { OrderStatus } from './OrderStatus';
 import { Proposal } from './Proposal';
 
 /**
@@ -11,7 +12,7 @@ import { Proposal } from './Proposal';
  */
 export type Order = {
     id: string;
-    status: string;
+    status: OrderStatus;
     proposal: Proposal | null;
     proof: null;
 } & OrderDto;
