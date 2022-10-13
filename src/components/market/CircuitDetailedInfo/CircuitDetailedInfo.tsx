@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
-import { Icon, Spinner } from '@nilfoundation/react-components';
+import { Icon, Label, Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { DashboardCard } from '../DashboardCard';
@@ -22,34 +22,31 @@ export const CircuitDetailedInfo = (): ReactElement => {
     const currentSelectedCircuit = useSelector(selectCurrentCircuit);
     const loadingCircuits = useAppSelector(s => s.circuitsState.isLoading);
 
-    const renderTitle = () =>
-        currentSelectedCircuit ? (
-            <div className="detailedTitle">
-                <h4>
-                    {`${currentSelectedCircuit.name} (${currentSelectedCircuit.describe})`} info
-                </h4>
-                <a href={currentSelectedCircuit.repository}>
-                    <Icon
-                        iconName="fa-brands fa-github"
-                        srOnlyText="github repository link"
-                    />
-                </a>
-            </div>
-        ) : (
-            <h4>Circuit detailed info</h4>
-        );
-
     return (
         <DashboardCard>
-            <Details title={renderTitle()}>
+            <Details title={<h4>Circuit detailed info</h4>}>
                 {currentSelectedCircuit ? (
-                    <ReactJson
-                        src={currentSelectedCircuit}
-                        collapsed={1}
-                        name={null}
-                        displayDataTypes={false}
-                        theme={jsonViewerTheme}
-                    />
+                    <div>
+                        <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
+                        <h5 className="text-muted">{currentSelectedCircuit.describe}</h5>
+                        <p>
+                            <Label href={currentSelectedCircuit.repository}>
+                                <Icon
+                                    iconName="fa-brands fa-github"
+                                    srOnlyText="github repository link"
+                                />
+                                GitHub Repository
+                            </Label>
+                        </p>
+                        <h5>Public assignment:</h5>
+                        <ReactJson
+                            src={currentSelectedCircuit.public_assignment}
+                            collapsed={1}
+                            name={null}
+                            displayDataTypes={false}
+                            theme={jsonViewerTheme}
+                        />
+                    </div>
                 ) : loadingCircuits ? (
                     <Spinner grow />
                 ) : (

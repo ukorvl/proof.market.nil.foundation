@@ -15,3 +15,8 @@ export const UpdateOrdersList = createAction<Order[]>('@orders/UPDATE_ORDERS_LIS
  * Add order.
  */
 export const AddOrder = createAction<Order>('@orders/ADD_ORDER');
+
+/**
+ * Update selected circuit id.
+ */
+export const UpdateSelectedOrderId = createAction<string>('@orders/UPDATE_SELECTED_ORDER_ID');

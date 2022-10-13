@@ -4,7 +4,8 @@
  */
 
 import { useMemo } from 'react';
-import { useAppSelector } from 'src/redux';
+import { useSelector } from 'react-redux';
+import { selectOrders, selectProposals, useAppSelector } from 'src/redux';
 
 /**
  * Hook return type.
@@ -13,6 +14,16 @@ type UseGetOrderBookDataReturnType = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
     loadingData: boolean;
+};
+
+enum OrderBookItemType {
+    bid = 'bid',
+    ask = 'ask',
+}
+
+type OrderBookItem = {
+    type: OrderBookItemType;
+    time: number;
 };
 
 enum Accessor {
@@ -45,14 +56,17 @@ export type OrderBookTableData = {
  */
 export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
+    const proposals = useSelector(selectProposals);
+    const orders = useSelector(selectOrders);
+
     const columns = useMemo(
         () => [
             {
-                Header: 'Bids',
+                Header: 'Bid',
                 accessor: Accessor.bid,
             },
             {
-                Header: 'Price',
+                Header: 'Ask',
                 accessor: Accessor.price,
             },
             {

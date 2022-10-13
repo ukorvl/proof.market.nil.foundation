@@ -5,7 +5,8 @@
 
 import { useMemo } from 'react';
 import { LineData } from 'lightweight-charts';
-import { useAppSelector } from 'src/redux';
+import { useSelector } from 'react-redux';
+import { useAppSelector, selectProposals } from 'src/redux';
 import { Proposal } from 'src/models';
 
 /**
@@ -23,7 +24,7 @@ type UseGetCircuitDashboardDataReturnType = {
  */
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
-    const proposals = useAppSelector(s => s.proposalsState.proposals);
+    const proposals = useSelector(selectProposals);
     const data = useMemo(
         () => (proposals.length ? proposals.map(mapProposalToLineData) : undefined),
         [proposals],

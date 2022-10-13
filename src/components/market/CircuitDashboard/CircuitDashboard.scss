@@ -1,9 +1,14 @@
 @import '../../../styles/constants.scss';
 
-.placeholder {
-  background-color: $c-base-darker!important;
+.circuitDashboard {
+  height: 500px;
 
-  > .wave {
-    background-color: $c-secondary-darker;
+  .placeholder {
+    background-color: $c-base-darker!important;
+    border-radius: 6px;
+
+    > .wave {
+      background-color: $c-secondary-darker;
+    }
   }
 }

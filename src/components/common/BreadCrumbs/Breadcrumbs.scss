@@ -1,10 +1,17 @@
 @import '../../../styles/constants.scss';
+@import '../../../styles/mixins.scss';
 
 .customBreadcumbs {
   padding: 0!important;
   margin-top: 12px;
   margin-bottom: 12px!important;
   display: inline-block;
+
+  @include responsive(sm) {
+    > li:last-child {
+      display: none!important;
+    }
+  }
 
   > li {
     height: 64px;

@@ -22,6 +22,7 @@ export const OrderBook = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Order book</h4>}>
+                <h5>Orders:</h5>
                 <div className="orderBook">
                     {data ? (
                         <OrderBookTable

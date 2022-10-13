@@ -28,7 +28,7 @@ export type CircuitDto = {
     /**
      * Public assignment.
      */
-    public_assignmen: string;
+    public_assignment: Record<string, string>;
     /**
      * Desc.
      */

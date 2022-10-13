@@ -8,6 +8,7 @@ import { Nav } from '@nilfoundation/react-components';
 import { DashboardCard } from '../DashboardCard';
 import { Details } from '../../common';
 import { CreateOrderForm } from '../CreateOrderForm';
+import { CreateProposalForm } from '../CreateProposalForm';
 import './OrderManagementPanel.scss';
 
 /**
@@ -30,6 +31,8 @@ export const OrderManagementPanel = (): ReactElement => {
         switch (tab) {
             case Tab.orders:
                 return <CreateOrderForm />;
+            case Tab.proposals:
+                return <CreateProposalForm />;
             default:
                 return <></>;
         }

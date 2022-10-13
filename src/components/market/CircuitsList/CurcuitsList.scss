@@ -6,7 +6,7 @@
 
   .list-group-item {
     border: none;
-    border-radius: $val!important;
+    border-radius: 6px!important;
 
     + .list-group-item {
       margin-top: $val;

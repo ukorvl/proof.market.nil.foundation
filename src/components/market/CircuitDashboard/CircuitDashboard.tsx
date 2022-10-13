@@ -25,9 +25,12 @@ export const CircuitDashboard = (): ReactElement => {
             <h4>Circuit dashboard</h4>
             <div
                 ref={ref}
-                style={{ height: '500px' }}
+                className="circuitDashboard"
             >
-                {(loadingData || !data) && <Placeholder animation={PlaceholderAnimation.wave} />}
+                {loadingData && <Placeholder animation={PlaceholderAnimation.wave} />}
+                {data === undefined && !loadingData && (
+                    <h4>Please, select circuit to display data.</h4>
+                )}
             </div>
         </DashboardCard>
     );

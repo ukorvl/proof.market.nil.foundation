@@ -13,7 +13,6 @@ import { OrderDto } from 'src/models';
 import { AddOrder, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { createOrder } from 'src/api/market/OrdersApi';
-import './CreateOrderForm.scss';
 
 /**
  * Create order form.
@@ -37,11 +36,12 @@ export const CreateOrderForm = (): ReactElement => {
         defaultValues: {
             sender: user,
             wait_period: 1111,
-            circuit_id: '1',
+            circuit_id: selectedCircuitId,
+            public_input: {},
         },
     });
 
-    const onSubmitLogin = handleSubmit(async (data: OrderDto): Promise<void> => {
+    const onSubmitOrder = handleSubmit(async (data: OrderDto): Promise<void> => {
         setErrorMessage('');
         try {
             const order = await createOrder(data);
@@ -53,7 +53,7 @@ export const CreateOrderForm = (): ReactElement => {
     });
 
     return (
-        <Form className="createOrderForm">
+        <Form>
             {selectedCircuitId !== undefined ? (
                 <>
                     <Form.Group hasError={!!errors['wait_period']}>
@@ -69,7 +69,6 @@ export const CreateOrderForm = (): ReactElement => {
                         <Form.Label htmlFor="public_input">Public_input</Form.Label>
                         <Controller
                             name="public_input"
-                            defaultValue={{}}
                             control={control}
                             render={({ field: { onChange, value } }) => (
                                 <ReactJson
@@ -86,7 +85,7 @@ export const CreateOrderForm = (): ReactElement => {
                     </Form.Group>
                     <Button
                         variant={Variant.success}
-                        onClick={onSubmitLogin}
+                        onClick={onSubmitOrder}
                         size={Size.lg}
                         disabled={!isValid || isSubmitting}
                     >

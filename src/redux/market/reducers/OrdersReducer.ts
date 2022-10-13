@@ -5,13 +5,14 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Order } from 'src/models';
-import { UpdateOrdersList, AddOrder } from '../actions';
+import { UpdateOrdersList, AddOrder, UpdateSelectedOrderId } from '../actions';
 
 /**
  * State.
  */
 export type OrdersReducerState = {
     orders: Order[];
+    selectedOrderId?: string;
 };
 
 /**
@@ -19,6 +20,7 @@ export type OrdersReducerState = {
  */
 const initialState: OrdersReducerState = {
     orders: [],
+    selectedOrderId: undefined,
 };
 
 /**
@@ -33,5 +35,9 @@ export const OrdersReducer = createReducer(initialState, builder =>
         .addCase(AddOrder, (state, { payload }) => ({
             ...state,
             orders: { ...state.orders, payload },
+        }))
+        .addCase(UpdateSelectedOrderId, (state, { payload }) => ({
+            ...state,
+            selectedOrderId: payload,
         })),
 );

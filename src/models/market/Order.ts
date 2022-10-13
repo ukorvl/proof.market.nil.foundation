@@ -10,7 +10,7 @@ import { Proposal } from './Proposal';
  * Order.
  */
 export type Order = {
-    order_id: string;
+    id: string;
     status: string;
     proposal: Proposal | null;
     proof: null;

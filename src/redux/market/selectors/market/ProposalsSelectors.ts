@@ -16,7 +16,7 @@ export const selectProposals = createSelector(
     selectProposalsList,
     selectOrders,
     (proposals, orders) => {
-        const ordersIds = orders.map(x => x.order_id);
+        const ordersIds = orders.map(x => x.id);
 
         return proposals.filter(x => ordersIds.includes(x.order));
     },
