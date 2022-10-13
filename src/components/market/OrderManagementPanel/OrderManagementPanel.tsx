@@ -42,7 +42,7 @@ export const OrderManagementPanel = (): ReactElement => {
                     {Object.values(Tab).map(t => (
                         <Nav.Item
                             key={t}
-                            //onClick={() => setTab(t)}
+                            onClick={() => setTab(t)}
                             active={t === tab}
                         >
                             {t}

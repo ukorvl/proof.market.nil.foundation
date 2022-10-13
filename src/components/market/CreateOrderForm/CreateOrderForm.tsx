@@ -33,6 +33,7 @@ export const CreateOrderForm = (): ReactElement => {
         formState: { isSubmitting, isValid, errors },
         control,
     } = useForm<OrderDto>({
+        mode: 'onChange',
         defaultValues: {
             sender: user,
             wait_period: 1111,
@@ -53,7 +54,7 @@ export const CreateOrderForm = (): ReactElement => {
 
     return (
         <Form className="createOrderForm">
-            {true ? (
+            {selectedCircuitId !== undefined ? (
                 <>
                     <Form.Group hasError={!!errors['wait_period']}>
                         <Form.Label htmlFor="wait_period">Wait period</Form.Label>
@@ -107,7 +108,7 @@ export const CreateOrderForm = (): ReactElement => {
                     </CSSTransition>
                 </>
             ) : (
-                <h4>Please, select circuit to make orders.</h4>
+                <h4>Please, select circuit to create orders.</h4>
             )}
         </Form>
     );
