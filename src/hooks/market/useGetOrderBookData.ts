@@ -4,6 +4,7 @@
  */
 
 import { useMemo } from 'react';
+import { useAppSelector } from 'src/redux';
 
 /**
  * Hook return type.
@@ -11,6 +12,7 @@ import { useMemo } from 'react';
 type UseGetOrderBookDataReturnType = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
+    loadingData: boolean;
 };
 
 enum Accessor {
@@ -42,6 +44,7 @@ export type OrderBookTableData = {
  * @returns Data to render order book table.
  */
 export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
+    const loadingData = useAppSelector(s => s.circuitsState.isLoading);
     const columns = useMemo(
         () => [
             {
@@ -79,7 +82,7 @@ export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
         [],
     );
 
-    return { columns, data };
+    return { columns, data, loadingData };
 };
 
 // const getMaxAmount = (values: number[]) => Math.max.apply(null, values);

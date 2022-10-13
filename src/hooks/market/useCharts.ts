@@ -15,6 +15,8 @@ const chartsTheme = {
     fontFamily: 'Roboto',
     layoutTextColor: '#d3d3d3',
     gridLineColor: '#3c3c3c',
+    areaTopColor: '#2677f0',
+    areaBottomColor: 'rgba(41, 98, 255, 0.28)',
 };
 
 /**

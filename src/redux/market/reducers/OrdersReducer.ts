@@ -5,7 +5,7 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Order } from 'src/models';
-import { UpdateOrdersList } from '../actions';
+import { UpdateOrdersList, AddOrder } from '../actions';
 
 /**
  * State.
@@ -25,8 +25,13 @@ const initialState: OrdersReducerState = {
  * Reducer of orders.
  */
 export const OrdersReducer = createReducer(initialState, builder =>
-    builder.addCase(UpdateOrdersList, (state, { payload }) => ({
-        ...state,
-        orders: payload,
-    })),
+    builder
+        .addCase(UpdateOrdersList, (state, { payload }) => ({
+            ...state,
+            orders: payload,
+        }))
+        .addCase(AddOrder, (state, { payload }) => ({
+            ...state,
+            orders: { ...state.orders, payload },
+        })),
 );

@@ -1,0 +1,9 @@
+@import '../../../styles/constants.scss';
+
+.placeholder {
+  background-color: $c-base-darker!important;
+
+  > .wave {
+    background-color: $c-secondary-darker;
+  }
+}

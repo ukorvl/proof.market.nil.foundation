@@ -4,8 +4,10 @@
  */
 
 import { ReactElement, useRef } from 'react';
+import { Placeholder, PlaceholderAnimation } from '@nilfoundation/react-components';
 import { useCharts, useGetCircuitDashboardData } from 'src/hooks';
 import { DashboardCard } from '../DashboardCard';
+import './CircuitDashboard.scss';
 
 /**
  * Circuit dashboard.
@@ -15,7 +17,7 @@ import { DashboardCard } from '../DashboardCard';
 export const CircuitDashboard = (): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
 
-    const { data } = useGetCircuitDashboardData();
+    const { data, loadingData } = useGetCircuitDashboardData();
     useCharts(ref, data);
 
     return (
@@ -24,7 +26,9 @@ export const CircuitDashboard = (): ReactElement => {
             <div
                 ref={ref}
                 style={{ height: '500px' }}
-            ></div>
+            >
+                {(loadingData || !data) && <Placeholder animation={PlaceholderAnimation.wave} />}
+            </div>
         </DashboardCard>
     );
 };

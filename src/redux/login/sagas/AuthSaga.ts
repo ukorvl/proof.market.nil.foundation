@@ -42,7 +42,7 @@ function* CheckJwtExpiredSaga(): SagaIterator<void> {
     try {
         yield call(chekJwt);
     } catch (e) {
-        if (e.status === 401) {
+        if (e.response.data.code === 401) {
             yield put(UpdateUser(null));
         }
     }

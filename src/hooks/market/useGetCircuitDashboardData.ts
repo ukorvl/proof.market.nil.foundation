@@ -5,12 +5,15 @@
 
 import { useMemo } from 'react';
 import { LineData } from 'lightweight-charts';
+import { useAppSelector } from 'src/redux';
+import { Proposal } from 'src/models';
 
 /**
  * Hook return type.
  */
 type UseGetCircuitDashboardDataReturnType = {
-    data: LineData[];
+    data?: LineData[];
+    loadingData: boolean;
 };
 
 /**
@@ -19,21 +22,17 @@ type UseGetCircuitDashboardDataReturnType = {
  * @returns Data to draw circuit chart.
  */
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
+    const loadingData = useAppSelector(s => s.circuitsState.isLoading);
+    const proposals = useAppSelector(s => s.proposalsState.proposals);
     const data = useMemo(
-        () => [
-            { time: '2019-04-11', value: 80.01 },
-            { time: '2019-04-12', value: 96.63 },
-            { time: '2019-04-13', value: 76.64 },
-            { time: '2019-04-14', value: 81.89 },
-            { time: '2019-04-15', value: 74.43 },
-            { time: '2019-04-16', value: 80.01 },
-            { time: '2019-04-17', value: 96.63 },
-            { time: '2019-04-18', value: 76.64 },
-            { time: '2019-04-19', value: 81.89 },
-            { time: '2019-04-20', value: 74.43 },
-        ],
-        [],
+        () => (proposals.length ? proposals.map(mapProposalToLineData) : undefined),
+        [proposals],
     );
 
-    return { data };
+    return { data, loadingData };
 };
+
+const mapProposalToLineData = (proposal: Proposal): LineData => ({
+    time: new Date().toDateString(),
+    value: proposal.eval_time,
+});

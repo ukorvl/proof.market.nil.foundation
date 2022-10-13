@@ -17,7 +17,7 @@ import './OrderBook.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
-    const { columns, data } = useGetOrderBookData();
+    const { columns, data, loadingData } = useGetOrderBookData();
 
     return (
         <DashboardCard>
@@ -28,8 +28,10 @@ export const OrderBook = (): ReactElement => {
                             data={data}
                             columns={columns}
                         />
-                    ) : (
+                    ) : loadingData ? (
                         <Spinner grow />
+                    ) : (
+                        'Nothing selected.'
                     )}
                 </div>
             </Details>

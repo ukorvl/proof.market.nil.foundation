@@ -6,8 +6,8 @@
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
-import { Icon } from '@nilfoundation/react-components';
-import { selectCurrentCircuit } from 'src/redux';
+import { Icon, Spinner } from '@nilfoundation/react-components';
+import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { DashboardCard } from '../DashboardCard';
 import { Details } from '../../common';
@@ -20,9 +20,10 @@ import './CircuitDetailedInfo.scss';
  */
 export const CircuitDetailedInfo = (): ReactElement => {
     const currentSelectedCircuit = useSelector(selectCurrentCircuit);
+    const loadingCircuits = useAppSelector(s => s.circuitsState.isLoading);
 
     const renderTitle = () =>
-        currentSelectedCircuit && (
+        currentSelectedCircuit ? (
             <div className="detailedTitle">
                 <h4>
                     {`${currentSelectedCircuit.name} (${currentSelectedCircuit.describe})`} info
@@ -34,6 +35,8 @@ export const CircuitDetailedInfo = (): ReactElement => {
                     />
                 </a>
             </div>
+        ) : (
+            <h4>Circuit detailed info</h4>
         );
 
     return (
@@ -47,6 +50,8 @@ export const CircuitDetailedInfo = (): ReactElement => {
                         displayDataTypes={false}
                         theme={jsonViewerTheme}
                     />
+                ) : loadingCircuits ? (
+                    <Spinner grow />
                 ) : (
                     <div>Nothing is selected.</div>
                 )}

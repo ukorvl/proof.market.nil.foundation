@@ -44,7 +44,7 @@ export const LoginForm = (): ReactElement => {
 
     const {
         register,
-        formState: { isSubmitting, isValid },
+        formState: { isSubmitting, isValid, errors },
         handleSubmit,
     } = useForm<LoginData>({
         mode: 'onChange',
@@ -69,7 +69,7 @@ export const LoginForm = (): ReactElement => {
                 rounded
             />
             <Form onSubmit={undefined}>
-                <Form.Group hasError={!isValid}>
+                <Form.Group hasError={!!errors['username']}>
                     <Form.Label htmlFor="userName">Username</Form.Label>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>
@@ -82,7 +82,7 @@ export const LoginForm = (): ReactElement => {
                         />
                     </InputGroup>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group hasError={!!errors['password']}>
                     <Form.Label htmlFor="password">Password</Form.Label>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>

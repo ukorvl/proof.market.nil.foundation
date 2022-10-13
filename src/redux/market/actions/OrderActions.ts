@@ -10,3 +10,8 @@ import { Order } from 'src/models';
  * Update circuits list.
  */
 export const UpdateOrdersList = createAction<Order[]>('@orders/UPDATE_ORDERS_LIST');
+
+/**
+ * Add order.
+ */
+export const AddOrder = createAction<Order>('@orders/ADD_ORDER');
