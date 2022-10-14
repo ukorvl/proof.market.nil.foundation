@@ -1,5 +1,6 @@
-@import '../../../styles/mixins.scss';
-@import '../../../styles//constants.scss';
+@import '/src/styles/mixins/responsive';
+@import '/src/styles/mixins/primaryLink';
+@import '/src/styles/constants.scss';
 
 .headerContainer {
   display: flex;
@@ -14,6 +15,10 @@
   @include responsive(sm) {
     display: none;
   }
+
+  li > a {
+    @include primaryLink;
+  }
 }
 
 .navbar {
@@ -25,6 +30,5 @@
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:visited {
   color: $c-secondary!important;
-  display: block;
-  font-weight: 400;;
+  font-weight: 400;
 }
