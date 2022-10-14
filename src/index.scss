@@ -17,6 +17,10 @@ main {
   &:hover {
     background-color: $c-base-lighter!important;
   }
+
+  &:active:focus {
+    color: $c-secondary;
+  }
 }
 
 button {

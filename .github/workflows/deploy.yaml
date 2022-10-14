@@ -25,6 +25,12 @@ jobs:
         npm config set "//npm.pkg.github.com/:_authToken" ${{ secrets.GITHUB_TOKEN }}
         npm ci
 
+    - name: Setup env
+      run: |
+        touch .env.local
+        echo "REACT_APP_BASE_API_URL=http://try.dbms.nil.foundation" >> .env.local
+        echo "REACT_APP_DBMS_DEFAULT_DATABASE=market" >> .env.local
+
     - name: Build
       run: npm run build
 

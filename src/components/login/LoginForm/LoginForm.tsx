@@ -70,7 +70,6 @@ export const LoginForm = (): ReactElement => {
             />
             <Form onSubmit={undefined}>
                 <Form.Group hasError={!!errors['username']}>
-                    <Form.Label htmlFor="userName">Username</Form.Label>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>
                             <Icon iconName="fa-solid fa-user" />
@@ -78,12 +77,13 @@ export const LoginForm = (): ReactElement => {
                         <Input
                             type="text"
                             id="userName"
+                            placeholder="username"
+                            aria-label="username"
                             {...register('username', { required: true })}
                         />
                     </InputGroup>
                 </Form.Group>
                 <Form.Group hasError={!!errors['password']}>
-                    <Form.Label htmlFor="password">Password</Form.Label>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>
                             <Icon iconName="fa-solid fa-lock" />
@@ -91,6 +91,8 @@ export const LoginForm = (): ReactElement => {
                         <Input
                             type={pwdInputType}
                             id="password"
+                            aria-label="password"
+                            placeholder="password"
                             autoComplete="off"
                             {...register('password')}
                         />
@@ -115,6 +117,7 @@ export const LoginForm = (): ReactElement => {
                     classNames="fade"
                     timeout={300}
                     in={!!errorMessage}
+                    unmountOnExit
                     nodeRef={nodeRef}
                 >
                     <div
