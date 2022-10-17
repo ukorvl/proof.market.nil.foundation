@@ -29,14 +29,18 @@ export const Header = (): ReactElement => {
                 <Breadcrumbs />
                 <Nav className="navbar-right navbar-nav">
                     {navigationLinks.map(({ title, path }) => (
-                        <li key={title}>
-                            <Link
-                                to={path}
-                                className={pathname === path ? 'active' : ''}
-                            >
-                                <span>{title}</span>
-                            </Link>
-                        </li>
+                        <Nav.Item
+                            key={title}
+                            active={pathname === path}
+                            renderLink={({ ...props }) => (
+                                <Link
+                                    to={path}
+                                    {...props}
+                                >
+                                    <span>{title}</span>
+                                </Link>
+                            )}
+                        />
                     ))}
                 </Nav>
                 <UserMenu />

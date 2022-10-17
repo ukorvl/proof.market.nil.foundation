@@ -17,7 +17,7 @@ import {
     Spinner,
     Variant,
 } from '@nilfoundation/react-components';
-import { ProposalDto } from 'src/models';
+import { CreateAsk } from 'src/models';
 import { AddProposal, useAppSelector } from 'src/redux';
 import { createProposal } from 'src/api/market/ProposalsApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
@@ -27,11 +27,11 @@ import { OrderManagementPanelContext } from '../OrderManagementPanel';
  *
  * @returns React component.
  */
-export const CreateProposalForm = (): ReactElement => {
+export const CreateAskForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementPanelContext);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useAppSelector(s => s.userState.user)!;
-    const selectedOrderId = useAppSelector(s => s.ordersState.selectedOrderId);
+    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
     const nodeRef = useRef(null);
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState('');
@@ -39,15 +39,16 @@ export const CreateProposalForm = (): ReactElement => {
         register,
         handleSubmit,
         formState: { isSubmitting, isValid, errors },
-    } = useForm<ProposalDto>({
+    } = useForm<CreateAsk>({
         mode: 'onChange',
         defaultValues: {
             sender: user,
-            order: selectedOrderId,
+            circuit_id: selectedCircuitId,
+            wait_period: 1111,
         },
     });
 
-    const onSubmitProposal = handleSubmit(async (data: ProposalDto): Promise<void> => {
+    const onSubmitProposal = handleSubmit(async (data: CreateAsk): Promise<void> => {
         setErrorMessage('');
         setProcessing(true);
         try {

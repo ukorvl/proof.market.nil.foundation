@@ -9,10 +9,10 @@ import ReactJson, { InteractionProps } from 'react-json-view';
 import { useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
-import { OrderDto } from 'src/models';
+import { CreateBid } from 'src/models';
 import { AddOrder, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
-import { createOrder } from 'src/api/market/OrdersApi';
+import { createBid } from 'src/api/market/OrdersApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**
@@ -20,7 +20,7 @@ import { OrderManagementPanelContext } from '../OrderManagementPanel';
  *
  * @returns React component.
  */
-export const CreateOrderForm = (): ReactElement => {
+export const CreateBidForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementPanelContext);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useAppSelector(s => s.userState.user)!;
@@ -33,7 +33,7 @@ export const CreateOrderForm = (): ReactElement => {
         handleSubmit,
         formState: { isSubmitting, isValid, errors },
         control,
-    } = useForm<OrderDto>({
+    } = useForm<CreateBid>({
         mode: 'onChange',
         defaultValues: {
             sender: user,
@@ -43,11 +43,11 @@ export const CreateOrderForm = (): ReactElement => {
         },
     });
 
-    const onSubmitOrder = handleSubmit(async (data: OrderDto): Promise<void> => {
+    const onSubmitBid = handleSubmit(async (data: CreateBid): Promise<void> => {
         setErrorMessage('');
         setProcessing(true);
         try {
-            const order = await createOrder(data);
+            const order = await createBid(data);
             console.log(order);
             dispatch(AddOrder(order));
         } catch (e) {
@@ -90,7 +90,7 @@ export const CreateOrderForm = (): ReactElement => {
                     </Form.Group>
                     <Button
                         variant={Variant.success}
-                        onClick={onSubmitOrder}
+                        onClick={onSubmitBid}
                         size={Size.lg}
                         disabled={!isValid || isSubmitting}
                     >

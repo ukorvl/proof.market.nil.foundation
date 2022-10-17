@@ -4,5 +4,5 @@
  */
 
 export * from './CircuitsSelectors';
-export * from './OrdersSelectors';
+export * from './BidsSelectors';
 export * from './ProposalsSelectors';

@@ -6,8 +6,8 @@
 import { ReactElement, useState } from 'react';
 import { Nav } from '@nilfoundation/react-components';
 import { DashboardCard, Details } from '../../common';
-import { CreateOrderForm } from '../CreateOrderForm';
-import { CreateProposalForm } from '../CreateProposalForm';
+import { CreateBidForm } from '../CreateBidForm';
+import { CreateAskForm } from '../CreateAskForm';
 import { OrderManagementPanelContext } from './OrderManagementPanelContext';
 import './OrderManagementPanel.scss';
 
@@ -31,9 +31,9 @@ export const OrderManagementPanel = (): ReactElement => {
     const tabFactory = () => {
         switch (tab) {
             case Tab.buy:
-                return <CreateOrderForm />;
+                return <CreateBidForm />;
             case Tab.sell:
-                return <CreateProposalForm />;
+                return <CreateAskForm />;
             default:
                 return <></>;
         }

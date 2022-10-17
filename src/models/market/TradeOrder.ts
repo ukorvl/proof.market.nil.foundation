@@ -4,11 +4,12 @@
  */
 
 /**
- * Order dto.
+ * Trade order.
  */
-export type OrderDto = {
+export interface TradeOrder {
     circuit_id: string;
-    public_input: Record<string, string>;
-    sender: string;
+    cost: number;
+    eval_time: number;
     wait_period: number;
-};
+    sender: string;
+}

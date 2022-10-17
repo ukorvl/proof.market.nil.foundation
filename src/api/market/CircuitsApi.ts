@@ -37,7 +37,7 @@ export const cursor = (): Promise<void> =>
         })
         .then((x: any) => x.result);
 
-export const getOrders = () =>
+export const getBids = () =>
     httpFetcher
         .post('cursor', {
             query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',

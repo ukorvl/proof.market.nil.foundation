@@ -4,6 +4,6 @@
  */
 
 /**
- * Order status.
+ * Trade order status.
  */
-export type OrderStatus = 'created' | 'processing' | 'completed';
+export type TradeOrderStatus = 'created' | 'processing' | 'completed';

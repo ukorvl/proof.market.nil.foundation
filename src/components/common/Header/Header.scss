@@ -6,6 +6,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  code {
+    font-weight: bold;
+  }
 }
 
 .navbar-nav {
@@ -17,7 +21,7 @@
   }
 
   li > a {
-    @include primaryLink;
+    @include primaryLink($c-primary, $c-base-light);
   }
 }
 

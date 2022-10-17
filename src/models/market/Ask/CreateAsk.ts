@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ProposalDto } from './dto';
+import { TradeOrder } from '../TradeOrder';
 
 /**
- * Proposal.
+ * Bid dto.
  */
-export type Proposal = ProposalDto;
+export type CreateAsk = TradeOrder;

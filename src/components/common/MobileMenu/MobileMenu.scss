@@ -8,6 +8,10 @@
     background-color: $c-base;
     color: $c-secondary;
     border-color: $c-secondary-darker;
+
+    i {
+      width: 16px;
+    }
   }
 
   @include responsive(lg) {
