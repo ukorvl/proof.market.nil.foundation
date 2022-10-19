@@ -12,16 +12,11 @@
   }
 }
 
-.navbar-nav {
+.navbar-default {
   letter-spacing: 1px;
-  margin: 12px 12px 12px 0!important;
 
   @include responsive(sm) {
     display: none;
-  }
-
-  li > a {
-    @include primaryLink($c-primary, $c-base-light);
   }
 }
 

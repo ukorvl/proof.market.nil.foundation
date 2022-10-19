@@ -27,7 +27,7 @@ export const Header = (): ReactElement => {
                 fluid
             >
                 <Breadcrumbs />
-                <Nav className="navbar-right navbar-nav">
+                <Nav>
                     {navigationLinks.map(({ title, path }) => (
                         <Nav.Item
                             key={title}
