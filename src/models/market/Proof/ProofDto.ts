@@ -7,6 +7,12 @@
  * Proof dto.
  */
 export type ProofDto = {
+    /**
+     * Proof unique id.
+     */
     id: number;
+    /**
+     * Proof.
+     */
     proof: string;
 };

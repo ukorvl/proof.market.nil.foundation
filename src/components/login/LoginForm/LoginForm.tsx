@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useRef, useState, useEffect } from 'react';
 import {
     Jumbotron,
     Image,
@@ -35,6 +35,7 @@ type PwdInputType = 'password' | 'text';
  */
 export const LoginForm = (): ReactElement => {
     const nodeRef = useRef(null);
+    const userNameInputRef = useRef<HTMLInputElement>(null);
     const { processLogin } = useAuth();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
@@ -60,6 +61,10 @@ export const LoginForm = (): ReactElement => {
         }
     });
 
+    useEffect(() => {
+        userNameInputRef.current && userNameInputRef.current.focus();
+    }, []);
+
     return (
         <Jumbotron className="loginForm">
             <Image
@@ -80,6 +85,7 @@ export const LoginForm = (): ReactElement => {
                             placeholder="username"
                             aria-label="username"
                             {...register('username', { required: true })}
+                            ref={userNameInputRef}
                         />
                     </InputGroup>
                 </Form.Group>

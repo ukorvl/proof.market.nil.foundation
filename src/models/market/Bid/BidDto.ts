@@ -3,22 +3,17 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CreateBid } from './CreateBid';
-import { TradeOrderStatus } from '../TradeOrderStatus';
 import { Proof } from '../Proof';
+import { TradeOrder } from '../TradeOrder';
 
 /**
  * Bid.
  */
-export interface BidDto extends CreateBid {
+export interface BidDto extends TradeOrder {
     /**
-     * Id.
+     * Public input.
      */
-    id: string;
-    /**
-     * Order status.
-     */
-    status: TradeOrderStatus;
+    public_input: Record<string, string>;
     /**
      * Proof (when generated, either - null).
      */
@@ -27,8 +22,4 @@ export interface BidDto extends CreateBid {
      * Time, when bid was accepted, either - null.
      */
     timestamp: string | null;
-    /**
-     * ?
-     */
-    order: null;
 }

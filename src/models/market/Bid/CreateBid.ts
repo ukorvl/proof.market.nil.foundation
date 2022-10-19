@@ -3,12 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { TradeOrder } from '../TradeOrder';
+import { CreateTradeOrder } from '../TradeOrder';
 
 /**
  * Bid dto.
  */
-export interface CreateBid extends TradeOrder {
+export interface CreateBid extends CreateTradeOrder {
     /**
      * Public input.
      */

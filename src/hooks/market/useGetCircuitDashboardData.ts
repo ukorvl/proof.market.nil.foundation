@@ -6,8 +6,9 @@
 import { useMemo } from 'react';
 import { LineData } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
-import { useAppSelector, selectProposals } from 'src/redux';
-import { Proposal } from 'src/models';
+import dayjs from 'dayjs';
+import { useAppSelector, selectAsks } from 'src/redux';
+import { Ask, Bid } from 'src/models';
 
 /**
  * Hook return type.
@@ -24,16 +25,15 @@ type UseGetCircuitDashboardDataReturnType = {
  */
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
-    const proposals = useSelector(selectProposals);
-    const data = useMemo(
-        () => (proposals.length ? proposals.map(mapProposalToLineData) : undefined),
-        [proposals],
-    );
+    const asks = useSelector(selectAsks);
+    const data = useMemo(() => {
+        return asks.filter(x => x.status === 'completed' && !!x.timestamp).map(mapOrderToLineData);
+    }, [asks]);
 
     return { data, loadingData };
 };
 
-const mapProposalToLineData = (proposal: Proposal): LineData => ({
-    time: new Date().toDateString(),
-    value: proposal.eval_time,
+const mapOrderToLineData = <T extends Bid | Ask>({ timestamp, cost }: T): LineData => ({
+    time: dayjs(timestamp).format(),
+    value: cost,
 });

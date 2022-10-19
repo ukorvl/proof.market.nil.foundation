@@ -5,4 +5,4 @@
 
 export * from './CircuitsSelectors';
 export * from './BidsSelectors';
-export * from './ProposalsSelectors';
+export * from './AsksSelectors';

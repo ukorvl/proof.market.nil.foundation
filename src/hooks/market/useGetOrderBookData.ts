@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectOrders, selectProposals, useAppSelector } from 'src/redux';
+import { selectBids, selectAsks, useAppSelector } from 'src/redux';
 
 /**
  * Hook return type.
@@ -56,8 +56,8 @@ export type OrderBookTableData = {
  */
 export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
-    const proposals = useSelector(selectProposals);
-    const orders = useSelector(selectOrders);
+    const asks = useSelector(selectAsks);
+    const bids = useSelector(selectBids);
 
     const columns = useMemo(
         () => [
@@ -98,6 +98,3 @@ export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
 
     return { columns, data, loadingData };
 };
-
-// const getMaxAmount = (values: number[]) => Math.max.apply(null, values);
-// const getMinAmount = (values: number[]) => Math.min.apply(null, values);

@@ -18,7 +18,7 @@ import {
     Variant,
 } from '@nilfoundation/react-components';
 import { CreateAsk } from 'src/models';
-import { AddProposal, useAppSelector } from 'src/redux';
+import { AddAsk, useAppSelector } from 'src/redux';
 import { createProposal } from 'src/api/market/ProposalsApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
@@ -52,9 +52,8 @@ export const CreateAskForm = (): ReactElement => {
         setErrorMessage('');
         setProcessing(true);
         try {
-            const proposal = await createProposal(data);
-            console.log(proposal);
-            dispatch(AddProposal(proposal));
+            const ask = await createProposal(data);
+            dispatch(AddAsk(ask));
         } catch (e) {
             setErrorMessage('Create proposal error');
         } finally {
@@ -64,17 +63,16 @@ export const CreateAskForm = (): ReactElement => {
 
     return (
         <Form>
-            {selectedOrderId !== undefined ? (
+            {selectedCircuitId !== undefined ? (
                 <>
-                    <h5>Selected order: {selectedOrderId}</h5>
-                    <Form.Group hasError={!!errors['bid']}>
-                        <Form.Label htmlFor="bid">Bid</Form.Label>
+                    <Form.Group hasError={!!errors['cost']}>
+                        <Form.Label htmlFor="bid">Cost</Form.Label>
                         <InputGroup>
                             <Input
                                 type="number"
                                 id="bid"
                                 size={Size.lg}
-                                {...register('bid', { required: true })}
+                                {...register('cost', { required: true })}
                             />
                             <InputGroup.Addon>
                                 <Icon iconName="fa-solid fa-square-dollar" />
@@ -114,7 +112,7 @@ export const CreateAskForm = (): ReactElement => {
                     </CSSTransition>
                 </>
             ) : (
-                <h4>Please, select order to create proposals.</h4>
+                <h4>Please, select circuit to create orders.</h4>
             )}
         </Form>
     );

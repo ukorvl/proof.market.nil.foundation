@@ -6,9 +6,9 @@
 import { UserReducerState } from './login';
 import {
     CircuitsReducerState,
-    OrdersReducerState,
+    BidsReducerState,
     ProofReducerState,
-    ProposalsReducerState,
+    AsksReducerState,
 } from './market';
 
 /**
@@ -16,8 +16,8 @@ import {
  */
 export interface RootStateType {
     circuitsState: CircuitsReducerState;
-    proposalsState: ProposalsReducerState;
-    ordersState: OrdersReducerState;
+    asksState: AsksReducerState;
+    bidsState: BidsReducerState;
     proofState: ProofReducerState;
     userState: UserReducerState;
 }

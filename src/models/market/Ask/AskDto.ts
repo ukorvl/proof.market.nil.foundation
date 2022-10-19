@@ -3,32 +3,14 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Proof } from '../Proof';
-import { TradeOrderStatus } from '../TradeOrderStatus';
-import { CreateAsk } from './CreateAsk';
+import { TradeOrder } from '../TradeOrder';
 
 /**
  * Proposal dto.
  */
-export interface AskDto extends CreateAsk {
-    /**
-     * Id.
-     */
-    id: string;
-    /**
-     * Offer status.
-     */
-    status: TradeOrderStatus;
-    /**
-     * Proof id (when generated, either - null).
-     */
-    proof: Proof['id'] | null;
+export interface AskDto extends TradeOrder {
     /**
      * Time, when bid was accepted, either - null.
      */
     timestamp: string | null;
-    /**
-     * ?
-     */
-    order: null;
 }

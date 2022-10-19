@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
 import { CreateBid } from 'src/models';
-import { AddOrder, useAppSelector } from 'src/redux';
+import { AddBid, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { createBid } from 'src/api/market/OrdersApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
@@ -47,9 +47,8 @@ export const CreateBidForm = (): ReactElement => {
         setErrorMessage('');
         setProcessing(true);
         try {
-            const order = await createBid(data);
-            console.log(order);
-            dispatch(AddOrder(order));
+            const bid = await createBid(data);
+            dispatch(AddBid(bid));
         } catch (e) {
             setErrorMessage('Create order error');
         } finally {

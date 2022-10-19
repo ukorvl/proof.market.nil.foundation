@@ -6,12 +6,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootStateType } from '../../../RootStateType';
 
-const selectBidsList = (s: RootStateType) => s.bidsState.bids;
+const selectAsksList = (s: RootStateType) => s.asksState.asks;
 const selectedCircuitid = (s: RootStateType) => s.circuitsState.selectedid;
 
 /**
- * Select all current circuit - related bids from all users.
+ * Select all current circuit - related proposals.
  */
-export const selectBids = createSelector(selectBidsList, selectedCircuitid, (bids, selectedid) =>
-    bids.filter(x => x.circuit_id === selectedid),
+export const selectAsks = createSelector(selectAsksList, selectedCircuitid, (asks, selectedid) =>
+    asks.filter(x => x.circuit_id === selectedid),
 );
