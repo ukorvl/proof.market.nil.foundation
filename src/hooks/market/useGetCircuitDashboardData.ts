@@ -47,12 +47,12 @@ const createCandlestickData = <T extends Bid | Ask>(
     ordersGrouppedByDate: Record<string, T[]>,
 ): CandlestickData[] => {
     return Object.keys(ordersGrouppedByDate).map(x => {
-        const orders = ordersGrouppedByDate[x];
+        const ordersCosts = ordersGrouppedByDate[x].map(x => x.cost);
 
-        const high = Math.max(...orders.map(x => x.cost));
-        const low = Math.min(...orders.map(x => x.cost));
-        const open = orders[0].cost;
-        const close = orders[-1].cost;
+        const high = Math.max(...ordersCosts);
+        const low = Math.min(...ordersCosts);
+        const open = ordersCosts[0];
+        const close = ordersCosts[-1];
 
         return {
             time: x,
