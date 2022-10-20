@@ -66,11 +66,11 @@ export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
                 accessor: Accessor.bid,
             },
             {
-                Header: 'Ask',
+                Header: 'Price',
                 accessor: Accessor.price,
             },
             {
-                Header: 'Asks',
+                Header: 'Ask',
                 accessor: Accessor.ask,
             },
         ],
@@ -93,7 +93,7 @@ export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
                 price: 4000,
             },
         ],
-        [],
+        [asks, bids],
     );
 
     return { columns, data, loadingData };

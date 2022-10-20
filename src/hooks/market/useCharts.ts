@@ -4,9 +4,15 @@
  */
 
 import { RefObject, useEffect, useMemo, useState } from 'react';
-import { createChart, ColorType, LineData } from 'lightweight-charts';
+import { createChart, ColorType, CandlestickData } from 'lightweight-charts';
 
+/**
+ * Return type.
+ */
 type UseChartsReturnType = {
+    /**
+     * Current price value (when user hovers chart) - can be used to render Legend.
+     */
     price?: string;
 };
 
@@ -16,6 +22,8 @@ type UseChartsReturnType = {
 const chartsTheme = {
     background: '#151515',
     lineColor: '#2677f0',
+    upColor: '#57965a',
+    downColor: '#f44336',
     fontFamily: 'Roboto',
     layoutTextColor: '#d3d3d3',
     gridLineColor: '#3c3c3c',
@@ -31,7 +39,7 @@ const chartsTheme = {
  */
 export const useCharts = <T extends HTMLElement>(
     ref: RefObject<T>,
-    data?: LineData[],
+    data?: CandlestickData[],
     theme?: Partial<typeof chartsTheme>,
 ): UseChartsReturnType => {
     const [price, setPrice] = useState<string>();
@@ -44,7 +52,7 @@ export const useCharts = <T extends HTMLElement>(
             return;
         }
 
-        if (!data) {
+        if (!data || !data.length) {
             return;
         }
 
@@ -63,8 +71,11 @@ export const useCharts = <T extends HTMLElement>(
         });
         chart.timeScale().fitContent();
 
-        const lineSeries = chart.addLineSeries({ color: mergedTheme.lineColor });
-        lineSeries.setData(data);
+        const candlesSeries = chart.addCandlestickSeries({
+            upColor: mergedTheme.upColor,
+            downColor: mergedTheme.downColor,
+        });
+        candlesSeries.setData(data);
 
         const handleResize = () => {
             ref.current && chart.applyOptions({ width: ref.current.clientWidth });
@@ -72,7 +83,7 @@ export const useCharts = <T extends HTMLElement>(
 
         chart.subscribeCrosshairMove(param => {
             if (param.time) {
-                const price = param.seriesPrices.get(lineSeries);
+                const price = param.seriesPrices.get(candlesSeries);
                 setPrice(price && price.toString());
             }
         });
