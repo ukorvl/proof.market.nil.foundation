@@ -4,7 +4,7 @@
  */
 
 import { ReactElement } from 'react';
-import { Nav } from '@nilfoundation/react-components';
+import { Nav, useBreakpoints } from '@nilfoundation/react-components';
 import { ChartType } from 'src/enums';
 
 /**
@@ -25,8 +25,13 @@ export const ChartTypeSelect = ({
     chartType,
     onSelectChartType,
 }: ChartTypeSelectProps): ReactElement => {
+    const { xs } = useBreakpoints();
+
     return (
-        <Nav tabs>
+        <Nav
+            tabs
+            vertical={xs}
+        >
             {Object.values(ChartType).map(x => (
                 <Nav.Item
                     key={x}

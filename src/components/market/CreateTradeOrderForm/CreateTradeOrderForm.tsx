@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useRef, useState } from 'react';
-import { useForm, Controller, useFormContext } from 'react-hook-form';
+import { ReactElement, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';

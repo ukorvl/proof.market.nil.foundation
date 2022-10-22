@@ -9,7 +9,6 @@ import { ChartType } from 'src/enums';
 import { DashboardCard } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
 import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
-import './CircuitDashboard.scss';
 
 /**
  * Circuit dashboard.
