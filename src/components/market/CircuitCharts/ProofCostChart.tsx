@@ -24,7 +24,7 @@ export const ProofCostChart = (): ReactElement => {
     } = useGetCircuitDashboardData();
 
     useEffect(() => {
-        if (!chart) {
+        if (!chart || !candlestickChartData) {
             return;
         }
 

@@ -3,11 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
 import { UpdateCircuitsList, UpdateAsksList } from '../actions';
+
+const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL);
 
 /**
  * Asks main saga.
@@ -16,6 +18,7 @@ import { UpdateCircuitsList, UpdateAsksList } from '../actions';
  */
 export function* AsksSaga(): SagaIterator<void> {
     yield takeLatest(UpdateCircuitsList, GetAsksSaga);
+    // yield fork(RevalidateAsksSaga);
 }
 
 /**
@@ -32,5 +35,22 @@ function* GetAsksSaga(): SagaIterator<void> {
         }
     } catch (e) {
         // Do nothing
+    }
+}
+
+/**
+ * Revalidate asks.
+ *
+ * @yields
+ */
+function* RevalidateAsksSaga() {
+    while (true) {
+        try {
+            yield fork(GetAsksSaga);
+        } catch (e) {
+            // Do nothing.
+        }
+
+        yield delay(revalidateAsksDelay);
     }
 }

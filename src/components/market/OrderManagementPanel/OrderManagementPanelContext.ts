@@ -11,6 +11,8 @@ import { createContext } from 'react';
 type OrderManagementPanelContextModel = {
     processing: boolean;
     setProcessing: (processing: boolean) => void;
+    selectedCost?: number;
+    setSelectedCost: (cost: number) => void;
 };
 
 /**

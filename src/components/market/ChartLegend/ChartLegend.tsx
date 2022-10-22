@@ -22,7 +22,6 @@ type ChartLegendProps = {
  * @returns React component.
  */
 export const ChartLegend = ({ name, price }: ChartLegendProps): ReactElement => {
-    console.log(price);
     const displayPrice = () =>
         typeof price === 'object' ? (
             Object.keys(price).map(x => (

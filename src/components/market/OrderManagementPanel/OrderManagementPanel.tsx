@@ -4,20 +4,11 @@
  */
 
 import { ReactElement, useState } from 'react';
-import { Nav } from '@nilfoundation/react-components';
-import { DashboardCard, Details } from '../../common';
-import { CreateBidForm } from '../CreateBidForm';
-import { CreateAskForm } from '../CreateAskForm';
+import { Col } from '@nilfoundation/react-components';
 import { OrderManagementPanelContext } from './OrderManagementPanelContext';
+import { OrderBook } from '../OrderBook';
+import { CreateOrdersPanel } from '../CreateOrdersPanel';
 import './OrderManagementPanel.scss';
-
-/**
- * Tab.
- */
-enum Tab {
-    buy = 'BUY',
-    sell = 'SELL',
-}
 
 /**
  * Order management panel.
@@ -25,39 +16,25 @@ enum Tab {
  * @returns React component.
  */
 export const OrderManagementPanel = (): ReactElement => {
-    const [tab, setTab] = useState<Tab>(Tab.buy);
     const [processing, setProcessing] = useState(false);
-
-    const tabFactory = () => {
-        switch (tab) {
-            case Tab.buy:
-                return <CreateBidForm />;
-            case Tab.sell:
-                return <CreateAskForm />;
-            default:
-                return <></>;
-        }
-    };
+    const [selectedCost, setSelectedCost] = useState<number>();
 
     return (
-        <DashboardCard>
-            <Details title={<h4>Manage orders</h4>}>
-                <Nav>
-                    {Object.values(Tab).map(t => (
-                        <Nav.Item
-                            key={t}
-                            onClick={() => setTab(t)}
-                            active={t === tab}
-                            disabled={processing}
-                        >
-                            {t}
-                        </Nav.Item>
-                    ))}
-                </Nav>
-                <OrderManagementPanelContext.Provider value={{ processing, setProcessing }}>
-                    <div className="orderManagementPanel">{tabFactory()}</div>
-                </OrderManagementPanelContext.Provider>
-            </Details>
-        </DashboardCard>
+        <OrderManagementPanelContext.Provider
+            value={{ processing, setProcessing, selectedCost, setSelectedCost }}
+        >
+            <Col
+                xs={12}
+                md={8}
+            >
+                <CreateOrdersPanel />
+            </Col>
+            <Col
+                xs={12}
+                md={4}
+            >
+                <OrderBook />
+            </Col>
+        </OrderManagementPanelContext.Provider>
     );
 };
