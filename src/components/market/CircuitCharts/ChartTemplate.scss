@@ -1,0 +1,15 @@
+@import '../../../styles/constants.scss';
+
+.circuitChart {
+  height: 500px;
+  position: relative;
+
+  .placeholder {
+    background-color: $c-base-darker!important;
+    border-radius: 6px;
+
+    > .wave {
+      background-color: $c-secondary-darker;
+    }
+  }
+}

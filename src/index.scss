@@ -13,14 +13,14 @@ main {
 }
 
 .input-group-btn .btn {
-  color: $c-secondary;
+  color: $c-secondary-darker!important;
 
   &:hover {
-    background-color: $c-base-lighter!important;
+    background-color: $c-secondary!important;
   }
 
   &:active:focus {
-    color: $c-secondary;
+    color: $c-secondary!important;
   }
 }
 

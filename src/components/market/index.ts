@@ -8,3 +8,5 @@ export * from './CircuitDetailedInfo';
 export * from './CircuitDashboard';
 export * from './OrderBook';
 export * from './OrderManagementPanel';
+export * from './ChartLegend';
+export * from './CircuitCharts';

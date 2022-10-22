@@ -7,7 +7,7 @@
  * Chart type.
  */
 export enum ChartType {
-    candlestickChart = 'Proof Cost',
+    proofCostChart = 'Proof Cost',
     proofGenCostChart = 'Proof Gen Cost',
     proofGetTimeChart = 'Proof Gen Time',
 }

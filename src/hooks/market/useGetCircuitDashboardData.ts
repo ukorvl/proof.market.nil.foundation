@@ -41,7 +41,7 @@ export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnTy
         () => ({
             candlestickChartData: getCandlestickData(grouppedOrders),
             proofGenTimeData: getProofGenTimeData(grouppedOrders),
-            proofGenCostData: getProofGenTimeData(grouppedOrders),
+            proofGenCostData: getProofGenTimeData(grouppedOrders), // TODO - replace when proof cost will be avial.
         }),
         [grouppedOrders],
     );

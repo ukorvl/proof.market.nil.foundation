@@ -3,16 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect, useRef, useState } from 'react';
-import { Placeholder, PlaceholderAnimation } from '@nilfoundation/react-components';
-import { BarPrice, BarPrices, ISeriesApi, MouseEventHandler } from 'lightweight-charts';
-import { useChart, useGetCircuitDashboardData } from 'src/hooks';
+import { ReactElement, useState } from 'react';
 import { Details } from 'src/components';
 import { ChartType } from 'src/enums';
-import colors from 'src/styles/export.module.scss';
 import { DashboardCard } from '../../common';
-import { ChartLegend } from './ChartLegend';
 import { ChartTypeSelect } from './ChartTypeSelect';
+import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
 import './CircuitDashboard.scss';
 
 /**
@@ -21,71 +17,7 @@ import './CircuitDashboard.scss';
  * @returns React component.
  */
 export const CircuitDashboard = (): ReactElement => {
-    const [price, setPrice] = useState<BarPrice | BarPrices>();
-    const [chartType, setChartType] = useState(ChartType.candlestickChart);
-    const [series, setSeries] = useState<ISeriesApi<'Candlestick' | 'Line'>>();
-    const ref = useRef<HTMLDivElement>(null);
-
-    const {
-        chartData: { candlestickChartData, proofGenTimeData, proofGenCostData },
-        loadingData,
-    } = useGetCircuitDashboardData();
-    console.log(candlestickChartData, proofGenTimeData);
-    const { chart } = useChart(ref);
-
-    useEffect(() => {
-        if (!chart || !series) {
-            return;
-        }
-
-        const crosshairMoveHandler: MouseEventHandler = param => {
-            if (param.time) {
-                const price = param.seriesPrices.get(series);
-                console.log(price);
-                setPrice(price && price);
-            }
-        };
-
-        chart && chart.subscribeCrosshairMove(crosshairMoveHandler);
-
-        return () => {
-            chart.unsubscribeCrosshairMove(crosshairMoveHandler);
-        };
-    }, [chart, series]);
-
-    useEffect(() => {
-        if (!chart) {
-            return;
-        }
-
-        switch (chartType) {
-            case ChartType.candlestickChart: {
-                const candlesSeries = chart.addCandlestickSeries({
-                    upColor: colors.successColor,
-                    downColor: colors.dangerColor,
-                    priceLineWidth: 2,
-                    wickUpColor: 'red',
-                });
-                candlesSeries.setData(candlestickChartData);
-                chart.timeScale().fitContent();
-                setSeries(candlesSeries);
-                break;
-            }
-            case ChartType.proofGetTimeChart: {
-                const candlesSeries = chart.addLineSeries({ color: colors.infoColor });
-                candlesSeries.setData(candlestickChartData);
-                chart.timeScale().fitContent();
-                setSeries(candlesSeries);
-                break;
-            }
-            default:
-                return;
-        }
-
-        return () => {
-            series && chart.removeSeries(series);
-        };
-    }, [chartType, candlestickChartData]);
+    const [chartType, setChartType] = useState(ChartType.proofCostChart);
 
     return (
         <DashboardCard>
@@ -94,19 +26,27 @@ export const CircuitDashboard = (): ReactElement => {
                     chartType={chartType}
                     onSelectChartType={setChartType}
                 />
-                <div
-                    ref={ref}
-                    className="circuitDashboard"
-                >
-                    {price && (
-                        <ChartLegend
-                            price={price}
-                            name={chartType}
-                        />
-                    )}
-                    {loadingData && <Placeholder animation={PlaceholderAnimation.wave} />}
+                <div>
+                    <ChartFactory chartType={chartType} />
                 </div>
             </Details>
         </DashboardCard>
     );
+};
+
+/**
+ * Renders chart depending on its type.
+ *
+ * @param {{chartType: ChartType}} props Props.
+ * @returns Chart.
+ */
+const ChartFactory = ({ chartType }: { chartType: ChartType }) => {
+    switch (chartType) {
+        case ChartType.proofCostChart:
+            return <ProofCostChart />;
+        case ChartType.proofGetTimeChart:
+            return <ProofTimeGenChart />;
+        default:
+            return <></>;
+    }
 };
