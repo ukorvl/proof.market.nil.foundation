@@ -17,6 +17,10 @@
   th {
     border-bottom: 1px solid $c-base-light!important;
     text-align: center;
+
+    > i {
+      margin-left: 8px;
+    }
   }
 
   tbody tr {
@@ -32,6 +36,10 @@
 
     td:last-child {
       color: $c-danger;
+    }
+
+    td:not(:first-child):not(:last-child) {
+      color: $c-secondary-darker;
     }
   }
 }

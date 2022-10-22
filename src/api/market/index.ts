@@ -5,3 +5,5 @@
 
 export * from './CircuitsApi';
 export * from './ProofApi';
+export * from './BidsApi';
+export * from './AsksApi';

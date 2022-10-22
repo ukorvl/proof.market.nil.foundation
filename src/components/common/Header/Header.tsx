@@ -32,7 +32,7 @@ export const Header = (): ReactElement => {
                         <Nav.Item
                             key={title}
                             active={pathname === path}
-                            renderLink={({ ...props }) => (
+                            renderLink={({ active: _, ...props }) => (
                                 <Link
                                     to={path}
                                     {...props}

@@ -1,0 +1,13 @@
+@import './constants.scss';
+
+:export {
+  primaryColor: $c-primary;
+  dangerColor: $c-danger;
+  successColor: $c-success;
+  baseColor: $c-base;
+  infoColor: $c-info;
+  baseDarkerColor: $c-base-darker;
+  baseLightColor: $c-base-light;
+  secondaryColor: $c-secondary;
+  secondaryDarkerColor: $c-secondary-darker;
+}

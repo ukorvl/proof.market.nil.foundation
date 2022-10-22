@@ -9,6 +9,7 @@ main {
 .form-control[readonly],
 .input-group-btn .btn {
   background-color: $c-base!important;
+  border-color: $c-base-light!important;
 }
 
 .input-group-btn .btn {

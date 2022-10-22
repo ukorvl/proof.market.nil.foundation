@@ -13,10 +13,7 @@ import { ProofList } from '../components';
  * @returns React component.
  */
 const PortfolioView = (): ReactElement => (
-    <Container
-        as="main"
-        fluid
-    >
+    <Container as="main">
         <Row>
             <Col xs={12}>
                 <ProofList />

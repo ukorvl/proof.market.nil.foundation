@@ -22,4 +22,8 @@ export interface TradeOrder extends CreateTradeOrder {
      * Id of accepted Order.
      */
     order: string | null;
+    /**
+     * Time of trade order creation.
+     */
+    init_time: string;
 }

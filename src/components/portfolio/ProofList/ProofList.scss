@@ -1,17 +1,11 @@
-.react-json-view {
-  word-break: break-all;
-  overflow-wrap:break-word;
+.proofList {
+  .react-json-view {
 
-  + .react-json-view {
-    margin-top: 20px;
-  }
+    word-break: break-all;
+    overflow-wrap:break-word;
 
-  .object-content {
-    .variable-value {
-      overflow: auto;
-      width: 100%;
+    + .react-json-view {
+      margin-top: 20px;
     }
   }
-
-
 }

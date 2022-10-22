@@ -35,7 +35,7 @@ type PwdInputType = 'password' | 'text';
  */
 export const LoginForm = (): ReactElement => {
     const nodeRef = useRef(null);
-    const userNameInputRef = useRef<HTMLInputElement>(null);
+    const userNameInputRef = useRef<HTMLInputElement | null>(null);
     const { processLogin } = useAuth();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
@@ -65,6 +65,8 @@ export const LoginForm = (): ReactElement => {
         userNameInputRef.current && userNameInputRef.current.focus();
     }, []);
 
+    const { ref, ...restRegister } = register('username', { required: true });
+
     return (
         <Jumbotron className="loginForm">
             <Image
@@ -84,8 +86,11 @@ export const LoginForm = (): ReactElement => {
                             id="userName"
                             placeholder="username"
                             aria-label="username"
-                            {...register('username', { required: true })}
-                            ref={userNameInputRef}
+                            {...restRegister}
+                            ref={e => {
+                                ref(e);
+                                userNameInputRef.current = e;
+                            }}
                         />
                     </InputGroup>
                 </Form.Group>

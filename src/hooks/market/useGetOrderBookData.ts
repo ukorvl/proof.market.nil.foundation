@@ -5,6 +5,7 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { UseSortByColumnProps } from 'react-table';
 import { selectBids, selectAsks, useAppSelector } from 'src/redux';
 
 /**
@@ -16,20 +17,11 @@ type UseGetOrderBookDataReturnType = {
     loadingData: boolean;
 };
 
-enum OrderBookItemType {
-    bid = 'bid',
-    ask = 'ask',
-}
-
-type OrderBookItem = {
-    type: OrderBookItemType;
-    time: number;
-};
-
 enum Accessor {
     bid = 'bid',
     ask = 'ask',
     price = 'price',
+    eval_time = 'eval_time',
 }
 
 /**
@@ -38,16 +30,14 @@ enum Accessor {
 export type OrderBookTableColumn = {
     Header: string;
     accessor: Accessor;
-};
+} & Partial<UseSortByColumnProps<any>>;
 
 /**
  * Data.
  */
 export type OrderBookTableData = {
     [key in Accessor]?: number;
-} & {
-    percent?: number;
-};
+} & Partial<UseSortByColumnProps<any>>;
 
 /**
  * Hook to get order book data structured for rendering table.
@@ -68,6 +58,12 @@ export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
             {
                 Header: 'Price',
                 accessor: Accessor.price,
+                defaultCanSort: true,
+            },
+            {
+                Header: 'Eval_time',
+                accessor: Accessor.eval_time,
+                defaultCanSort: true,
             },
             {
                 Header: 'Ask',

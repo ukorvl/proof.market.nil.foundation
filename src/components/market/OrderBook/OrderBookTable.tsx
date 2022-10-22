@@ -4,13 +4,14 @@
  */
 
 import { ReactElement } from 'react';
-import { Table } from '@nilfoundation/react-components';
-import { useTable } from 'react-table';
+import { Icon, Table, uniqueId } from '@nilfoundation/react-components';
+import { useSortBy, useTable } from 'react-table';
 import { OrderBookTableColumn, OrderBookTableData } from '../../../hooks';
 
 type OrderBookTableProps = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
+    maxRows?: number;
 };
 
 /**
@@ -19,8 +20,15 @@ type OrderBookTableProps = {
  * @param {OrderBookTableProps} props Props.
  * @returns React component.
  */
-export const OrderBookTable = (props: OrderBookTableProps): ReactElement => {
-    const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable({ ...props });
+export const OrderBookTable = ({
+    columns,
+    data,
+    maxRows = 20,
+}: OrderBookTableProps): ReactElement => {
+    const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
+        { columns, data },
+        useSortBy,
+    );
 
     return (
         <Table
@@ -38,6 +46,9 @@ export const OrderBookTable = (props: OrderBookTableProps): ReactElement => {
                             className={`thead-${column.id}`}
                         >
                             {column.render('Header')}
+                            {column && (
+                                <Icon iconName={`fa-solid fa-angle-${column ? 'down' : 'up'}`} />
+                            )}
                         </th>
                     ))}
                 </tr>
@@ -55,7 +66,7 @@ export const OrderBookTable = (props: OrderBookTableProps): ReactElement => {
                                 return (
                                     <td
                                         {...cell.getCellProps()}
-                                        key={cell.value ?? 'd'}
+                                        key={cell.value ?? uniqueId('sss')}
                                     >
                                         {cell.render('Cell')}
                                     </td>

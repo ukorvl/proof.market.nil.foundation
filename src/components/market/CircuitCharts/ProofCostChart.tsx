@@ -9,7 +9,7 @@ import { BarPrice, BarPrices } from 'lightweight-charts';
 /**
  * Props.
  */
-type ChartLegendProps = {
+type ProofCostChartProps = {
     name: string;
     price?: BarPrice | BarPrices;
 };
@@ -20,7 +20,7 @@ type ChartLegendProps = {
  * @param {ChartLegendProps} props Props.
  * @returns React component.
  */
-export const ChartLegend = ({ name, price }: ChartLegendProps): ReactElement => {
+export const ProofCostChart = ({ name, price }: ProofCostChartProps): ReactElement => {
     const displayPrice = () =>
         typeof price === 'object' ? (
             Object.keys(price).map(x => (

@@ -25,7 +25,7 @@ export const CircuitDetailedInfo = (): ReactElement => {
         <DashboardCard>
             <Details title={<h4>Circuit detailed info</h4>}>
                 {currentSelectedCircuit ? (
-                    <div>
+                    <div className="circuitDetailedInfo">
                         <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
                         <h5 className="text-muted">{currentSelectedCircuit.describe}</h5>
                         <p>

@@ -3,24 +3,26 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import colors from 'src/styles/export.module.scss';
+
 /**
  * Json viewer custom theme.
  */
 export const jsonViewerTheme = {
     base00: 'transparent', // background
-    base01: '#d3d3d3',
-    base02: '#3C3C3C', // left vertical bar color
-    base03: '#d3d3d3',
-    base04: '#776475', // helpers text color
-    base05: '#d3d3d3',
-    base06: '#d3d3d3',
-    base07: '#d3d3d3',
-    base08: '#d3d3d3',
-    base09: '#d3d3d3',
-    base0A: '#2677f0',
-    base0B: '#2677f0',
-    base0C: '#2677f0',
-    base0D: '#776475',
-    base0E: '#776475',
-    base0F: '#d3d3d3', // copy icons color
+    base01: colors.secondaryDarkerColor,
+    base02: colors.baseLightColor, // left vertical bar color
+    base03: colors.secondaryDarkerColor,
+    base04: colors.primaryColor, // helpers text color
+    base05: colors.secondaryDarkerColor,
+    base06: colors.secondaryDarkerColor,
+    base07: colors.secondaryDarkerColor,
+    base08: colors.secondaryDarkerColor,
+    base09: colors.secondaryDarkerColor,
+    base0A: colors.infoColor,
+    base0B: colors.infoColor,
+    base0C: colors.infoColor,
+    base0D: colors.primaryColor,
+    base0E: colors.primaryColor,
+    base0F: colors.secondaryDarkerColor, // copy icons color
 };

@@ -19,7 +19,7 @@ import {
 } from '@nilfoundation/react-components';
 import { CreateAsk } from 'src/models';
 import { AddAsk, useAppSelector } from 'src/redux';
-import { createProposal } from 'src/api/market/ProposalsApi';
+import { createAsk } from 'src/api/market/AsksApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**
@@ -52,7 +52,7 @@ export const CreateAskForm = (): ReactElement => {
         setErrorMessage('');
         setProcessing(true);
         try {
-            const ask = await createProposal(data);
+            const ask = await createAsk(data);
             dispatch(AddAsk(ask));
         } catch (e) {
             setErrorMessage('Create proposal error');
@@ -75,7 +75,7 @@ export const CreateAskForm = (): ReactElement => {
                                 {...register('cost', { required: true })}
                             />
                             <InputGroup.Addon>
-                                <Icon iconName="fa-solid fa-square-dollar" />
+                                <Icon iconName="fa-solid fa-dollar-sign" />
                             </InputGroup.Addon>
                         </InputGroup>
                     </Form.Group>

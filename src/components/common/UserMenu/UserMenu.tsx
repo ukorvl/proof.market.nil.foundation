@@ -22,7 +22,7 @@ export const UserMenu = (): ReactElement => {
                 <Icon iconName="fa-solid fa-circle-user" />
                 {user}
             </Dropdown.Button>
-            <Dropdown.Menu className="dropdown-menu-right">
+            <Dropdown.Menu align="right">
                 <Dropdown.Item onSelect={processLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

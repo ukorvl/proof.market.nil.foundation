@@ -23,17 +23,14 @@ export const OrderBook = (): ReactElement => {
             <Details title={<h4>Order book</h4>}>
                 <h5>Orders:</h5>
                 <div className="orderBook">
-                    {data ? (
+                    {data && (
                         <OrderBookTable
                             data={data}
                             columns={columns}
                         />
-                    ) : loadingData ? (
-                        <Spinner grow />
-                    ) : (
-                        'Nothing selected.'
                     )}
                 </div>
+                {loadingData && <Spinner grow />}
             </Details>
         </DashboardCard>
     );

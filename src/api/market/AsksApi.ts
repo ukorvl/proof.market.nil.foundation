@@ -3,8 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Circuit } from '../../models';
-import { getApiRouteForCurrentDB } from '../../dbms';
+import { Ask, CreateAsk } from '../../models';
 import { createBearerHttpClient } from '../common';
 
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
@@ -12,24 +11,28 @@ const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
 /**
- * Get circuits.
+ * Get asks.
  *
- * @returns .
+ * @returns Asks.
  */
-// export const getCircuits = (): Promise<Circuit[]> =>
-//     getApiRouteForCurrentDB()
-//         .get('relation')
-//         .then(r => r.body.result);
-
-export const getCircuits = (): Promise<void> =>
+export const getAsks = (): Promise<Ask[]> =>
     httpFetcher
         .post('cursor', {
             query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
             bindVars: {
-                '@relation': 'circuit',
+                '@relation': 'ask',
                 offset: 0,
-                count: 10,
+                count: 1000,
             },
-            batchSize: 10,
+            batchSize: 1000,
         })
         .then((x: any) => x.result);
+
+/**
+ * Create Ask.
+ *
+ * @param data Ask dto.
+ * @returns Ask.
+ */
+export const createAsk = (data: CreateAsk): Promise<Ask> =>
+    httpFetcher.post('document?relation=proposal', data).then((x: any) => x);

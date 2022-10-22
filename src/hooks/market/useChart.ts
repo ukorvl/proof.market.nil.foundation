@@ -4,7 +4,8 @@
  */
 
 import { RefObject, useEffect, useMemo, useState } from 'react';
-import { createChart, ColorType, CandlestickData } from 'lightweight-charts';
+import { createChart, ColorType, IChartApi } from 'lightweight-charts';
+import colors from 'src/styles/export.module.scss';
 
 /**
  * Return type.
@@ -13,46 +14,37 @@ type UseChartsReturnType = {
     /**
      * Current price value (when user hovers chart) - can be used to render Legend.
      */
-    price?: string;
+    chart?: IChartApi;
 };
 
 /**
  * Default charts theme.
  */
 const chartsTheme = {
-    background: '#151515',
-    lineColor: '#2677f0',
-    upColor: '#57965a',
-    downColor: '#f44336',
+    background: colors.baseDarkerColor,
     fontFamily: 'Roboto',
-    layoutTextColor: '#d3d3d3',
-    gridLineColor: '#3c3c3c',
+    layoutTextColor: colors.secondaryDarkerColor,
+    gridLineColor: colors.baseLightColor,
 };
 
 /**
  * Hook to create charts.
  *
  * @param ref - Ref.
- * @param data - Chart data.
  * @param theme - Theme.
- * @returns {UseChartsReturnType}.
+ * @returns Chart.
  */
-export const useCharts = <T extends HTMLElement>(
+export const useChart = <T extends HTMLElement>(
     ref: RefObject<T>,
-    data?: CandlestickData[],
     theme?: Partial<typeof chartsTheme>,
 ): UseChartsReturnType => {
-    const [price, setPrice] = useState<string>();
+    const [chart, setChart] = useState<IChartApi>();
     const mergedTheme = useMemo(() => {
         return theme ? { ...chartsTheme, ...theme } : chartsTheme;
     }, [theme]);
 
     useEffect(() => {
         if (!ref.current) {
-            return;
-        }
-
-        if (!data || !data.length) {
             return;
         }
 
@@ -70,23 +62,12 @@ export const useCharts = <T extends HTMLElement>(
             },
         });
         chart.timeScale().fitContent();
-
-        const candlesSeries = chart.addCandlestickSeries({
-            upColor: mergedTheme.upColor,
-            downColor: mergedTheme.downColor,
-        });
-        candlesSeries.setData(data);
+        setChart(chart);
 
         const handleResize = () => {
             ref.current && chart.applyOptions({ width: ref.current.clientWidth });
+            chart.timeScale().fitContent();
         };
-
-        chart.subscribeCrosshairMove(param => {
-            if (param.time) {
-                const price = param.seriesPrices.get(candlesSeries);
-                setPrice(price && price.toString());
-            }
-        });
 
         window.addEventListener('resize', handleResize);
 
@@ -95,7 +76,7 @@ export const useCharts = <T extends HTMLElement>(
 
             chart.remove();
         };
-    }, [ref, data, mergedTheme]);
+    }, [ref, mergedTheme]);
 
-    return { price };
+    return { chart };
 };

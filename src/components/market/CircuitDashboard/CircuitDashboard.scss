@@ -15,7 +15,17 @@
 
   .chartLegend {
     position: absolute;
+    width: 250px;
     top: 12px;
     left: 12px;
+    z-index: 2;
+
+    h5 {
+      margin-bottom: 4px;
+    }
+
+    span {
+      display: block;
+    }
   }
 }

@@ -1,9 +1,5 @@
-.detailedTitle {
-  display: flex;
-  align-items: center;
-
-  i {
-    margin-left: 12px;
-    margin-right: 12px;
+.circuitDetailedInfo {
+  .react-json-view {
+    line-break: anywhere;
   }
 }

@@ -5,7 +5,7 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getProposals } from 'src/api';
+import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
 import { UpdateCircuitsList, UpdateAsksList } from '../actions';
 
@@ -25,7 +25,7 @@ export function* AsksSaga(): SagaIterator<void> {
  */
 function* GetAsksSaga(): SagaIterator<void> {
     try {
-        const asks: Ask[] = yield call(getProposals);
+        const asks: Ask[] = yield call(getAsks);
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));

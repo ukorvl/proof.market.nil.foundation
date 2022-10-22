@@ -4,9 +4,10 @@
  */
 
 import { useMemo } from 'react';
-import { CandlestickData } from 'lightweight-charts';
+import { CandlestickData, LineData } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import sum from 'lodash/sum';
 import { useAppSelector, selectAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 
@@ -14,7 +15,11 @@ import { Ask, Bid } from 'src/models';
  * Hook return type.
  */
 type UseGetCircuitDashboardDataReturnType = {
-    data: CandlestickData[];
+    chartData: {
+        candlestickChartData: CandlestickData[];
+        proofGenTimeData: LineData[];
+        proofGenCostData: LineData[];
+    };
     loadingData: boolean;
 };
 
@@ -26,15 +31,22 @@ type UseGetCircuitDashboardDataReturnType = {
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
     const asks = useSelector(selectAsks);
-    const data = useMemo(() => {
-        const grouppedOrders = asks
+    const grouppedOrders = useMemo(() => {
+        return asks
             .filter(x => x.status === 'completed' && !!x.timestamp)
             .reduce(reduceOrdersByDate, {});
-
-        return createCandlestickData(grouppedOrders);
     }, [asks]);
 
-    return { data, loadingData };
+    const chartData = useMemo(
+        () => ({
+            candlestickChartData: getCandlestickData(grouppedOrders),
+            proofGenTimeData: getProofGenTimeData(grouppedOrders),
+            proofGenCostData: getProofGenTimeData(grouppedOrders),
+        }),
+        [grouppedOrders],
+    );
+
+    return { chartData, loadingData };
 };
 
 /**
@@ -43,7 +55,7 @@ export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnTy
  * @param ordersGrouppedByDate Orders array.
  * @returns Array of candleStick data.
  */
-const createCandlestickData = <T extends Bid | Ask>(
+const getCandlestickData = <T extends Bid | Ask>(
     ordersGrouppedByDate: Record<string, T[]>,
 ): CandlestickData[] => {
     return Object.keys(ordersGrouppedByDate).map(x => {
@@ -52,7 +64,7 @@ const createCandlestickData = <T extends Bid | Ask>(
         const high = Math.max(...ordersCosts);
         const low = Math.min(...ordersCosts);
         const open = ordersCosts[0];
-        const close = ordersCosts[-1];
+        const close = ordersCosts[ordersCosts.length - 1];
 
         return {
             time: x,
@@ -61,6 +73,23 @@ const createCandlestickData = <T extends Bid | Ask>(
             open,
             close,
         };
+    });
+};
+
+/**
+ * Creates line data {@link LineData} array from orders, groupped by date.
+ *
+ * @param ordersGrouppedByDate Orders array.
+ * @returns Array of line data.
+ */
+const getProofGenTimeData = <T extends Bid | Ask>(
+    ordersGrouppedByDate: Record<string, T[]>,
+): LineData[] => {
+    return Object.keys(ordersGrouppedByDate).map(x => {
+        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
+        const meanEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
+
+        return { time: x, value: meanEvalTime };
     });
 };
 

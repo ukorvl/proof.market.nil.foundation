@@ -26,16 +26,16 @@ export const ProofList = (): ReactElement => {
             {loadingProofs && !proofList.length ? (
                 <Spinner grow />
             ) : (
-                <ListGroup className="currenciesList">
+                <ListGroup className="proofList">
                     {proofList.map(x => (
-                        <ReactJson
-                            src={x}
-                            key={x.id}
-                            collapsed
-                            name={null}
-                            displayDataTypes={false}
-                            theme={jsonViewerTheme}
-                        />
+                        <ListGroup.Item key={x.id}>
+                            <ReactJson
+                                src={x}
+                                name={null}
+                                displayDataTypes={false}
+                                theme={jsonViewerTheme}
+                            />
+                        </ListGroup.Item>
                     ))}
                 </ListGroup>
             )}

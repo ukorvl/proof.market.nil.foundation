@@ -12,7 +12,7 @@ import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/reac
 import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
-import { createBid } from 'src/api/market/OrdersApi';
+import { createBid } from 'src/api/market/BidsApi';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**

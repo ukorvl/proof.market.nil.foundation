@@ -4,7 +4,6 @@
  */
 
 import { ReactElement } from 'react';
-import { Row, Col } from '@nilfoundation/react-components';
 import { LoginContainer, LoginForm } from '../components';
 
 /**
@@ -14,15 +13,7 @@ import { LoginContainer, LoginForm } from '../components';
  */
 const LoginView = (): ReactElement => (
     <LoginContainer>
-        <Row>
-            <Col
-                xs={12}
-                sm={5}
-                md={3}
-            >
-                <LoginForm />
-            </Col>
-        </Row>
+        <LoginForm />
     </LoginContainer>
 );
 
