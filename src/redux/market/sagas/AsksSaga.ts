@@ -7,7 +7,7 @@ import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
-import { UpdateCircuitsList, UpdateAsksList } from '../actions';
+import { UpdateCircuitsList, UpdateAsksList, UpdateIsLoadingAsks } from '../actions';
 
 const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL);
 
@@ -28,6 +28,7 @@ export function* AsksSaga(): SagaIterator<void> {
  */
 function* GetAsksSaga(): SagaIterator<void> {
     try {
+        yield put(UpdateIsLoadingAsks(true));
         const asks: Ask[] = yield call(getAsks);
 
         if (asks !== undefined) {
@@ -35,6 +36,8 @@ function* GetAsksSaga(): SagaIterator<void> {
         }
     } catch (e) {
         // Do nothing
+    } finally {
+        yield put(UpdateIsLoadingAsks(false));
     }
 }
 

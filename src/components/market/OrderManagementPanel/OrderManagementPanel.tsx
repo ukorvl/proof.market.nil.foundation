@@ -8,7 +8,7 @@ import { Col } from '@nilfoundation/react-components';
 import { OrderManagementPanelContext } from './OrderManagementPanelContext';
 import { OrderBook } from '../OrderBook';
 import { CreateOrdersPanel } from '../CreateOrdersPanel';
-import './OrderManagementPanel.scss';
+import { CostAndEvalTime } from './CostAndEvalTime';
 
 /**
  * Order management panel.
@@ -17,11 +17,11 @@ import './OrderManagementPanel.scss';
  */
 export const OrderManagementPanel = (): ReactElement => {
     const [processing, setProcessing] = useState(false);
-    const [selectedCost, setSelectedCost] = useState<number>();
+    const [selectedValues, setSelectedValues] = useState<CostAndEvalTime>();
 
     return (
         <OrderManagementPanelContext.Provider
-            value={{ processing, setProcessing, selectedCost, setSelectedCost }}
+            value={{ processing, setProcessing, selectedValues, setSelectedValues }}
         >
             <Col
                 xs={12}

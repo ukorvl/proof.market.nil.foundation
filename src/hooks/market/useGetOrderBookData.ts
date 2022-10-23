@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { UseSortByColumnProps } from 'react-table';
+import { Ask, Bid, ColumnAccessor, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { selectBids, selectAsks, useAppSelector } from 'src/redux';
 
 /**
@@ -17,80 +17,100 @@ type UseGetOrderBookDataReturnType = {
     loadingData: boolean;
 };
 
-enum Accessor {
-    bid = 'bid',
-    ask = 'ask',
-    price = 'price',
-    eval_time = 'eval_time',
-}
-
-/**
- * Column.
- */
-export type OrderBookTableColumn = {
-    Header: string;
-    accessor: Accessor;
-} & Partial<UseSortByColumnProps<any>>;
-
-/**
- * Data.
- */
-export type OrderBookTableData = {
-    [key in Accessor]?: number;
-} & Partial<UseSortByColumnProps<any>>;
-
 /**
  * Hook to get order book data structured for rendering table.
  *
+ * @param itemsLimit - Max count of orderBook items of one type (itemsLimit * 2 overall).
  * @returns Data to render order book table.
  */
-export const useGetOrderBookData = (): UseGetOrderBookDataReturnType => {
-    const loadingData = useAppSelector(s => s.circuitsState.isLoading);
+export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnType => {
+    const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectAsks);
     const bids = useSelector(selectBids);
 
     const columns = useMemo(
-        () => [
+        (): OrderBookTableColumn[] => [
             {
                 Header: 'Bid',
-                accessor: Accessor.bid,
+                accessor: ColumnAccessor.bid,
+                disableSortBy: true,
             },
             {
-                Header: 'Price',
-                accessor: Accessor.price,
-                defaultCanSort: true,
+                Header: 'Cost',
+                accessor: ColumnAccessor.cost,
             },
             {
                 Header: 'Eval_time',
-                accessor: Accessor.eval_time,
-                defaultCanSort: true,
+                accessor: ColumnAccessor.eval_time,
             },
             {
                 Header: 'Ask',
-                accessor: Accessor.ask,
+                accessor: ColumnAccessor.ask,
+                disableSortBy: true,
             },
         ],
         [],
     );
 
+    const asksData = useMemo(() => {
+        return createOrderBookData(
+            asks.filter(x => x.status === 'created').reduce(reduceOrdersByCost, {}),
+            'ask',
+        );
+    }, [asks]);
+
+    const bidsData = useMemo(() => {
+        return createOrderBookData(
+            bids.filter(x => x.status === 'created').reduce(reduceOrdersByCost, {}),
+            'bid',
+        );
+    }, [bids]);
+
     const data = useMemo(
-        () => [
-            {
-                ask: 321,
-                price: 1000,
-                id: 2,
-            },
-            {
-                ask: 321,
-                price: 3000,
-            },
-            {
-                bid: 1233,
-                price: 4000,
-            },
-        ],
-        [asks, bids],
+        (): OrderBookTableData[] =>
+            asksData.slice(0, itemsLimit).concat(bidsData.slice(0, itemsLimit)),
+        [asksData, bidsData, itemsLimit],
     );
 
     return { columns, data, loadingData };
+};
+
+/**
+ * Map groupped trade orders to order book data.
+ *
+ * @param grouppedOrders Trande order.
+ * @param orderType Bid or Ask.
+ * @returns Order book data.
+ */
+const createOrderBookData = <T extends Ask | Bid>(
+    grouppedOrders: Record<string, T[]>,
+    orderType: 'bid' | 'ask',
+): OrderBookTableData[] => {
+    return Object.keys(grouppedOrders).map(x => {
+        return {
+            cost: x,
+            eval_time: x,
+            [orderType]: grouppedOrders[x].length.toString(),
+        };
+    });
+};
+
+/**
+ * Takes orders array and returns dict, where keys are costs, and values are arrays of orders.
+ *
+ * @param previousValue Initial value.
+ * @param currentValue Current value.
+ * @returns Orders, grouped by date.
+ */
+const reduceOrdersByCost = <T extends Bid | Ask>(
+    previousValue: Record<string, T[]>,
+    currentValue: T,
+) => {
+    const cost = currentValue.cost.toFixed(2);
+
+    if (!previousValue[cost]) previousValue[cost] = [];
+
+    previousValue[cost].push(currentValue);
+
+    return previousValue;
 };

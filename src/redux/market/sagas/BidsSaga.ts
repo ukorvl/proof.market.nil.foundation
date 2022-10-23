@@ -7,7 +7,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getBids } from 'src/api';
 import { Bid } from 'src/models';
-import { UpdateCircuitsList, UpdateBidsList } from '../actions';
+import { UpdateCircuitsList, UpdateBidsList, UpdateIsLoadingBids } from '../actions';
 
 /**
  * Bids main saga.
@@ -25,6 +25,7 @@ export function* BidsSaga(): SagaIterator<void> {
  */
 function* GetBidsSaga(): SagaIterator<void> {
     try {
+        yield put(UpdateIsLoadingBids(true));
         const bids: Bid[] = yield call(getBids);
 
         if (bids !== undefined) {
@@ -32,5 +33,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         }
     } catch (e) {
         // Do nothing
+    } finally {
+        yield put(UpdateIsLoadingBids(false));
     }
 }

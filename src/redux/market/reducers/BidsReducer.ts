@@ -12,6 +12,7 @@ import { UpdateBidsList, AddBid } from '../actions';
  */
 export type BidsReducerState = {
     bids: Bid[];
+    isLoading: boolean;
 };
 
 /**
@@ -19,6 +20,7 @@ export type BidsReducerState = {
  */
 const initialState: BidsReducerState = {
     bids: [],
+    isLoading: false,
 };
 
 /**

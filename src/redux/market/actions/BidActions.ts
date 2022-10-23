@@ -9,9 +9,14 @@ import { Bid } from 'src/models';
 /**
  * Update bids list.
  */
-export const UpdateBidsList = createAction<Bid[]>('@orders/UPDATE_BIDS_LIST');
+export const UpdateBidsList = createAction<Bid[]>('@bids/UPDATE_BIDS_LIST');
 
 /**
  * Add bid.
  */
-export const AddBid = createAction<Bid>('@orders/ADD_BID');
+export const AddBid = createAction<Bid>('@bids/ADD_BID');
+
+/**
+ * Update bids loading state.
+ */
+export const UpdateIsLoadingBids = createAction<boolean>('@bids/UPDATE_IS_LOADING');

@@ -4,14 +4,18 @@
  */
 
 import { ReactElement } from 'react';
-import { Icon, Table, uniqueId } from '@nilfoundation/react-components';
+import { Table } from '@nilfoundation/react-components';
 import { useSortBy, useTable } from 'react-table';
-import { OrderBookTableColumn, OrderBookTableData } from '../../../hooks';
+import { OrderBookTableColumn, OrderBookTableData } from 'src/models';
+import { OrderBookTableHeader } from './OrderBookTableHeader';
+import { OrderBookTableRow } from './OrderBookTableRow';
 
+/**
+ * Props.
+ */
 type OrderBookTableProps = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
-    maxRows?: number;
 };
 
 /**
@@ -20,15 +24,15 @@ type OrderBookTableProps = {
  * @param {OrderBookTableProps} props Props.
  * @returns React component.
  */
-export const OrderBookTable = ({
-    columns,
-    data,
-    maxRows = 20,
-}: OrderBookTableProps): ReactElement => {
+export const OrderBookTable = ({ columns, data }: OrderBookTableProps): ReactElement => {
     const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
         { columns, data },
         useSortBy,
     );
+
+    if (data.length === 0) {
+        return <h5>No orders.</h5>;
+    }
 
     return (
         <Table
@@ -40,16 +44,10 @@ export const OrderBookTable = ({
             <thead>
                 <tr>
                     {headers.map(column => (
-                        <th
-                            {...column.getHeaderProps()}
+                        <OrderBookTableHeader
                             key={column.id}
-                            className={`thead-${column.id}`}
-                        >
-                            {column.render('Header')}
-                            {column && (
-                                <Icon iconName={`fa-solid fa-angle-${column ? 'down' : 'up'}`} />
-                            )}
-                        </th>
+                            column={column}
+                        />
                     ))}
                 </tr>
             </thead>
@@ -57,22 +55,10 @@ export const OrderBookTable = ({
                 {rows.map(row => {
                     prepareRow(row);
                     return (
-                        <tr
-                            {...row.getRowProps()}
+                        <OrderBookTableRow
                             key={row.id}
-                            id={row.id}
-                        >
-                            {row.cells.map(cell => {
-                                return (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        key={cell.value ?? uniqueId('sss')}
-                                    >
-                                        {cell.render('Cell')}
-                                    </td>
-                                );
-                            })}
-                        </tr>
+                            row={row}
+                        />
                     );
                 })}
             </tbody>

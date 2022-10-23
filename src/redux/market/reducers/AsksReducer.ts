@@ -12,6 +12,7 @@ import { UpdateAsksList, AddAsk } from '../actions';
  */
 export type AsksReducerState = {
     asks: Ask[];
+    isLoading: boolean;
 };
 
 /**
@@ -19,6 +20,7 @@ export type AsksReducerState = {
  */
 const initialState: AsksReducerState = {
     asks: [],
+    isLoading: false,
 };
 
 /**

@@ -5,9 +5,9 @@
 
 import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
+import { useGetOrderBookData } from 'src/hooks';
 import { OrderBookTable } from './OrderBookTable';
 import { Details, DashboardCard } from '../../common';
-import { useGetOrderBookData } from '../../../hooks';
 import './OrderBook.scss';
 
 /**
@@ -21,7 +21,6 @@ export const OrderBook = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Order book</h4>}>
-                <h5>Orders:</h5>
                 <div className="orderBook">
                     {data && (
                         <OrderBookTable

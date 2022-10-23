@@ -1,12 +1,13 @@
 @import '../../../styles/constants.scss';
 
 .orderBook {
-  max-height: 400px;
+  max-height: 600px;
   overflow-y: auto;
 }
 
 .orderBookTable {
   margin-bottom: 0;
+  margin-top: 2px;
 
   tbody td {
     border-color:  $c-base-light!important;
@@ -17,14 +18,25 @@
   th {
     border-bottom: 1px solid $c-base-light!important;
     text-align: center;
+    color: $c-secondary-darker;
 
     > i {
       margin-left: 8px;
+    }
+
+    &.sortableColumn {
+      color: $c-secondary;
+
+      &:hover,
+      &:focus {
+        background-color: $c-base-light;
+      }
     }
   }
 
   tbody tr {
     cursor: pointer!important;
+    position: relative;
 
     &:hover {
       background-color: $c-base;

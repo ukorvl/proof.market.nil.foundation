@@ -4,6 +4,7 @@
  */
 
 import { createContext } from 'react';
+import { CostAndEvalTime } from './CostAndEvalTime';
 
 /**
  * Context type.
@@ -11,8 +12,8 @@ import { createContext } from 'react';
 type OrderManagementPanelContextModel = {
     processing: boolean;
     setProcessing: (processing: boolean) => void;
-    selectedCost?: number;
-    setSelectedCost: (cost: number) => void;
+    selectedValues?: CostAndEvalTime;
+    setSelectedValues: (cost: CostAndEvalTime) => void;
 };
 
 /**

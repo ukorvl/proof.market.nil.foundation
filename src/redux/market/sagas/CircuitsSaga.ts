@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, delay, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getCircuits } from 'src/api';
 import { Circuit } from 'src/models';
@@ -16,7 +16,6 @@ import {
 import { RootStateType } from '../../RootStateType';
 import { UpdateUser } from '../../login';
 
-const revalidateCurcuitsInterval = process.env.REACT_APP_UPDATE_CIRCUITS_INFO_INTERVAL;
 const selectUser = (s: RootStateType) => s.userState.user;
 const selectetCurrentCircuitId = (s: RootStateType) => s.circuitsState.selectedid;
 
@@ -55,8 +54,6 @@ function* GetCircuitsSaga(): SagaIterator<void> {
         yield put(UpdateIsLoadingCircuits(false));
         yield put(UpdateCircuitsError(true));
     }
-
-    yield delay(Number(revalidateCurcuitsInterval));
 }
 
 /**

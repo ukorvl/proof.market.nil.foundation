@@ -9,9 +9,14 @@ import { Ask } from 'src/models';
 /**
  * Update asks list.
  */
-export const UpdateAsksList = createAction<Ask[]>('@proposals/UPDATE_ASKS_LIST');
+export const UpdateAsksList = createAction<Ask[]>('@asks/UPDATE_ASKS_LIST');
 
 /**
  * Add ask.
  */
-export const AddAsk = createAction<Ask>('@proposals/ADD_ASK');
+export const AddAsk = createAction<Ask>('@asks/ADD_ASK');
+
+/**
+ * Update asks loading state.
+ */
+export const UpdateIsLoadingAsks = createAction<boolean>('@asks/UPDATE_IS_LOADING');
