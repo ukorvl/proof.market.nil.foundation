@@ -4,7 +4,6 @@
  */
 
 import { ReactElement, useContext } from 'react';
-import { uniqueId } from '@nilfoundation/react-components';
 import { Row } from 'react-table';
 import { OrderBookTableData } from 'src/models';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
@@ -39,10 +38,11 @@ export const OrderBookTableRow = ({ row }: OrderBookTableRowProps): ReactElement
             tabIndex={0}
         >
             {row.cells.map(cell => {
+                const { key, ...rest } = cell.getCellProps();
                 return (
                     <td
-                        {...cell.getCellProps()}
-                        key={cell.value ?? uniqueId('cell')}
+                        key={key}
+                        {...rest}
                     >
                         {cell.render('Cell')}
                     </td>

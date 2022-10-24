@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
+import { OrderManagementPanelContext } from '../OrderManagementPanel';
 
 /**
  * Props.
@@ -28,10 +29,22 @@ export const CreateTradeOrderForm = ({
     errorMessage,
 }: CreateTradeOrderFormProps): ReactElement => {
     const nodeRef = useRef(null);
+    const { selectedValues } = useContext(OrderManagementPanelContext);
     const {
         register,
+        setValue,
         formState: { isSubmitting, isValid, errors },
     } = useFormContext<CreateTradeOrder>();
+
+    useEffect(() => {
+        if (!selectedValues) {
+            return;
+        }
+
+        const setValueOpts = { shouldDirty: true, shouldValidate: true };
+        setValue('cost', selectedValues.cost, setValueOpts);
+        setValue('eval_time', selectedValues.eval_time, setValueOpts);
+    }, [selectedValues, setValue]);
 
     return (
         <>

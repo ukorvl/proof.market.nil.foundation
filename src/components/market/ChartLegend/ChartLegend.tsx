@@ -29,11 +29,11 @@ export const ChartLegend = ({ name, price }: ChartLegendProps): ReactElement => 
                     className="text-muted"
                     key={x}
                 >
-                    {`${x}: ${price[x as keyof BarPrices]}`}
+                    {`${x}: ${price[x as keyof BarPrices]?.toFixed(2)}`}
                 </span>
             ))
         ) : (
-            <span className="text-muted">{price}</span>
+            <span className="text-muted">{price?.toFixed(2)}</span>
         );
 
     return (

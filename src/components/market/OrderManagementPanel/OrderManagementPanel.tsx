@@ -5,10 +5,10 @@
 
 import { ReactElement, useState } from 'react';
 import { Col } from '@nilfoundation/react-components';
+import { CostAndEvalTime } from 'src/models';
 import { OrderManagementPanelContext } from './OrderManagementPanelContext';
 import { OrderBook } from '../OrderBook';
 import { CreateOrdersPanel } from '../CreateOrdersPanel';
-import { CostAndEvalTime } from './CostAndEvalTime';
 
 /**
  * Order management panel.

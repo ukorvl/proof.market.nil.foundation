@@ -5,7 +5,14 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Ask, Bid, ColumnAccessor, OrderBookTableColumn, OrderBookTableData } from 'src/models';
+import {
+    Ask,
+    Bid,
+    ColumnAccessor,
+    CostAndEvalTime,
+    OrderBookTableColumn,
+    OrderBookTableData,
+} from 'src/models';
 import { selectBids, selectAsks, useAppSelector } from 'src/redux';
 
 /**
@@ -16,6 +23,11 @@ type UseGetOrderBookDataReturnType = {
     data: OrderBookTableData[];
     loadingData: boolean;
 };
+
+/**
+ * Groupped orders map.
+ */
+type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
 
 /**
  * Hook to get order book data structured for rendering table.
@@ -54,14 +66,18 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
 
     const asksData = useMemo(() => {
         return createOrderBookData(
-            asks.filter(x => x.status === 'created').reduce(reduceOrdersByCost, {}),
+            asks
+                .filter(x => x.status === 'created')
+                .reduce(reduceOrdersByCostAndEvalTime, new Map()),
             'ask',
         );
     }, [asks]);
 
     const bidsData = useMemo(() => {
         return createOrderBookData(
-            bids.filter(x => x.status === 'created').reduce(reduceOrdersByCost, {}),
+            bids
+                .filter(x => x.status === 'created')
+                .reduce(reduceOrdersByCostAndEvalTime, new Map()),
             'bid',
         );
     }, [bids]);
@@ -82,17 +98,23 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
  * @param orderType Bid or Ask.
  * @returns Order book data.
  */
-const createOrderBookData = <T extends Ask | Bid>(
-    grouppedOrders: Record<string, T[]>,
+const createOrderBookData = (
+    grouppedOrders: GrouppedOrdersMap,
     orderType: 'bid' | 'ask',
 ): OrderBookTableData[] => {
-    return Object.keys(grouppedOrders).map(x => {
-        return {
-            cost: x,
-            eval_time: x,
-            [orderType]: grouppedOrders[x].length.toString(),
-        };
+    const result: OrderBookTableData[] = [];
+
+    grouppedOrders.forEach((value, key) => {
+        const parsedKey: CostAndEvalTime = JSON.parse(key);
+
+        result.push({
+            cost: parsedKey?.cost.toString(),
+            eval_time: parsedKey?.eval_time.toString() || '',
+            [orderType]: value.length,
+        });
     });
+
+    return result;
 };
 
 /**
@@ -102,15 +124,22 @@ const createOrderBookData = <T extends Ask | Bid>(
  * @param currentValue Current value.
  * @returns Orders, grouped by date.
  */
-const reduceOrdersByCost = <T extends Bid | Ask>(
-    previousValue: Record<string, T[]>,
+const reduceOrdersByCostAndEvalTime = <T extends Bid | Ask>(
+    previousValue: GrouppedOrdersMap,
     currentValue: T,
 ) => {
-    const cost = currentValue.cost.toFixed(2);
+    const mapKey = JSON.stringify({
+        cost: currentValue.cost,
+        eval_time: currentValue.eval_time,
+    });
 
-    if (!previousValue[cost]) previousValue[cost] = [];
+    const value = previousValue.get(mapKey);
 
-    previousValue[cost].push(currentValue);
+    if (!value) {
+        previousValue.set(mapKey, [currentValue]);
+    } else {
+        previousValue.set(mapKey, [...value, currentValue]);
+    }
 
     return previousValue;
 };
