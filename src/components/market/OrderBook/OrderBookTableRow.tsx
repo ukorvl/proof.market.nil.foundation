@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
+import { KeyboardEventHandler, ReactElement, useContext } from 'react';
 import { Row } from 'react-table';
 import { OrderBookTableData } from 'src/models';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
@@ -30,11 +30,20 @@ export const OrderBookTableRow = ({ row }: OrderBookTableRowProps): ReactElement
         });
     };
 
+    const onKeyDownHandler: KeyboardEventHandler = e => {
+        if (e.key !== 'Enter' && e.key !== ' ') {
+            return;
+        }
+
+        e.preventDefault();
+        onClickRow();
+    };
+
     return (
         <tr
             {...row.getRowProps()}
             onClick={onClickRow}
-            onKeyDown={onClickRow}
+            onKeyDown={onKeyDownHandler}
             tabIndex={0}
         >
             {row.cells.map(cell => {
