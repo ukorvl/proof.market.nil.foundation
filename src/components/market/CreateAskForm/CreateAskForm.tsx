@@ -40,7 +40,7 @@ export const CreateAskForm = (): ReactElement => {
             const ask = await createAsk(data);
             dispatch(AddAsk(ask));
         } catch (e) {
-            setErrorMessage('Create proposal error');
+            setErrorMessage(`Create order error`);
         } finally {
             setProcessing(false);
         }

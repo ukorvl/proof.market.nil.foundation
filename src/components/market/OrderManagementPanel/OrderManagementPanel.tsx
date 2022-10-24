@@ -27,13 +27,13 @@ export const OrderManagementPanel = (): ReactElement => {
                 xs={12}
                 md={8}
             >
-                <CreateOrdersPanel />
+                <OrderBook />
             </Col>
             <Col
                 xs={12}
                 md={4}
             >
-                <OrderBook />
+                <CreateOrdersPanel />
             </Col>
         </OrderManagementPanelContext.Provider>
     );

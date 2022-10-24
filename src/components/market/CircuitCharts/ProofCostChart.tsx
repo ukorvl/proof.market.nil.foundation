@@ -47,7 +47,9 @@ export const ProofCostChart = (): ReactElement => {
         chart.timeScale().fitContent();
 
         return () => {
+            candlesSeries && chart.removeSeries(candlesSeries);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
+            setPrice(undefined);
         };
     }, [candlestickChartData, chart]);
 

@@ -84,7 +84,7 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
 
     const data = useMemo(
         (): OrderBookTableData[] =>
-            asksData.slice(0, itemsLimit).concat(bidsData.slice(0, itemsLimit)),
+            asksData.slice(-itemsLimit).concat(bidsData.slice(0, itemsLimit)),
         [asksData, bidsData, itemsLimit],
     );
 

@@ -35,4 +35,4 @@ export const getBids = (): Promise<Bid[]> =>
  * @returns Bid.
  */
 export const createBid = (data: CreateBid): Promise<Bid> =>
-    httpFetcher.post('document?relation=order', data).then((x: any) => x);
+    httpFetcher.post('document?relation=bid', data).then((x: any) => x);

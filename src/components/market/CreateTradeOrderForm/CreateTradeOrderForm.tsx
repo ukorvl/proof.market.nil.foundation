@@ -29,7 +29,7 @@ export const CreateTradeOrderForm = ({
     errorMessage,
 }: CreateTradeOrderFormProps): ReactElement => {
     const nodeRef = useRef(null);
-    const { selectedValues } = useContext(OrderManagementPanelContext);
+    const { selectedValues, setSelectedValues } = useContext(OrderManagementPanelContext);
     const {
         register,
         setValue,
@@ -44,7 +44,9 @@ export const CreateTradeOrderForm = ({
         const setValueOpts = { shouldDirty: true, shouldValidate: true };
         setValue('cost', selectedValues.cost, setValueOpts);
         setValue('eval_time', selectedValues.eval_time, setValueOpts);
-    }, [selectedValues, setValue]);
+        setSelectedValues(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedValues]);
 
     return (
         <>

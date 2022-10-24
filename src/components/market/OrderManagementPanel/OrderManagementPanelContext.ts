@@ -13,7 +13,7 @@ type OrderManagementPanelContextModel = {
     processing: boolean;
     setProcessing: (processing: boolean) => void;
     selectedValues?: CostAndEvalTime;
-    setSelectedValues: (cost: CostAndEvalTime) => void;
+    setSelectedValues: (costAndEvalTime?: CostAndEvalTime) => void;
 };
 
 /**

@@ -73,10 +73,15 @@ export const useChart = <T extends HTMLElement>(
 
         return () => {
             window.removeEventListener('resize', handleResize);
-
-            chart.remove();
         };
     }, [ref, mergedTheme]);
+
+    useEffect(() => {
+        return () => {
+            chart && chart.remove();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return { chart };
 };

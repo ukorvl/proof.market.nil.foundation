@@ -45,7 +45,9 @@ export const ProofTimeGenChart = (): ReactElement => {
         chart.timeScale().fitContent();
 
         return () => {
+            lineSeries && chart.removeSeries(lineSeries);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
+            setPrice(undefined);
         };
     }, [proofGenTimeData, chart]);
 
