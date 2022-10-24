@@ -55,7 +55,7 @@ export const ProofTimeGenChart = (): ReactElement => {
         <ChartTemplate
             loadingData={loadingData}
             price={price}
-            chartName="Proof Gen Time"
+            chartName="Proof Gen Time, ms"
             ref={ref}
         />
     );
