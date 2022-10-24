@@ -8,7 +8,7 @@ import { Details } from 'src/components';
 import { ChartType } from 'src/enums';
 import { DashboardCard } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
-import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
+import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../CircuitCharts';
 
 /**
  * Circuit dashboard.
@@ -45,6 +45,8 @@ const ChartFactory = ({ chartType }: { chartType: ChartType }) => {
             return <ProofCostChart />;
         case ChartType.proofGetTimeChart:
             return <ProofTimeGenChart />;
+        case ChartType.proofGenCostChart:
+            return <ProofGenCostChart />;
         default:
             return <></>;
     }

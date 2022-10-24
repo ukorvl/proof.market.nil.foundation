@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement, useContext } from 'react';
+import { CSSProperties, KeyboardEventHandler, ReactElement, useContext } from 'react';
 import { Row } from 'react-table';
 import { OrderBookTableData } from 'src/models';
 import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderBookTableCell } from './OrderBookTableCell';
 
 /**
  * Props.
@@ -45,16 +46,15 @@ export const OrderBookTableRow = ({ row }: OrderBookTableRowProps): ReactElement
             onClick={onClickRow}
             onKeyDown={onKeyDownHandler}
             tabIndex={0}
+            style={{ '--bar-percent': `value` } as CSSProperties}
         >
             {row.cells.map(cell => {
-                const { key, ...rest } = cell.getCellProps();
+                const { key } = cell.getCellProps();
                 return (
-                    <td
+                    <OrderBookTableCell
                         key={key}
-                        {...rest}
-                    >
-                        {cell.render('Cell')}
-                    </td>
+                        cell={cell}
+                    />
                 );
             })}
         </tr>

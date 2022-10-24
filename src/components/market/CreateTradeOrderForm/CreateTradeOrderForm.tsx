@@ -55,7 +55,7 @@ export const CreateTradeOrderForm = ({
                 <Input
                     type="number"
                     id="cost"
-                    {...register('cost', { required: true })}
+                    {...register('cost', { required: true, min: 0 })}
                 />
             </Form.Group>
             <Form.Group hasError={!!errors['eval_time']}>
@@ -63,7 +63,7 @@ export const CreateTradeOrderForm = ({
                 <Input
                     type="number"
                     id="eval_time"
-                    {...register('eval_time', { required: true })}
+                    {...register('eval_time', { required: true, min: 0 })}
                 />
             </Form.Group>
             <Form.Group hasError={!!errors['wait_period']}>
@@ -71,7 +71,7 @@ export const CreateTradeOrderForm = ({
                 <Input
                     type="number"
                     id="wait_period"
-                    {...register('wait_period', { required: true })}
+                    {...register('wait_period', { required: true, min: 0 })}
                 />
             </Form.Group>
             <Button

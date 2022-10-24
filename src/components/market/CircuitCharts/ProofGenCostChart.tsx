@@ -10,16 +10,16 @@ import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from './ChartTemplate';
 
 /**
- * Proof cost chart.
+ * Proof gen cost chart.
  *
  * @returns React component.
  */
-export const ProofCostChart = (): ReactElement => {
+export const ProofGenCostChart = (): ReactElement => {
     const [price, setPrice] = useState<BarPrice | BarPrices>();
     const ref = useRef<HTMLDivElement>(null);
     const { chart } = useChart(ref);
     const {
-        chartData: { candlestickChartData },
+        chartData: { proofGenCostData },
         loadingData,
     } = useGetCircuitDashboardData();
 
@@ -28,17 +28,15 @@ export const ProofCostChart = (): ReactElement => {
             return;
         }
 
-        const candlesSeries = chart.addCandlestickSeries({
-            upColor: colors.successColor,
-            downColor: colors.dangerColor,
-            priceLineWidth: 2,
+        const lineSeries = chart.addLineSeries({
+            color: colors.infoColor,
         });
 
-        candlesSeries.setData(candlestickChartData);
+        lineSeries.setData(proofGenCostData);
 
         const crosshairMoveHandler: MouseEventHandler = param => {
             if (param.time) {
-                const price = param.seriesPrices.get(candlesSeries);
+                const price = param.seriesPrices.get(lineSeries);
                 price && setPrice(price);
             }
         };
@@ -47,17 +45,17 @@ export const ProofCostChart = (): ReactElement => {
         chart.timeScale().fitContent();
 
         return () => {
-            candlesSeries && chart.removeSeries(candlesSeries);
+            lineSeries && chart.removeSeries(lineSeries);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
             setPrice(undefined);
         };
-    }, [candlestickChartData, chart]);
+    }, [proofGenCostData, chart]);
 
     return (
         <ChartTemplate
             loadingData={loadingData}
             price={price}
-            chartName="Proof cost, USD"
+            chartName="Proof Gen Cost, USD"
             ref={ref}
         />
     );

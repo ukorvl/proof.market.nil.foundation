@@ -4,4 +4,5 @@
  */
 
 export * from './ProofCostChart';
-export * from './ProofTimeGenChart';
+export * from './ProofGenTimeChart';
+export * from './ProofGenCostChart';
