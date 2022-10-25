@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import {
-    CurcuitsList,
+    CircuitsList,
     CircuitDetailedInfo,
     OrderManagementPanel,
     CircuitDashboard,
@@ -27,7 +27,7 @@ const MarketView = (): ReactElement => (
                 xs={12}
                 md={3}
             >
-                <CurcuitsList />
+                <CircuitsList />
                 <CircuitDetailedInfo />
             </Col>
             <Col
