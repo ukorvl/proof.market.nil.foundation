@@ -4,8 +4,9 @@
  */
 
 import { RefObject, useEffect, useMemo, useState } from 'react';
-import { createChart, ColorType, IChartApi } from 'lightweight-charts';
+import { createChart, ColorType, IChartApi, UTCTimestamp } from 'lightweight-charts';
 import colors from 'src/styles/export.module.scss';
+import { formatUTCTimestamp } from 'src/utils';
 
 /**
  * Return type.
@@ -59,6 +60,12 @@ export const useChart = <T extends HTMLElement>(
             grid: {
                 vertLines: { color: mergedTheme.gridLineColor },
                 horzLines: { color: mergedTheme.gridLineColor },
+            },
+            localization: {
+                timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY hh:mm"),
+            },
+            timeScale: {
+                tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM hh:mm'),
             },
         });
         chart.timeScale().fitContent();

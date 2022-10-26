@@ -4,12 +4,12 @@
  */
 
 import { useMemo } from 'react';
-import { CandlestickData, LineData } from 'lightweight-charts';
+import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
-import dayjs from 'dayjs';
 import sum from 'lodash/sum';
 import { useAppSelector, selectAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
+import { getUTCTimestamp } from 'src/utils';
 
 /**
  * Hook return type.
@@ -67,7 +67,7 @@ const getCandlestickData = <T extends Bid | Ask>(
         const close = ordersCosts[ordersCosts.length - 1];
 
         return {
-            time: x,
+            time: Number(x) as UTCTimestamp,
             high,
             low,
             open,
@@ -89,7 +89,7 @@ const getProofGenTimeData = <T extends Bid | Ask>(
         const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
         const meanEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
 
-        return { time: x, value: meanEvalTime };
+        return { time: Number(x) as UTCTimestamp, value: meanEvalTime };
     });
 };
 
@@ -104,7 +104,7 @@ const reduceOrdersByDate = <T extends Bid | Ask>(
     previousValue: Record<string, T[]>,
     currentValue: T,
 ) => {
-    const date = dayjs(currentValue.timestamp).format('YYYY-MM-DD');
+    const date = getUTCTimestamp(currentValue.timestamp!);
 
     if (!previousValue[date]) previousValue[date] = [];
 

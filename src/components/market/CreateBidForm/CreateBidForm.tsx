@@ -22,7 +22,6 @@ import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
  */
 export const CreateBidForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementPanelContext);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = useAppSelector(s => s.userState.user)!;
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
     const dispatch = useDispatch();

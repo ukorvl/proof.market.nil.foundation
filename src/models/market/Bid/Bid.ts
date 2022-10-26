@@ -9,12 +9,7 @@ import { BidDto } from './BidDto';
 /**
  * Bid.
  */
-export interface Bid extends Omit<BidDto, 'timestamp'> {
-    /**
-     * "Browser" time, converted to Date with proper time zone offset.
-     */
-    timestamp: Date | null;
-}
+export type Bid = BidDto;
 
 /**
  * Maps bidDto to Bid model.
@@ -24,5 +19,5 @@ export interface Bid extends Omit<BidDto, 'timestamp'> {
  */
 export const mapToBid = ({ timestamp, ...rest }: BidDto): Bid => ({
     ...rest,
-    timestamp: dayjs(timestamp).toDate(),
+    timestamp: dayjs(timestamp).toISOString(),
 });

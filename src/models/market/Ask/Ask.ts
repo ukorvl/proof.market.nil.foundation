@@ -9,12 +9,7 @@ import { AskDto } from './AskDto';
 /**
  * Ask.
  */
-export interface Ask extends Omit<AskDto, 'timestamp'> {
-    /**
-     * "Browser" time, converted to Date with proper time zone offset.
-     */
-    timestamp: Date | null;
-}
+export type Ask = AskDto;
 
 /**
  * Maps askDto to Ask model.
@@ -24,5 +19,5 @@ export interface Ask extends Omit<AskDto, 'timestamp'> {
  */
 export const mapToAsk = ({ timestamp, ...rest }: AskDto): Ask => ({
     ...rest,
-    timestamp: dayjs(timestamp).toDate(),
+    timestamp: dayjs(timestamp).toISOString(),
 });

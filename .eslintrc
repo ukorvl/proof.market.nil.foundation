@@ -26,6 +26,7 @@
       1,
       { "argsIgnorePattern": "^_" }
     ],
+    "@typescript-eslint/no-non-null-assertion": 0,
     "react/display-name": 1,
     "react/jsx-first-prop-new-line": [
       "warn",

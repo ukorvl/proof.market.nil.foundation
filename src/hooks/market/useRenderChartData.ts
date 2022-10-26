@@ -58,7 +58,6 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
             return;
         }
 
-        console.log('here');
         const addSeriesMethod =
             seriesType === 'Line'
                 ? chart.addLineSeries.bind(
