@@ -20,3 +20,8 @@ export const AddAsk = createAction<Ask>('@asks/ADD_ASK');
  * Update asks loading state.
  */
 export const UpdateIsLoadingAsks = createAction<boolean>('@asks/UPDATE_IS_LOADING');
+
+/**
+ * Update asks error state.
+ */
+export const UpdateAsksError = createAction<boolean>('@asks/UPDATE_ERROR');

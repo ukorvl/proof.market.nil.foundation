@@ -20,3 +20,8 @@ export const AddBid = createAction<Bid>('@bids/ADD_BID');
  * Update bids loading state.
  */
 export const UpdateIsLoadingBids = createAction<boolean>('@bids/UPDATE_IS_LOADING');
+
+/**
+ * Update bids error state.
+ */
+export const UpdateBidsError = createAction<boolean>('@bids/UPDATE_ERROR');

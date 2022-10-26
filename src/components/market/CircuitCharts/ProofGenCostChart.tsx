@@ -3,9 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect, useRef, useState } from 'react';
-import { BarPrice, BarPrices, MouseEventHandler } from 'lightweight-charts';
-import { useChart, useGetCircuitDashboardData } from 'src/hooks';
+import { ReactElement, useMemo, useRef } from 'react';
+import { useChart, useGetCircuitDashboardData, useRenderChartData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from './ChartTemplate';
 
@@ -15,41 +14,20 @@ import { ChartTemplate } from './ChartTemplate';
  * @returns React component.
  */
 export const ProofGenCostChart = (): ReactElement => {
-    const [price, setPrice] = useState<BarPrice | BarPrices>();
     const ref = useRef<HTMLDivElement>(null);
+    const options = useMemo(() => ({ color: colors.infoColor }), []);
     const { chart } = useChart(ref);
     const {
         chartData: { proofGenCostData },
         loadingData,
     } = useGetCircuitDashboardData();
 
-    useEffect(() => {
-        if (!chart) {
-            return;
-        }
-
-        const lineSeries = chart.addLineSeries({
-            color: colors.infoColor,
-        });
-
-        lineSeries.setData(proofGenCostData);
-
-        const crosshairMoveHandler: MouseEventHandler = param => {
-            if (param.time) {
-                const price = param.seriesPrices.get(lineSeries);
-                price && setPrice(price);
-            }
-        };
-
-        chart.subscribeCrosshairMove(crosshairMoveHandler);
-        chart.timeScale().fitContent();
-
-        return () => {
-            lineSeries && chart.removeSeries(lineSeries);
-            chart.unsubscribeCrosshairMove(crosshairMoveHandler);
-            setPrice(undefined);
-        };
-    }, [proofGenCostData, chart]);
+    const { price } = useRenderChartData({
+        seriesType: 'Line',
+        seriesData: proofGenCostData,
+        chart,
+        options,
+    });
 
     return (
         <ChartTemplate

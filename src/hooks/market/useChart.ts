@@ -12,7 +12,7 @@ import colors from 'src/styles/export.module.scss';
  */
 type UseChartsReturnType = {
     /**
-     * Current price value (when user hovers chart) - can be used to render Legend.
+     * Chart instance.
      */
     chart?: IChartApi;
 };

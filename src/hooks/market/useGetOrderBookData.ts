@@ -18,10 +18,11 @@ import { selectBids, selectAsks, useAppSelector } from 'src/redux';
 /**
  * Hook return type.
  */
-type UseGetOrderBookDataReturnType = {
+export type UseGetOrderBookDataReturnType = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
     loadingData: boolean;
+    isError: boolean;
 };
 
 /**
@@ -39,6 +40,7 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectAsks);
     const bids = useSelector(selectBids);
+    const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const columns = useMemo(
         (): OrderBookTableColumn[] => [
@@ -88,7 +90,7 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
         [asksData, bidsData, itemsLimit],
     );
 
-    return { columns, data, loadingData };
+    return { columns, data, loadingData, isError };
 };
 
 /**
@@ -109,7 +111,7 @@ const createOrderBookData = (
 
         result.push({
             cost: parsedKey?.cost.toString(),
-            eval_time: parsedKey?.eval_time.toString() || '',
+            eval_time: parsedKey?.eval_time.toString(),
             [orderType]: value.length,
         });
     });

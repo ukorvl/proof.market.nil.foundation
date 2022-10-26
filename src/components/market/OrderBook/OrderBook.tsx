@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetOrderBookData } from 'src/hooks';
+import { useGetOrderBookData, UseGetOrderBookDataReturnType } from 'src/hooks';
 import { OrderBookTable } from './OrderBookTable';
 import { Details, DashboardCard } from '../../common';
 import './OrderBook.scss';
@@ -16,21 +16,42 @@ import './OrderBook.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
-    const { columns, data, loadingData } = useGetOrderBookData();
+    const data = useGetOrderBookData();
 
     return (
         <DashboardCard>
             <Details title={<h4>Order book</h4>}>
-                <div className="orderBook">
-                    {data && (
-                        <OrderBookTable
-                            data={data}
-                            columns={columns}
-                        />
-                    )}
-                </div>
-                {loadingData && <Spinner grow />}
+                <div className="orderBook">{OrderBookViewFactory({ ...data })}</div>
             </Details>
         </DashboardCard>
     );
+};
+
+/**
+ * Renders order book view.
+ *
+ * @param {UseGetOrderBookDataReturnType} props Props.
+ * @returns React element.
+ */
+const OrderBookViewFactory = ({
+    data,
+    columns,
+    loadingData,
+    isError,
+}: UseGetOrderBookDataReturnType) => {
+    switch (true) {
+        case loadingData:
+            return <Spinner grow />;
+        case isError:
+            return <h5>Error while loading data.</h5>;
+        case !!data.length:
+            return (
+                <OrderBookTable
+                    data={data}
+                    columns={columns}
+                />
+            );
+        default:
+            return <h5>No orders.</h5>;
+    }
 };

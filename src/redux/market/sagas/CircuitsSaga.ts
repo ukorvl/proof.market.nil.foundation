@@ -43,16 +43,17 @@ function* GetCircuitsSaga(): SagaIterator<void> {
 
     try {
         yield put(UpdateIsLoadingCircuits(true));
+        yield put(UpdateCircuitsError(false));
+
         const circuitsList: Circuit[] = yield call(getCircuits);
 
         if (circuitsList !== undefined) {
             yield put(UpdateCircuitsList(circuitsList));
         }
-
-        yield put(UpdateIsLoadingCircuits(false));
     } catch (e) {
-        yield put(UpdateIsLoadingCircuits(false));
         yield put(UpdateCircuitsError(true));
+    } finally {
+        yield put(UpdateIsLoadingCircuits(false));
     }
 }
 

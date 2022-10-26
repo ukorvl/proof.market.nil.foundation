@@ -7,7 +7,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getProofs } from 'src/api';
 import { Proof } from 'src/models';
-import { UpdateProofList, UpdateIsLoadingProofs } from '../actions';
+import { UpdateProofList, UpdateIsLoadingProofs, UpdateProofsError } from '../actions';
 import { RootStateType } from '../../RootStateType';
 import { UpdateUser } from '../../login';
 
@@ -35,15 +35,17 @@ function* GetProofSaga(): SagaIterator<void> {
     }
 
     try {
+        yield put(UpdateProofsError(false));
         yield put(UpdateIsLoadingProofs(true));
+
         const proofList: Proof[] = yield call(getProofs);
 
         if (proofList !== undefined) {
             yield put(UpdateProofList(proofList));
         }
-
-        yield put(UpdateIsLoadingProofs(false));
     } catch (e) {
+        yield put(UpdateProofsError(true));
+    } finally {
         yield put(UpdateIsLoadingProofs(false));
     }
 }

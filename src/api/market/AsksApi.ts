@@ -35,4 +35,4 @@ export const getAsks = (): Promise<Ask[]> =>
  * @returns Ask.
  */
 export const createAsk = (data: CreateAsk): Promise<Ask> =>
-    httpFetcher.post('document?relation=ask', data).then((x: any) => x);
+    httpFetcher.post('document?relation=ask', data);

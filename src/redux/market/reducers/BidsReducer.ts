@@ -5,7 +5,7 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Bid } from 'src/models';
-import { UpdateBidsList, AddBid } from '../actions';
+import { UpdateBidsList, AddBid, UpdateBidsError, UpdateIsLoadingBids } from '../actions';
 
 /**
  * State.
@@ -13,6 +13,7 @@ import { UpdateBidsList, AddBid } from '../actions';
 export type BidsReducerState = {
     bids: Bid[];
     isLoading: boolean;
+    error: boolean;
 };
 
 /**
@@ -21,6 +22,7 @@ export type BidsReducerState = {
 const initialState: BidsReducerState = {
     bids: [],
     isLoading: false,
+    error: false,
 };
 
 /**
@@ -35,5 +37,13 @@ export const BidsReducer = createReducer(initialState, builder =>
         .addCase(AddBid, (state, { payload }) => ({
             ...state,
             bids: { ...state.bids, payload },
+        }))
+        .addCase(UpdateIsLoadingBids, (state, { payload }) => ({
+            ...state,
+            isLoading: payload,
+        }))
+        .addCase(UpdateBidsError, (state, { payload }) => ({
+            ...state,
+            error: payload,
         })),
 );

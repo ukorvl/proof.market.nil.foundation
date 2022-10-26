@@ -6,3 +6,4 @@
 export * from './useChart';
 export * from './useGetOrderBookData';
 export * from './useGetCircuitDashboardData';
+export * from './useRenderChartData';

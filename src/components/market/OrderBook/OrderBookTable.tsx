@@ -30,10 +30,6 @@ export const OrderBookTable = ({ columns, data }: OrderBookTableProps): ReactEle
         useSortBy,
     );
 
-    if (data.length === 0) {
-        return <h5>No orders.</h5>;
-    }
-
     return (
         <Table
             className="orderBookTable"

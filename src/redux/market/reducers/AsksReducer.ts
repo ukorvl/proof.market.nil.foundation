@@ -5,7 +5,7 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Ask } from 'src/models';
-import { UpdateAsksList, AddAsk } from '../actions';
+import { UpdateAsksList, AddAsk, UpdateAsksError, UpdateIsLoadingAsks } from '../actions';
 
 /**
  * State.
@@ -13,6 +13,7 @@ import { UpdateAsksList, AddAsk } from '../actions';
 export type AsksReducerState = {
     asks: Ask[];
     isLoading: boolean;
+    error: boolean;
 };
 
 /**
@@ -21,6 +22,7 @@ export type AsksReducerState = {
 const initialState: AsksReducerState = {
     asks: [],
     isLoading: false,
+    error: false,
 };
 
 /**
@@ -35,5 +37,13 @@ export const AsksReducer = createReducer(initialState, builder =>
         .addCase(AddAsk, (state, { payload }) => ({
             ...state,
             asks: { ...state.asks, payload },
+        }))
+        .addCase(UpdateIsLoadingAsks, (state, { payload }) => ({
+            ...state,
+            isLoading: payload,
+        }))
+        .addCase(UpdateAsksError, (state, { payload }) => ({
+            ...state,
+            error: payload,
         })),
 );

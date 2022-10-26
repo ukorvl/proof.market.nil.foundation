@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect, useRef, useState } from 'react';
-import { BarPrice, BarPrices, MouseEventHandler } from 'lightweight-charts';
-import { useChart, useGetCircuitDashboardData } from 'src/hooks';
+import { ReactElement, useMemo, useRef } from 'react';
+import { LineWidth } from 'lightweight-charts';
+import { useChart, useGetCircuitDashboardData, useRenderChartData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from './ChartTemplate';
 
@@ -15,43 +15,27 @@ import { ChartTemplate } from './ChartTemplate';
  * @returns React component.
  */
 export const ProofCostChart = (): ReactElement => {
-    const [price, setPrice] = useState<BarPrice | BarPrices>();
     const ref = useRef<HTMLDivElement>(null);
+    const options = useMemo(
+        () => ({
+            upColor: colors.successColor,
+            downColor: colors.dangerColor,
+            priceLineWidth: 2 as LineWidth,
+        }),
+        [],
+    );
     const { chart } = useChart(ref);
     const {
         chartData: { candlestickChartData },
         loadingData,
     } = useGetCircuitDashboardData();
 
-    useEffect(() => {
-        if (!chart) {
-            return;
-        }
-
-        const candlesSeries = chart.addCandlestickSeries({
-            upColor: colors.successColor,
-            downColor: colors.dangerColor,
-            priceLineWidth: 2,
-        });
-
-        candlesSeries.setData(candlestickChartData);
-
-        const crosshairMoveHandler: MouseEventHandler = param => {
-            if (param.time) {
-                const price = param.seriesPrices.get(candlesSeries);
-                price && setPrice(price);
-            }
-        };
-
-        chart.subscribeCrosshairMove(crosshairMoveHandler);
-        chart.timeScale().fitContent();
-
-        return () => {
-            candlesSeries && chart.removeSeries(candlesSeries);
-            chart.unsubscribeCrosshairMove(crosshairMoveHandler);
-            setPrice(undefined);
-        };
-    }, [candlestickChartData, chart]);
+    const { price } = useRenderChartData({
+        seriesType: 'Candlestick',
+        seriesData: candlestickChartData,
+        chart,
+        options,
+    });
 
     return (
         <ChartTemplate
