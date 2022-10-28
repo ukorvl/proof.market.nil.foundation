@@ -104,7 +104,7 @@ const reduceOrdersByDate = <T extends Bid | Ask>(
     previousValue: Record<string, T[]>,
     currentValue: T,
 ) => {
-    const date = getUTCTimestamp(currentValue.timestamp!);
+    const date = getUTCTimestamp(currentValue.timestamp!, true);
 
     if (!previousValue[date]) previousValue[date] = [];
 
