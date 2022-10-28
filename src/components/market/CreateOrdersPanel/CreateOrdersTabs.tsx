@@ -29,7 +29,7 @@ export const CreateOrdersTabs = ({
     const { processing } = useContext(OrderManagementPanelContext);
 
     return (
-        <Nav>
+        <Nav justified>
             {Object.values(Tab).map(t => (
                 <Nav.Item
                     key={t}

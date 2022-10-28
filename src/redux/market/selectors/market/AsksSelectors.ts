@@ -4,14 +4,23 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { RootStateType } from '../../../RootStateType';
+import { Ask } from 'src/models';
+import { RootStateType } from 'src/redux';
+import { selectCurrentCircuitId } from './CircuitsSelectors';
 
-const selectAsksList = (s: RootStateType) => s.asksState.asks;
-const selectedCircuitid = (s: RootStateType) => s.circuitsState.selectedid;
+/**
+ * Select all asks from state.
+ *
+ * @param s State.
+ * @returns All asks.
+ */
+export const selectAsksList = (s: RootStateType): Ask[] => s.asksState.asks;
 
 /**
  * Select all current circuit - related proposals.
  */
-export const selectAsks = createSelector(selectAsksList, selectedCircuitid, (asks, selectedid) =>
-    asks.filter(x => x.circuit_id === selectedid),
+export const selectCurrentCircuitAsks = createSelector(
+    selectAsksList,
+    selectCurrentCircuitId,
+    (asks, selectedid) => asks.filter(x => x.circuit_id === selectedid),
 );

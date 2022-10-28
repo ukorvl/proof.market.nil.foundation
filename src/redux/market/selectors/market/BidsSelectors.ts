@@ -4,14 +4,23 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { RootStateType } from '../../../RootStateType';
+import { Bid } from 'src/models';
+import { RootStateType } from 'src/redux';
+import { selectCurrentCircuitId } from './CircuitsSelectors';
 
-const selectBidsList = (s: RootStateType) => s.bidsState.bids;
-const selectedCircuitid = (s: RootStateType) => s.circuitsState.selectedid;
+/**
+ * Select all bids.
+ *
+ * @param s State.
+ * @returns All bids.
+ */
+export const selectBidsList = (s: RootStateType): Bid[] => s.bidsState.bids;
 
 /**
  * Select all current circuit - related bids from all users.
  */
-export const selectBids = createSelector(selectBidsList, selectedCircuitid, (bids, selectedid) =>
-    bids.filter(x => x.circuit_id === selectedid),
+export const selectCurrentCircuitBids = createSelector(
+    selectBidsList,
+    selectCurrentCircuitId,
+    (bids, selectedid) => bids.filter(x => x.circuit_id === selectedid),
 );

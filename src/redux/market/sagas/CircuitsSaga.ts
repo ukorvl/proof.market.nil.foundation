@@ -15,9 +15,9 @@ import {
 } from '../actions';
 import { RootStateType } from '../../RootStateType';
 import { UpdateUser } from '../../login';
+import { selectCurrentCircuitId } from '../selectors';
 
 const selectUser = (s: RootStateType) => s.userState.user;
-const selectetCurrentCircuitId = (s: RootStateType) => s.circuitsState.selectedid;
 
 /**
  * Circuits main saga.
@@ -66,7 +66,7 @@ function* GetCircuitsSaga(): SagaIterator<void> {
 function* SelectCircuitSaga({
     payload,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectetCurrentCircuitId);
+    const currentCircuitId = yield select(selectCurrentCircuitId);
 
     if (currentCircuitId) {
         return;

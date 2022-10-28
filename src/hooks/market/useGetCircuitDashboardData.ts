@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import sum from 'lodash/sum';
-import { useAppSelector, selectAsks } from 'src/redux';
+import { useAppSelector, selectCurrentCircuitAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 
@@ -30,7 +30,7 @@ type UseGetCircuitDashboardDataReturnType = {
  */
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading);
-    const asks = useSelector(selectAsks);
+    const asks = useSelector(selectCurrentCircuitAsks);
     const grouppedOrders = useMemo(() => {
         return asks
             .filter(x => x.status === 'completed' && !!x.timestamp)

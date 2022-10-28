@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrencyImage } from 'src/enums';
 import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
 import { Circuit } from 'src/models';
+import { CircuitsListItemInfo } from './CircuitsListItemInfo';
 
 /**
  * Props.
@@ -28,13 +29,15 @@ export const CurcuitsListItem = ({
 }: CurcuitsListItemProps): ReactElement => {
     const dispatch = useDispatch();
     const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
+    const isSelected = id === selectedItem?.id;
+
     const onSelectItem = () => {
         dispatch(UpdateSelectedCircuitId(id));
     };
 
     return (
         <ListGroup.Item
-            active={id === selectedItem?.id}
+            active={isSelected}
             onClick={onSelectItem}
         >
             <Media>
@@ -46,9 +49,11 @@ export const CurcuitsListItem = ({
                         alt="Circuit image"
                     />
                 </Media.Item>
-                <Media.Body>
-                    <Media.Heading>{`${name.toUpperCase()} (${info.toUpperCase()})/USD`}</Media.Heading>
-                </Media.Body>
+                <Media.Body>{`${name.toUpperCase()} (${info.toUpperCase()})/USD`}</Media.Body>
+                <CircuitsListItemInfo
+                    id={id}
+                    isSelected={isSelected}
+                />
             </Media>
         </ListGroup.Item>
     );

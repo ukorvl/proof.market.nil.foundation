@@ -13,7 +13,7 @@ import {
     OrderBookTableColumn,
     OrderBookTableData,
 } from 'src/models';
-import { selectBids, selectAsks, useAppSelector } from 'src/redux';
+import { selectCurrentCircuitBids, selectCurrentCircuitAsks, useAppSelector } from 'src/redux';
 
 /**
  * Hook return type.
@@ -38,8 +38,8 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  */
 export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectAsks);
-    const bids = useSelector(selectBids);
+    const asks = useSelector(selectCurrentCircuitAsks);
+    const bids = useSelector(selectCurrentCircuitBids);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const columns = useMemo(

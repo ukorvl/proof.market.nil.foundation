@@ -13,13 +13,14 @@ import {
 } from '@nilfoundation/react-components';
 import { Header, Footer, ProtectedRoute } from './components';
 import { routes, loginRoute } from './routing';
+import ErrorView from './views/ErrorView';
 
 /**
  * @returns App.
  */
 function App(): ReactElement {
     return (
-        <ErrorBoundary>
+        <ErrorBoundary errorView={<ErrorView />}>
             <NotificationProvider>
                 <BrowserRouter>
                     <Layout

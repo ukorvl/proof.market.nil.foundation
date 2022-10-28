@@ -7,21 +7,26 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootStateType } from '../../../RootStateType';
 
 const selectCircuitsList = (s: RootStateType) => s.circuitsState.circuits;
-const selectedid = (s: RootStateType) => s.circuitsState.selectedid;
+
+/**
+ * Selects current circuit id.
+ *
+ * @param s State.
+ * @returns Current selected circuit id.
+ */
+export const selectCurrentCircuitId = (s: RootStateType): string | undefined =>
+    s.circuitsState.selectedid;
 
 /**
  * Sorted and filtered circuits selector.
  */
-export const selectCircuits = createSelector(
-    selectCircuitsList,
-    circuits => circuits
-);
+export const selectCircuits = createSelector(selectCircuitsList, circuits => circuits);
 
 /**
  * Selected circuit selector.
  */
 export const selectCurrentCircuit = createSelector(
     selectCircuits,
-    selectedid,
-    (circuits, selectedid) => circuits.find(x => x.id === selectedid)
+    selectCurrentCircuitId,
+    (circuits, selectedid) => circuits.find(x => x.id === selectedid),
 );

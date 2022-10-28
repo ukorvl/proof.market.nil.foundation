@@ -4,7 +4,7 @@
  */
 
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { RootStateType } from './RootStateType';
+import { RootStateType } from '../RootStateType';
 
 /**
  * Typed use selector.

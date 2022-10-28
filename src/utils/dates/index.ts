@@ -5,3 +5,4 @@
 
 export * from './formatUTCTimestamp';
 export * from './getUTCTimestamp';
+export * from './isPreviousDay';
