@@ -4,8 +4,8 @@
 
 .customBreadcumbs {
   padding: 0!important;
-  margin-top: 4px;
-  margin-bottom: 4px!important;
+  margin-top: 0;
+  margin-bottom: 0!important;
   display: inline-block;
   margin-right: auto;
 
@@ -22,7 +22,7 @@
   }
 
   > li > a {
-    padding: 12px 15px;
+    padding: 10px 15px;
     font-size: 20px;
     font-weight: 400;
     color: $c-secondary;
