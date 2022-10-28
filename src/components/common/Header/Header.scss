@@ -10,6 +10,13 @@
   .nav {
     letter-spacing: 1px;
 
+    > li > a {
+      border-radius: 0!important;
+      color: $c-secondary!important;
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+
     @include responsive(sm) {
       display: none;
     }
@@ -17,6 +24,7 @@
 
   code {
     font-weight: bold;
+    font-family: 'Menlo', Courier, monospace!important;
   }
 }
 

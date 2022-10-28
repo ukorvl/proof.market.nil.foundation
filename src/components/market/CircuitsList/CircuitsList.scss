@@ -4,7 +4,7 @@
   $val: 12px;
 
   margin-top: $val;
-  margin-bottom: 0;
+  margin-bottom: 0!important;
 
   .list-group-item {
     border: none;
