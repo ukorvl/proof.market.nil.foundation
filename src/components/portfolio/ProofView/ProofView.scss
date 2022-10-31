@@ -2,6 +2,7 @@
 
 .proofView {
   padding-top: 0!important;
+  min-height: calc(100vh - 110px);
 
   .proofJsonViewContainer {
     border-radius: 4px;
@@ -17,6 +18,7 @@
 
         .variable-value {
           width: 100%;
+          overflow: hidden;
 
           > div {
             width: 100%;

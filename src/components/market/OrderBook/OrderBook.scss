@@ -1,8 +1,10 @@
-@import '../../../styles/constants.scss';
+@import 'src/styles/constants.scss';
+@import 'src/styles/mixins/hideScrollbar';
 
 .orderBook {
   height: 542px;
   overflow-y: auto;
+  @include hideScrollbar;
 }
 
 .orderBookTable {

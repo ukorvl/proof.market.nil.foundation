@@ -3,13 +3,14 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { lazy, ReactElement, Suspense, useContext } from 'react';
+import { ReactElement, useContext } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components';
 import { Proof } from 'src/models';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
 import { ProofViewHeader } from './ProofViewHeader';
+import { ProofViewJson } from './ProofViewJson';
 import './ProofView.scss';
 
 /**
@@ -30,8 +31,6 @@ export const ProofView = (): ReactElement => {
     );
 };
 
-const LazyProofJsonView = lazy(() => import('./ProofViewJson'));
-
 /**
  * Conditionally renders proof data. First true case renders.
  *
@@ -44,11 +43,7 @@ const ProofViewFactory = (loadingProofs: boolean, proof?: Proof) => {
         case loadingProofs:
             return <Spinner grow />;
         case proof !== undefined:
-            return (
-                <Suspense fallback={<Spinner grow />}>
-                    <LazyProofJsonView proof={proof!} />
-                </Suspense>
-            );
+            return <ProofViewJson proof={proof!} />;
         default:
             <h5>No proof data was found.</h5>;
     }

@@ -8,6 +8,9 @@ import ReactJson from 'react-json-view';
 import { jsonViewerTheme } from 'src/constants';
 import { ProofDto } from 'src/models';
 
+/**
+ * Props.
+ */
 type ProofViewJsonProps = {
     proof: ProofDto;
 };
@@ -18,7 +21,7 @@ type ProofViewJsonProps = {
  * @param {ProofViewJsonProps} props Props.
  * @returns React component.
  */
-const ProofViewJson = ({ proof }: ProofViewJsonProps): ReactElement => {
+export const ProofViewJson = ({ proof }: ProofViewJsonProps): ReactElement => {
     return (
         <div className="proofJsonViewContainer">
             <ReactJson
@@ -26,11 +29,9 @@ const ProofViewJson = ({ proof }: ProofViewJsonProps): ReactElement => {
                 name={null}
                 displayDataTypes={false}
                 displayObjectSize={false}
-                collapseStringsAfterLength={500}
+                collapseStringsAfterLength={600}
                 theme={jsonViewerTheme}
             />
         </div>
     );
 };
-
-export default ProofViewJson;

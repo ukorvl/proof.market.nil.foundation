@@ -4,11 +4,9 @@
  */
 
 import { ReactElement, useContext } from 'react';
-import { ListGroup, Spinner } from '@nilfoundation/react-components';
-import ReactJson from 'react-json-view';
+import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
 import { selectPartialProofList, useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components/common';
-import { jsonViewerTheme } from 'src/constants';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
 import './ProofList.scss';
 
@@ -23,7 +21,7 @@ export const ProofList = (): ReactElement => {
     const getProofsError = useAppSelector(s => s.proofState.error);
 
     return (
-        <DashboardCard>
+        <DashboardCard className="proofList">
             <h4>Proof list</h4>
             {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
         </DashboardCard>
@@ -51,21 +49,19 @@ const ProofListViewFactory = (
             return <h5>Error while getting proofs.</h5>;
         case !!proofList.length:
             return (
-                <ListGroup className="proofList">
+                <ListGroup>
                     {proofList.map(x => (
                         <ListGroup.Item
                             key={x.id}
                             onClick={() => setSelectedProofId(x.id)}
                             active={x.id === selectedProofId}
                         >
-                            <ReactJson
-                                src={x}
-                                name={null}
-                                displayDataTypes={false}
-                                displayObjectSize={false}
-                                enableClipboard={false}
-                                theme={proofListJsonTheme}
-                            />
+                            <Media>
+                                <Media.Body>
+                                    <Media.Heading>{`"id": ${x.id}`}</Media.Heading>
+                                    {`"bid_id": ${x.bid_id}`}
+                                </Media.Body>
+                            </Media>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
@@ -73,12 +69,4 @@ const ProofListViewFactory = (
         default:
             <h5>No proofs.</h5>;
     }
-};
-
-/**
- * Custom JSON viewer theme for proof list.
- */
-const proofListJsonTheme = {
-    ...jsonViewerTheme,
-    base02: 'transparent',
 };
