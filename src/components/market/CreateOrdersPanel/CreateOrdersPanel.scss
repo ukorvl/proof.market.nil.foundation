@@ -1,4 +1,25 @@
+@import 'src/styles/constants.scss';
+
 .cerateOrdersPanel {
   padding: 20px 0;
   height: 380px;
+
+  .react-json-view {
+
+    textarea {
+      background-color: $c-base!important;
+    }
+
+    .key-modal-input {
+      background-color: $c-base!important;
+    }
+
+    > div > div {
+      background-color: $c-base;
+
+      > span {
+        background-color: $c-base-light!important;
+      }
+    }
+  }
 }

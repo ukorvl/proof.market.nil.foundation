@@ -16,7 +16,7 @@ import { ChartTemplate } from './ChartTemplate';
  */
 export const ProofCostChart = (): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const options = useMemo(
+    const seriesOptions = useMemo(
         () => ({
             upColor: colors.successColor,
             downColor: colors.dangerColor,
@@ -24,22 +24,22 @@ export const ProofCostChart = (): ReactElement => {
         }),
         [],
     );
-    const { chart } = useChart(ref);
     const {
         chartData: { candlestickChartData },
-        loadingData,
+        loadingData: isLoadingChartData,
     } = useGetCircuitDashboardData();
+    const { chart } = useChart({ ref });
 
     const { price } = useRenderChartData({
         seriesType: 'Candlestick',
         seriesData: candlestickChartData,
         chart,
-        options,
+        options: seriesOptions,
     });
 
     return (
         <ChartTemplate
-            loadingData={loadingData}
+            loadingData={isLoadingChartData}
             price={price}
             chartName="Proof cost, USD"
             ref={ref}

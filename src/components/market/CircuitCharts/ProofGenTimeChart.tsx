@@ -15,23 +15,23 @@ import { ChartTemplate } from './ChartTemplate';
  */
 export const ProofTimeGenChart = (): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const { chart } = useChart(ref);
-    const options = useMemo(() => ({ color: colors.infoColor }), []);
+    const seriesOptions = useMemo(() => ({ color: colors.infoColor }), []);
     const {
         chartData: { proofGenTimeData },
-        loadingData,
+        loadingData: isLoadingChartData,
     } = useGetCircuitDashboardData();
+    const { chart } = useChart({ ref });
 
     const { price } = useRenderChartData({
         seriesType: 'Line',
         seriesData: proofGenTimeData,
         chart,
-        options,
+        options: seriesOptions,
     });
 
     return (
         <ChartTemplate
-            loadingData={loadingData}
+            loadingData={isLoadingChartData}
             price={price}
             chartName="Proof Gen Time, ms"
             ref={ref}

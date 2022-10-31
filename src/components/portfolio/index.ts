@@ -4,3 +4,5 @@
  */
 
 export * from './ProofList';
+export * from './SelectedProofContextProvider';
+export * from './ProofView';

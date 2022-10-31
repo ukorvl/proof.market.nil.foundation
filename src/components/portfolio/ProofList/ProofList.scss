@@ -1,11 +1,32 @@
-.proofList {
-  .react-json-view {
+@import 'src/styles/constants';
+@import 'src/styles/mixins/styledList';
 
-    word-break: break-all;
-    overflow-wrap:break-word;
+.proofList {
+  @include styledList;
+
+  .react-json-view {
+    pointer-events: none;
+
+    div.icon-container {
+      display: none!important;
+    }
+
+    span {
+      color: $c-secondary!important;
+    }
+
+    .object-key {
+      opacity: 1!important;
+    }
 
     + .react-json-view {
       margin-top: 20px;
+    }
+  }
+
+  &:hover {
+    .react-json-view {
+      cursor: pointer!important;
     }
   }
 }

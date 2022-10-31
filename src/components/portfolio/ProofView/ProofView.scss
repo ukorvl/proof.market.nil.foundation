@@ -1,0 +1,46 @@
+@import 'src/styles/constants';
+
+.proofView {
+  padding-top: 0!important;
+
+  .proofJsonViewContainer {
+    border-radius: 4px;
+    padding: 12px;
+    background-color: $c-base-darker;
+
+    .react-json-view {
+
+      .variable-row:last-of-type {
+        * {
+          line-break: anywhere;
+        }
+
+        .variable-value {
+          width: 100%;
+
+          > div {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .proofViewHeader {
+    display: flex;
+    align-items: center;
+    height: 48px;
+
+    h4 {
+      margin: 0;
+    }
+
+    .btn {
+      margin-left: auto;
+
+      i {
+        margin-right: 8px;
+      }
+    }
+  }
+}

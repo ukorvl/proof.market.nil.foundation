@@ -7,6 +7,7 @@ export * from './CircuitsList';
 export * from './CircuitDetailedInfo';
 export * from './CircuitDashboard';
 export * from './OrderBook';
-export * from './OrderManagementPanel';
+export * from './OrderManagementContextProvider';
 export * from './ChartLegend';
 export * from './CircuitCharts';
+export * from './CreateOrdersPanel';

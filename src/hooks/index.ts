@@ -6,3 +6,4 @@
 
 export * from './login';
 export * from './market';
+export * from './portfolio';

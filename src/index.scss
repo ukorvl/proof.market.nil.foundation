@@ -41,28 +41,8 @@ button {
   color: $c-danger
 }
 
-.react-json-view {
-
-  textarea {
-    background-color: $c-base!important;
-  }
-
-  .key-modal-input {
-    background-color: $c-base!important;
-  }
-
-  > div > div {
-    background-color: $c-base!important;
-
-    > span {
-      background-color: $c-base-light!important;
-    }
-  }
-}
-
 @media screen and (max-width: 767px) {
   .table-responsive {
     border: none!important;
   }
 }
-

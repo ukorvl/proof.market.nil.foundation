@@ -6,7 +6,7 @@
 import { CSSProperties, KeyboardEventHandler, ReactElement, useContext } from 'react';
 import { Row } from 'react-table';
 import { OrderBookTableData } from 'src/models';
-import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { OrderBookTableCell } from './OrderBookTableCell';
 
 /**
@@ -14,6 +14,7 @@ import { OrderBookTableCell } from './OrderBookTableCell';
  */
 type OrderBookTableRowProps = {
     row: Row<OrderBookTableData>;
+    maxValue?: number;
 };
 
 /**
@@ -22,8 +23,9 @@ type OrderBookTableRowProps = {
  * @param {OrderBookTableRowProps} props Props.
  * @returns React component.
  */
-export const OrderBookTableRow = ({ row }: OrderBookTableRowProps): ReactElement => {
-    const { setSelectedValues } = useContext(OrderManagementPanelContext);
+export const OrderBookTableRow = ({ row, maxValue = 50 }: OrderBookTableRowProps): ReactElement => {
+    const { setSelectedValues } = useContext(OrderManagementContext);
+    const percentOfMaxValue = maxValue;
     const onClickRow = () => {
         setSelectedValues({
             cost: row.values.cost,
@@ -46,7 +48,7 @@ export const OrderBookTableRow = ({ row }: OrderBookTableRowProps): ReactElement
             onClick={onClickRow}
             onKeyDown={onKeyDownHandler}
             tabIndex={0}
-            style={{ '--bar-percent': `value` } as CSSProperties}
+            style={{ '--bar-width': `${percentOfMaxValue}%` } as CSSProperties}
         >
             {row.cells.map(cell => {
                 const { key } = cell.getCellProps();

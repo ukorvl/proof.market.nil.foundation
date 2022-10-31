@@ -1,7 +1,7 @@
 @import '../../../styles/constants.scss';
 
 .orderBook {
-  height: 420px;
+  height: 542px;
   overflow-y: auto;
 }
 
@@ -10,8 +10,7 @@
   margin-top: 2px;
 
   tbody td {
-    border-color:  $c-base-light!important;
-    border-width: 1px!important;
+    border: none!important;
     text-align: center;
   }
 
@@ -42,16 +41,34 @@
       background-color: $c-base;
     }
 
-    td:first-child {
-      color: $c-success;
+    &::after {
+      background-color: darken($c-danger, 0%);
+      opacity: 0.3;
+      border-radius: 1rem;
+      content: "";
+      width: var(--bar-width);
+      transition: width 0.1s ease;
+      height: 90%;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    td:last-child {
-      color: $c-danger;
-    }
+    td {
+      z-index: 2;
+      position: relative;
 
-    td:not(:first-child):not(:last-child) {
-      color: $c-secondary-darker;
+      &:first-child {
+        color: $c-success;
+      }
+
+      &:last-child {
+        color: $c-danger;
+      }
+
+      &:not(:first-child):not(:last-child) {
+        color: $c-secondary-darker;
+      }
     }
   }
 }

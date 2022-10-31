@@ -5,7 +5,7 @@
 
 import { forwardRef, ReactElement } from 'react';
 import { BarPrice, BarPrices } from 'lightweight-charts';
-import { Placeholder, PlaceholderAnimation } from '@nilfoundation/react-components';
+import { Spinner } from '@nilfoundation/react-components';
 import { ChartLegend } from '../ChartLegend';
 import './ChartTemplate.scss';
 
@@ -37,7 +37,7 @@ export const ChartTemplate = forwardRef<HTMLDivElement, ChartTemplateProps>(func
                 price={price}
                 name={chartName}
             />
-            {loadingData && <Placeholder animation={PlaceholderAnimation.wave} />}
+            {loadingData && <Spinner grow />}
         </div>
     );
 });

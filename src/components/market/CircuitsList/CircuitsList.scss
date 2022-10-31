@@ -1,18 +1,10 @@
 @import 'src/styles/constants.scss';
+@import 'src/styles/mixins/styledList';
 
 .currenciesList {
-  $val: 12px;
-
-  margin-top: $val;
-  margin-bottom: 0!important;
+  @include styledList;
 
   .list-group-item {
-    border: none;
-    border-radius: 6px!important;
-
-    + .list-group-item {
-      margin-top: $val;
-    }
 
     .media-body {
       vertical-align: middle;

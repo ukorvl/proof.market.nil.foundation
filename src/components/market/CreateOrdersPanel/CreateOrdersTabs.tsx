@@ -5,7 +5,7 @@
 
 import { ReactElement, useContext } from 'react';
 import { Nav } from '@nilfoundation/react-components';
-import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { Tab } from './Tab';
 
 /**
@@ -26,7 +26,7 @@ export const CreateOrdersTabs = ({
     currentTab,
     onSetTab,
 }: OrderManagementTabsProps): ReactElement => {
-    const { processing } = useContext(OrderManagementPanelContext);
+    const { processing } = useContext(OrderManagementContext);
 
     return (
         <Nav justified>

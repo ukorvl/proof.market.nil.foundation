@@ -9,7 +9,7 @@ import { CostAndEvalTime } from 'src/models';
 /**
  * Context type.
  */
-type OrderManagementPanelContextModel = {
+type OrderManagementContextModel = {
     processing: boolean;
     setProcessing: (processing: boolean) => void;
     selectedValues?: CostAndEvalTime;
@@ -17,8 +17,8 @@ type OrderManagementPanelContextModel = {
 };
 
 /**
- * Order management panel context.
+ * Order management context.
  */
-export const OrderManagementPanelContext = createContext<OrderManagementPanelContextModel>(
-    {} as OrderManagementPanelContextModel,
+export const OrderManagementContext = createContext<OrderManagementContextModel>(
+    {} as OrderManagementContextModel,
 );

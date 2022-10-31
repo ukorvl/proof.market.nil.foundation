@@ -10,7 +10,7 @@ import { Form } from '@nilfoundation/react-components';
 import { CreateAsk } from 'src/models';
 import { AddAsk, useAppSelector } from 'src/redux';
 import { createAsk } from 'src/api/market/AsksApi';
-import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
 
 /**
@@ -19,7 +19,7 @@ import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
  * @returns React component.
  */
 export const CreateAskForm = (): ReactElement => {
-    const { setProcessing } = useContext(OrderManagementPanelContext);
+    const { setProcessing } = useContext(OrderManagementContext);
     const user = useAppSelector(s => s.userState.user)!;
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
     const dispatch = useDispatch();

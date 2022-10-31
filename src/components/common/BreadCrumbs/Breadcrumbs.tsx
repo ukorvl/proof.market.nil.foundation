@@ -5,6 +5,7 @@
 
 import { Breadcrumbs as NativeBreadcrumbs } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
+import { mainSiteAddress } from 'src/constants';
 import { Path } from 'src/routing';
 import './Breadcrumbs.scss';
 
@@ -16,7 +17,7 @@ import './Breadcrumbs.scss';
 export const Breadcrumbs = (): JSX.Element => {
     return (
         <NativeBreadcrumbs className="customBreadcumbs">
-            <NativeBreadcrumbs.Item href="https://nil.foundation">
+            <NativeBreadcrumbs.Item href={mainSiteAddress}>
                 <span>
                     <code>=nil;</code>Foundation
                 </span>

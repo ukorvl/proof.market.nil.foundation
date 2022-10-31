@@ -12,6 +12,14 @@ export type ProofDto = {
      */
     id: number;
     /**
+     * Internal id.
+     */
+    _id: string;
+    /**
+     * Id of bid.
+     */
+    bid_id: string;
+    /**
      * Proof.
      */
     proof: string;

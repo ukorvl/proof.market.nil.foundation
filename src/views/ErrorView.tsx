@@ -5,6 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
+import { mainSiteAddress } from 'src/constants';
 
 /**
  * App Error view.
@@ -24,6 +25,9 @@ const ErrorView = (): ReactElement => (
                 <h4>Sorry, unknown error occured.</h4>
                 <p className="text-muted">
                     Please, try to reload page or leave message to support.
+                </p>
+                <p>
+                    <a href={mainSiteAddress}>{mainSiteAddress}</a>
                 </p>
             </Col>
         </Row>

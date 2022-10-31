@@ -8,6 +8,6 @@
  */
 export enum ChartType {
     proofCostChart = 'Proof Cost',
-    proofGenCostChart = 'Proof Gen Cost',
-    proofGetTimeChart = 'Proof Gen Time',
+    proofGenCostChart = 'Proof Generation Cost',
+    proofGetTimeChart = 'Proof Generation Time',
 }

@@ -15,18 +15,18 @@ import { ChartTemplate } from './ChartTemplate';
  */
 export const ProofGenCostChart = (): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const options = useMemo(() => ({ color: colors.infoColor }), []);
-    const { chart } = useChart(ref);
+    const seriesOptions = useMemo(() => ({ color: colors.infoColor }), []);
     const {
         chartData: { proofGenCostData },
         loadingData,
     } = useGetCircuitDashboardData();
+    const { chart } = useChart({ ref });
 
     const { price } = useRenderChartData({
         seriesType: 'Line',
         seriesData: proofGenCostData,
         chart,
-        options,
+        options: seriesOptions,
     });
 
     return (

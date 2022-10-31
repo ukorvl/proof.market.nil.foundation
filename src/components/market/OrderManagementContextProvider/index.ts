@@ -3,5 +3,5 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-export * from './OrderManagementPanel';
-export * from './OrderManagementPanelContext';
+export * from './OrderManagementContextProvider';
+export * from './OrderManagementContext';

@@ -29,7 +29,7 @@ type UseGetCircuitDashboardDataReturnType = {
  * @returns Data to draw circuit chart.
  */
 export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
-    const loadingData = useAppSelector(s => s.circuitsState.isLoading);
+    const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitAsks);
     const grouppedOrders = useMemo(() => {
         return asks

@@ -4,12 +4,10 @@
   height: 500px;
   position: relative;
 
-  .placeholder {
-    background-color: $c-base-darker!important;
-    border-radius: 6px;
-
-    > .wave {
-      background-color: $c-secondary-darker;
-    }
+  .spinner-grow-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
   }
 }

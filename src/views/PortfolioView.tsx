@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
-import { ProofList } from '../components';
+import { ProofList, SelectedProofContextProvider, ProofView } from '../components';
 
 /**
  * Portfolio view.
@@ -13,11 +13,25 @@ import { ProofList } from '../components';
  * @returns React component.
  */
 const PortfolioView = (): ReactElement => (
-    <Container as="main">
+    <Container
+        as="main"
+        fluid
+    >
         <Row>
-            <Col xs={12}>
-                <ProofList />
-            </Col>
+            <SelectedProofContextProvider>
+                <Col
+                    xs={12}
+                    md={3}
+                >
+                    <ProofList />
+                </Col>
+                <Col
+                    xs={12}
+                    md={9}
+                >
+                    <ProofView />
+                </Col>
+            </SelectedProofContextProvider>
         </Row>
     </Container>
 );

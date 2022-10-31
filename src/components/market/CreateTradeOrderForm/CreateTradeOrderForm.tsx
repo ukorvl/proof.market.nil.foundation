@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
-import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderManagementContext } from '../OrderManagementContextProvider';
 
 /**
  * Props.
@@ -29,7 +29,7 @@ export const CreateTradeOrderForm = ({
     errorMessage,
 }: CreateTradeOrderFormProps): ReactElement => {
     const nodeRef = useRef(null);
-    const { selectedValues, setSelectedValues } = useContext(OrderManagementPanelContext);
+    const { selectedValues, setSelectedValues } = useContext(OrderManagementContext);
     const {
         register,
         setValue,

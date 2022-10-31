@@ -4,8 +4,9 @@
  */
 
 import { all, AllEffect, fork, ForkEffect } from 'redux-saga/effects';
-import { CircuitsSaga, AsksSaga, BidsSaga, ProofSaga } from './market';
+import { CircuitsSaga, AsksSaga, BidsSaga } from './market';
 import { AuthSaga } from './login';
+import { ProofSaga } from './portfolio';
 
 /**
  * RootSaga.

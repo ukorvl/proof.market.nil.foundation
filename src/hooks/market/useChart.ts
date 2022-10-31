@@ -3,8 +3,15 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { RefObject, useEffect, useMemo, useState } from 'react';
-import { createChart, ColorType, IChartApi, UTCTimestamp } from 'lightweight-charts';
+import { RefObject, useEffect, useState } from 'react';
+import {
+    createChart,
+    ColorType,
+    IChartApi,
+    UTCTimestamp,
+    DeepPartial,
+    ChartOptions,
+} from 'lightweight-charts';
 import colors from 'src/styles/export.module.scss';
 import { formatUTCTimestamp } from 'src/utils';
 
@@ -19,60 +26,41 @@ type UseChartsReturnType = {
 };
 
 /**
- * Default charts theme.
+ * Use chart params.
  */
-const chartsTheme = {
-    background: colors.baseDarkerColor,
-    fontFamily: 'Roboto',
-    layoutTextColor: colors.secondaryDarkerColor,
-    gridLineColor: colors.baseLightColor,
+type UseChartParams<T extends HTMLElement> = {
+    ref: RefObject<T>;
+    options?: DeepPartial<ChartOptions>; // Don't forget to memoize options object.
 };
 
 /**
- * Hook to create charts.
+ * Hook to create and manage charts.
  *
- * @param ref - Ref.
- * @param theme - Theme.
+ * @param {UseChartParams} params Parameters.
  * @returns Chart.
  */
-export const useChart = <T extends HTMLElement>(
-    ref: RefObject<T>,
-    theme?: Partial<typeof chartsTheme>,
-): UseChartsReturnType => {
+export const useChart = <T extends HTMLElement>({
+    ref,
+    options,
+}: UseChartParams<T>): UseChartsReturnType => {
     const [chart, setChart] = useState<IChartApi>();
-    const mergedTheme = useMemo(() => {
-        return theme ? { ...chartsTheme, ...theme } : chartsTheme;
-    }, [theme]);
 
     useEffect(() => {
-        if (!ref.current) {
+        const { current: htmlElement } = ref;
+        if (!htmlElement) {
             return;
         }
 
-        const chart = createChart(ref.current, {
-            layout: {
-                background: { type: ColorType.Solid, color: mergedTheme.background },
-                fontFamily: mergedTheme.fontFamily,
-                textColor: mergedTheme.layoutTextColor,
-            },
-            width: ref.current.clientWidth,
-            height: ref.current.clientHeight,
-            grid: {
-                vertLines: { color: mergedTheme.gridLineColor },
-                horzLines: { color: mergedTheme.gridLineColor },
-            },
-            localization: {
-                timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY hh:mm"),
-            },
-            timeScale: {
-                tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM hh:mm'),
-            },
+        const chart = createChart(htmlElement, {
+            width: htmlElement.clientWidth,
+            height: htmlElement.clientHeight,
+            ...chartConstantOptions,
         });
         chart.timeScale().fitContent();
         setChart(chart);
 
         const handleResize = () => {
-            ref.current && chart.applyOptions({ width: ref.current.clientWidth });
+            chart.applyOptions({ width: htmlElement.clientWidth });
             chart.timeScale().fitContent();
         };
 
@@ -81,7 +69,11 @@ export const useChart = <T extends HTMLElement>(
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [ref, mergedTheme]);
+    }, [ref]);
+
+    useEffect(() => {
+        chart && options && chart.applyOptions(options);
+    }, [options, chart]);
 
     useEffect(() => {
         return () => {
@@ -91,4 +83,35 @@ export const useChart = <T extends HTMLElement>(
     }, []);
 
     return { chart };
+};
+
+/**
+ * Default charts theme.
+ */
+const chartDefaultTheme = {
+    background: colors.baseDarkerColor,
+    fontFamily: 'inherit',
+    layoutTextColor: colors.secondaryDarkerColor,
+    gridLineColor: colors.baseLightColor,
+};
+
+/**
+ * Chart constant options.
+ */
+const chartConstantOptions = {
+    localization: {
+        timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY hh:mm"),
+    },
+    timeScale: {
+        tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM hh:mm'),
+    },
+    layout: {
+        background: { type: ColorType.Solid, color: chartDefaultTheme.background },
+        fontFamily: chartDefaultTheme.fontFamily,
+        textColor: chartDefaultTheme.layoutTextColor,
+    },
+    grid: {
+        vertLines: { color: chartDefaultTheme.gridLineColor },
+        horzLines: { color: chartDefaultTheme.gridLineColor },
+    },
 };

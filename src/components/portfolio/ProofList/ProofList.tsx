@@ -3,13 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useContext } from 'react';
 import { ListGroup, Spinner } from '@nilfoundation/react-components';
 import ReactJson from 'react-json-view';
-import { useAppSelector } from 'src/redux';
+import { selectPartialProofList, useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components/common';
 import { jsonViewerTheme } from 'src/constants';
-import { Proof } from 'src/models';
+import { SelectedProofContext } from '../SelectedProofContextProvider';
 import './ProofList.scss';
 
 /**
@@ -18,7 +18,7 @@ import './ProofList.scss';
  * @returns React component.
  */
 export const ProofList = (): ReactElement => {
-    const proofList = useAppSelector(s => s.proofState.proofs);
+    const proofList = useAppSelector(selectPartialProofList);
     const loadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const getProofsError = useAppSelector(s => s.proofState.error);
 
@@ -39,10 +39,11 @@ export const ProofList = (): ReactElement => {
  * @returns View, based on proof data state.
  */
 const ProofListViewFactory = (
-    proofList: Proof[],
+    proofList: ReturnType<typeof selectPartialProofList>,
     loadingProofs: boolean,
     getProofsError: boolean,
 ) => {
+    const { selectedProofId, setSelectedProofId } = useContext(SelectedProofContext);
     switch (true) {
         case loadingProofs:
             return <Spinner grow />;
@@ -52,12 +53,18 @@ const ProofListViewFactory = (
             return (
                 <ListGroup className="proofList">
                     {proofList.map(x => (
-                        <ListGroup.Item key={x.id}>
+                        <ListGroup.Item
+                            key={x.id}
+                            onClick={() => setSelectedProofId(x.id)}
+                            active={x.id === selectedProofId}
+                        >
                             <ReactJson
                                 src={x}
                                 name={null}
                                 displayDataTypes={false}
-                                theme={jsonViewerTheme}
+                                displayObjectSize={false}
+                                enableClipboard={false}
+                                theme={proofListJsonTheme}
                             />
                         </ListGroup.Item>
                     ))}
@@ -66,4 +73,12 @@ const ProofListViewFactory = (
         default:
             <h5>No proofs.</h5>;
     }
+};
+
+/**
+ * Custom JSON viewer theme for proof list.
+ */
+const proofListJsonTheme = {
+    ...jsonViewerTheme,
+    base02: 'transparent',
 };

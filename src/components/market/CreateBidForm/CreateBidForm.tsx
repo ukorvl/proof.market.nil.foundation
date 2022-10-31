@@ -12,7 +12,7 @@ import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { createBid } from 'src/api/market/BidsApi';
-import { OrderManagementPanelContext } from '../OrderManagementPanel';
+import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
 
 /**
@@ -21,7 +21,7 @@ import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
  * @returns React component.
  */
 export const CreateBidForm = (): ReactElement => {
-    const { setProcessing } = useContext(OrderManagementPanelContext);
+    const { setProcessing } = useContext(OrderManagementContext);
     const user = useAppSelector(s => s.userState.user)!;
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
     const dispatch = useDispatch();

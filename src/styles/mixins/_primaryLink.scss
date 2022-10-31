@@ -1,6 +1,6 @@
 @import '../constants.scss';
 
-@mixin primaryLink ($hover-color: $c-primary, $active-color: $c-primary) {
+@mixin primaryLink {
   position: relative;
 
   > span {
@@ -16,11 +16,11 @@
     content: '';
     width: 100%;
     height: 100%;
-    background-color: $hover-color;
+    background-color: $c-primary;
     opacity: 0;
 
     &.active{
-      background-color: $active-color;
+      background-color: $c-primary;
     }
   }
 

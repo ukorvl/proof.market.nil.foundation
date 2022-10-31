@@ -4,12 +4,8 @@
  */
 
 import { UserReducerState } from './login';
-import {
-    CircuitsReducerState,
-    BidsReducerState,
-    ProofReducerState,
-    AsksReducerState,
-} from './market';
+import { CircuitsReducerState, BidsReducerState, AsksReducerState } from './market';
+import { ProofReducerState } from './portfolio';
 
 /**
  * Root state type.

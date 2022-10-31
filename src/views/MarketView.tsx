@@ -8,8 +8,10 @@ import { Container, Row, Col } from '@nilfoundation/react-components';
 import {
     CircuitsList,
     CircuitDetailedInfo,
-    OrderManagementPanel,
+    OrderManagementContextProvider,
     CircuitDashboard,
+    OrderBook,
+    CreateOrdersPanel,
 } from '../components';
 
 /**
@@ -35,10 +37,26 @@ const MarketView = (): ReactElement => (
                 md={9}
             >
                 <Row>
-                    <Col xs={12}>
+                    <Col
+                        xs={12}
+                        md={7}
+                    >
                         <CircuitDashboard />
                     </Col>
-                    <OrderManagementPanel />
+                    <OrderManagementContextProvider>
+                        <Col
+                            xs={12}
+                            md={5}
+                        >
+                            <OrderBook />
+                        </Col>
+                        <Col
+                            xs={12}
+                            md={6}
+                        >
+                            <CreateOrdersPanel />
+                        </Col>
+                    </OrderManagementContextProvider>
                 </Row>
             </Col>
         </Row>
