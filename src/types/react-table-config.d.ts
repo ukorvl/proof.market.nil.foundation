@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 /**
  * @file Typings.
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
@@ -50,11 +51,11 @@ import {
 } from 'react-table';
 
 declare module 'react-table' {
-    export interface UseFlexLayoutInstanceProps<D extends Record<string, unknown>> {
+    export interface UseFlexLayoutInstanceProps {
         totalColumnsMinWidth: number;
     }
 
-    export interface UseFlexLayoutColumnProps<D extends Record<string, unknown>> {
+    export interface UseFlexLayoutColumnProps {
         totalMinWidth: number;
     }
 
@@ -115,8 +116,8 @@ declare module 'react-table' {
             UseFlexLayoutColumnProps<D>,
             UseSortByColumnProps<D> {}
 
-    export interface Cell<D extends Record<string, unknown> = Record<string, unknown>>
-        extends UseGroupByCellProps<D> {}
+    export type Cell<D extends Record<string, unknown> = Record<string, unknown>> =
+        UseGroupByCellProps<D>;
 
     export interface Row<D extends Record<string, unknown> = Record<string, unknown>>
         extends UseExpandedRowProps<D>,

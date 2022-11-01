@@ -5,7 +5,7 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Row, SortByFn } from 'react-table';
+import { SortByFn } from 'react-table';
 import {
     Ask,
     Bid,
