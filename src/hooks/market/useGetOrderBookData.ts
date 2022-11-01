@@ -95,6 +95,7 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
     const data = useMemo((): OrderBookTableData[] => {
         const asksTotalVolume = sum(asksData.map(x => x.ordersAmount));
         const bidsTotalVolume = sum(bidsData.map(x => x.ordersAmount));
+        const maxVolume = Math.max(asksTotalVolume, bidsTotalVolume);
 
         return asksData.slice(-itemsLimit).concat(bidsData.slice(0, itemsLimit));
     }, [asksData, bidsData, itemsLimit]);

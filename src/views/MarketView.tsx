@@ -40,6 +40,7 @@ const MarketView = (): ReactElement => (
                     <Col
                         xs={12}
                         md={7}
+                        lg={8}
                     >
                         <CircuitDashboard />
                     </Col>
@@ -47,6 +48,7 @@ const MarketView = (): ReactElement => (
                         <Col
                             xs={12}
                             md={5}
+                            lg={4}
                         >
                             <OrderBook />
                         </Col>

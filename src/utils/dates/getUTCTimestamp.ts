@@ -15,5 +15,5 @@ import { roundDateToMinute } from './roundDateToMinute';
 export const getUTCTimestamp = (dateString: string, roundToMinute?: boolean): number => {
     const date = roundToMinute ? roundDateToMinute(dateString) : new Date(dateString);
 
-    return date.getTime() / 1000;
+    return Math.trunc(date.getTime() / 1000);
 };
