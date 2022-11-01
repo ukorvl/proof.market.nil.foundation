@@ -7,9 +7,9 @@ import { Ask, Bid } from 'src/models';
 
 /**
  *
- * @param first
- * @param second
- * @returns
+ * @param first First order.
+ * @param second Second order.
+ * @returns Comparsion result.
  */
 export const sortTradeOrdersByDate = <T extends Bid | Ask>(first: T, second: T): number =>
     Date.parse(first.init_time) - Date.parse(second.init_time);

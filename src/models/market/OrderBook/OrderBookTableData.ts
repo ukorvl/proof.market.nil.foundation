@@ -3,11 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ColumnAccessor } from './ColumnAccessor';
-
 /**
  * Order book table data.
  */
 export type OrderBookTableData = {
-    [key in ColumnAccessor]?: string;
+    bid?: string;
+    ask?: string;
+    cost: number;
+    eval_time: number;
+    percent?: number;
 };

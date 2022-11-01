@@ -29,7 +29,10 @@ export const CircuitDetailedInfo = (): ReactElement => {
                         <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
                         <h5 className="text-muted">{currentSelectedCircuit.describe}</h5>
                         <p>
-                            <Label href={currentSelectedCircuit.repository}>
+                            <Label
+                                href={currentSelectedCircuit.repository}
+                                target="_blank"
+                            >
                                 <Icon
                                     iconName="fa-brands fa-github"
                                     srOnlyText="github repository link"

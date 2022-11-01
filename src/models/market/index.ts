@@ -6,6 +6,5 @@
 export * from './Circuit';
 export * from './Bid';
 export * from './Ask';
-export * from './Proof';
 export * from './TradeOrder';
 export * from './OrderBook';

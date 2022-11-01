@@ -58,8 +58,8 @@ const ProofListViewFactory = (
                         >
                             <Media>
                                 <Media.Body>
-                                    <Media.Heading>{`"id": ${x.id}`}</Media.Heading>
-                                    {`"bid_id": ${x.bid_id}`}
+                                    <Media.Heading>{`id: ${x.id}`}</Media.Heading>
+                                    {`bid_id: ${x.bid_id}`}
                                 </Media.Body>
                             </Media>
                         </ListGroup.Item>

@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { Table } from '@nilfoundation/react-components';
-import { useSortBy, useTable } from 'react-table';
-import { OrderBookTableColumn, OrderBookTableData } from 'src/models';
+import { Row, TableState, useSortBy, useTable } from 'react-table';
+import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
+import { notEmpty } from 'src/utils';
 import { OrderBookTableHeader } from './OrderBookTableHeader';
 import { OrderBookTableRow } from './OrderBookTableRow';
 
@@ -16,6 +17,24 @@ import { OrderBookTableRow } from './OrderBookTableRow';
 type OrderBookTableProps = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
+    lastOrderData?: LastOrderData;
+};
+
+/**
+ * React-table hook list to pass into table instance.
+ */
+const tableHooks = [useSortBy].filter(notEmpty);
+
+/**
+ * Initial table state.
+ */
+const initialState: Partial<TableState<OrderBookTableData>> = {
+    sortBy: [
+        {
+            id: 'cost',
+            desc: true,
+        },
+    ],
 };
 
 /**
@@ -24,11 +43,18 @@ type OrderBookTableProps = {
  * @param {OrderBookTableProps} props Props.
  * @returns React component.
  */
-export const OrderBookTable = ({ columns, data }: OrderBookTableProps): ReactElement => {
+export const OrderBookTable = ({
+    columns,
+    data,
+    lastOrderData,
+}: OrderBookTableProps): ReactElement => {
     const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
-        { columns, data },
-        useSortBy,
+        { columns, data, initialState },
+        ...tableHooks,
     );
+
+    const asks = useMemo(() => rows.filter(x => !!x.values.ask), [rows]);
+    const bids = useMemo(() => rows.filter(x => !!x.values.bid), [rows]);
 
     return (
         <Table
@@ -48,16 +74,44 @@ export const OrderBookTable = ({ columns, data }: OrderBookTableProps): ReactEle
                 </tr>
             </thead>
             <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
-                    prepareRow(row);
-                    return (
-                        <OrderBookTableRow
-                            key={row.id}
-                            row={row}
-                        />
-                    );
-                })}
+                {asks.map(row => renderRow(row, prepareRow, 'ask'))}
+                <tr className="lastOrderDataContainer">
+                    <td colSpan={4}>
+                        {lastOrderData && (
+                            <>
+                                <div className={lastOrderData.type}>
+                                    {`$ ${lastOrderData.cost}`}
+                                </div>
+                                <div className="text-muted">{lastOrderData.eval_time}</div>
+                            </>
+                        )}
+                    </td>
+                </tr>
+                {bids.map(row => renderRow(row, prepareRow, 'bid'))}
             </tbody>
         </Table>
+    );
+};
+
+/**
+ * Render row.
+ *
+ * @param row Row instance.
+ * @param prepareRow Prepare row callback.
+ * @param className Class.
+ * @returns Row.
+ */
+const renderRow = (
+    row: Row<OrderBookTableData>,
+    prepareRow: (r: Row<OrderBookTableData>) => void,
+    className: string,
+): ReactElement => {
+    prepareRow(row);
+    return (
+        <OrderBookTableRow
+            key={row.id}
+            row={row}
+            className={className}
+        />
     );
 };

@@ -3,13 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ColumnAccessor } from './ColumnAccessor';
+import { Column } from 'react-table';
+import { OrderBookTableData } from './OrderBookTableData';
 
 /**
  * Column.
  */
-export type OrderBookTableColumn = {
-    Header: string;
-    accessor: ColumnAccessor;
-    disableSortBy?: boolean;
-};
+export type OrderBookTableColumn = Column<OrderBookTableData>;

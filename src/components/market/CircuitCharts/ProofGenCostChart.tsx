@@ -33,7 +33,7 @@ export const ProofGenCostChart = (): ReactElement => {
         <ChartTemplate
             loadingData={loadingData}
             price={price}
-            chartName="Proof Gen Cost, USD"
+            chartName="Proof Generation Cost, USD"
             ref={ref}
         />
     );

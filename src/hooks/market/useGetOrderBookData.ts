@@ -5,11 +5,12 @@
 
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Row, SortByFn } from 'react-table';
 import {
     Ask,
     Bid,
-    ColumnAccessor,
     CostAndEvalTime,
+    LastOrderData,
     OrderBookTableColumn,
     OrderBookTableData,
 } from 'src/models';
@@ -23,6 +24,7 @@ export type UseGetOrderBookDataReturnType = {
     data: OrderBookTableData[];
     loadingData: boolean;
     isError: boolean;
+    lastOrderData?: LastOrderData;
 };
 
 /**
@@ -36,30 +38,34 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  * @param itemsLimit - Max count of orderBook items of one type (itemsLimit * 2 overall).
  * @returns Data to render order book table.
  */
-export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnType => {
+export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitAsks);
     const bids = useSelector(selectCurrentCircuitBids);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
+    const lastOrderData: LastOrderData = useMemo(() => getLastOrderData(asks), [asks]);
+
     const columns = useMemo(
         (): OrderBookTableColumn[] => [
             {
                 Header: 'Bid',
-                accessor: ColumnAccessor.bid,
+                accessor: 'bid',
                 disableSortBy: true,
             },
             {
                 Header: 'Cost',
-                accessor: ColumnAccessor.cost,
+                accessor: 'cost',
+                sortType: sortFunctionCreator('cost'),
             },
             {
                 Header: 'Eval_time',
-                accessor: ColumnAccessor.eval_time,
+                accessor: 'eval_time',
+                sortType: sortFunctionCreator('eval_time'),
             },
             {
                 Header: 'Ask',
-                accessor: ColumnAccessor.ask,
+                accessor: 'ask',
                 disableSortBy: true,
             },
         ],
@@ -90,7 +96,7 @@ export const useGetOrderBookData = (itemsLimit = 12): UseGetOrderBookDataReturnT
         [asksData, bidsData, itemsLimit],
     );
 
-    return { columns, data, loadingData, isError };
+    return { columns, data, loadingData, isError, lastOrderData };
 };
 
 /**
@@ -110,8 +116,8 @@ const createOrderBookData = (
         const parsedKey: CostAndEvalTime = JSON.parse(key);
 
         result.push({
-            cost: parsedKey?.cost.toString(),
-            eval_time: parsedKey?.eval_time.toString(),
+            cost: parsedKey?.cost,
+            eval_time: parsedKey?.eval_time,
             [orderType]: value.length,
         });
     });
@@ -144,4 +150,54 @@ const reduceOrdersByCostAndEvalTime = <T extends Bid | Ask>(
     }
 
     return previousValue;
+};
+
+/**
+ * Counts current price value and price changing direction.
+ *
+ * @param currentAsks Current ask list.
+ * @see {CurrentPrice}
+ * @returns Current price.
+ */
+const getLastOrderData = (currentAsks: Ask[]): LastOrderData => {
+    const completedAsks = currentAsks.filter(x => x.status === 'completed');
+
+    const latestCost = completedAsks.at(-1)?.cost;
+    const prevCost = completedAsks.at(-2)?.cost;
+
+    const getType = () => (latestCost! > prevCost! ? 'grow' : 'loss');
+    const type = latestCost && prevCost ? getType() : undefined;
+
+    return {
+        cost: latestCost,
+        eval_time: completedAsks.at(-1)?.eval_time,
+        type,
+    };
+};
+
+/**
+ * Creates react table sort by provided field fucntion.
+ *
+ * @param sortField Sort field.
+ * @returns Sort function.
+ */
+const sortFunctionCreator = (sortField: keyof OrderBookTableData) => {
+    const sortFn: SortByFn<OrderBookTableData> = (rowFirst, rowSecond, _id, desc) => {
+        const { values: valuesFirst } = rowFirst;
+        const { values: valuesSecond } = rowSecond;
+        const isAskFirst = !!valuesFirst.ask;
+        const isAskSecond = !!valuesSecond.ask;
+
+        if (isAskFirst && !isAskSecond) {
+            return desc ? 1 : -1;
+        }
+
+        if (!isAskFirst && isAskSecond) {
+            return desc ? -1 : 1;
+        }
+
+        return valuesFirst[sortField] - valuesSecond[sortField] > 0 ? 1 : -1;
+    };
+
+    return sortFn;
 };

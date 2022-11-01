@@ -14,6 +14,7 @@
   tbody td {
     border: none!important;
     text-align: center;
+    font-size: 1.2rem;
   }
 
   th {
@@ -33,43 +34,88 @@
         background-color: $c-base-light;
       }
     }
+
+    &:first-child,
+    &:last-child {
+      width: 4rem;
+    }
   }
 
   tbody tr {
-    cursor: pointer!important;
     position: relative;
 
-    &:hover {
+    &:not(.lastOrderDataContainer) {
+      cursor: pointer!important;
+    }
+
+    &:hover:not(.lastOrderDataContainer) {
       background-color: $c-base;
     }
 
     &::after {
-      background-color: darken($c-danger, 0%);
-      opacity: 0.3;
-      border-radius: 1rem;
+      opacity: 0.15;
       content: "";
       width: var(--bar-width);
       transition: width 0.1s ease;
-      height: 90%;
+      height: 100%;
       position: absolute;
       top: 0;
       left: 0;
+    }
+
+    &.ask::after {
+      //background-color: $c-danger;
+    }
+
+    &.bid::after {
+      //background-color: $c-success;
     }
 
     td {
       z-index: 2;
       position: relative;
 
-      &:first-child {
-        color: $c-success;
-      }
+      &:not(.lastOrderDataContainer td) {
+        &:first-child {
+          color: $c-success;
+        }
 
-      &:last-child {
-        color: $c-danger;
-      }
+        &:last-child {
+          color: $c-danger;
+        }
 
-      &:not(:first-child):not(:last-child) {
-        color: $c-secondary-darker;
+        &:not(:first-child):not(:last-child) {
+          color: $c-secondary-darker;
+          text-align: left;
+          padding-left: 8%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .lastOrderDataContainer {
+    border-top: 1px solid $c-base-light;
+    border-bottom: 1px solid $c-base-light;
+
+    > td {
+      height: 6rem;
+      vertical-align: middle;
+      text-align: left;
+      padding-left: calc(8% + 4rem);
+
+      > div:first-of-type {
+        font-size: 1.75rem;
+
+        &.grow {
+          color: $c-success;
+        }
+
+        &.loss {
+          color: $c-danger;
+        }
       }
     }
   }

@@ -38,6 +38,7 @@ const OrderBookViewFactory = ({
     columns,
     loadingData,
     isError,
+    lastOrderData,
 }: UseGetOrderBookDataReturnType) => {
     switch (true) {
         case loadingData:
@@ -49,6 +50,7 @@ const OrderBookViewFactory = ({
                 <OrderBookTable
                     data={data}
                     columns={columns}
+                    lastOrderData={lastOrderData}
                 />
             );
         default:

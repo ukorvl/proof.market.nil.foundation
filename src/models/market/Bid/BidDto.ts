@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Proof } from '../Proof';
+import { Proof } from '../../portfolio';
 import { TradeOrder } from '../TradeOrder';
 
 /**

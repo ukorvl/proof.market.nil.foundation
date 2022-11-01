@@ -6,12 +6,13 @@
 import { KeyboardEventHandler, ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import { ColumnInstance } from 'react-table';
+import { OrderBookTableData } from 'src/models';
 
 /**
  * Props.
  */
 type OrderBookTableHeaderProps = {
-    column: ColumnInstance;
+    column: ColumnInstance<OrderBookTableData>;
 };
 
 /**

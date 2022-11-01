@@ -15,6 +15,7 @@ import { OrderBookTableCell } from './OrderBookTableCell';
 type OrderBookTableRowProps = {
     row: Row<OrderBookTableData>;
     maxValue?: number;
+    className?: string;
 };
 
 /**
@@ -23,7 +24,11 @@ type OrderBookTableRowProps = {
  * @param {OrderBookTableRowProps} props Props.
  * @returns React component.
  */
-export const OrderBookTableRow = ({ row, maxValue = 50 }: OrderBookTableRowProps): ReactElement => {
+export const OrderBookTableRow = ({
+    row,
+    maxValue = 50,
+    className: propsClassName,
+}: OrderBookTableRowProps): ReactElement => {
     const { setSelectedValues } = useContext(OrderManagementContext);
     const percentOfMaxValue = maxValue;
     const onClickRow = () => {
@@ -42,13 +47,18 @@ export const OrderBookTableRow = ({ row, maxValue = 50 }: OrderBookTableRowProps
         onClickRow();
     };
 
+    const { className, style, ...rest } = row.getRowProps();
+    const combinedStyle = { ...style, '--bar-width': `${percentOfMaxValue}%` } as CSSProperties;
+    const combinedClassName = `${className ?? ''} ${propsClassName ?? ''}`;
+
     return (
         <tr
-            {...row.getRowProps()}
+            {...rest}
             onClick={onClickRow}
             onKeyDown={onKeyDownHandler}
             tabIndex={0}
-            style={{ '--bar-width': `${percentOfMaxValue}%` } as CSSProperties}
+            style={combinedStyle}
+            className={combinedClassName}
         >
             {row.cells.map(cell => {
                 const { key } = cell.getCellProps();
