@@ -27,7 +27,7 @@ export const CircuitDetailedInfo = (): ReactElement => {
                 {currentSelectedCircuit ? (
                     <div className="circuitDetailedInfo">
                         <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
-                        <h5 className="text-muted">{currentSelectedCircuit.describe}</h5>
+                        <h5 className="text-muted">{currentSelectedCircuit.description}</h5>
                         <p>
                             <Label
                                 href={currentSelectedCircuit.repository}

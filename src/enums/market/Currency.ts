@@ -9,7 +9,7 @@
 export enum Currency {
     Solana = 'Solana',
     Mina = 'Mina',
-    Ethereum = 'ETH',
+    Ethereum = 'Ethereum',
 }
 
 /**

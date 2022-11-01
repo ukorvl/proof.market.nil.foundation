@@ -70,6 +70,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
                   );
 
         const series = addSeriesMethod();
+        series.applyOptions(seriesOptions);
         series.setData(seriesData);
 
         const crosshairMoveHandler: MouseEventHandler = param => {
@@ -93,4 +94,15 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
     }, [seriesData, chart, seriesType, options]);
 
     return { price };
+};
+
+/**
+ * Series options.
+ */
+const seriesOptions: Partial<SeriesOptionsCommon> = {
+    priceFormat: {
+        type: 'price',
+        precision: 4,
+        minMove: 0.0001,
+    },
 };

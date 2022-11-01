@@ -22,9 +22,9 @@ export type CircuitDto = {
      */
     info: string;
     /**
-     * Describe.
+     * Description.
      */
-    describe: string;
+    description: string;
     /**
      * Public assignment.
      */
