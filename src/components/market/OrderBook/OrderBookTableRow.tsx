@@ -14,7 +14,6 @@ import { OrderBookTableCell } from './OrderBookTableCell';
  */
 type OrderBookTableRowProps = {
     row: Row<OrderBookTableData>;
-    maxValue?: number;
     className?: string;
 };
 
@@ -26,11 +25,10 @@ type OrderBookTableRowProps = {
  */
 export const OrderBookTableRow = ({
     row,
-    maxValue = 50,
     className: propsClassName,
 }: OrderBookTableRowProps): ReactElement => {
     const { setSelectedValues } = useContext(OrderManagementContext);
-    const percentOfMaxValue = maxValue;
+    const percentOfMaxValue = row.values.quantity;
     const onClickRow = () => {
         setSelectedValues({
             cost: row.values.cost,

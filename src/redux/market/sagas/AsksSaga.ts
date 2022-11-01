@@ -14,7 +14,7 @@ import {
     UpdateAsksError,
 } from '../actions';
 
-const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 2000;
+const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
 /**
  * Asks main saga.
@@ -23,7 +23,7 @@ const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  */
 export function* AsksSaga(): SagaIterator<void> {
     yield takeLatest(UpdateCircuitsList, GetAsksSaga);
-    // yield fork(RevalidateAsksSaga);
+    yield fork(RevalidateAsksSaga);
 }
 
 /**

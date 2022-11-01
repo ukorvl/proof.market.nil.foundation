@@ -40,6 +40,7 @@ export const ProofCostChart = (): ReactElement => {
     return (
         <ChartTemplate
             loadingData={isLoadingChartData}
+            emptyData={!candlestickChartData.length}
             price={price}
             chartName="Proof cost, USD"
             ref={ref}

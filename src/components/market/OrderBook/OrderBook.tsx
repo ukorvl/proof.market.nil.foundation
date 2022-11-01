@@ -41,7 +41,7 @@ const OrderBookViewFactory = ({
     lastOrderData,
 }: UseGetOrderBookDataReturnType) => {
     switch (true) {
-        case loadingData:
+        case loadingData && !data.length:
             return <Spinner grow />;
         case isError:
             return <h5>Error while loading data.</h5>;

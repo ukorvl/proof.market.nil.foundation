@@ -35,6 +35,7 @@ const initialState: Partial<TableState<OrderBookTableData>> = {
             desc: true,
         },
     ],
+    hiddenColumns: ['type', 'volume'],
 };
 
 /**
@@ -48,13 +49,13 @@ export const OrderBookTable = ({
     data,
     lastOrderData,
 }: OrderBookTableProps): ReactElement => {
-    const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
+    const { getTableProps, getTableBodyProps, visibleColumns, rows, prepareRow } = useTable(
         { columns, data, initialState },
         ...tableHooks,
     );
 
-    const asks = useMemo(() => rows.filter(x => !!x.values.ask), [rows]);
-    const bids = useMemo(() => rows.filter(x => !!x.values.bid), [rows]);
+    const asks = useMemo(() => rows.filter(x => x.values.type === 'ask'), [rows]);
+    const bids = useMemo(() => rows.filter(x => x.values.type === 'bid'), [rows]);
 
     return (
         <Table
@@ -65,7 +66,7 @@ export const OrderBookTable = ({
         >
             <thead>
                 <tr>
-                    {headers.map(column => (
+                    {visibleColumns.map(column => (
                         <OrderBookTableHeader
                             key={column.id}
                             column={column}
@@ -75,18 +76,14 @@ export const OrderBookTable = ({
             </thead>
             <tbody {...getTableBodyProps()}>
                 {asks.map(row => renderRow(row, prepareRow, 'ask'))}
-                <tr className="lastOrderDataContainer">
-                    <td colSpan={4}>
-                        {lastOrderData && (
-                            <>
-                                <div className={lastOrderData.type}>
-                                    {`$ ${lastOrderData.cost}`}
-                                </div>
-                                <div className="text-muted">{lastOrderData.eval_time}</div>
-                            </>
-                        )}
-                    </td>
-                </tr>
+                {lastOrderData && lastOrderData.cost && (
+                    <tr className="lastOrderDataContainer">
+                        <td colSpan={3}>
+                            <div className={lastOrderData.type}>{`$ ${lastOrderData.cost}`}</div>
+                            <div className="text-muted">{lastOrderData.eval_time}</div>
+                        </td>
+                    </tr>
+                )}
                 {bids.map(row => renderRow(row, prepareRow, 'bid'))}
             </tbody>
         </Table>

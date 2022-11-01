@@ -35,8 +35,7 @@
       }
     }
 
-    &:first-child,
-    &:last-child {
+    &:first-child {
       width: 4rem;
     }
   }
@@ -53,7 +52,7 @@
     }
 
     &::after {
-      opacity: 0.15;
+      opacity: 0.1;
       content: "";
       width: var(--bar-width);
       transition: width 0.1s ease;
@@ -63,48 +62,49 @@
       left: 0;
     }
 
-    &.ask::after {
-      //background-color: $c-danger;
+    &.ask {
+      &::after {
+        background-color: $c-danger;
+      }
+
+      td:first-child {
+        color: $c-danger;
+      }
     }
 
-    &.bid::after {
-      //background-color: $c-success;
+    &.bid {
+      &::after {
+        background-color: $c-success;
+      }
+
+      td:first-child {
+        color: $c-success;
+      }
     }
 
     td {
       z-index: 2;
       position: relative;
+      text-align: left;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
-      &:not(.lastOrderDataContainer td) {
-        &:first-child {
-          color: $c-success;
-        }
+      &:first-child {
+        padding-left: 5%;
+      }
 
-        &:last-child {
-          color: $c-danger;
-        }
-
-        &:not(:first-child):not(:last-child) {
-          color: $c-secondary-darker;
-          text-align: left;
-          padding-left: 8%;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-        }
+      &:not(:first-child) {
+        color: $c-secondary-darker;
+        padding-left: 8%;
       }
     }
   }
 
   .lastOrderDataContainer {
-    border-top: 1px solid $c-base-light;
-    border-bottom: 1px solid $c-base-light;
-
     > td {
       height: 6rem;
       vertical-align: middle;
-      text-align: left;
-      padding-left: calc(8% + 4rem);
 
       > div:first-of-type {
         font-size: 1.75rem;

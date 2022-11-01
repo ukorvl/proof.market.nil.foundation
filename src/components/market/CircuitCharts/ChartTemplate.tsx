@@ -16,6 +16,7 @@ type ChartTemplateProps = {
     price?: BarPrice | BarPrices;
     chartName: string;
     loadingData: boolean;
+    emptyData: boolean;
 };
 
 /**
@@ -25,7 +26,7 @@ type ChartTemplateProps = {
  * @returns React component.
  */
 export const ChartTemplate = forwardRef<HTMLDivElement, ChartTemplateProps>(function ChartTemplate(
-    { price, chartName, loadingData }: ChartTemplateProps,
+    { price, chartName, loadingData, emptyData }: ChartTemplateProps,
     ref,
 ): ReactElement {
     return (
@@ -37,7 +38,7 @@ export const ChartTemplate = forwardRef<HTMLDivElement, ChartTemplateProps>(func
                 price={price}
                 name={chartName}
             />
-            {loadingData && <Spinner grow />}
+            {loadingData && emptyData && <Spinner grow />}
         </div>
     );
 });

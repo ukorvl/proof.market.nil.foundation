@@ -6,6 +6,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { SortByFn } from 'react-table';
+import sum from 'lodash/sum';
 import {
     Ask,
     Bid,
@@ -38,7 +39,7 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  * @param itemsLimit - Max count of orderBook items of one type (itemsLimit * 2 overall).
  * @returns Data to render order book table.
  */
-export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnType => {
+export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitAsks);
     const bids = useSelector(selectCurrentCircuitBids);
@@ -49,8 +50,8 @@ export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnT
     const columns = useMemo(
         (): OrderBookTableColumn[] => [
             {
-                Header: 'Bid',
-                accessor: 'bid',
+                Header: 'Orders',
+                accessor: 'ordersAmount',
                 disableSortBy: true,
             },
             {
@@ -64,9 +65,10 @@ export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnT
                 sortType: sortFunctionCreator('eval_time'),
             },
             {
-                Header: 'Ask',
-                accessor: 'ask',
-                disableSortBy: true,
+                accessor: 'type',
+            },
+            {
+                accessor: 'volume',
             },
         ],
         [],
@@ -90,11 +92,12 @@ export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnT
         );
     }, [bids]);
 
-    const data = useMemo(
-        (): OrderBookTableData[] =>
-            asksData.slice(-itemsLimit).concat(bidsData.slice(0, itemsLimit)),
-        [asksData, bidsData, itemsLimit],
-    );
+    const data = useMemo((): OrderBookTableData[] => {
+        const asksTotalVolume = sum(asksData.map(x => x.ordersAmount));
+        const bidsTotalVolume = sum(bidsData.map(x => x.ordersAmount));
+
+        return asksData.slice(-itemsLimit).concat(bidsData.slice(0, itemsLimit));
+    }, [asksData, bidsData, itemsLimit]);
 
     return { columns, data, loadingData, isError, lastOrderData };
 };
@@ -102,7 +105,7 @@ export const useGetOrderBookData = (itemsLimit = 10): UseGetOrderBookDataReturnT
 /**
  * Map groupped trade orders to order book data.
  *
- * @param grouppedOrders Trande order.
+ * @param grouppedOrders Trade orders.
  * @param orderType Bid or Ask.
  * @returns Order book data.
  */
@@ -118,7 +121,8 @@ const createOrderBookData = (
         result.push({
             cost: parsedKey?.cost,
             eval_time: parsedKey?.eval_time,
-            [orderType]: value.length,
+            ordersAmount: value.length,
+            type: orderType,
         });
     });
 

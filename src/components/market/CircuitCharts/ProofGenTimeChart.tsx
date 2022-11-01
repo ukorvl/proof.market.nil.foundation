@@ -32,6 +32,7 @@ export const ProofTimeGenChart = (): ReactElement => {
     return (
         <ChartTemplate
             loadingData={isLoadingChartData}
+            emptyData={!proofGenTimeData.length}
             price={price}
             chartName="Proof Generation Time, ms"
             ref={ref}

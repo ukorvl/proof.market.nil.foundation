@@ -7,9 +7,9 @@
  * Order book table data.
  */
 export type OrderBookTableData = {
-    bid?: string;
-    ask?: string;
+    ordersAmount: number;
     cost: number;
     eval_time: number;
-    percent?: number;
+    type: 'bid' | 'ask';
+    volume?: number;
 };
