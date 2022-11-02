@@ -34,10 +34,9 @@ export const AsksReducer = createReducer(initialState, builder =>
             ...state,
             asks: payload,
         }))
-        .addCase(AddAsk, (state, { payload }) => ({
-            ...state,
-            asks: { ...state.asks, payload },
-        }))
+        .addCase(AddAsk, (state, { payload }) => {
+            state.asks.push(payload);
+        })
         .addCase(UpdateIsLoadingAsks, (state, { payload }) => ({
             ...state,
             isLoading: payload,

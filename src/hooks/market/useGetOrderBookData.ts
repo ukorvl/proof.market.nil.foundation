@@ -6,6 +6,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { SortByFn } from 'react-table';
+import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
 import {
     Ask,
@@ -41,8 +42,8 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  */
 export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCurrentCircuitAsks);
-    const bids = useSelector(selectCurrentCircuitBids);
+    const asks = useSelector(selectCurrentCircuitAsks, deepEqual);
+    const bids = useSelector(selectCurrentCircuitBids, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const lastOrderData: LastOrderData = useMemo(() => getLastOrderData(asks), [asks]);

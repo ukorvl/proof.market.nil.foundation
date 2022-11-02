@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     IChartApi,
     BarPrice,
@@ -52,6 +52,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
     options,
 }: UseRenderChartDataProps<T>): UseRenderChartDataReturnType => {
     const [price, setPrice] = useState<BarPrice | BarPrices>();
+    const seriesMountedRef = useRef(false);
 
     useEffect(() => {
         if (!chart) {
@@ -84,7 +85,11 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
         };
 
         chart.subscribeCrosshairMove(crosshairMoveHandler);
-        chart.timeScale().fitContent();
+
+        !seriesMountedRef.current && chart.timeScale().fitContent();
+        if (seriesData.length) {
+            seriesMountedRef.current = true;
+        }
 
         return () => {
             chart.removeSeries(series);

@@ -34,10 +34,9 @@ export const BidsReducer = createReducer(initialState, builder =>
             ...state,
             bids: payload,
         }))
-        .addCase(AddBid, (state, { payload }) => ({
-            ...state,
-            bids: { ...state.bids, payload },
-        }))
+        .addCase(AddBid, (state, { payload }) => {
+            state.bids.push(payload);
+        })
         .addCase(UpdateIsLoadingBids, (state, { payload }) => ({
             ...state,
             isLoading: payload,

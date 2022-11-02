@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { dequal as deepEqual } from 'dequal';
 import { Ask } from 'src/models';
 import { selectAsksList } from 'src/redux';
 import { isPreviousDay } from 'src/utils';
@@ -27,7 +28,7 @@ export const useGetCircuitBriefInfo = (circuitId?: string): UseGetCircuitBriefIn
     const [currentPrice, setCurrentPrice] = useState<number>();
     const [dailyChange, setDailyChange] = useState<number>();
 
-    const allAsks = useSelector(selectAsksList);
+    const allAsks = useSelector(selectAsksList, deepEqual);
 
     useEffect(() => {
         const filteredAsks = allAsks.filter(

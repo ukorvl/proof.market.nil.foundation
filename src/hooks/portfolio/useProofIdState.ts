@@ -4,6 +4,7 @@
  */
 
 import { Dispatch, SetStateAction, useState } from 'react';
+import { dequal as deepEqual } from 'dequal';
 import { selectPartialProofList, useAppSelector } from 'src/redux';
 
 /**
@@ -17,7 +18,7 @@ export const useProofIdState = (): [
 ] => {
     const [selectedProofId, setSelectedProofId] = useState<number>();
 
-    const proofs = useAppSelector(selectPartialProofList);
+    const proofs = useAppSelector(selectPartialProofList, deepEqual);
 
     if (selectedProofId === undefined && proofs.length) {
         setSelectedProofId(proofs.at(0)?.id);
