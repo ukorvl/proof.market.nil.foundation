@@ -4,9 +4,8 @@
  */
 
 import { ReactElement } from 'react';
-import { Image, ListGroup, Media } from '@nilfoundation/react-components';
+import { ListGroup, Media } from '@nilfoundation/react-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrencyImage } from 'src/enums';
 import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
 import { Circuit } from 'src/models';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
@@ -41,14 +40,6 @@ export const CurcuitsListItem = ({
             onClick={onSelectItem}
         >
             <Media>
-                <Media.Item>
-                    <Image
-                        source={getCurrencyImage(name)}
-                        height={48}
-                        width={48}
-                        alt="Circuit image"
-                    />
-                </Media.Item>
                 <Media.Body>{`${name.toUpperCase()} (${info.toUpperCase()})/USD`}</Media.Body>
                 <CircuitsListItemInfo
                     id={id}

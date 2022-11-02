@@ -6,9 +6,10 @@
 import { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
-import { Icon, Label, Spinner } from '@nilfoundation/react-components';
+import { Icon, Image, Label, Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
+import { getCurrencyImage } from 'src/enums';
 import { Details, DashboardCard } from '../../common';
 import './CircuitDetailedInfo.scss';
 
@@ -27,6 +28,13 @@ export const CircuitDetailedInfo = (): ReactElement => {
                 {currentSelectedCircuit ? (
                     <div className="circuitDetailedInfo">
                         <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
+                        <div className="circuitDetailedInfo__imageContainer">
+                            <Image
+                                alt="Circuit image"
+                                source={getCurrencyImage(currentSelectedCircuit.name)}
+                                responsive
+                            />
+                        </div>
                         <h5 className="text-muted">{currentSelectedCircuit.description}</h5>
                         <p>
                             <Label
@@ -45,6 +53,7 @@ export const CircuitDetailedInfo = (): ReactElement => {
                             collapsed={1}
                             name={null}
                             displayDataTypes={false}
+                            displayObjectSize={false}
                             theme={jsonViewerTheme}
                         />
                     </div>

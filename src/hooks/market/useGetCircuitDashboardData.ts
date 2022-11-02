@@ -88,9 +88,9 @@ const getProofGenTimeData = <T extends Bid | Ask>(
 ): LineData[] => {
     return Object.keys(ordersGrouppedByDate).map(x => {
         const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
-        const meanEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
+        const averageEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
 
-        return { time: Number(x) as UTCTimestamp, value: meanEvalTime };
+        return { time: Number(x) as UTCTimestamp, value: averageEvalTime };
     });
 };
 

@@ -1,6 +1,22 @@
+@import 'src/styles/constants.scss';
+
 .circuitDetailedInfo {
   h5 {
     word-wrap: break-word;
+  }
+
+  &__imageContainer {
+    text-align: center;
+    background-color: $c-base;
+    aspect-ratio: 1/1;
+    padding: 4rem;
+    margin: 0 2rem;
+    border-radius: 6px;
+
+    > img {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .react-json-view {

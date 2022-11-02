@@ -33,7 +33,9 @@ export function* BidsSaga(): SagaIterator<void> {
  */
 function* GetBidsSaga(): SagaIterator<void> {
     try {
+        yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
+
         const bids: Bid[] = yield call(getBids);
 
         if (bids !== undefined) {
