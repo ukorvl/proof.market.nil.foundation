@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo, memo } from 'react';
 import { Table } from '@nilfoundation/react-components';
 import { Row, TableState, useSortBy, useTable } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { notEmpty } from 'src/utils';
+import { useDebounce, useInitialTableState } from 'src/hooks';
 import { OrderBookTableHeader } from './OrderBookTableHeader';
 import { OrderBookTableRow } from './OrderBookTableRow';
 
@@ -26,9 +27,9 @@ type OrderBookTableProps = {
 const tableHooks = [useSortBy].filter(notEmpty);
 
 /**
- * Initial table state.
+ * Initial table state without user interactions.
  */
-const initialState: Partial<TableState<OrderBookTableData>> = {
+const defaultTableState: Partial<TableState<OrderBookTableData>> = {
     sortBy: [
         {
             id: 'cost',
@@ -44,15 +45,26 @@ const initialState: Partial<TableState<OrderBookTableData>> = {
  * @param {OrderBookTableProps} props Props.
  * @returns React component.
  */
-export const OrderBookTable = ({
+export const OrderBookTable = memo(function OrderBookTable({
     columns,
     data,
     lastOrderData,
-}: OrderBookTableProps): ReactElement => {
-    const { getTableProps, getTableBodyProps, visibleColumns, rows, prepareRow } = useTable(
+}: OrderBookTableProps): ReactElement {
+    const [initialState, setInitialState] = useInitialTableState(
+        'orderBookTable',
+        defaultTableState,
+    );
+
+    const { getTableBodyProps, visibleColumns, rows, prepareRow, state } = useTable(
         { columns, data, initialState },
         ...tableHooks,
     );
+
+    const debouncedState = useDebounce(state, 500);
+
+    useEffect(() => {
+        setInitialState(debouncedState);
+    }, [setInitialState, debouncedState]);
 
     const asks = useMemo(() => rows.filter(x => x.values.type === 'ask'), [rows]);
     const bids = useMemo(() => rows.filter(x => x.values.type === 'bid'), [rows]);
@@ -62,7 +74,6 @@ export const OrderBookTable = ({
             className="orderBookTable"
             condensed
             responsive
-            {...getTableProps()}
         >
             <thead>
                 <tr>
@@ -88,7 +99,7 @@ export const OrderBookTable = ({
             </tbody>
         </Table>
     );
-};
+});
 
 /**
  * Render row.

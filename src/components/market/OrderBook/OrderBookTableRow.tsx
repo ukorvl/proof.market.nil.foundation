@@ -28,7 +28,6 @@ export const OrderBookTableRow = ({
     className: propsClassName,
 }: OrderBookTableRowProps): ReactElement => {
     const { setSelectedValues } = useContext(OrderManagementContext);
-    const percentOfMaxValue = row.values.quantity;
     const onClickRow = () => {
         setSelectedValues({
             cost: row.values.cost,
@@ -46,7 +45,7 @@ export const OrderBookTableRow = ({
     };
 
     const { className, style, ...rest } = row.getRowProps();
-    const combinedStyle = { ...style, '--bar-width': `${percentOfMaxValue}%` } as CSSProperties;
+    const combinedStyle = { ...style, '--bar-width': `${row.values.volume}%` } as CSSProperties;
     const combinedClassName = `${className ?? ''} ${propsClassName ?? ''}`;
 
     return (

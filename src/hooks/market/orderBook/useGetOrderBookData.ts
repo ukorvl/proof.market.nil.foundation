@@ -93,13 +93,10 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
         );
     }, [bids]);
 
-    const data = useMemo((): OrderBookTableData[] => {
-        const asksTotalVolume = sum(asksData.map(x => x.ordersAmount));
-        const bidsTotalVolume = sum(bidsData.map(x => x.ordersAmount));
-        const maxVolume = Math.max(asksTotalVolume, bidsTotalVolume);
-
-        return asksData.slice(-itemsLimit).concat(bidsData.slice(0, itemsLimit));
-    }, [asksData, bidsData, itemsLimit]);
+    const data = useMemo(
+        (): OrderBookTableData[] => getDataWithVolumes(asksData, bidsData, itemsLimit),
+        [asksData, bidsData, itemsLimit],
+    );
 
     return { columns, data, loadingData, isError, lastOrderData };
 };
@@ -206,4 +203,38 @@ const sortFunctionCreator = (sortField: keyof OrderBookTableData) => {
     };
 
     return sortFn;
+};
+
+/**
+ * Creates order book data with volumes for every order book item.
+ *
+ * @param asksData Asks data.
+ * @param bidsData Bids data.
+ * @param itemsLimit Items limit to show in order book.
+ * @returns Order book data with voulmes.
+ */
+const getDataWithVolumes = (
+    asksData: OrderBookTableData[],
+    bidsData: OrderBookTableData[],
+    itemsLimit: number,
+): OrderBookTableData[] => {
+    const asksTotalVolume = sum(asksData.map(x => x.ordersAmount));
+    const bidsTotalVolume = sum(bidsData.map(x => x.ordersAmount));
+    const maxVolume = Math.max(asksTotalVolume, bidsTotalVolume);
+    let count = 0;
+
+    const finalBids = bidsData
+        .slice(0, itemsLimit)
+        .reverse()
+        .map(x => {
+            count += x.ordersAmount;
+
+            return {
+                ...x,
+                volume: ((maxVolume - count) / maxVolume) * 100,
+            };
+        })
+        .reverse();
+
+    return asksData.slice(-itemsLimit).concat(finalBids);
 };

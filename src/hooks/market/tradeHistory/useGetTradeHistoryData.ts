@@ -8,7 +8,7 @@ import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
-import { useAppSelector, selectCurrentCircuitAsks } from 'src/redux';
+import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 
@@ -29,13 +29,11 @@ type UseGetCircuitDashboardDataReturnType = {
  *
  * @returns Data to draw circuit chart.
  */
-export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
+export const useGetTradeHistoryData = (): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCurrentCircuitAsks, deepEqual);
+    const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
     const grouppedOrders = useMemo(() => {
-        return asks
-            .filter(x => x.status === 'completed' && !!x.timestamp)
-            .reduce(reduceOrdersByDate, {});
+        return asks.reduce(reduceOrdersByDate, {});
     }, [asks]);
 
     const chartData = useMemo(

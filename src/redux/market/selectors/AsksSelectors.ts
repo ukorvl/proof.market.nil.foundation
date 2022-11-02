@@ -24,3 +24,10 @@ export const selectCurrentCircuitAsks = createSelector(
     selectCurrentCircuitId,
     (asks, selectedid) => asks.filter(x => x.circuit_id === selectedid),
 );
+
+/**
+ * Select all completed asks.
+ */
+export const selectCurrentCircuitCompletedAsks = createSelector(selectCurrentCircuitAsks, asks =>
+    asks.filter(x => x.status === 'completed'),
+);
