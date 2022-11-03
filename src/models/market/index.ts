@@ -8,3 +8,4 @@ export * from './Bid';
 export * from './Ask';
 export * from './TradeOrder';
 export * from './OrderBook';
+export * from './TradeHistory';

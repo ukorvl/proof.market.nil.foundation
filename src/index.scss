@@ -37,9 +37,3 @@ button {
   padding-top: 12px;
   color: $c-danger
 }
-
-@media screen and (max-width: 767px) {
-  .table-responsive {
-    border: none!important;
-  }
-}

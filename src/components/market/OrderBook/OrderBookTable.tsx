@@ -4,12 +4,11 @@
  */
 
 import { ReactElement, useEffect, useMemo, memo } from 'react';
-import { Table } from '@nilfoundation/react-components';
 import { Row, TableState, useSortBy, useTable } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { notEmpty } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
-import { OrderBookTableHeader } from './OrderBookTableHeader';
+import { Table, TableHeader } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
 
 /**
@@ -70,15 +69,11 @@ export const OrderBookTable = memo(function OrderBookTable({
     const bids = useMemo(() => rows.filter(x => x.values.type === 'bid'), [rows]);
 
     return (
-        <Table
-            className="orderBookTable"
-            condensed
-            responsive
-        >
+        <Table className="orderBookTable">
             <thead>
                 <tr>
                     {visibleColumns.map(column => (
-                        <OrderBookTableHeader
+                        <TableHeader
                             key={column.id}
                             column={column}
                         />

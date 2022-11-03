@@ -3,6 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import { TradeOrderChange } from '../TradeOrder';
+
 /**
  * Last order data.
  */
@@ -18,5 +20,5 @@ export type LastOrderData = {
     /**
      * Shows price changing direction. Neutral if no changes happend.
      */
-    type?: 'grow' | 'loss';
+    type: TradeOrderChange;
 };

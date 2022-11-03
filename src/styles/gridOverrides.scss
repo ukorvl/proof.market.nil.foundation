@@ -4,7 +4,7 @@ $grid-gutter-width: 20px;
 $grid-columns: 12;
 
 main {
-  padding: $grid-gutter-width 0;
+  padding-top: $grid-gutter-width;
 }
 
 .jumbotron {

@@ -8,36 +8,8 @@
 }
 
 .orderBookTable {
-  margin-bottom: 0;
-  margin-top: 2px;
-
-  tbody td {
-    border: none!important;
-    text-align: center;
-    font-size: 1.2rem;
-  }
-
-  th {
-    border-bottom: 1px solid $c-base-light!important;
-    text-align: center;
-    color: $c-secondary-darker;
-
-    > i {
-      margin-left: 8px;
-    }
-
-    &.sortableColumn {
-      color: $c-secondary;
-
-      &:hover,
-      &:focus {
-        background-color: $c-base-light;
-      }
-    }
-
-    &:first-child {
-      width: 4rem;
-    }
+  th:first-child {
+    width: 4rem;
   }
 
   tbody tr {
@@ -85,18 +57,9 @@
     td {
       z-index: 2;
       position: relative;
-      text-align: left;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
 
       &:first-child {
         padding-left: 5%;
-      }
-
-      &:not(:first-child) {
-        color: $c-secondary-darker;
-        padding-left: 8%;
       }
     }
   }

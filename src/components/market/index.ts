@@ -11,3 +11,4 @@ export * from './OrderManagementContextProvider';
 export * from './ChartLegend';
 export * from './CircuitCharts';
 export * from './CreateOrdersPanel';
+export * from './TradeHistory';

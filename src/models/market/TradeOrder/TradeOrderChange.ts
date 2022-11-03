@@ -3,9 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { AskDto } from './AskDto';
-
 /**
- * Ask.
+ * Trade order change type.
  */
-export type Ask = AskDto;
+export type TradeOrderChange = 'grow' | 'loss' | undefined;

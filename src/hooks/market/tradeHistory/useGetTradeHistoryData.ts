@@ -4,110 +4,73 @@
  */
 
 import { useMemo } from 'react';
-import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
-import sum from 'lodash/sum';
 import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
-import { Ask, Bid } from 'src/models';
-import { getUTCTimestamp } from 'src/utils';
+import { Ask, TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
+import { formatDate } from 'src/utils';
 
 /**
- * Hook return type.
+ * UseGetTradeHistoryData hook return type.
  */
-type UseGetCircuitDashboardDataReturnType = {
-    chartData: {
-        candlestickChartData: CandlestickData[];
-        proofGenTimeData: LineData[];
-        proofGenCostData: LineData[];
-    };
+export type UseGetTradeHistoryDataReturnType = {
+    data: TradeHistoryData[];
+    columns: TradeHistoryTableColumn[];
     loadingData: boolean;
+    isError: boolean;
 };
 
 /**
- * Get data to draw circuit chart.
+ * Get data to render trade history table.
  *
- * @returns Data to draw circuit chart.
+ * @returns Data to render trade history table.
  */
-export const useGetTradeHistoryData = (): UseGetCircuitDashboardDataReturnType => {
+export const useGetTradeHistoryData = (): UseGetTradeHistoryDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
-    const grouppedOrders = useMemo(() => {
-        return asks.reduce(reduceOrdersByDate, {});
-    }, [asks]);
+    const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
-    const chartData = useMemo(
-        () => ({
-            candlestickChartData: getCandlestickData(grouppedOrders),
-            proofGenTimeData: getProofGenTimeData(grouppedOrders),
-            proofGenCostData: getProofGenTimeData(grouppedOrders), // TODO - replace when proof cost will be avial.
-        }),
-        [grouppedOrders],
+    const columns = useMemo(
+        (): TradeHistoryTableColumn[] => [
+            {
+                Header: 'Orders',
+                accessor: 'timestamp',
+            },
+            {
+                Header: 'Cost',
+                accessor: 'cost',
+            },
+            {
+                Header: 'Eval_time',
+                accessor: 'eval_time',
+            },
+            {
+                accessor: 'type',
+            },
+        ],
+        [],
     );
 
-    return { chartData, loadingData };
+    const data = useMemo(() => asks.map(mapToTradeHostoryData), [asks]);
+
+    return { data, columns, loadingData, isError };
 };
 
 /**
- * Creates candleStick data {@link CandlestickData} array from orders, groupped by date.
+ * Maps asks list to trade history table data list.
  *
- * @param ordersGrouppedByDate Orders array.
- * @returns Array of candleStick data.
+ * @param {Ask} ask - Current ask.
+ * @param i Current index.
+ * @param asks Asks array.
+ * @returns Trade history table data list.
  */
-const getCandlestickData = <T extends Bid | Ask>(
-    ordersGrouppedByDate: Record<string, T[]>,
-): CandlestickData[] => {
-    return Object.keys(ordersGrouppedByDate).map(x => {
-        const ordersCosts = ordersGrouppedByDate[x].map(x => x.cost);
-
-        const high = Math.max(...ordersCosts);
-        const low = Math.min(...ordersCosts);
-        const open = ordersCosts[0];
-        const close = ordersCosts[ordersCosts.length - 1];
-
-        return {
-            time: Number(x) as UTCTimestamp,
-            high,
-            low,
-            open,
-            close,
-        };
-    });
-};
-
-/**
- * Creates line data {@link LineData} array from orders, groupped by date.
- *
- * @param ordersGrouppedByDate Orders array.
- * @returns Array of line data.
- */
-const getProofGenTimeData = <T extends Bid | Ask>(
-    ordersGrouppedByDate: Record<string, T[]>,
-): LineData[] => {
-    return Object.keys(ordersGrouppedByDate).map(x => {
-        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
-        const averageEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
-
-        return { time: Number(x) as UTCTimestamp, value: averageEvalTime };
-    });
-};
-
-/**
- * Takes orders array and returns dict, where keys are dates, and values are arrays of orders.
- *
- * @param previousValue Initial value.
- * @param currentValue Current value.
- * @returns Orders, grouped by date.
- */
-const reduceOrdersByDate = <T extends Bid | Ask>(
-    previousValue: Record<string, T[]>,
-    currentValue: T,
-) => {
-    const date = getUTCTimestamp(currentValue.timestamp!, true);
-
-    if (!previousValue[date]) previousValue[date] = [];
-
-    previousValue[date].push(currentValue);
-
-    return previousValue;
-};
+const mapToTradeHostoryData = (
+    { timestamp, cost, eval_time }: Ask,
+    i: number,
+    asks: Ask[],
+): TradeHistoryData => ({
+    timestamp: formatDate(timestamp!, 'DD.MM hh:mm'),
+    cost,
+    eval_time,
+    type: asks.at(i - 1) && (asks.at(i - 1)!.cost > cost ? 'loss' : 'grow'),
+});

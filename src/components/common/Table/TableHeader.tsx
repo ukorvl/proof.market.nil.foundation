@@ -6,22 +6,23 @@
 import { KeyboardEventHandler, ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import { ColumnInstance } from 'react-table';
-import { OrderBookTableData } from 'src/models';
 
 /**
  * Props.
  */
-type OrderBookTableHeaderProps = {
-    column: ColumnInstance<OrderBookTableData>;
+type TableHeaderProps<T extends Record<string, unknown>> = {
+    column: ColumnInstance<T>;
 };
 
 /**
  * Order book table header.
  *
- * @param {OrderBookTableHeaderProps} props Props.
+ * @param {TableHeaderProps} props Props.
  * @returns React component.
  */
-export const OrderBookTableHeader = ({ column }: OrderBookTableHeaderProps): ReactElement => {
+export const TableHeader = <T extends Record<string, unknown>>({
+    column,
+}: TableHeaderProps<T>): ReactElement => {
     const { canSort, isSorted, isSortedDesc, toggleSortBy } = column;
 
     const onKeyDownHandler: KeyboardEventHandler = e => {
