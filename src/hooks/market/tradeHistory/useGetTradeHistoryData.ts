@@ -33,7 +33,7 @@ export const useGetTradeHistoryData = (): UseGetTradeHistoryDataReturnType => {
     const columns = useMemo(
         (): TradeHistoryTableColumn[] => [
             {
-                Header: 'Orders',
+                Header: 'Time',
                 accessor: 'timestamp',
             },
             {

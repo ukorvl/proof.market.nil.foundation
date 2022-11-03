@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, memo } from 'react';
 import { Icon, Media } from '@nilfoundation/react-components';
 import clsx from 'clsx';
 import { useGetCircuitBriefInfo } from 'src/hooks';
@@ -22,10 +22,10 @@ type CircuitsListItemInfoProps = {
  * @param {CircuitsListItemInfoProps} props - Props.
  * @returns React component.
  */
-export const CircuitsListItemInfo = ({
+export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
     id,
     isSelected,
-}: CircuitsListItemInfoProps): ReactElement => {
+}: CircuitsListItemInfoProps): ReactElement {
     const { currentPrice, dailyChange } = useGetCircuitBriefInfo(id);
     const isGrow = !!dailyChange && dailyChange > 0;
     const iconName = `fa-solid fa-arrow-${isGrow ? 'up' : 'down'}`;
@@ -45,4 +45,4 @@ export const CircuitsListItemInfo = ({
             )}
         </Media.Item>
     );
-};
+});

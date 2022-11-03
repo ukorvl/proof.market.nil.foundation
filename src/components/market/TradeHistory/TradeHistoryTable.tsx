@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, useEffect, memo } from 'react';
-import { TableState, useSortBy, useTable } from 'react-table';
+import { Row, TableState, useSortBy, useTable } from 'react-table';
 import { OrderBookTableData, TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
 import { notEmpty } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
@@ -63,7 +63,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
     }, [setInitialState, debouncedState]);
 
     return (
-        <Table className="tradeHistoryTable">
+        <Table>
             <thead>
                 <tr>
                     {visibleColumns.map(column => (
@@ -87,6 +87,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
 
                                 return (
                                     <td
+                                        className={getCellClassName(row)}
                                         key={key}
                                         {...rest}
                                     >
@@ -101,3 +102,17 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
         </Table>
     );
 });
+
+/**
+ * Generate className to table cell.
+ *
+ * @param row Row.
+ * @returns Class name.
+ */
+const getCellClassName = (row: Row<TradeHistoryData>) => {
+    if (!row.values.type) {
+        return undefined;
+    }
+
+    return `${row.values.type}TextColor`;
+};
