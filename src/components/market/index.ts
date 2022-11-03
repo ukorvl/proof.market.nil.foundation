@@ -12,3 +12,4 @@ export * from './ChartLegend';
 export * from './CircuitCharts';
 export * from './CreateOrdersPanel';
 export * from './TradeHistory';
+export * from './ManageOrdersPanel';

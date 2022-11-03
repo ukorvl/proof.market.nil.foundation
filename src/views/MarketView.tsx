@@ -13,6 +13,7 @@ import {
     OrderBook,
     CreateOrdersPanel,
     TradeHistory,
+    ManageOrdersPanel,
 } from '../components';
 
 /**
@@ -62,7 +63,12 @@ const MarketView = (): ReactElement => (
                         <Col
                             xs={12}
                             md={4}
-                            md-offset={4}
+                        >
+                            <ManageOrdersPanel />
+                        </Col>
+                        <Col
+                            xs={12}
+                            md={4}
                         >
                             <TradeHistory />
                         </Col>

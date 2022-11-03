@@ -38,7 +38,7 @@ export const CreateOrdersPanel = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <Details title={<h4>Manage orders</h4>}>
+            <Details title={<h4>Create orders</h4>}>
                 <CreateOrdersTabs
                     currentTab={tab}
                     onSetTab={setTab}
