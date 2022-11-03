@@ -9,7 +9,7 @@ import { OrderBookTableData, TradeHistoryData, TradeHistoryTableColumn } from 's
 import { notEmpty } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { Table, TableHeader } from 'src/components';
-``;
+
 /**
  * Props.
  */
