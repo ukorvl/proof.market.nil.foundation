@@ -22,8 +22,8 @@ export const getProofs = (): Promise<Proof> =>
             bindVars: {
                 '@relation': 'proof',
                 offset: 0,
-                count: 10,
+                count: 100,
             },
-            batchSize: 10,
+            batchSize: 100,
         })
         .then((x: any) => x.result);

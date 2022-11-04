@@ -70,6 +70,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
     return (
         <ReactTable
             name="tradeHistoryTable"
+            className="tradeHistoryTable"
             data={data}
             columns={columns}
             renderRows={renderRows}

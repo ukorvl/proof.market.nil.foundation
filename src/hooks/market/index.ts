@@ -5,5 +5,5 @@
 
 export * from './charts';
 export * from './orderBook';
-export * from './TradeHistory';
+export * from './tradeHistory';
 export * from './useGetCircuitBriefInfo';

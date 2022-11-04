@@ -1,3 +1,11 @@
 .tradeHistory {
   height: 500px;
 }
+
+.tradeHistoryTable {
+  tbody tr td {
+    &:not(:first-child) {
+      padding-left: 8%;
+    }
+  }
+}
