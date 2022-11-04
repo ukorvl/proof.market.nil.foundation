@@ -16,7 +16,12 @@ import {
     OrderBookTableColumn,
     OrderBookTableData,
 } from 'src/models';
-import { selectCurrentCircuitBids, selectCurrentCircuitAsks, useAppSelector } from 'src/redux';
+import {
+    selectCurrentCircuitBids,
+    selectCurrentCircuitAsks,
+    useAppSelector,
+    selectCurrentUserAsks,
+} from 'src/redux';
 
 /**
  * Hook return type.
@@ -27,6 +32,7 @@ export type UseGetOrderBookDataReturnType = {
     loadingData: boolean;
     isError: boolean;
     lastOrderData?: LastOrderData;
+    maxVolume: number;
 };
 
 /**
@@ -40,10 +46,12 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  * @param itemsLimit - Max count of orderBook items of one type (itemsLimit * 2 overall).
  * @returns Data to render order book table.
  */
-export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturnType => {
+export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitAsks, deepEqual);
     const bids = useSelector(selectCurrentCircuitBids, deepEqual);
+    const userAsks = useSelector(selectCurrentUserAsks, deepEqual);
+    const userBids = useSelector(selectCurrentCircuitBids, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const lastOrderData: LastOrderData = useMemo(() => getLastOrderData(asks), [asks]);
@@ -69,7 +77,7 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
                 accessor: 'type',
             },
             {
-                accessor: 'volume',
+                accessor: 'userOrdersAmount',
             },
         ],
         [],
@@ -81,8 +89,9 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
                 .filter(x => x.status === 'created')
                 .reduce(reduceOrdersByCostAndEvalTime, new Map()),
             'ask',
-        );
-    }, [asks]);
+            userAsks,
+        ).slice(-itemsLimit);
+    }, [asks, userAsks, itemsLimit]);
 
     const bidsData = useMemo(() => {
         return createOrderBookData(
@@ -90,15 +99,25 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
                 .filter(x => x.status === 'created')
                 .reduce(reduceOrdersByCostAndEvalTime, new Map()),
             'bid',
-        );
-    }, [bids]);
+            userBids,
+        ).slice(0, itemsLimit);
+    }, [bids, userBids, itemsLimit]);
 
     const data = useMemo(
-        (): OrderBookTableData[] => getDataWithVolumes(asksData, bidsData, itemsLimit),
-        [asksData, bidsData, itemsLimit],
+        (): OrderBookTableData[] => asksData.concat(bidsData),
+        [asksData, bidsData],
     );
 
-    return { columns, data, loadingData, isError, lastOrderData };
+    const maxVolume = useMemo(
+        () =>
+            Math.max(
+                sum(asksData.map(x => x.ordersAmount)) ?? 0,
+                sum(bidsData.map(x => x.ordersAmount)) ?? 0,
+            ),
+        [asksData, bidsData],
+    );
+
+    return { columns, data, loadingData, isError, lastOrderData, maxVolume };
 };
 
 /**
@@ -106,11 +125,13 @@ export const useGetOrderBookData = (itemsLimit = 100): UseGetOrderBookDataReturn
  *
  * @param grouppedOrders Trade orders.
  * @param orderType Bid or Ask.
+ * @param userOrders - Orders, created by user.
  * @returns Order book data.
  */
-const createOrderBookData = (
+const createOrderBookData = <T extends Bid | Ask>(
     grouppedOrders: GrouppedOrdersMap,
     orderType: 'bid' | 'ask',
+    userOrders: T[],
 ): OrderBookTableData[] => {
     const result: OrderBookTableData[] = [];
 
@@ -122,6 +143,7 @@ const createOrderBookData = (
             eval_time: parsedKey?.eval_time,
             ordersAmount: value.length,
             type: orderType,
+            userOrdersAmount: value.filter(x => userOrders.some(y => y.id === x.id)).length,
         });
     });
 
@@ -203,38 +225,4 @@ const sortFunctionCreator = (sortField: keyof OrderBookTableData) => {
     };
 
     return sortFn;
-};
-
-/**
- * Creates order book data with volumes for every order book item.
- *
- * @param asksData Asks data.
- * @param bidsData Bids data.
- * @param itemsLimit Items limit to show in order book.
- * @returns Order book data with voulmes.
- */
-const getDataWithVolumes = (
-    asksData: OrderBookTableData[],
-    bidsData: OrderBookTableData[],
-    itemsLimit: number,
-): OrderBookTableData[] => {
-    const asksTotalVolume = sum(asksData.map(x => x.ordersAmount));
-    const bidsTotalVolume = sum(bidsData.map(x => x.ordersAmount));
-    const maxVolume = Math.max(asksTotalVolume, bidsTotalVolume);
-    let count = 0;
-
-    const finalBids = bidsData
-        .slice(0, itemsLimit)
-        .reverse()
-        .map(x => {
-            count += x.ordersAmount;
-
-            return {
-                ...x,
-                volume: ((maxVolume - count) / maxVolume) * 100,
-            };
-        })
-        .reverse();
-
-    return asksData.slice(-itemsLimit).concat(finalBids);
 };

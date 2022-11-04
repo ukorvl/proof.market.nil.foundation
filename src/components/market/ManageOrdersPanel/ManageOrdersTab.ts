@@ -6,7 +6,7 @@
 /**
  * Tab.
  */
-export enum Tab {
-    buy = 'BUY',
-    sell = 'SELL',
+export enum ManageOrdersTab {
+    active = 'ACTIVE',
+    history = 'HISTORY',
 }

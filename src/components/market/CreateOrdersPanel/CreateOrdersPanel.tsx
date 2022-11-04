@@ -9,7 +9,7 @@ import { DashboardCard, Details } from '../../common';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateAskForm } from '../CreateAskForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
-import { Tab } from './Tab';
+import { CreateOrdersTab } from './CreateOrdersTab';
 import './CreateOrdersPanel.scss';
 
 /**
@@ -18,23 +18,8 @@ import './CreateOrdersPanel.scss';
  * @returns React component.
  */
 export const CreateOrdersPanel = (): ReactElement => {
-    const [tab, setTab] = useState<Tab>(Tab.buy);
+    const [tab, setTab] = useState<CreateOrdersTab>(CreateOrdersTab.buy);
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
-
-    const tabFactory = () => {
-        if (selectedCircuitId === undefined) {
-            return <h4>Please, select circuit to create orders.</h4>;
-        }
-
-        switch (tab) {
-            case Tab.buy:
-                return <CreateBidForm />;
-            case Tab.sell:
-                return <CreateAskForm />;
-            default:
-                return <></>;
-        }
-    };
 
     return (
         <DashboardCard>
@@ -43,8 +28,30 @@ export const CreateOrdersPanel = (): ReactElement => {
                     currentTab={tab}
                     onSetTab={setTab}
                 />
-                <div className="cerateOrdersPanel">{tabFactory()}</div>
+                <div className="cerateOrdersPanel">{tabFactory(tab, selectedCircuitId)}</div>
             </Details>
         </DashboardCard>
     );
+};
+
+/**
+ * Renders tab content conditionally.
+ *
+ * @param tab Selected tab.
+ * @param selectedCircuitId Selected circuit id.
+ * @returns React Element.
+ */
+const tabFactory = (tab: CreateOrdersTab, selectedCircuitId?: string) => {
+    if (selectedCircuitId === undefined) {
+        return <h4>Please, select circuit to create orders.</h4>;
+    }
+
+    switch (tab) {
+        case CreateOrdersTab.buy:
+            return <CreateBidForm />;
+        case CreateOrdersTab.sell:
+            return <CreateAskForm />;
+        default:
+            return <></>;
+    }
 };

@@ -7,6 +7,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Ask } from 'src/models';
 import { RootStateType } from 'src/redux';
 import { selectCurrentCircuitId } from './CircuitsSelectors';
+import { selectCurrentUser } from '../../login';
 
 /**
  * Select all asks from state.
@@ -30,4 +31,13 @@ export const selectCurrentCircuitAsks = createSelector(
  */
 export const selectCurrentCircuitCompletedAsks = createSelector(selectCurrentCircuitAsks, asks =>
     asks.filter(x => x.status === 'completed'),
+);
+
+/**
+ * Select asks, created by current user.
+ */
+export const selectCurrentUserAsks = createSelector(
+    selectAsksList,
+    selectCurrentUser,
+    (asks, user) => asks.filter(x => x.sender === user),
 );

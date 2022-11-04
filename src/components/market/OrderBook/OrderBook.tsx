@@ -39,6 +39,7 @@ const OrderBookViewFactory = ({
     loadingData,
     isError,
     lastOrderData,
+    maxVolume,
 }: UseGetOrderBookDataReturnType) => {
     switch (true) {
         case loadingData && !data.length:
@@ -51,6 +52,7 @@ const OrderBookViewFactory = ({
                     data={data}
                     columns={columns}
                     lastOrderData={lastOrderData}
+                    maxVolume={maxVolume}
                 />
             );
         default:

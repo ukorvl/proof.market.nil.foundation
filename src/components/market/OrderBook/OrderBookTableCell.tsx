@@ -4,6 +4,7 @@
  */
 
 import { ReactElement } from 'react';
+import { Label } from '@nilfoundation/react-components';
 import { Cell } from 'react-table';
 import { OrderBookTableData } from 'src/models';
 
@@ -12,6 +13,7 @@ import { OrderBookTableData } from 'src/models';
  */
 type OrderBookTableCellProps = {
     cell: Cell<OrderBookTableData>;
+    userOrdersAmount?: number;
 };
 
 /**
@@ -20,6 +22,18 @@ type OrderBookTableCellProps = {
  * @param {OrderBookTableCellProps} props Props.
  * @returns React component.
  */
-export const OrderBookTableCell = ({ cell }: OrderBookTableCellProps): ReactElement => {
-    return <td {...cell.getCellProps()}>{cell.value}</td>;
+export const OrderBookTableCell = ({
+    cell,
+    userOrdersAmount,
+}: OrderBookTableCellProps): ReactElement => {
+    return (
+        <td {...cell.getCellProps()}>
+            {cell.value}
+            {userOrdersAmount && (
+                <Label>
+                    <span>{userOrdersAmount}</span>
+                </Label>
+            )}
+        </td>
+    );
 };

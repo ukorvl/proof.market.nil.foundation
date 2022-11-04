@@ -14,6 +14,7 @@ import { OrderBookTableCell } from './OrderBookTableCell';
  */
 type OrderBookTableRowProps = {
     row: Row<OrderBookTableData>;
+    volume: number;
     className?: string;
 };
 
@@ -25,6 +26,7 @@ type OrderBookTableRowProps = {
  */
 export const OrderBookTableRow = ({
     row,
+    volume,
     className: propsClassName,
 }: OrderBookTableRowProps): ReactElement => {
     const { setSelectedValues } = useContext(OrderManagementContext);
@@ -45,7 +47,7 @@ export const OrderBookTableRow = ({
     };
 
     const { className, style, ...rest } = row.getRowProps();
-    const combinedStyle = { ...style, '--bar-width': `${row.values.volume}%` } as CSSProperties;
+    const combinedStyle = { ...style, '--bar-width': `${volume}%` } as CSSProperties;
     const combinedClassName = `${className ?? ''} ${propsClassName ?? ''}`;
 
     return (
@@ -57,12 +59,13 @@ export const OrderBookTableRow = ({
             style={combinedStyle}
             className={combinedClassName}
         >
-            {row.cells.map(cell => {
+            {row.cells.map((cell, i) => {
                 const { key } = cell.getCellProps();
                 return (
                     <OrderBookTableCell
                         key={key}
                         cell={cell}
+                        userOrdersAmount={i !== 0 ? undefined : row.values.userOrdersAmount}
                     />
                 );
             })}

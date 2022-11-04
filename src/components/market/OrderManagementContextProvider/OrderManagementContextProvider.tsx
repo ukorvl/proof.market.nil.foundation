@@ -8,21 +8,21 @@ import { CostAndEvalTime } from 'src/models';
 import { OrderManagementContext } from './OrderManagementContext';
 
 /**
- * Poprs.
+ * Props.
  */
-type OrderManagementContextProps = {
+type OrderManagementContextProviderProps = {
     children?: ReactNode;
 };
 
 /**
- * Order management panel.
+ * Order management context provider.
  *
- * @param {OrderManagementContextProps} props Props.
+ * @param {OrderManagementContextProviderProps} props Props.
  * @returns React component.
  */
 export const OrderManagementContextProvider = ({
     children,
-}: OrderManagementContextProps): ReactElement => {
+}: OrderManagementContextProviderProps): ReactElement => {
     const [processing, setProcessing] = useState(false);
     const [selectedValues, setSelectedValues] = useState<CostAndEvalTime>();
 

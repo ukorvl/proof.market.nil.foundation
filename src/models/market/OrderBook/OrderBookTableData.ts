@@ -8,8 +8,8 @@
  */
 export type OrderBookTableData = {
     ordersAmount: number;
+    userOrdersAmount: number;
     cost: number;
     eval_time: number;
     type: 'bid' | 'ask';
-    volume?: number;
 };

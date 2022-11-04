@@ -1,5 +1,9 @@
+@import 'src/styles/mixins/hideScrollbar';
+
 .tradeHistory {
   height: 500px;
+  overflow-y: auto;
+  @include hideScrollbar;
 }
 
 .tradeHistoryTable {

@@ -5,4 +5,4 @@
 
 export * from './CreateOrdersPanel';
 export * from './CreateOrdersTabs';
-export * from './Tab';
+export * from './CreateOrdersTab';

@@ -16,7 +16,10 @@ type OrderBookTableProps = {
     columns: OrderBookTableColumn[];
     data: OrderBookTableData[];
     lastOrderData?: LastOrderData;
+    maxVolume: number;
 };
+
+type RowWithVolume = Row<OrderBookTableData> & { volume: number };
 
 /**
  * Initial table state without user interactions.
@@ -28,7 +31,7 @@ const defaultOrderBookState: Partial<TableState<OrderBookTableData>> = {
             desc: true,
         },
     ],
-    hiddenColumns: ['type', 'volume'],
+    hiddenColumns: ['type', 'userOrdersAmount'],
 };
 
 /**
@@ -41,6 +44,7 @@ export const OrderBookTable = memo(function OrderBookTable({
     columns,
     data,
     lastOrderData,
+    maxVolume,
 }: OrderBookTableProps): ReactElement {
     const renderRows = useCallback(
         (rows: Row<OrderBookTableData>[], prepareRow: (row: Row<OrderBookTableData>) => void) => {
@@ -49,7 +53,9 @@ export const OrderBookTable = memo(function OrderBookTable({
 
             return (
                 <>
-                    {asks.map(row => renderRow(row, prepareRow, 'ask'))}
+                    {getDataWithVolumes(asks, maxVolume, true).map(row =>
+                        renderRow(row, prepareRow, 'ask'),
+                    )}
                     {lastOrderData && lastOrderData.cost && (
                         <tr className="lastOrderDataContainer">
                             <td colSpan={3}>
@@ -60,11 +66,13 @@ export const OrderBookTable = memo(function OrderBookTable({
                             </td>
                         </tr>
                     )}
-                    {bids.map(row => renderRow(row, prepareRow, 'bid'))}
+                    {getDataWithVolumes(bids, maxVolume).map(row =>
+                        renderRow(row, prepareRow, 'bid'),
+                    )}
                 </>
             );
         },
-        [lastOrderData],
+        [lastOrderData, maxVolume],
     );
 
     return (
@@ -88,7 +96,7 @@ export const OrderBookTable = memo(function OrderBookTable({
  * @returns Row.
  */
 const renderRow = (
-    row: Row<OrderBookTableData>,
+    row: RowWithVolume,
     prepareRow: (r: Row<OrderBookTableData>) => void,
     className: string,
 ): ReactElement => {
@@ -97,7 +105,35 @@ const renderRow = (
         <OrderBookTableRow
             key={row.id}
             row={row}
+            volume={row.volume}
             className={className}
         />
     );
+};
+
+/**
+ * Adds volume data to each order book data item.
+ *
+ * @param data Data.
+ * @param maxVolume Max volume.
+ * @param reverse Count volumes in a reverse order.
+ * @returns Data with voulmes.
+ */
+const getDataWithVolumes = (
+    data: Row<OrderBookTableData>[],
+    maxVolume: number,
+    reverse?: boolean,
+): RowWithVolume[] => {
+    let count = 0;
+
+    const finalData = (reverse ? data.reverse() : data).map(x => {
+        count = count + x.values.ordersAmount;
+
+        return {
+            ...x,
+            volume: 100 - ((maxVolume - count) / maxVolume) * 100,
+        };
+    });
+
+    return reverse ? finalData.reverse() : finalData;
 };

@@ -7,6 +7,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Bid } from 'src/models';
 import { RootStateType } from 'src/redux';
 import { selectCurrentCircuitId } from './CircuitsSelectors';
+import { selectCurrentUser } from '../../login';
 
 /**
  * Select all bids.
@@ -23,4 +24,13 @@ export const selectCurrentCircuitBids = createSelector(
     selectBidsList,
     selectCurrentCircuitId,
     (bids, selectedid) => bids.filter(x => x.circuit_id === selectedid),
+);
+
+/**
+ * Select bids, created by current user.
+ */
+export const selectCurrentUserBids = createSelector(
+    selectBidsList,
+    selectCurrentUser,
+    (bids, user) => bids.filter(x => x.sender === user),
 );

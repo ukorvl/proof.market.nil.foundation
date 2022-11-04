@@ -6,7 +6,7 @@
 import { ReactElement, ReactNode, useEffect } from 'react';
 import { Column, Row, TableState, useSortBy, useTable } from 'react-table';
 import { Table } from '@nilfoundation/react-components';
-import { notEmpty, typedMemo } from 'src/utils';
+import { notEmpty, genericMemo } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { ReactTableHeader } from './ReactTableHeader';
 import './ReactTable.scss';
@@ -35,7 +35,7 @@ const tableHooks = [useSortBy].filter(notEmpty);
  * @param {ReactTableProps} props Props.
  * @returns React component.
  */
-export const ReactTable = typedMemo(function ReactTable<T extends Record<string, unknown>>({
+export const ReactTable = genericMemo(function ReactTable<T extends Record<string, unknown>>({
     name,
     columns,
     data,

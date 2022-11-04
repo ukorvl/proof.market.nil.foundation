@@ -62,6 +62,12 @@
       &:first-child {
         padding-left: 5%;
       }
+
+      > .label {
+        margin-left: 4px;
+        vertical-align: middle;
+        background-color: $c-base-light!important;
+      }
     }
   }
 

@@ -8,7 +8,7 @@ import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
-import { UpdateUser, useAppSelector } from 'src/redux';
+import { selectCurrentUser, UpdateUser, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
 
@@ -31,7 +31,7 @@ export const useAuth = (): UseAuthReturnType => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = useAppSelector(s => s.userState.user);
+    const user = useAppSelector(selectCurrentUser);
     const isAuthentificated = useMemo(() => {
         return !!user;
     }, [user]);

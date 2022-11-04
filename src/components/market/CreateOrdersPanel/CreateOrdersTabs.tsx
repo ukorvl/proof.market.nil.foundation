@@ -6,14 +6,14 @@
 import { ReactElement, useContext } from 'react';
 import { Nav } from '@nilfoundation/react-components';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
-import { Tab } from './Tab';
+import { CreateOrdersTab } from './CreateOrdersTab';
 
 /**
  * Props.
  */
 type OrderManagementTabsProps = {
-    currentTab: Tab;
-    onSetTab: (t: Tab) => void;
+    currentTab: CreateOrdersTab;
+    onSetTab: (t: CreateOrdersTab) => void;
 };
 
 /**
@@ -30,7 +30,7 @@ export const CreateOrdersTabs = ({
 
     return (
         <Nav justified>
-            {Object.values(Tab).map(t => (
+            {Object.values(CreateOrdersTab).map(t => (
                 <Nav.Item
                     key={t}
                     onClick={() => onSetTab(t)}

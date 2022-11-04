@@ -10,4 +10,4 @@ import { memo } from 'react';
  *
  * @see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37087
  */
-export const typedMemo: <T>(c: T) => T = memo;
+export const genericMemo: <T>(c: T) => T = memo;
