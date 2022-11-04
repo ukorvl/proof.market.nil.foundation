@@ -10,6 +10,8 @@ const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
 const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
+const createFetcher = createBearerHttpClient('/market/bid');
+
 /**
  * Get bids.
  *
@@ -35,4 +37,4 @@ export const getBids = (): Promise<Bid[]> =>
  * @returns Bid.
  */
 export const createBid = (data: CreateBid): Promise<Bid> =>
-    httpFetcher.post('document?relation=bid', data).then((x: any) => x);
+    createFetcher.post('', data).then((x: any) => x);

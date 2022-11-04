@@ -4,7 +4,6 @@
  */
 
 import { Circuit } from '../../models';
-import { getApiRouteForCurrentDB } from '../../dbms';
 import { createBearerHttpClient } from '../common';
 
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
@@ -16,11 +15,6 @@ const httpFetcher = createBearerHttpClient(apiUrl);
  *
  * @returns .
  */
-// export const getCircuits = (): Promise<Circuit[]> =>
-//     getApiRouteForCurrentDB()
-//         .get('relation')
-//         .then(r => r.body.result);
-
 export const getCircuits = (): Promise<void> =>
     httpFetcher
         .post('cursor', {

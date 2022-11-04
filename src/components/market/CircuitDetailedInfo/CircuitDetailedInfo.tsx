@@ -35,7 +35,7 @@ export const CircuitDetailedInfo = (): ReactElement => {
                                 responsive
                             />
                         </div>
-                        <h5 className="text-muted">{currentSelectedCircuit.description}</h5>
+                        <h5>{currentSelectedCircuit.description}</h5>
                         <p>
                             <Label
                                 href={currentSelectedCircuit.repository}

@@ -46,6 +46,7 @@ export const CreateBidForm = (): ReactElement => {
         try {
             const bid = await createBid(data);
             dispatch(AddBid(bid));
+            form.reset();
         } catch (e) {
             setErrorMessage('Create order error');
         } finally {
@@ -55,30 +56,31 @@ export const CreateBidForm = (): ReactElement => {
 
     return (
         <Form>
-            <Form.Group hasError={!!errors['public_input']}>
-                <Form.Label htmlFor="public_input">Public_input</Form.Label>
-                <Controller
-                    name="public_input"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <ReactJson
-                            src={value}
-                            collapsed={false}
-                            enableClipboard
-                            onEdit={(edit: InteractionProps) => onChange(edit.updated_src)}
-                            onAdd={(add: InteractionProps) => onChange(add.updated_src)}
-                            onDelete={(del: InteractionProps) => onChange(del.updated_src)}
-                            displayDataTypes={false}
-                            theme={jsonViewerTheme}
-                        />
-                    )}
-                />
-            </Form.Group>
             <FormProvider {...form}>
                 <CreateTradeOrderForm
                     onSubmit={onSubmitBid}
                     errorMessage={errorMessage}
-                />
+                >
+                    <Form.Group hasError={!!errors['public_input']}>
+                        <Form.Label htmlFor="public_input">Public_input</Form.Label>
+                        <Controller
+                            name="public_input"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <ReactJson
+                                    src={value}
+                                    collapsed={false}
+                                    enableClipboard
+                                    onEdit={(edit: InteractionProps) => onChange(edit.updated_src)}
+                                    onAdd={(add: InteractionProps) => onChange(add.updated_src)}
+                                    onDelete={(del: InteractionProps) => onChange(del.updated_src)}
+                                    displayDataTypes={false}
+                                    theme={jsonViewerTheme}
+                                />
+                            )}
+                        />
+                    </Form.Group>
+                </CreateTradeOrderForm>
             </FormProvider>
         </Form>
     );

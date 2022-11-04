@@ -38,6 +38,7 @@ export const CreateAskForm = (): ReactElement => {
         try {
             const ask = await createAsk(data);
             dispatch(AddAsk(ask));
+            form.reset();
         } catch (e) {
             setErrorMessage(`Create order error`);
         } finally {

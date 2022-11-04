@@ -10,6 +10,8 @@ const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
 const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
+const createFetcher = createBearerHttpClient('/market/ask');
+
 /**
  * Get asks.
  *
@@ -34,5 +36,4 @@ export const getAsks = (): Promise<Ask[]> =>
  * @param data Ask dto.
  * @returns Ask.
  */
-export const createAsk = (data: CreateAsk): Promise<Ask> =>
-    httpFetcher.post('document?relation=ask', data);
+export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('', data);

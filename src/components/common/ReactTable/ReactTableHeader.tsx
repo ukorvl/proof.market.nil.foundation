@@ -10,19 +10,19 @@ import { ColumnInstance } from 'react-table';
 /**
  * Props.
  */
-type TableHeaderProps<T extends Record<string, unknown>> = {
+type ReactTableHeaderProps<T extends Record<string, unknown>> = {
     column: ColumnInstance<T>;
 };
 
 /**
- * Order book table header.
+ * React table header.
  *
- * @param {TableHeaderProps} props Props.
+ * @param {ReactTableHeaderProps} props Props.
  * @returns React component.
  */
-export const TableHeader = <T extends Record<string, unknown>>({
+export const ReactTableHeader = <T extends Record<string, unknown>>({
     column,
-}: TableHeaderProps<T>): ReactElement => {
+}: ReactTableHeaderProps<T>): ReactElement => {
     const { canSort, isSorted, isSortedDesc, toggleSortBy } = column;
 
     const onKeyDownHandler: KeyboardEventHandler = e => {

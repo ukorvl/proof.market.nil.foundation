@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useEffect, useRef } from 'react';
+import { ReactElement, ReactNode, useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
@@ -16,6 +16,7 @@ import { OrderManagementContext } from '../OrderManagementContextProvider';
 type CreateTradeOrderFormProps = {
     onSubmit: () => Promise<void>;
     errorMessage: string;
+    children?: ReactNode;
 };
 
 /**
@@ -27,6 +28,7 @@ type CreateTradeOrderFormProps = {
 export const CreateTradeOrderForm = ({
     onSubmit,
     errorMessage,
+    children,
 }: CreateTradeOrderFormProps): ReactElement => {
     const nodeRef = useRef(null);
     const { selectedValues, setSelectedValues } = useContext(OrderManagementContext);
@@ -74,6 +76,7 @@ export const CreateTradeOrderForm = ({
                     {...register('wait_period', { required: true, min: 0 })}
                 />
             </Form.Group>
+            {children}
             <Button
                 variant={Variant.success}
                 onClick={onSubmit}

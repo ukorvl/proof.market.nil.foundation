@@ -4,3 +4,4 @@
  */
 
 export * from './notEmpty';
+export * from './typedMemo';

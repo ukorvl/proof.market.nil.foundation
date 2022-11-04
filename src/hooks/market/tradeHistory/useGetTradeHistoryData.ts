@@ -23,9 +23,10 @@ export type UseGetTradeHistoryDataReturnType = {
 /**
  * Get data to render trade history table.
  *
+ * @param itemsLimit - Limit items to display.
  * @returns Data to render trade history table.
  */
-export const useGetTradeHistoryData = (): UseGetTradeHistoryDataReturnType => {
+export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
@@ -51,7 +52,10 @@ export const useGetTradeHistoryData = (): UseGetTradeHistoryDataReturnType => {
         [],
     );
 
-    const data = useMemo(() => asks.map(mapToTradeHostoryData), [asks]);
+    const data = useMemo(
+        () => asks.map(mapToTradeHistoryData).slice(-itemsLimit),
+        [asks, itemsLimit],
+    );
 
     return { data, columns, loadingData, isError };
 };
@@ -64,7 +68,7 @@ export const useGetTradeHistoryData = (): UseGetTradeHistoryDataReturnType => {
  * @param asks Asks array.
  * @returns Trade history table data list.
  */
-const mapToTradeHostoryData = (
+const mapToTradeHistoryData = (
     { timestamp, cost, eval_time }: Ask,
     i: number,
     asks: Ask[],
@@ -72,5 +76,5 @@ const mapToTradeHostoryData = (
     timestamp: formatDate(timestamp!, 'DD.MM hh:mm'),
     cost,
     eval_time,
-    type: asks.at(i - 1) && (asks.at(i - 1)!.cost > cost ? 'loss' : 'grow'),
+    type: i !== 0 ? (asks.at(i - 1)!.cost > cost ? 'loss' : 'grow') : undefined,
 });
