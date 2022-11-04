@@ -8,7 +8,7 @@ main {
 }
 
 .jumbotron {
-  margin-bottom: $grid-gutter-width;
+  margin-bottom: $grid-gutter-width!important;
 }
 
 @mixin make-container($gutter: $grid-gutter-width) {
