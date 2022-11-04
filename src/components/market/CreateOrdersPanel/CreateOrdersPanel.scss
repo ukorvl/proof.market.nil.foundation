@@ -1,8 +1,11 @@
 @import 'src/styles/constants.scss';
 
 .cerateOrdersPanel {
-  padding: 20px 0;
-  height: 380px;
+  height: 500px;
+
+  .nav {
+    padding: 20px 0;
+  }
 
   .react-json-view {
 

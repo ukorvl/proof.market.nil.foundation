@@ -6,6 +6,7 @@
 import { ReactElement, useState } from 'react';
 import { DashboardCard, Details } from '../../common';
 import { ManageOrdersTab } from './ManageOrdersTab';
+import './ManageOrdersPanel.scss';
 
 /**
  * Manage orders panel.

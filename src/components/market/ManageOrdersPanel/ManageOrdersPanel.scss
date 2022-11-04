@@ -1,0 +1,7 @@
+@import 'src/styles/mixins/hideScrollbar';
+
+.manageOrdersPanel {
+  height: 500px;
+  overflow-y: auto;
+  @include hideScrollbar;
+}

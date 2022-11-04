@@ -24,11 +24,13 @@ export const CreateOrdersPanel = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Create orders</h4>}>
-                <CreateOrdersTabs
-                    currentTab={tab}
-                    onSetTab={setTab}
-                />
-                <div className="cerateOrdersPanel">{tabFactory(tab, selectedCircuitId)}</div>
+                <div className="cerateOrdersPanel">
+                    <CreateOrdersTabs
+                        currentTab={tab}
+                        onSetTab={setTab}
+                    />
+                    {tabFactory(tab, selectedCircuitId)}
+                </div>
             </Details>
         </DashboardCard>
     );
