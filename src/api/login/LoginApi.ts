@@ -19,13 +19,6 @@ export const login = (loginData: LoginData): Promise<LoginDto> =>
     httpFetcher.post<LoginDto, LoginData>(`${databaseUrl}/_open/auth`, loginData);
 
 /**
- * Check jtw tocken.
- *
- * @returns .
- */
-export const chekJwt = (): Promise<void> => httpFetcher.get(`${databaseUrl}/_api/version`);
-
-/**
  * Renew jtw tocken.
  *
  * @deprecated

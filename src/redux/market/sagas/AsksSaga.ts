@@ -7,6 +7,7 @@ import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
+import { ProtectedApiCall } from 'src/redux';
 import {
     UpdateCircuitsList,
     UpdateAsksList,
@@ -36,7 +37,7 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(false));
         yield put(UpdateIsLoadingAsks(true));
 
-        const asks: Ask[] = yield call(getAsks);
+        const asks: Ask[] = yield call(ProtectedApiCall, getAsks);
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));

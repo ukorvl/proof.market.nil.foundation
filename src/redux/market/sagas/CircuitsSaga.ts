@@ -14,7 +14,7 @@ import {
     UpdateSelectedCircuitId,
 } from '../actions';
 import { RootStateType } from '../../RootStateType';
-import { UpdateUser } from '../../login';
+import { ProtectedApiCall, UpdateUser } from '../../login';
 import { selectCurrentCircuitId } from '../selectors';
 
 const selectUser = (s: RootStateType) => s.userState.user;
@@ -45,7 +45,7 @@ function* GetCircuitsSaga(): SagaIterator<void> {
         yield put(UpdateIsLoadingCircuits(true));
         yield put(UpdateCircuitsError(false));
 
-        const circuitsList: Circuit[] = yield call(getCircuits);
+        const circuitsList: Circuit[] = yield call(ProtectedApiCall, getCircuits);
 
         if (circuitsList !== undefined) {
             yield put(UpdateCircuitsList(circuitsList));

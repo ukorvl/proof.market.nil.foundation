@@ -7,6 +7,7 @@ import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getBids } from 'src/api';
 import { Bid } from 'src/models';
+import { ProtectedApiCall } from 'src/redux';
 import {
     UpdateCircuitsList,
     UpdateBidsList,
@@ -36,7 +37,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(getBids);
+        const bids: Bid[] = yield call(ProtectedApiCall, getBids);
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));

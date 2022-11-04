@@ -4,3 +4,4 @@
  */
 
 export * from './AuthSaga';
+export * from './ProtectedApiCall';

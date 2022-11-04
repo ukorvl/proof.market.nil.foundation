@@ -4,8 +4,7 @@
  */
 
 import { SagaIterator } from '@redux-saga/core';
-import { all, call, fork, put } from 'redux-saga/effects';
-import { chekJwt } from 'src/api';
+import { fork, put } from 'redux-saga/effects';
 import { getItemFromLocalStorage } from '../../../packages/LocalStorage';
 import { getUserFromJwt } from '../../../utils';
 import { UpdateUser } from '../actions';
@@ -16,7 +15,7 @@ import { UpdateUser } from '../actions';
  * @yields
  */
 export function* AuthSaga(): SagaIterator<void> {
-    yield all([fork(TryGetUserFromLocalStorageTokenSaga), fork(CheckJwtExpiredSaga)]);
+    yield fork(TryGetUserFromLocalStorageTokenSaga);
 }
 
 /**
@@ -35,15 +34,5 @@ function* TryGetUserFromLocalStorageTokenSaga(): SagaIterator<void> {
 
     if (user) {
         yield put(UpdateUser(user));
-    }
-}
-
-function* CheckJwtExpiredSaga(): SagaIterator<void> {
-    try {
-        yield call(chekJwt);
-    } catch (e) {
-        if (e.response.data.code === 401) {
-            yield put(UpdateUser(null));
-        }
     }
 }
