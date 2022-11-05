@@ -33,9 +33,8 @@ export const CreateBidForm = (): ReactElement => {
             public_input: {},
         },
     });
-    const { handleSubmit } = form;
 
-    const onSubmitBid = handleSubmit(async (data: CreateBid): Promise<void> => {
+    const onSubmitBid = form.handleSubmit(async (data: CreateBid): Promise<void> => {
         setErrorMessage('');
         setProcessing(true);
         try {
