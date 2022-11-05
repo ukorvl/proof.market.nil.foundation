@@ -4,16 +4,15 @@
  */
 
 import { ReactElement, useContext, useState } from 'react';
-import { useForm, Controller, FormProvider } from 'react-hook-form';
-import ReactJson, { InteractionProps } from 'react-json-view';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Form } from '@nilfoundation/react-components';
 import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
-import { jsonViewerTheme } from 'src/constants';
 import { createBid } from 'src/api/market/BidsApi';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
+import { PublicInput } from './PublicInput';
 
 /**
  * Create bid form.
@@ -34,11 +33,7 @@ export const CreateBidForm = (): ReactElement => {
             public_input: {},
         },
     });
-    const {
-        handleSubmit,
-        formState: { errors },
-        control,
-    } = form;
+    const { handleSubmit } = form;
 
     const onSubmitBid = handleSubmit(async (data: CreateBid): Promise<void> => {
         setErrorMessage('');
@@ -61,25 +56,7 @@ export const CreateBidForm = (): ReactElement => {
                     onSubmit={onSubmitBid}
                     errorMessage={errorMessage}
                 >
-                    <Form.Group hasError={!!errors['public_input']}>
-                        <Form.Label htmlFor="public_input">Public_input</Form.Label>
-                        <Controller
-                            name="public_input"
-                            control={control}
-                            render={({ field: { onChange, value } }) => (
-                                <ReactJson
-                                    src={value}
-                                    collapsed={false}
-                                    enableClipboard
-                                    onEdit={(edit: InteractionProps) => onChange(edit.updated_src)}
-                                    onAdd={(add: InteractionProps) => onChange(add.updated_src)}
-                                    onDelete={(del: InteractionProps) => onChange(del.updated_src)}
-                                    displayDataTypes={false}
-                                    theme={jsonViewerTheme}
-                                />
-                            )}
-                        />
-                    </Form.Group>
+                    <PublicInput />
                 </CreateTradeOrderForm>
             </FormProvider>
         </Form>
