@@ -34,3 +34,28 @@ export const selectCurrentUserBids = createSelector(
     selectCurrentUser,
     (bids, user) => bids.filter(x => x.sender === user),
 );
+
+/**
+ * Select bids, created by current user in current circuit.
+ */
+export const selectCurrentCircuitCurrentUserBids = createSelector(
+    selectCurrentCircuitBids,
+    selectCurrentUser,
+    (bids, user) => bids.filter(x => x.sender === user),
+);
+
+/**
+ * Select bids, created by current user in current circuit with 'created' status.
+ */
+export const selectCurrentCircuitCurrentUserCreatedBids = createSelector(
+    selectCurrentCircuitCurrentUserBids,
+    asks => asks.filter(x => x.status === 'created'),
+);
+
+/**
+ * Select bids, created by current user in current circuit with 'compelted' status.
+ */
+export const selectCurrentCircuitCurrentUserCompletedBids = createSelector(
+    selectCurrentCircuitCurrentUserBids,
+    asks => asks.filter(x => x.status === 'completed'),
+);

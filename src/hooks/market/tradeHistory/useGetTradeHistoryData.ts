@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
-import { Ask, TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
+import { Ask, TradeHistoryData, TradeHistoryTableColumn, TradeOrderChange } from 'src/models';
 import { formatDate } from 'src/utils';
 
 /**
@@ -76,5 +76,20 @@ const mapToTradeHistoryData = (
     timestamp: formatDate(timestamp!, 'DD.MM hh:mm'),
     cost,
     eval_time,
-    type: i !== 0 ? (asks.at(i - 1)!.cost > cost ? 'loss' : 'grow') : undefined,
+    type: i !== 0 ? getType(asks.at(i - 1)!.cost, cost) : undefined,
 });
+
+/**
+ * Returns trade order change type.
+ *
+ * @param costA Prev cost.
+ * @param costB Current cost.
+ * @returns Trade order type.
+ */
+const getType = (costA: number, costB: number): TradeOrderChange => {
+    if (costA === costB) {
+        return undefined;
+    }
+
+    return costA > costB ? 'loss' : 'grow';
+};

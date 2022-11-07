@@ -8,4 +8,10 @@
   .nav {
     padding: 8px 0 16px;
   }
+
+  tbody tr td {
+    &:not(:first-child) {
+      padding-left: 3%;
+    }
+  }
 }

@@ -41,3 +41,28 @@ export const selectCurrentUserAsks = createSelector(
     selectCurrentUser,
     (asks, user) => asks.filter(x => x.sender === user),
 );
+
+/**
+ * Select asks, created by current user in current circuit.
+ */
+export const selectCurrentCircuitCurrentUserAsks = createSelector(
+    selectCurrentCircuitAsks,
+    selectCurrentUser,
+    (asks, user) => asks.filter(x => x.sender === user),
+);
+
+/**
+ * Select asks, created by current user in current circuit with 'created' status.
+ */
+export const selectCurrentCircuitCurrentUserCreatedAsks = createSelector(
+    selectCurrentCircuitCurrentUserAsks,
+    asks => asks.filter(x => x.status === 'created'),
+);
+
+/**
+ * Select asks, created by current user in current circuit with 'compelted' status.
+ */
+export const selectCurrentCircuitCurrentUserCompletedAsks = createSelector(
+    selectCurrentCircuitCurrentUserAsks,
+    asks => asks.filter(x => x.status === 'completed'),
+);

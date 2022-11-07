@@ -46,3 +46,7 @@ button {
 .growTextColor {
   color: $c-success!important;
 }
+
+details summary::-webkit-details-marker {
+  display:none!important;
+}

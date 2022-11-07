@@ -4,9 +4,9 @@
  */
 
 /**
- * Tab.
+ * Trade order type.
  */
-export enum CreateOrdersTab {
+export enum TradeOrderType {
     buy = 'BUY',
     sell = 'SELL',
 }

@@ -53,7 +53,7 @@ export const CreateTradeOrderForm = ({
     return (
         <>
             <Form.Group hasError={!!errors['cost']}>
-                <Form.Label htmlFor="cost">Cost</Form.Label>
+                <Form.Label htmlFor="cost">Cost, $</Form.Label>
                 <Input
                     type="number"
                     id="cost"
@@ -61,7 +61,7 @@ export const CreateTradeOrderForm = ({
                 />
             </Form.Group>
             <Form.Group hasError={!!errors['eval_time']}>
-                <Form.Label htmlFor="eval_time">Eval time</Form.Label>
+                <Form.Label htmlFor="eval_time">Eval time, ms</Form.Label>
                 <Input
                     type="number"
                     id="eval_time"
@@ -69,7 +69,7 @@ export const CreateTradeOrderForm = ({
                 />
             </Form.Group>
             <Form.Group hasError={!!errors['wait_period']}>
-                <Form.Label htmlFor="wait_period">Wait period</Form.Label>
+                <Form.Label htmlFor="wait_period">Wait period, ms</Form.Label>
                 <Input
                     type="number"
                     id="wait_period"

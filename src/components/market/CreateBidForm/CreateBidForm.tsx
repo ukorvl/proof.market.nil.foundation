@@ -6,7 +6,7 @@
 import { ReactElement, useContext, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form } from '@nilfoundation/react-components';
+import { Form, notificationActions, Variant } from '@nilfoundation/react-components';
 import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { createBid } from 'src/api/market/BidsApi';
@@ -30,6 +30,7 @@ export const CreateBidForm = (): ReactElement => {
         defaultValues: {
             sender: user,
             circuit_id: selectedCircuitId,
+            wait_period: 86400000,
         },
     });
 
@@ -39,6 +40,11 @@ export const CreateBidForm = (): ReactElement => {
         try {
             const bid = await createBid(data);
             dispatch(AddBid(bid));
+            notificationActions?.create({
+                title: 'Order successfully created',
+                message: `Cost: ${data.cost}, eval_time: ${data.eval_time}`,
+                variant: Variant.success,
+            });
             form.reset();
         } catch (e) {
             setErrorMessage('Create order error');

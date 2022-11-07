@@ -21,6 +21,7 @@ import {
     selectCurrentCircuitAsks,
     useAppSelector,
     selectCurrentUserAsks,
+    selectCurrentUserBids,
 } from 'src/redux';
 
 /**
@@ -51,7 +52,7 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
     const asks = useSelector(selectCurrentCircuitAsks, deepEqual);
     const bids = useSelector(selectCurrentCircuitBids, deepEqual);
     const userAsks = useSelector(selectCurrentUserAsks, deepEqual);
-    const userBids = useSelector(selectCurrentCircuitBids, deepEqual);
+    const userBids = useSelector(selectCurrentUserBids, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const lastOrderData: LastOrderData = useMemo(() => getLastOrderData(asks), [asks]);

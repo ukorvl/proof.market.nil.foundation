@@ -9,3 +9,4 @@ export * from './Ask';
 export * from './TradeOrder';
 export * from './OrderBook';
 export * from './TradeHistory';
+export * from './ManageOrders';

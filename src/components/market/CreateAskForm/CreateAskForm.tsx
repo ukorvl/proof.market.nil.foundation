@@ -6,7 +6,7 @@
 import { ReactElement, useState, useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form } from '@nilfoundation/react-components';
+import { Form, notificationActions, Variant } from '@nilfoundation/react-components';
 import { CreateAsk } from 'src/models';
 import { AddAsk, useAppSelector } from 'src/redux';
 import { createAsk } from 'src/api/market/AsksApi';
@@ -29,6 +29,7 @@ export const CreateAskForm = (): ReactElement => {
         defaultValues: {
             sender: user,
             circuit_id: selectedCircuitId,
+            wait_period: 86400000,
         },
     });
 
@@ -38,6 +39,11 @@ export const CreateAskForm = (): ReactElement => {
         try {
             const ask = await createAsk(data);
             dispatch(AddAsk(ask));
+            notificationActions?.create({
+                title: 'Order successfully created',
+                message: `Cost: ${data.cost}, eval_time: ${data.eval_time}`,
+                variant: Variant.success,
+            });
             form.reset();
         } catch (e) {
             setErrorMessage(`Create order error`);

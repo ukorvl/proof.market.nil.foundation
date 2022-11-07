@@ -61,8 +61,8 @@ export const OrderBookTable = memo(function OrderBookTable({
                             <td colSpan={3}>
                                 <div
                                     className={lastOrderData.type}
-                                >{`$ ${lastOrderData.cost}`}</div>
-                                <div className="text-muted">{lastOrderData.eval_time}</div>
+                                >{`${lastOrderData.cost} $`}</div>
+                                <div className="text-muted">{`${lastOrderData.eval_time} ms`}</div>
                             </td>
                         </tr>
                     )}

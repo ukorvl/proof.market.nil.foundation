@@ -29,7 +29,7 @@ export const OrderBookTableCell = ({
     return (
         <td {...cell.getCellProps()}>
             {cell.value}
-            {userOrdersAmount && (
+            {!!userOrdersAmount && (
                 <Label>
                     <span>{userOrdersAmount}</span>
                 </Label>
