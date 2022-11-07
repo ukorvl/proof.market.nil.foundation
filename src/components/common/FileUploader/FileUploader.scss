@@ -1,0 +1,46 @@
+@import 'src/styles/constants.scss';
+
+.fileUploader {
+  height: 48px;
+  position: relative;
+  background-color: $c-base;
+  border-radius: 4px;
+  border: 1px solid $c-base-light;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  &-dragActive,
+  &:hover {
+    background-color: $c-base-light;
+
+    i {
+      opacity: 0.3;
+    }
+
+    .fileUploader__message {
+      color: $c-secondary;
+    }
+  }
+
+  &-dragActive {
+    border: 1px dashed $c-secondary-darker!important;
+  }
+
+  &__message {
+    color: $c-secondary-darker;
+    vertical-align: middle;
+  }
+
+  > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.2;
+  }
+}

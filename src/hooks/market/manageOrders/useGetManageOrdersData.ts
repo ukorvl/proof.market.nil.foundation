@@ -14,8 +14,6 @@ import { formatDate } from 'src/utils';
  * UseGetManageOrdersData hook return type.
  */
 export type UseGetManageOrdersDataReturnType = {
-    data: TradeHistoryData[];
-    columns: TradeHistoryTableColumn[];
     loadingData: boolean;
     isError: boolean;
 };
@@ -46,9 +44,6 @@ export const useGetManageOrdersData = (itemsLimit = 25): UseGetManageOrdersDataR
                 Header: 'Eval_time',
                 accessor: 'eval_time',
             },
-            {
-                accessor: 'type',
-            },
         ],
         [],
     );
@@ -58,7 +53,7 @@ export const useGetManageOrdersData = (itemsLimit = 25): UseGetManageOrdersDataR
         [asks, itemsLimit],
     );
 
-    return { data, columns, loadingData, isError };
+    return { loadingData, isError };
 };
 
 /**

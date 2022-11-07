@@ -11,3 +11,4 @@ export * from './BreadCrumbs';
 export * from './Details';
 export * from './DashboardCard';
 export * from './ReactTable';
+export * from './FileUploader';

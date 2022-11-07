@@ -19,9 +19,9 @@ export const jsonViewerTheme = {
     base07: colors.secondaryDarkerColor,
     base08: colors.secondaryDarkerColor,
     base09: colors.secondaryDarkerColor,
-    base0A: colors.infoColor,
-    base0B: colors.infoColor,
-    base0C: colors.infoColor,
+    base0A: colors.secondaryColor,
+    base0B: colors.secondaryColor,
+    base0C: colors.secondaryColor,
     base0D: colors.primaryColor,
     base0E: colors.primaryColor,
     base0F: colors.secondaryDarkerColor, // copy icons color

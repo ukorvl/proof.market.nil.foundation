@@ -4,8 +4,10 @@
  */
 
 import { ReactElement, useState } from 'react';
+import { useAppSelector } from 'src/redux';
 import { DashboardCard, Details } from '../../common';
 import { ManageOrdersTab } from './ManageOrdersTab';
+import { ManageOrdersPanelTabs } from './ManageOrdersPanelTabs';
 import './ManageOrdersPanel.scss';
 
 /**
@@ -15,11 +17,22 @@ import './ManageOrdersPanel.scss';
  */
 export const ManageOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<ManageOrdersTab>(ManageOrdersTab.active);
+    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
 
     return (
         <DashboardCard>
             <Details title={<h4>Manage orders</h4>}>
-                <div className="manageOrdersPanel">{tabFactory()}</div>
+                <div className="manageOrdersPanel">
+                    <ManageOrdersPanelTabs
+                        currentTab={tab}
+                        onSetTab={setTab}
+                    />
+                    {selectedCircuitId !== undefined ? (
+                        tabFactory(tab)
+                    ) : (
+                        <h4>Please, select circuit to display orders.</h4>
+                    )}
+                </div>
             </Details>
         </DashboardCard>
     );
@@ -28,8 +41,16 @@ export const ManageOrdersPanel = (): ReactElement => {
 /**
  * Renders tab content conditionally.
  *
+ * @param tab - Tab.
  * @returns React Element.
  */
-const tabFactory = () => {
-    return <></>;
+const tabFactory = (tab: ManageOrdersTab) => {
+    switch (tab) {
+        case ManageOrdersTab.active:
+            return <></>;
+        case ManageOrdersTab.history:
+            return <></>;
+        default:
+            return <></>;
+    }
 };
