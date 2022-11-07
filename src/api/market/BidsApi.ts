@@ -38,3 +38,12 @@ export const getBids = (): Promise<Bid[]> =>
  */
 export const createBid = (data: CreateBid): Promise<Bid> =>
     createFetcher.post('', data).then((x: any) => x);
+
+/**
+ * Remove Bid.
+ *
+ * @param bidToRemoveId Ask to remove id.
+ * @returns Ask.
+ */
+export const removeBid = (bidToRemoveId: Bid['id']): Promise<void> =>
+    httpFetcher.post('simple/remove-by-keys', { keys: [bidToRemoveId], relation: 'bid' });

@@ -5,7 +5,13 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Ask } from 'src/models';
-import { UpdateAsksList, AddAsk, UpdateAsksError, UpdateIsLoadingAsks } from '../actions';
+import {
+    UpdateAsksList,
+    AddAsk,
+    UpdateAsksError,
+    UpdateIsLoadingAsks,
+    RemoveAsk,
+} from '../actions';
 
 /**
  * State.
@@ -44,5 +50,9 @@ export const AsksReducer = createReducer(initialState, builder =>
         .addCase(UpdateAsksError, (state, { payload }) => ({
             ...state,
             error: payload,
+        }))
+        .addCase(RemoveAsk, (state, { payload }) => ({
+            ...state,
+            asks: state.asks.filter(x => payload !== x.id),
         })),
 );

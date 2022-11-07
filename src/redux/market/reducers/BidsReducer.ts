@@ -5,7 +5,13 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Bid } from 'src/models';
-import { UpdateBidsList, AddBid, UpdateBidsError, UpdateIsLoadingBids } from '../actions';
+import {
+    UpdateBidsList,
+    AddBid,
+    UpdateBidsError,
+    UpdateIsLoadingBids,
+    RemoveBid,
+} from '../actions';
 
 /**
  * State.
@@ -44,5 +50,9 @@ export const BidsReducer = createReducer(initialState, builder =>
         .addCase(UpdateBidsError, (state, { payload }) => ({
             ...state,
             error: payload,
+        }))
+        .addCase(RemoveBid, (state, { payload }) => ({
+            ...state,
+            asks: state.bids.filter(x => payload !== x.id),
         })),
 );

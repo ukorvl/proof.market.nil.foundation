@@ -37,3 +37,12 @@ export const getAsks = (): Promise<Ask[]> =>
  * @returns Ask.
  */
 export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('', data);
+
+/**
+ * Remove Ask.
+ *
+ * @param askToRemoveId Ask to remove id.
+ * @returns Ask.
+ */
+export const removeAsk = (askToRemoveId: Ask['id']): Promise<void> =>
+    httpFetcher.post('simple/remove-by-keys', { keys: [askToRemoveId], relation: 'ask' });

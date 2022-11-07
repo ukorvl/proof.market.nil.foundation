@@ -25,3 +25,8 @@ export const UpdateIsLoadingBids = createAction<boolean>('@bids/UPDATE_IS_LOADIN
  * Update bids error state.
  */
 export const UpdateBidsError = createAction<boolean>('@bids/UPDATE_ERROR');
+
+/**
+ * Remove bid.
+ */
+export const RemoveBid = createAction<Bid['id']>('@bids/REMOVE_BID');

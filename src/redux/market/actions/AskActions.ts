@@ -25,3 +25,8 @@ export const UpdateIsLoadingAsks = createAction<boolean>('@asks/UPDATE_IS_LOADIN
  * Update asks error state.
  */
 export const UpdateAsksError = createAction<boolean>('@asks/UPDATE_ERROR');
+
+/**
+ * Remove ask.
+ */
+export const RemoveAsk = createAction<Ask['id']>('@asks/REMOVE_ASK');

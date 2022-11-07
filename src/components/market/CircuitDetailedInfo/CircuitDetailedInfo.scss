@@ -1,7 +1,11 @@
 @import 'src/styles/constants.scss';
+@import 'src/styles/mixins/responsive';
 
 .circuitDetailedInfo {
   position: relative;
+  @include responsive(lg) {
+    height: 816px;
+  }
 
   h5 {
     word-wrap: break-word;
