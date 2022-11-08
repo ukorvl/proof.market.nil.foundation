@@ -100,10 +100,10 @@ const chartDefaultTheme = {
  */
 const chartConstantOptions = {
     localization: {
-        timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY hh:mm"),
+        timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY HH:mm"),
     },
     timeScale: {
-        tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM hh:mm'),
+        tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM HH:mm'),
     },
     layout: {
         background: { type: ColorType.Solid, color: chartDefaultTheme.background },

@@ -72,6 +72,8 @@
   }
 
   .lastOrderDataContainer {
+    position: sticky;
+    
     > td {
       height: 6rem;
       vertical-align: middle;

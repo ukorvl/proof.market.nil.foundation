@@ -88,7 +88,7 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
 
     return (
         <ReactTable
-            name="activeOrdersTable"
+            name="historyOrdersTable"
             data={data}
             columns={columns}
             renderRows={renderRows}
