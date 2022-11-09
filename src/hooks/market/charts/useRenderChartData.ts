@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     IChartApi,
     BarPrice,
@@ -15,7 +15,11 @@ import {
     CandlestickStyleOptions,
     SeriesOptionsCommon,
     LineStyleOptions,
+    UTCTimestamp,
+    Range,
 } from 'lightweight-charts';
+import { DateUnit } from 'src/enums';
+import { subtractFromUTCTimestamp } from 'src/utils';
 
 /**
  * Return type.
@@ -37,6 +41,7 @@ type UseRenderChartDataProps<T extends 'Line' | 'Candlestick'> = {
     options?: DeepPartial<
         (T extends 'Line' ? LineStyleOptions : CandlestickStyleOptions) & SeriesOptionsCommon
     >;
+    visibleRange?: DateUnit;
 };
 
 /**
@@ -50,9 +55,9 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
     seriesData,
     chart,
     options,
+    visibleRange,
 }: UseRenderChartDataProps<T>): UseRenderChartDataReturnType => {
     const [price, setPrice] = useState<BarPrice | BarPrices>();
-    const seriesMountedRef = useRef(false);
 
     useEffect(() => {
         if (!chart) {
@@ -84,19 +89,27 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
             price && setPrice(price);
         };
 
-        chart.subscribeCrosshairMove(crosshairMoveHandler);
-
-        !seriesMountedRef.current && chart.timeScale().fitContent();
-        if (seriesData.length) {
-            seriesMountedRef.current = true;
-        }
-
         return () => {
             chart.removeSeries(series);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
             setPrice(undefined);
         };
     }, [seriesData, chart, seriesType, options]);
+
+    useEffect(() => {
+        if (!chart || !seriesData.length) {
+            return;
+        }
+
+        if (!visibleRange) {
+            chart.timeScale().fitContent();
+            return;
+        }
+
+        chart
+            .timeScale()
+            .setVisibleRange(getDataRange(seriesData.at(-1)!.time as UTCTimestamp, visibleRange));
+    }, [chart, visibleRange, seriesData]);
 
     return { price };
 };
@@ -110,4 +123,18 @@ const seriesOptions: Partial<SeriesOptionsCommon> = {
         precision: 4,
         minMove: 0.0001,
     },
+};
+
+/**
+ * Creates chart data Range {@link Range} object, subtracting distance from provided right edge date.
+ *
+ * @param rightEdge Last date in range.
+ * @param distance Distance between dates.
+ * @returns Range.
+ */
+const getDataRange = (rightEdge: UTCTimestamp, distance: DateUnit): Range<UTCTimestamp> => {
+    return {
+        from: subtractFromUTCTimestamp(rightEdge, 1, distance),
+        to: rightEdge,
+    };
 };

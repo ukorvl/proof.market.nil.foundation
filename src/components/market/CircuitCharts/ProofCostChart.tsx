@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useMemo, useRef } from 'react';
+import { ReactElement, useContext, useMemo } from 'react';
 import { LineWidth } from 'lightweight-charts';
-import { useChart, useGetCircuitDashboardData, useRenderChartData } from 'src/hooks';
+import { useGetCircuitDashboardData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
-import { ChartTemplate } from './ChartTemplate';
+import { ChartTemplate } from '../ChartTemplate';
+import { DataRangeContext } from '../CircuitDashboard';
 
 /**
  * Proof cost chart.
@@ -15,7 +16,6 @@ import { ChartTemplate } from './ChartTemplate';
  * @returns React component.
  */
 export const ProofCostChart = (): ReactElement => {
-    const ref = useRef<HTMLDivElement>(null);
     const seriesOptions = useMemo(
         () => ({
             upColor: colors.successColor,
@@ -24,26 +24,19 @@ export const ProofCostChart = (): ReactElement => {
         }),
         [],
     );
+    const { dataRange } = useContext(DataRangeContext);
     const {
         chartData: { candlestickChartData },
         loadingData: isLoadingChartData,
-    } = useGetCircuitDashboardData();
-    const { chart } = useChart({ ref });
-
-    const { price } = useRenderChartData({
-        seriesType: 'Candlestick',
-        seriesData: candlestickChartData,
-        chart,
-        options: seriesOptions,
-    });
+    } = useGetCircuitDashboardData(dataRange);
 
     return (
         <ChartTemplate
             loadingData={isLoadingChartData}
-            emptyData={!candlestickChartData.length}
-            price={price}
             chartName="Proof cost, USD"
-            ref={ref}
+            seriesData={candlestickChartData}
+            seriesType="Candlestick"
+            seriesOptions={seriesOptions}
         />
     );
 };

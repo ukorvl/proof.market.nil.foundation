@@ -5,10 +5,14 @@
 
 import { ReactElement, useState } from 'react';
 import { Details } from 'src/components';
-import { ChartType } from 'src/enums';
+import { ChartType, DateUnit } from 'src/enums';
+import { useLocalStorage } from 'src/hooks';
 import { DashboardCard } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
+import { DataRangeSelect } from './DataRangeSelect';
 import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../CircuitCharts';
+import { DataRangeContext } from './DataRangeContext';
+import './CircuitDashboard.scss';
 
 /**
  * Circuit dashboard.
@@ -17,6 +21,10 @@ import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../Circuit
  */
 export const CircuitDashboard = (): ReactElement => {
     const [chartType, setChartType] = useState(ChartType.proofCostChart);
+    const [dataRange, setDataRange] = useLocalStorage<DateUnit>(
+        'circuitDashboardDataRange',
+        DateUnit.hour,
+    );
 
     return (
         <DashboardCard>
@@ -24,10 +32,16 @@ export const CircuitDashboard = (): ReactElement => {
                 <ChartTypeSelect
                     chartType={chartType}
                     onSelectChartType={setChartType}
+                    disabled={false}
                 />
-                <div>
+                <DataRangeSelect
+                    currentDataRange={dataRange}
+                    setDataRange={setDataRange}
+                    disabled={false}
+                />
+                <DataRangeContext.Provider value={{ dataRange }}>
                     <ChartFactory chartType={chartType} />
-                </div>
+                </DataRangeContext.Provider>
             </Details>
         </DashboardCard>
     );

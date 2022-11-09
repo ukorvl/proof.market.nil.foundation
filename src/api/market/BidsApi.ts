@@ -24,9 +24,9 @@ export const getBids = (): Promise<Bid[]> =>
             bindVars: {
                 '@relation': 'bid',
                 offset: 0,
-                count: 1000,
+                count: 10000,
             },
-            batchSize: 1000,
+            batchSize: 10000,
         })
         .then((x: any) => x.result);
 

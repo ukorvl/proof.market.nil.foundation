@@ -24,9 +24,9 @@ export const getAsks = (): Promise<Ask[]> =>
             bindVars: {
                 '@relation': 'ask',
                 offset: 0,
-                count: 1000,
+                count: 10000,
             },
-            batchSize: 1000,
+            batchSize: 10000,
         })
         .then((x: any) => x.result);
 

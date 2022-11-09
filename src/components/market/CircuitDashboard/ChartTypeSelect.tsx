@@ -13,6 +13,7 @@ import { ChartType } from 'src/enums';
 type ChartTypeSelectProps = {
     chartType: ChartType;
     onSelectChartType: (chartType: ChartType) => void;
+    disabled: boolean;
 };
 
 /**
@@ -24,6 +25,7 @@ type ChartTypeSelectProps = {
 export const ChartTypeSelect = ({
     chartType,
     onSelectChartType,
+    disabled,
 }: ChartTypeSelectProps): ReactElement => {
     const { lg } = useBreakpoints();
 
@@ -37,7 +39,7 @@ export const ChartTypeSelect = ({
                     key={x}
                     active={x === chartType}
                     onClick={() => onSelectChartType(x)}
-                    disabled={x === ChartType.proofGenCostChart}
+                    disabled={disabled || x === ChartType.proofGenCostChart}
                 >
                     {x}
                 </Nav.Item>

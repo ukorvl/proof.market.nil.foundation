@@ -6,3 +6,4 @@
 export * from './ProofSystem';
 export * from './Currency';
 export * from './ChartType';
+export * from './DateUnit';

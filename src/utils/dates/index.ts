@@ -6,5 +6,6 @@
 export * from './formatUTCTimestamp';
 export * from './getUTCTimestamp';
 export * from './isPreviousDay';
-export * from './roundDateToMinute';
+export * from './floorDateTo';
 export * from './formatDate';
+export * from './subtractFromUTCTimestamp';

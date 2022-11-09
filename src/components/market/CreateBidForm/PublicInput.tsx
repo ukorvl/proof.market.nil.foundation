@@ -38,7 +38,7 @@ export const PublicInput = (): ReactElement => {
             <div className="publicInputContainer__label">
                 <Form.Label htmlFor="public_input">Public_input</Form.Label>
             </div>
-            <Controller
+            <Controller<CreateBid, 'public_input'>
                 name="public_input"
                 control={control}
                 rules={{
@@ -85,7 +85,6 @@ const FileUploader = ({ onChange, disabled }: FileUploaderProps): ReactElement =
                 }
 
                 const obj = JSON.parse(target.result as string);
-                console.log(obj);
                 onChange(obj);
             };
 

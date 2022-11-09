@@ -1,0 +1,15 @@
+.dataRangeSelect {
+  height: 42px;
+  padding: 6px;
+
+  > .nav > li > a {
+    padding: 5px 12px!important;
+  }
+
+  .nav-pills>li.active {
+    a, a:hover, a:focus {
+      background-color: unset!important;
+      font-weight: bold;
+    }
+  }
+}

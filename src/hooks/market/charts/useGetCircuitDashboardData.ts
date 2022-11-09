@@ -11,6 +11,7 @@ import sum from 'lodash/sum';
 import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
+import { DateUnit, getRoundToBasedOnDateUnit } from 'src/enums';
 
 /**
  * Hook return type.
@@ -27,14 +28,17 @@ type UseGetCircuitDashboardDataReturnType = {
 /**
  * Get data to draw circuit chart.
  *
+ * @param dataRange Data range.
  * @returns Data to draw circuit chart.
  */
-export const useGetCircuitDashboardData = (): UseGetCircuitDashboardDataReturnType => {
+export const useGetCircuitDashboardData = (
+    dataRange: DateUnit,
+): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
     const grouppedOrders = useMemo(() => {
-        return asks.reduce(reduceOrdersByDate, {});
-    }, [asks]);
+        return reduceOrdersByDate(asks, dataRange);
+    }, [asks, dataRange]);
 
     const chartData = useMemo(
         () => ({
@@ -95,19 +99,18 @@ const getProofGenTimeData = <T extends Bid | Ask>(
 /**
  * Takes orders array and returns dict, where keys are dates, and values are arrays of orders.
  *
- * @param previousValue Initial value.
- * @param currentValue Current value.
+ * @param asks Asks.
+ * @param dataRange Data range.
  * @returns Orders, grouped by date.
  */
-const reduceOrdersByDate = <T extends Bid | Ask>(
-    previousValue: Record<string, T[]>,
-    currentValue: T,
-) => {
-    const date = getUTCTimestamp(currentValue.timestamp!, true);
+const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
+    return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
+        const date = getUTCTimestamp(currentValue.timestamp!, getRoundToBasedOnDateUnit(dataRange));
 
-    if (!previousValue[date]) previousValue[date] = [];
+        if (!previousValue[date]) previousValue[date] = [];
 
-    previousValue[date].push(currentValue);
+        previousValue[date].push(currentValue);
 
-    return previousValue;
+        return previousValue;
+    }, {});
 };

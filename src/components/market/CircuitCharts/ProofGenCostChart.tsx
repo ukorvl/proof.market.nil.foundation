@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useMemo, useRef } from 'react';
-import { useChart, useGetCircuitDashboardData, useRenderChartData } from 'src/hooks';
+import { ReactElement, useContext, useMemo } from 'react';
+import { useGetCircuitDashboardData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
-import { ChartTemplate } from './ChartTemplate';
+import { ChartTemplate } from '../ChartTemplate';
+import { DataRangeContext } from '../CircuitDashboard';
 
 /**
  * Proof gen cost chart.
@@ -14,28 +15,25 @@ import { ChartTemplate } from './ChartTemplate';
  * @returns React component.
  */
 export const ProofGenCostChart = (): ReactElement => {
-    const ref = useRef<HTMLDivElement>(null);
-    const seriesOptions = useMemo(() => ({ color: colors.infoColor }), []);
+    const seriesOptions = useMemo(
+        () => ({
+            color: colors.infoColor,
+        }),
+        [],
+    );
+    const { dataRange } = useContext(DataRangeContext);
     const {
         chartData: { proofGenCostData },
         loadingData,
-    } = useGetCircuitDashboardData();
-    const { chart } = useChart({ ref });
-
-    const { price } = useRenderChartData({
-        seriesType: 'Line',
-        seriesData: proofGenCostData,
-        chart,
-        options: seriesOptions,
-    });
+    } = useGetCircuitDashboardData(dataRange);
 
     return (
         <ChartTemplate
             loadingData={loadingData}
-            emptyData={!proofGenCostData.length}
-            price={price}
             chartName="Proof Generation Cost, USD"
-            ref={ref}
+            seriesData={proofGenCostData}
+            seriesType="Line"
+            seriesOptions={seriesOptions}
         />
     );
 };

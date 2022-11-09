@@ -4,16 +4,8 @@
  */
 
 import { RefObject, useEffect, useState } from 'react';
-import {
-    createChart,
-    ColorType,
-    IChartApi,
-    UTCTimestamp,
-    DeepPartial,
-    ChartOptions,
-} from 'lightweight-charts';
+import { createChart, ColorType, IChartApi, DeepPartial, ChartOptions } from 'lightweight-charts';
 import colors from 'src/styles/export.module.scss';
-import { formatUTCTimestamp } from 'src/utils';
 
 /**
  * Return type.
@@ -54,7 +46,7 @@ export const useChart = <T extends HTMLElement>({
         const chart = createChart(htmlElement, {
             width: htmlElement.clientWidth,
             height: htmlElement.clientHeight,
-            ...chartConstantOptions,
+            ...chartDefaultOptions,
         });
         chart.timeScale().fitContent();
         setChart(chart);
@@ -98,13 +90,7 @@ const chartDefaultTheme = {
 /**
  * Chart constant options.
  */
-const chartConstantOptions = {
-    localization: {
-        timeFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, "DD MM 'YY HH:mm"),
-    },
-    timeScale: {
-        tickMarkFormatter: (t: UTCTimestamp) => formatUTCTimestamp(t, 'DD.MM HH:mm'),
-    },
+const chartDefaultOptions = {
     layout: {
         background: { type: ColorType.Solid, color: chartDefaultTheme.background },
         fontFamily: chartDefaultTheme.fontFamily,
