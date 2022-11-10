@@ -4,16 +4,15 @@
  */
 
 import { ReactElement, ReactNode, useEffect } from 'react';
-import { Column, Row, TableState, useSortBy, useTable } from 'react-table';
-import { Table } from '@nilfoundation/react-components';
+import { Column, ColumnInstance, Row, TableState, useSortBy, useTable } from 'react-table';
 import { notEmpty, genericMemo } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { ReactTableHeader } from './ReactTableHeader';
+import { Table, TBody, THead, TRow } from '../Table';
 import './ReactTable.scss';
 
 /**
  * Props.
- * Don't forget to memoize all non-primitive values.
  */
 type ReactTableProps<T extends Record<string, unknown>> = {
     name: string;
@@ -22,6 +21,7 @@ type ReactTableProps<T extends Record<string, unknown>> = {
     renderRows: (rows: Row<T>[], prepareRow: (row: Row<T>) => void) => ReactNode;
     initialState?: Partial<TableState<T>>;
     className?: string;
+    reversed?: boolean;
 };
 
 /**
@@ -42,6 +42,7 @@ export const ReactTable = genericMemo(function ReactTable<T extends Record<strin
     renderRows,
     initialState: defaultInitialState,
     className,
+    reversed,
 }: ReactTableProps<T>): ReactElement {
     const [initialState, setInitialState] = useInitialTableState(name, defaultInitialState);
 
@@ -57,22 +58,29 @@ export const ReactTable = genericMemo(function ReactTable<T extends Record<strin
     }, [setInitialState, debouncedState]);
 
     return (
-        <Table
-            className={`styledTable ${className ?? ''}`}
-            condensed
-            responsive
-        >
-            <thead>
-                <tr>
-                    {visibleColumns.map(column => (
-                        <ReactTableHeader
-                            key={column.id}
-                            column={column}
-                        />
-                    ))}
-                </tr>
-            </thead>
-            <tbody {...getTableBodyProps()}>{renderRows(rows, prepareRow)}</tbody>
+        <Table className={className}>
+            {!reversed && renderTableHead(visibleColumns)}
+            <TBody {...getTableBodyProps()}>{renderRows(rows, prepareRow)}</TBody>
+            {reversed && renderTableHead(visibleColumns)}
         </Table>
     );
 });
+
+/**
+ * Renders table head.
+ *
+ * @param columns Table columns.
+ * @returns Table head.
+ */
+const renderTableHead = <T extends Record<string, unknown>>(columns: ColumnInstance<T>[]) => (
+    <THead sticky>
+        <TRow>
+            {columns.map(column => (
+                <ReactTableHeader
+                    key={column.id}
+                    column={column}
+                />
+            ))}
+        </TRow>
+    </THead>
+);

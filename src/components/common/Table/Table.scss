@@ -1,0 +1,56 @@
+@import 'src/styles/mixins/hideScrollbar';
+@import 'src/styles/constants.scss';
+
+.styledTable {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  @include hideScrollbar;
+  overflow: auto;
+  color: $c-secondary-darker;
+
+  div[role=rowgroup] {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+
+    &.sticky {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      background-color: $c-base-darker;
+    }
+
+    &.tableHead {
+      border-bottom: 1px solid $c-base-light;
+    }
+  }
+
+  div[role=row] {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    height: 28px;
+  }
+
+  div[role=columnheader],
+  div[role=cell] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  div[role=columnheader] {
+    color: $c-secondary;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  div[role=cell] {
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

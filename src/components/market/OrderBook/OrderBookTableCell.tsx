@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { Label } from '@nilfoundation/react-components';
 import { Cell } from 'react-table';
 import { OrderBookTableData } from 'src/models';
+import { TCell } from 'src/components';
 
 /**
  * Props.
@@ -27,13 +28,13 @@ export const OrderBookTableCell = ({
     userOrdersAmount,
 }: OrderBookTableCellProps): ReactElement => {
     return (
-        <td {...cell.getCellProps()}>
+        <TCell {...cell.getCellProps()}>
             {cell.value}
             {!!userOrdersAmount && (
                 <Label>
                     <span>{userOrdersAmount}</span>
                 </Label>
             )}
-        </td>
+        </TCell>
     );
 };

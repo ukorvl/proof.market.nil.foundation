@@ -6,7 +6,7 @@
 import { ReactElement, memo, useCallback } from 'react';
 import { Cell, Column, Row, TableState } from 'react-table';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
-import { ReactTable } from 'src/components';
+import { ReactTable, TRow, TCell } from 'src/components';
 
 /**
  * Props.
@@ -63,7 +63,7 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
             rows.map(row => {
                 prepareRow(row);
                 return (
-                    <tr
+                    <TRow
                         {...row.getRowProps()}
                         key={row.id}
                     >
@@ -71,16 +71,16 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
                             const { key, ...rest } = cell.getCellProps();
 
                             return (
-                                <td
+                                <TCell
                                     className={getCellClassName(cell)}
                                     key={key}
                                     {...rest}
                                 >
                                     {cell.render('Cell')}
-                                </td>
+                                </TCell>
                             );
                         })}
-                    </tr>
+                    </TRow>
                 );
             }),
         [],
@@ -89,6 +89,7 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
     return (
         <ReactTable
             name="historyOrdersTable"
+            className="historyOrdersTable"
             data={data}
             columns={columns}
             renderRows={renderRows}

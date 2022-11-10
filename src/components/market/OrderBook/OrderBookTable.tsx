@@ -6,7 +6,7 @@
 import { ReactElement, memo, useCallback } from 'react';
 import { Row, TableState } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
-import { ReactTable } from 'src/components';
+import { ReactTable, TRow, TCell } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
 
 /**
@@ -57,14 +57,14 @@ export const OrderBookTable = memo(function OrderBookTable({
                         renderRow(row, prepareRow, 'ask'),
                     )}
                     {lastOrderData && lastOrderData.cost && (
-                        <tr className="lastOrderDataContainer">
-                            <td colSpan={3}>
+                        <TRow className="lastOrderDataContainer">
+                            <TCell>
                                 <div
                                     className={lastOrderData.type}
                                 >{`${lastOrderData.cost} $`}</div>
                                 <div className="text-muted">{`${lastOrderData.eval_time} ms`}</div>
-                            </td>
-                        </tr>
+                            </TCell>
+                        </TRow>
                     )}
                     {getDataWithVolumes(bids, maxVolume).map(row =>
                         renderRow(row, prepareRow, 'bid'),

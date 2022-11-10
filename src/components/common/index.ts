@@ -1,4 +1,3 @@
-/* eslint-disable import/export */
 /**
  * @file Index.
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
@@ -12,3 +11,4 @@ export * from './Details';
 export * from './DashboardCard';
 export * from './ReactTable';
 export * from './FileUploader';
+export * from './Table';

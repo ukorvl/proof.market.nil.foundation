@@ -1,17 +1,24 @@
-@import 'src/styles/mixins/hideScrollbar';
+@import 'src/styles/mixins/tableColumns';
 
 .manageOrdersPanel {
   height: 500px;
-  overflow-y: auto;
-  @include hideScrollbar;
 
   .nav {
     padding: 8px 0 16px;
   }
 
-  tbody tr td {
-    &:not(:first-child) {
-      padding-left: 3%;
+  .historyOrdersTable,
+  .activeOrdersTable {
+    tbody {
+      height: 386px;
     }
+  }
+
+  .activeOrdersTable {
+    @include tableColumns(30%, 16%, 20%, 30%, 6%);
+  }
+
+  .historyOrdersTable {
+    @include tableColumns(24%, 16%, 30%, 30%);
   }
 }

@@ -5,6 +5,7 @@
 
 import { CSSProperties, KeyboardEventHandler, ReactElement, useContext } from 'react';
 import { Row } from 'react-table';
+import { TRow } from 'src/components';
 import { OrderBookTableData } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { OrderBookTableCell } from './OrderBookTableCell';
@@ -51,7 +52,7 @@ export const OrderBookTableRow = ({
     const combinedClassName = `${className ?? ''} ${propsClassName ?? ''}`;
 
     return (
-        <tr
+        <TRow
             {...rest}
             onClick={onClickRow}
             onKeyDown={onKeyDownHandler}
@@ -69,6 +70,6 @@ export const OrderBookTableRow = ({
                     />
                 );
             })}
-        </tr>
+        </TRow>
     );
 };

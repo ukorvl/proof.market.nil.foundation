@@ -6,6 +6,7 @@
 import { KeyboardEventHandler, ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import { ColumnInstance } from 'react-table';
+import { THeader } from '../Table';
 
 /**
  * Props.
@@ -35,14 +36,14 @@ export const ReactTableHeader = <T extends Record<string, unknown>>({
     };
 
     return (
-        <th
+        <THeader
             {...column.getHeaderProps(column.getSortByToggleProps())}
-            className={canSort ? 'sortableColumn' : ''}
+            className={canSort ? 'sortableColumnHeader' : ''}
             tabIndex={canSort ? 0 : undefined}
             onKeyDown={onKeyDownHandler}
         >
             {column.render('Header')}
             {isSorted && <Icon iconName={`fa-solid fa-angle-${isSortedDesc ? 'down' : 'up'}`} />}
-        </th>
+        </THeader>
     );
 };

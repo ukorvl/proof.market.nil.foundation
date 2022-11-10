@@ -6,7 +6,7 @@
 import { ReactElement, memo, useCallback } from 'react';
 import { Row, TableState } from 'react-table';
 import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
-import { ReactTable } from 'src/components';
+import { ReactTable, TRow, TCell } from 'src/components';
 
 /**
  * Props.
@@ -44,7 +44,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
             rows.map(row => {
                 prepareRow(row);
                 return (
-                    <tr
+                    <TRow
                         {...row.getRowProps()}
                         key={row.id}
                     >
@@ -52,16 +52,16 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                             const { key, ...rest } = cell.getCellProps();
 
                             return (
-                                <td
+                                <TCell
                                     className={getCellClassName(row)}
                                     key={key}
                                     {...rest}
                                 >
                                     {cell.render('Cell')}
-                                </td>
+                                </TCell>
                             );
                         })}
-                    </tr>
+                    </TRow>
                 );
             }),
         [],
