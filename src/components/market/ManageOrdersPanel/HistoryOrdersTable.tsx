@@ -68,7 +68,10 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
                         key={row.id}
                     >
                         {row.cells.map(cell => {
-                            const { key, ...rest } = cell.getCellProps();
+                            const { value, column, getCellProps } = cell;
+                            const { key, ...rest } = getCellProps();
+                            const shouldUseToFixed =
+                                column.id === 'eval_time' || column.id === 'cost';
 
                             return (
                                 <TCell
@@ -76,7 +79,7 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    {cell.render('Cell')}
+                                    <span>{shouldUseToFixed ? value.toFixed(4) : value}</span>
                                 </TCell>
                             );
                         })}

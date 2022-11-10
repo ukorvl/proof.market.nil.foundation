@@ -49,7 +49,8 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                         key={row.id}
                     >
                         {row.cells.map(cell => {
-                            const { key, ...rest } = cell.getCellProps();
+                            const { value, column, getCellProps } = cell;
+                            const { key, ...rest } = getCellProps();
 
                             return (
                                 <TCell
@@ -57,7 +58,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    {cell.render('Cell')}
+                                    {column.id !== 'timestamp' ? value.toFixed(4) : value}
                                 </TCell>
                             );
                         })}

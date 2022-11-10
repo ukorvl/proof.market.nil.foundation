@@ -1,3 +1,4 @@
+@import 'src/styles/constants.scss';
 @import 'src/styles/mixins/tableColumns';
 
 .manageOrdersPanel {
@@ -7,15 +8,21 @@
     padding: 8px 0 16px;
   }
 
-  .historyOrdersTable,
   .activeOrdersTable {
-    tbody {
-      height: 386px;
-    }
-  }
+    @include tableColumns(28%, 16%, 20%, 30%, 8%);
 
-  .activeOrdersTable {
-    @include tableColumns(30%, 16%, 20%, 30%, 6%);
+    .removeIcon {
+      cursor: pointer;
+      display: inline-block;
+      padding: 2px;
+      padding-right: 4px;
+      margin: -2px;
+
+      &:hover,
+      &:focus {
+        color: $c-secondary;
+      }
+    }
   }
 
   .historyOrdersTable {

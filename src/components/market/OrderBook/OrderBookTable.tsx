@@ -56,13 +56,15 @@ export const OrderBookTable = memo(function OrderBookTable({
                     {getDataWithVolumes(asks, maxVolume, true).map(row =>
                         renderRow(row, prepareRow, 'ask'),
                     )}
-                    {lastOrderData && lastOrderData.cost && (
+                    {lastOrderData && lastOrderData.cost && lastOrderData.eval_time && (
                         <TRow className="lastOrderDataContainer">
                             <TCell>
-                                <div
-                                    className={lastOrderData.type}
-                                >{`${lastOrderData.cost} $`}</div>
-                                <div className="text-muted">{`${lastOrderData.eval_time} ms`}</div>
+                                <div className={lastOrderData.type}>{`${lastOrderData.cost.toFixed(
+                                    4,
+                                )} $`}</div>
+                                <div className="text-muted">{`${lastOrderData.eval_time.toFixed(
+                                    4,
+                                )} ms`}</div>
                             </TCell>
                         </TRow>
                     )}

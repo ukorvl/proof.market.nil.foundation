@@ -8,6 +8,7 @@
   @include hideScrollbar;
   overflow: auto;
   color: $c-secondary-darker;
+  padding-top: 2px;
 
   div[role=rowgroup] {
     display: flex;
@@ -49,8 +50,11 @@
 
   div[role=cell] {
     font-size: 1.2rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+
+    > span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }

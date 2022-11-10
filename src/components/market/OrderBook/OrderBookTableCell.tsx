@@ -27,9 +27,10 @@ export const OrderBookTableCell = ({
     cell,
     userOrdersAmount,
 }: OrderBookTableCellProps): ReactElement => {
+    const { column, value, getCellProps } = cell;
     return (
-        <TCell {...cell.getCellProps()}>
-            {cell.value}
+        <TCell {...getCellProps()}>
+            <span>{column.id === 'ordersAmount' ? value : value.toFixed(4)}</span>
             {!!userOrdersAmount && (
                 <Label>
                     <span>{userOrdersAmount}</span>

@@ -5,6 +5,7 @@
 
 import { ReactElement, memo, useCallback } from 'react';
 import { Cell, Column, Row, TableState } from 'react-table';
+import { Icon } from '@nilfoundation/react-components';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
 
@@ -72,7 +73,22 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                         key={row.id}
                     >
                         {row.cells.map(cell => {
-                            const { key, ...rest } = cell.getCellProps();
+                            const { value, column, getCellProps } = cell;
+                            const { key, ...rest } = getCellProps();
+                            const shouldUseToFixed =
+                                column.id === 'eval_time' || column.id === 'cost';
+
+                            if (column.id === 'orderId') {
+                                return (
+                                    <TCell key={key}>
+                                        <Icon
+                                            tabIndex={0}
+                                            iconName="fa-solid fa-ban"
+                                            className="removeIcon"
+                                        />
+                                    </TCell>
+                                );
+                            }
 
                             return (
                                 <TCell
@@ -80,7 +96,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    {cell.render('Cell')}
+                                    <span>{shouldUseToFixed ? value.toFixed(4) : value}</span>
                                 </TCell>
                             );
                         })}

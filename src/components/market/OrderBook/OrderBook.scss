@@ -25,7 +25,7 @@
       }
 
       &::after {
-        opacity: 0.1;
+        opacity: 0.12;
         content: "";
         width: var(--bar-width);
         transition: width 0.2s ease;
@@ -40,7 +40,7 @@
           background-color: $c-danger;
         }
 
-        td:first-child {
+        div[role=cell]:first-child {
           color: $c-danger;
         }
       }
@@ -50,7 +50,7 @@
           background-color: $c-success;
         }
 
-        td:first-child {
+        div[role=cell]:first-child {
           color: $c-success;
         }
       }
@@ -58,6 +58,12 @@
       div[role=cell] {
         z-index: 2;
         position: relative;
+
+        > span {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
 
         &:first-child {
           justify-content: flex-start;
@@ -75,6 +81,7 @@
 
   div[role=row].lastOrderDataContainer {
     width: 100%;
+    align-items: center;
     background-color: $c-base-darker;
     z-index: 3;
     height: 6rem;
@@ -82,10 +89,10 @@
     top: 0;
     bottom: 0;
 
-    > div[role=cell] {
-      height: 6rem;
+    > div[role=cell]:first-child {
       flex-flow: column nowrap;
       align-items: flex-start;
+      justify-content: center;
 
       > div:first-of-type {
         font-size: 1.75rem;

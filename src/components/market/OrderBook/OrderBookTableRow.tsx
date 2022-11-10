@@ -60,13 +60,17 @@ export const OrderBookTableRow = ({
             style={combinedStyle}
             className={combinedClassName}
         >
-            {row.cells.map((cell, i) => {
+            {row.cells.map(cell => {
                 const { key } = cell.getCellProps();
                 return (
                     <OrderBookTableCell
                         key={key}
                         cell={cell}
-                        userOrdersAmount={i !== 0 ? undefined : row.values.userOrdersAmount}
+                        userOrdersAmount={
+                            cell.column.id !== 'ordersAmount'
+                                ? undefined
+                                : row.values.userOrdersAmount
+                        }
                     />
                 );
             })}
