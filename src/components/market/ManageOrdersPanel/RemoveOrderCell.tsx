@@ -3,15 +3,16 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import { Button, Icon, Size } from '@nilfoundation/react-components';
-import { Cell } from 'react-table';
+import { Cell, Row } from 'react-table';
 import { TCell } from 'src/components';
 import { ManageOrdersData } from 'src/models';
-import { ManageOrdersPanelContext } from './ManageOrdersPanelContext';
 
 type RemoveOrderCellProps = {
     cell: Cell<ManageOrdersData>;
+    disabled: boolean;
+    setSelectedRow: (r: Row<ManageOrdersData>) => void;
 };
 
 /**
@@ -20,15 +21,17 @@ type RemoveOrderCellProps = {
  * @param {RemoveOrderCellProps} props Props.
  * @returns React component.
  */
-export const RemoveOrderCell = ({ cell }: RemoveOrderCellProps): ReactElement => {
-    const { setSelectedRow, processing } = useContext(ManageOrdersPanelContext);
-
+export const RemoveOrderCell = ({
+    cell,
+    disabled,
+    setSelectedRow,
+}: RemoveOrderCellProps): ReactElement => {
     return (
         <TCell {...cell.getCellProps()}>
             <Button
                 className="removeButton"
                 onClick={() => setSelectedRow(cell.row)}
-                disabled={processing}
+                disabled={disabled}
                 size={Size.xs}
             >
                 <Icon

@@ -1,10 +1,13 @@
 @import 'src/styles/constants.scss';
 @import 'src/styles/mixins/responsive';
+@import 'src/styles/mixins/hideScrollbar';
 
 .circuitDetailedInfo {
   position: relative;
   @include responsive(lg) {
-    height: 816px;
+    height: 692px;
+    overflow: auto;
+    @include hideScrollbar;
   }
 
   h5 {

@@ -129,8 +129,23 @@ const seriesOptions: Partial<SeriesOptionsCommon> = {
  * @returns Range.
  */
 const getDataRange = (rightEdge: number, visibleRange: DateUnit): Range<number> => {
+    let distance = 0;
+
+    switch (visibleRange) {
+        case DateUnit.minute:
+            distance = 60;
+            break;
+        case DateUnit.hour:
+            distance = 24;
+            break;
+        case DateUnit.day:
+        case DateUnit.quaterMinute:
+        case DateUnit.halfHour:
+            distance = 30;
+    }
+
     return {
-        from: rightEdge - 24,
+        from: rightEdge - distance,
         to: rightEdge,
     };
 };

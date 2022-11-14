@@ -3,11 +3,15 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
+import { ReactElement, memo, useCallback, useState } from 'react';
 import { Cell, Column, Row, TableState } from 'react-table';
+import { useDispatch } from 'react-redux';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
+import { removeAsk, removeBid } from 'src/api';
+import { RemoveAsk, RemoveBid } from 'src/redux';
 import { RemoveOrderCell } from './RemoveOrderCell';
+import { ToolbarPanel } from './ToolbarPanel';
 
 /**
  * Props.
@@ -63,6 +67,36 @@ const defaultTableState: Partial<TableState<ManageOrdersData>> = {
 export const ActiveOrdersTable = memo(function ActiveOrdersTable({
     data,
 }: ActiveOrdersTableProps): ReactElement {
+    const [selectedRow, setSelectedRow] = useState<Row<ManageOrdersData> | null>(null);
+    const [processing, setProcessing] = useState(false);
+    const dispatch = useDispatch();
+
+    const onAcceptRemoveOrder = useCallback(async () => {
+        setProcessing(true);
+
+        if (!selectedRow) {
+            return;
+        }
+
+        try {
+            const { orderId, type } = selectedRow.values;
+            const fetcher = type === TradeOrderType.buy ? removeBid : removeAsk;
+            const action = type === TradeOrderType.buy ? RemoveBid : RemoveAsk;
+
+            await fetcher(orderId);
+            dispatch(action(orderId));
+            setSelectedRow(null);
+        } catch (e) {
+            // TODO Handle error
+        } finally {
+            setProcessing(false);
+        }
+    }, [setProcessing, selectedRow, setSelectedRow, dispatch]);
+
+    const onDecline = useCallback(() => {
+        setSelectedRow(null);
+    }, [setSelectedRow]);
+
     const renderRows = useCallback(
         (rows: Row<ManageOrdersData>[], prepareRow: (row: Row<ManageOrdersData>) => void) =>
             rows.map(row => {
@@ -83,6 +117,8 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                     <RemoveOrderCell
                                         key={key}
                                         cell={cell}
+                                        disabled={processing}
+                                        setSelectedRow={setSelectedRow}
                                     />
                                 );
                             }
@@ -100,18 +136,28 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                     </TRow>
                 );
             }),
-        [],
+        [processing],
     );
 
     return (
-        <ReactTable
-            name="activeOrdersTable"
-            className="activeOrdersTable"
-            data={data}
-            columns={columns}
-            renderRows={renderRows}
-            initialState={defaultTableState}
-        />
+        <>
+            <ReactTable
+                name="activeOrdersTable"
+                className="activeOrdersTable"
+                data={data}
+                columns={columns}
+                renderRows={renderRows}
+                initialState={defaultTableState}
+            />
+            {selectedRow !== null && (
+                <ToolbarPanel
+                    onAccept={onAcceptRemoveOrder}
+                    onDecline={onDecline}
+                    processing={processing}
+                    message="Proceed removing order?"
+                />
+            )}
+        </>
     );
 });
 

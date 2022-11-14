@@ -1,24 +1,32 @@
 @import 'src/styles/constants.scss';
 @import 'src/styles/mixins/styledList';
+@import 'src/styles/mixins/hideScrollbar';
 
-.currenciesList {
-  @include styledList;
+.circuitsList {
+  height: 350px;
+  overflow: auto;
+  @include hideScrollbar;
 
-  .list-group-item {
+  .list-group {
+    @include styledList;
 
-    .media-body {
-      vertical-align: middle;
-      height: 48px;
-    }
+    .list-group-item {
 
-    .dailyChangeIndicator {
-      font-size: 1.1rem;
-      margin-top: 4px;
+      .media-body {
+        vertical-align: middle;
+        height: 48px;
+      }
 
-      i {
-        display: inline;
-        margin-right: 4px;
+      .dailyChangeIndicator {
+        font-size: 1.1rem;
+        margin-top: 4px;
+
+        i {
+          display: inline;
+          margin-right: 4px;
+        }
       }
     }
   }
 }
+

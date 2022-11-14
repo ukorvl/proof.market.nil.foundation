@@ -22,18 +22,20 @@ export const CircuitsList = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Circuit list</h4>}>
-                {loadingCircuits && !circuitsList.length ? (
-                    <Spinner grow />
-                ) : (
-                    <ListGroup className="currenciesList">
-                        {circuitsList.map(x => (
-                            <CurcuitsListItem
-                                key={x.id}
-                                circuit={x}
-                            />
-                        ))}
-                    </ListGroup>
-                )}
+                <div className="circuitsList">
+                    {loadingCircuits && !circuitsList.length ? (
+                        <Spinner grow />
+                    ) : (
+                        <ListGroup>
+                            {circuitsList.map(x => (
+                                <CurcuitsListItem
+                                    key={x.id}
+                                    circuit={x}
+                                />
+                            ))}
+                        </ListGroup>
+                    )}
+                </div>
             </Details>
         </DashboardCard>
     );
