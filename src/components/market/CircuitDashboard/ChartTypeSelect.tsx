@@ -27,12 +27,12 @@ export const ChartTypeSelect = ({
     onSelectChartType,
     disabled,
 }: ChartTypeSelectProps): ReactElement => {
-    const { lg } = useBreakpoints();
+    const { xs, sm } = useBreakpoints();
 
     return (
         <Nav
             tabs
-            vertical={!lg}
+            vertical={xs || sm}
         >
             {Object.values(ChartType).map(x => (
                 <Nav.Item

@@ -12,6 +12,7 @@ import { ChartTypeSelect } from './ChartTypeSelect';
 import { DataRangeSelect } from './DataRangeSelect';
 import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../CircuitCharts';
 import { DataRangeContext } from './DataRangeContext';
+import { DashboardToolbar } from './DashboardToolbar';
 import './CircuitDashboard.scss';
 
 /**
@@ -27,18 +28,21 @@ export const CircuitDashboard = (): ReactElement => {
     );
 
     return (
-        <DashboardCard>
+        <DashboardCard className="circuitDashboard">
             <Details title={<h4>Circuit dashboard</h4>}>
                 <ChartTypeSelect
                     chartType={chartType}
                     onSelectChartType={setChartType}
                     disabled={false}
                 />
-                <DataRangeSelect
-                    currentDataRange={dataRange}
-                    setDataRange={setDataRange}
-                    disabled={false}
-                />
+                <div className="circuitDashboard__toolbar">
+                    <DataRangeSelect
+                        currentDataRange={dataRange}
+                        setDataRange={setDataRange}
+                        disabled={false}
+                    />
+                    <DashboardToolbar disabled={false} />
+                </div>
                 <DataRangeContext.Provider value={{ dataRange }}>
                     <ChartFactory chartType={chartType} />
                 </DataRangeContext.Provider>

@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
+import { ReactElement, memo, useCallback, useRef, useLayoutEffect } from 'react';
 import { Row, TableState } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
-import { ReactTable, TRow, TCell } from 'src/components';
+import { ReactTable } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
+import styles from './OrderBook.module.scss';
 
 /**
  * Props.
@@ -46,6 +47,13 @@ export const OrderBookTable = memo(function OrderBookTable({
     lastOrderData,
     maxVolume,
 }: OrderBookTableProps): ReactElement {
+    const asksContainerRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        const { current: el } = asksContainerRef;
+        el && el.scrollTo(0, el.scrollHeight);
+    }, []);
+
     const renderRows = useCallback(
         (rows: Row<OrderBookTableData>[], prepareRow: (row: Row<OrderBookTableData>) => void) => {
             const asks = rows.filter(x => x.values.type === 'ask');
@@ -53,24 +61,33 @@ export const OrderBookTable = memo(function OrderBookTable({
 
             return (
                 <>
-                    {getDataWithVolumes(asks, maxVolume, true).map(row =>
-                        renderRow(row, prepareRow, 'ask'),
-                    )}
-                    {lastOrderData && lastOrderData.cost && lastOrderData.eval_time && (
-                        <TRow className="lastOrderDataContainer">
-                            <TCell>
+                    <div
+                        className={styles.rowsContainer}
+                        ref={asksContainerRef}
+                    >
+                        {getDataWithVolumes(asks, maxVolume, true).map(row =>
+                            renderRow(row, prepareRow, styles.ask),
+                        )}
+                    </div>
+                    {lastOrderData && (
+                        <div className={styles.lastOrderDataContainer}>
+                            {lastOrderData.cost && (
                                 <div className={lastOrderData.type}>{`${lastOrderData.cost.toFixed(
                                     4,
                                 )} $`}</div>
+                            )}
+                            {lastOrderData.eval_time && (
                                 <div className="text-muted">{`${lastOrderData.eval_time.toFixed(
                                     4,
                                 )} ms`}</div>
-                            </TCell>
-                        </TRow>
+                            )}
+                        </div>
                     )}
-                    {getDataWithVolumes(bids, maxVolume).map(row =>
-                        renderRow(row, prepareRow, 'bid'),
-                    )}
+                    <div className={styles.rowsContainer}>
+                        {getDataWithVolumes(bids, maxVolume).map(row =>
+                            renderRow(row, prepareRow, styles.bid),
+                        )}
+                    </div>
                 </>
             );
         },
@@ -80,7 +97,7 @@ export const OrderBookTable = memo(function OrderBookTable({
     return (
         <ReactTable
             name="orderBookTable"
-            className="orderBookTable"
+            className={styles.orderBookTable}
             renderRows={renderRows}
             data={data}
             columns={columns}
@@ -94,7 +111,7 @@ export const OrderBookTable = memo(function OrderBookTable({
  *
  * @param row Row instance.
  * @param prepareRow Prepare row callback.
- * @param className Class.
+ * @param className HTML Class.
  * @returns Row.
  */
 const renderRow = (

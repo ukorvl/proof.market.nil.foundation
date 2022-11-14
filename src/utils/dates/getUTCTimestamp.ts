@@ -4,16 +4,17 @@
  */
 
 import { UTCTimestamp } from 'lightweight-charts';
-import { floorDateTo, RoundDateTo } from './floorDateTo';
+import { DateUnit } from 'src/enums';
+import { floorDateTo } from './floorDateTo';
 
 /**
  * Get UTCTimestamp from date string.
  *
  * @param dateString - Date string.
- * @param floorTo - Should round date to minute.
+ * @param floorTo - Date unit floor to.
  * @returns UTCTimestamp.
  */
-export const getUTCTimestamp = (dateString: string, floorTo?: RoundDateTo): UTCTimestamp => {
+export const getUTCTimestamp = (dateString: string, floorTo?: DateUnit): UTCTimestamp => {
     const date = floorTo ? floorDateTo(dateString, floorTo) : new Date(dateString);
 
     return Math.trunc(date.getTime() / 1000) as UTCTimestamp;

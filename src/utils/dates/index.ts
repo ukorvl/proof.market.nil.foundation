@@ -8,4 +8,3 @@ export * from './getUTCTimestamp';
 export * from './isPreviousDay';
 export * from './floorDateTo';
 export * from './formatDate';
-export * from './subtractFromUTCTimestamp';

@@ -53,7 +53,6 @@ export const useChart = <T extends HTMLElement>({
 
         const handleResize = () => {
             chart.applyOptions({ width: htmlElement.clientWidth });
-            chart.timeScale().fitContent();
         };
 
         window.addEventListener('resize', handleResize);

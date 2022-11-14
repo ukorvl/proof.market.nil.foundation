@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Nav } from '@nilfoundation/react-components';
-import { DateUnit, getDateUnitDisplay } from 'src/enums';
+import { DateUnit } from 'src/enums';
 
 /**
  * Props.
@@ -28,19 +28,17 @@ export const DataRangeSelect = ({
     disabled,
 }: DataRangeSelectProps): ReactElement => {
     return (
-        <div className="dataRangeSelect">
-            <Nav>
-                {Object.values(DateUnit).map(x => (
-                    <Nav.Item
-                        key={x}
-                        active={currentDataRange === x}
-                        onClick={() => setDataRange(x)}
-                        disabled={disabled}
-                    >
-                        {getDateUnitDisplay(x)}
-                    </Nav.Item>
-                ))}
-            </Nav>
-        </div>
+        <Nav>
+            {Object.values(DateUnit).map(x => (
+                <Nav.Item
+                    key={x}
+                    active={currentDataRange === x}
+                    onClick={() => setDataRange(x)}
+                    disabled={disabled}
+                >
+                    {x}
+                </Nav.Item>
+            ))}
+        </Nav>
     );
 };

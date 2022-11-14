@@ -8,7 +8,7 @@ import { Spinner } from '@nilfoundation/react-components';
 import { useGetOrderBookData, UseGetOrderBookDataReturnType } from 'src/hooks';
 import { OrderBookTable } from './OrderBookTable';
 import { Details, DashboardCard } from '../../common';
-import './OrderBook.scss';
+import styles from './OrderBook.module.scss';
 
 /**
  * Order book.
@@ -21,7 +21,7 @@ export const OrderBook = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Order book</h4>}>
-                <div className="orderBook">{OrderBookViewFactory({ ...data })}</div>
+                <div className={styles.orderBook}>{OrderBookViewFactory({ ...data })}</div>
             </Details>
         </DashboardCard>
     );

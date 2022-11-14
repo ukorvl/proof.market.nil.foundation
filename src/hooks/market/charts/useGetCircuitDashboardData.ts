@@ -11,7 +11,7 @@ import sum from 'lodash/sum';
 import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
-import { DateUnit, getRoundToBasedOnDateUnit } from 'src/enums';
+import { DateUnit } from 'src/enums';
 
 /**
  * Hook return type.
@@ -105,7 +105,7 @@ const getProofGenTimeData = <T extends Bid | Ask>(
  */
 const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
     return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
-        const date = getUTCTimestamp(currentValue.timestamp!, getRoundToBasedOnDateUnit(dataRange));
+        const date = getUTCTimestamp(currentValue.timestamp!, dataRange);
 
         if (!previousValue[date]) previousValue[date] = [];
 

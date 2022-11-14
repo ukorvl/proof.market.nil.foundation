@@ -15,11 +15,9 @@ import {
     CandlestickStyleOptions,
     SeriesOptionsCommon,
     LineStyleOptions,
-    UTCTimestamp,
     Range,
 } from 'lightweight-charts';
 import { DateUnit } from 'src/enums';
-import { subtractFromUTCTimestamp } from 'src/utils';
 
 /**
  * Return type.
@@ -106,9 +104,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
             return;
         }
 
-        chart
-            .timeScale()
-            .setVisibleRange(getDataRange(seriesData.at(-1)!.time as UTCTimestamp, visibleRange));
+        chart.timeScale().setVisibleLogicalRange(getDataRange(seriesData.length, visibleRange));
     }, [chart, visibleRange, seriesData]);
 
     return { price };
@@ -129,12 +125,12 @@ const seriesOptions: Partial<SeriesOptionsCommon> = {
  * Creates chart data Range {@link Range} object, subtracting distance from provided right edge date.
  *
  * @param rightEdge Last date in range.
- * @param distance Distance between dates.
+ * @param visibleRange Visible range.
  * @returns Range.
  */
-const getDataRange = (rightEdge: UTCTimestamp, distance: DateUnit): Range<UTCTimestamp> => {
+const getDataRange = (rightEdge: number, visibleRange: DateUnit): Range<number> => {
     return {
-        from: subtractFromUTCTimestamp(rightEdge, 1, distance),
+        from: rightEdge - 24,
         to: rightEdge,
     };
 };

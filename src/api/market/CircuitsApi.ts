@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Circuit } from '../../models';
+import { Circuit } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
@@ -13,9 +13,9 @@ const httpFetcher = createBearerHttpClient(apiUrl);
 /**
  * Get circuits.
  *
- * @returns .
+ * @returns Circuit list.
  */
-export const getCircuits = (): Promise<void> =>
+export const getCircuits = (): Promise<Circuit> =>
     httpFetcher
         .post('cursor', {
             query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',

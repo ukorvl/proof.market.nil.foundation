@@ -1,15 +1,27 @@
-.dataRangeSelect {
-  height: 42px;
-  padding: 6px;
+.circuitDashboard {
+  height: 614px;
 
-  > .nav > li > a {
-    padding: 5px 12px!important;
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+
+    .nav {
+      > li > a {
+        padding: 5px 12px!important;
+      }
+    }
+
+    .nav-pills > li.active {
+      a, a:hover, a:focus {
+        background-color: unset!important;
+        font-weight: bold;
+      }
+    }
   }
 
-  .nav-pills>li.active {
-    a, a:hover, a:focus {
-      background-color: unset!important;
-      font-weight: bold;
-    }
+  .chartTypeSelect {
+    display: flex;
+    flex-wrap: nowrap;
   }
 }

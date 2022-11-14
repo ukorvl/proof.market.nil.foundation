@@ -1,0 +1,104 @@
+@import 'src/styles/constants.scss';
+@import 'src/styles/mixins/hideScrollbar';
+@import 'src/styles/mixins/tableColumns';
+
+.orderBook {
+  height: 542px;
+}
+
+.orderBookTable {
+  @include tableColumns(20%, 40%, 40%);
+}
+
+.rowsContainer {
+  height: 224px;
+  overflow: auto;
+  @include hideScrollbar;
+
+  div[role=row] {
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $c-base;
+    }
+
+    &::after {
+      opacity: 0.12;
+      content: "";
+      width: 100%;
+      transform: scale(var(--bar-width), 1);
+      transform-origin: left;
+      transition: width 0.2s ease;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    div[role=cell] {
+      z-index: 2;
+      position: relative;
+
+      > span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      &:first-child {
+        justify-content: flex-start;
+        padding-left: 5%;
+      }
+
+      > .label {
+        margin-left: 4px;
+        vertical-align: middle;
+        background-color: $c-base-light!important;
+      }
+    }
+  }
+}
+
+.ask {
+  &::after {
+    background-color: $c-danger;
+  }
+
+  div[role=cell]:first-child {
+    color: $c-danger;
+  }
+}
+
+.bid {
+  &::after {
+    background-color: $c-success;
+  }
+
+  div[role=cell]:first-child {
+    color: $c-success;
+  }
+}
+
+.lastOrderDataContainer {
+  width: 100%;
+  background-color: $c-base-darker;
+  z-index: 3;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  > div:first-of-type {
+    font-size: 1.75rem;
+
+    &.grow {
+      color: $c-success;
+    }
+
+    &.loss {
+      color: $c-danger;
+    }
+  }
+}
