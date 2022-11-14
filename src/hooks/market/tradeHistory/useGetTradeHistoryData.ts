@@ -42,7 +42,7 @@ export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataR
                 accessor: 'cost',
             },
             {
-                Header: 'Eval_time',
+                Header: 'Generation time',
                 accessor: 'eval_time',
             },
             {

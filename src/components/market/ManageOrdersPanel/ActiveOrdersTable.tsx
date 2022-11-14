@@ -5,9 +5,9 @@
 
 import { ReactElement, memo, useCallback } from 'react';
 import { Cell, Column, Row, TableState } from 'react-table';
-import { Icon } from '@nilfoundation/react-components';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
+import { RemoveOrderCell } from './RemoveOrderCell';
 
 /**
  * Props.
@@ -33,7 +33,7 @@ const columns: Column<ManageOrdersData>[] = [
         accessor: 'cost',
     },
     {
-        Header: 'Eval_time',
+        Header: 'Gen time',
         accessor: 'eval_time',
     },
     {
@@ -80,13 +80,10 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
 
                             if (column.id === 'orderId') {
                                 return (
-                                    <TCell key={key}>
-                                        <Icon
-                                            tabIndex={0}
-                                            iconName="fa-solid fa-ban"
-                                            className="removeIcon"
-                                        />
-                                    </TCell>
+                                    <RemoveOrderCell
+                                        key={key}
+                                        cell={cell}
+                                    />
                                 );
                             }
 

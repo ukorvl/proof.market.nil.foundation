@@ -46,4 +46,4 @@ export const createBid = (data: CreateBid): Promise<Bid> =>
  * @returns Ask.
  */
 export const removeBid = (bidToRemoveId: Bid['id']): Promise<void> =>
-    httpFetcher.post('simple/remove-by-keys', { keys: [bidToRemoveId], relation: 'bid' });
+    httpFetcher.put('simple/remove-by-keys', { keys: [bidToRemoveId], relation: 'bid' });

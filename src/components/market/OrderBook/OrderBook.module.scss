@@ -40,21 +40,14 @@
       z-index: 2;
       position: relative;
 
-      > span {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+      > span + span {
+        margin-left: 4px;
+        background-color: $c-base-light!important;
       }
 
       &:first-child {
         justify-content: flex-start;
         padding-left: 5%;
-      }
-
-      > .label {
-        margin-left: 4px;
-        vertical-align: middle;
-        background-color: $c-base-light!important;
       }
     }
   }

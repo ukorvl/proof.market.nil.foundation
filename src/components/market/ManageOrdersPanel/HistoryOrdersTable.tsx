@@ -32,7 +32,7 @@ const columns: Column<ManageOrdersData>[] = [
         accessor: 'cost',
     },
     {
-        Header: 'Eval_time',
+        Header: 'Generation time',
         accessor: 'eval_time',
     },
 ];

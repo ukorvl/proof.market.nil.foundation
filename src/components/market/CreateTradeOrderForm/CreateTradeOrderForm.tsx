@@ -61,7 +61,7 @@ export const CreateTradeOrderForm = ({
                 />
             </Form.Group>
             <Form.Group hasError={!!errors['eval_time']}>
-                <Form.Label htmlFor="eval_time">Eval time, ms</Form.Label>
+                <Form.Label htmlFor="eval_time">Generation time, ms</Form.Label>
                 <Input
                     type="number"
                     id="eval_time"

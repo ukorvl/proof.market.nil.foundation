@@ -70,7 +70,7 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
                 sortType: sortFunctionCreator('cost'),
             },
             {
-                Header: 'Eval_time',
+                Header: 'Generation time',
                 accessor: 'eval_time',
                 sortType: sortFunctionCreator('eval_time'),
             },

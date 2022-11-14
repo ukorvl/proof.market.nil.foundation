@@ -3,29 +3,54 @@
 
 .manageOrdersPanel {
   height: 500px;
+  position: relative;
 
   .nav {
     padding: 8px 0 16px;
   }
 
   .activeOrdersTable {
-    @include tableColumns(28%, 16%, 20%, 30%, 8%);
+    @include tableColumns(28%, 16%, 20%, 30%, 6%);
+    height: 432px;
 
-    .removeIcon {
-      cursor: pointer;
+    .removeButton {
       display: inline-block;
-      padding: 2px;
-      padding-right: 4px;
-      margin: -2px;
+      padding: 0!important;
+      color: $c-secondary-darker;
+      background-color: $c-base-darker!important;
+      border: none!important;
 
       &:hover,
       &:focus {
-        color: $c-secondary;
+        color: $c-secondary!important;
       }
     }
   }
 
   .historyOrdersTable {
-    @include tableColumns(24%, 16%, 30%, 30%);
+    @include tableColumns(24%, 16%, 28%, 32%);
+    height: 432px;
+  }
+}
+
+.toolbarPanel {
+  width: 100%;
+  padding: 20px 0 25px;
+  position: absolute;
+  background-color: $c-base-darker;
+  z-index: 3;
+  bottom: 0;
+
+  .buttons {
+    display: flex;
+
+    .btn + .btn {
+      margin-left: 8px;
+      margin-top: 0!important;
+    }
+  }
+
+  .message {
+    padding-bottom: 4px;
   }
 }
