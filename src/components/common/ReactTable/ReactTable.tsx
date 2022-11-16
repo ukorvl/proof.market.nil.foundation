@@ -4,7 +4,15 @@
  */
 
 import { ReactElement, ReactNode, useEffect } from 'react';
-import { Column, ColumnInstance, Row, TableState, useSortBy, useTable } from 'react-table';
+import {
+    Column,
+    ColumnInstance,
+    Row,
+    TableState,
+    useFilters,
+    useSortBy,
+    useTable,
+} from 'react-table';
 import { notEmpty, genericMemo } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { ReactTableHeader } from './ReactTableHeader';
@@ -27,7 +35,7 @@ type ReactTableProps<T extends Record<string, unknown>> = {
 /**
  * React-table hook list to pass into table instance.
  */
-const tableHooks = [useSortBy].filter(notEmpty);
+const tableHooks = [useFilters, useSortBy].filter(notEmpty);
 
 /**
  * React table template.

@@ -1,7 +1,10 @@
+@import 'src/styles/constants.scss';
+
 .circuitDashboard {
   height: 614px;
 
   &__toolbar {
+    background-color: $c-base-darker;
     display: flex;
     justify-content: space-between;
     padding: 6px;
@@ -23,5 +26,14 @@
   .chartTypeSelect {
     display: flex;
     flex-wrap: nowrap;
+  }
+}
+
+.fullScreenChartContainer {
+  padding: 25px 50px 100px;
+  background-color: $c-base-darker;
+
+  .circuitChart {
+    height: 100%;
   }
 }

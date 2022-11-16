@@ -4,12 +4,12 @@
  */
 
 import { ReactElement, ReactNode } from 'react';
-import { Container } from '@nilfoundation/react-components';
-import './LoginContainer.scss';
+import { FullScreenView } from 'src/components/common';
+import styles from './LoginContainer.module.scss';
 
 type LoginContainerProps = {
     children: ReactNode;
-}
+};
 
 /**
  * Login container.
@@ -17,10 +17,13 @@ type LoginContainerProps = {
  * @param {LoginContainerProps} props Props.
  * @returns React component.
  */
-export const LoginContainer = ({children}: LoginContainerProps): ReactElement => {
+export const LoginContainer = ({ children }: LoginContainerProps): ReactElement => {
     return (
-        <Container as="main" fluid className="loginContainer">
+        <FullScreenView
+            showFullScreen
+            className={styles.loginContainer}
+        >
             {children}
-        </Container>
+        </FullScreenView>
     );
 };

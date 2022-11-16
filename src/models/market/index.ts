@@ -10,3 +10,4 @@ export * from './TradeOrder';
 export * from './OrderBook';
 export * from './TradeHistory';
 export * from './ManageOrders';
+export * from './CircuitsList';
