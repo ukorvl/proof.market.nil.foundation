@@ -3,21 +3,22 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, select, takeLatest, fork } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getCircuits } from 'src/api';
-import { Circuit } from 'src/models';
+import { getCircuits, getCircuitsInfo } from 'src/api';
+import { Circuit, CircuitInfo } from 'src/models';
 import {
     UpdateCircuitsError,
+    UpdateCircuitsInfoList,
     UpdateCircuitsList,
     UpdateIsLoadingCircuits,
+    UpdateIsLoadingCircuitsInfo,
     UpdateSelectedCircuitId,
 } from '../actions';
-import { RootStateType } from '../../RootStateType';
 import { ProtectedApiCall, UpdateUser } from '../../login';
 import { selectCurrentCircuitId } from '../selectors';
 
-const selectUser = (s: RootStateType) => s.userState.user;
+const revalidateInterval = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
 /**
  * Circuits main saga.
@@ -27,16 +28,16 @@ const selectUser = (s: RootStateType) => s.userState.user;
 export function* CircuitsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateUser, GetCircuitsSaga);
     yield takeLatest(UpdateCircuitsList, SelectCircuitSaga);
+    yield fork(revalidateCircuitsInfoSaga);
 }
 
 /**
  * Get circuits saga.
  *
+ * @param {ReturnType<typeof UpdateUser>} action Action return type.
  * @yields
  */
-function* GetCircuitsSaga(): SagaIterator<void> {
-    const user: ReturnType<typeof selectUser> = yield select(selectUser);
-
+function* GetCircuitsSaga({ payload: user }: ReturnType<typeof UpdateUser>): SagaIterator<void> {
     if (!user) {
         return;
     }
@@ -50,7 +51,7 @@ function* GetCircuitsSaga(): SagaIterator<void> {
         if (circuitsList !== undefined) {
             yield put(UpdateCircuitsList(circuitsList));
         }
-    } catch (e) {
+    } catch {
         yield put(UpdateCircuitsError(true));
     } finally {
         yield put(UpdateIsLoadingCircuits(false));
@@ -77,4 +78,25 @@ function* SelectCircuitSaga({
     }
 
     yield put(UpdateSelectedCircuitId(payload[0].id));
+}
+
+/**
+ * Revalidate circuits info.
+ *
+ * @yields
+ */
+function* revalidateCircuitsInfoSaga() {
+    while (true) {
+        try {
+            yield put(UpdateIsLoadingCircuitsInfo(true));
+            const circutsInfo: CircuitInfo[] = yield call(ProtectedApiCall, getCircuitsInfo);
+            yield put(UpdateCircuitsInfoList(circutsInfo));
+        } catch {
+            // Do nothing
+        } finally {
+            yield put(UpdateIsLoadingCircuitsInfo(false));
+        }
+
+        yield delay(revalidateInterval);
+    }
 }

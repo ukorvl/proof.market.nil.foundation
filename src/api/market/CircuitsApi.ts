@@ -10,6 +10,8 @@ const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
 const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
+const newFetcher = createBearerHttpClient('market/circuit');
+
 /**
  * Get circuits.
  *
@@ -27,3 +29,10 @@ export const getCircuits = (): Promise<Circuit> =>
             batchSize: 100,
         })
         .then((x: any) => x.result);
+
+/**
+ * Get circuits info.
+ *
+ * @returns .
+ */
+export const getCircuitsInfo = (): Promise<void> => newFetcher.get('/info');

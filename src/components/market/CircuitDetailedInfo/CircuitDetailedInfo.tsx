@@ -11,7 +11,7 @@ import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { jsonViewerTheme } from 'src/constants';
 import { getCurrencyImage } from 'src/enums';
 import { Details, DashboardCard } from '../../common';
-import './CircuitDetailedInfo.scss';
+import styles from './CircuitDetailedInfo.module.scss';
 
 /**
  * Currencies list.
@@ -25,43 +25,47 @@ export const CircuitDetailedInfo = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Circuit detailed info</h4>}>
-                {currentSelectedCircuit ? (
-                    <div className="circuitDetailedInfo">
-                        <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
-                        <div className="circuitDetailedInfo__imageContainer">
-                            <Image
-                                alt="Circuit image"
-                                source={getCurrencyImage(currentSelectedCircuit.name)}
-                                responsive
-                            />
-                        </div>
-                        <h5>{currentSelectedCircuit.description}</h5>
-                        <p>
-                            <Label
-                                href={currentSelectedCircuit.repository}
-                                target="_blank"
-                            >
-                                <Icon
-                                    iconName="fa-brands fa-github"
-                                    srOnlyText="github repository link"
+                <div className={styles.circuitDetailedInfo}>
+                    {currentSelectedCircuit ? (
+                        <>
+                            <h4>{`${currentSelectedCircuit.name} (${currentSelectedCircuit.info})/USD`}</h4>
+                            <div className={styles.imageContainer}>
+                                <Image
+                                    alt="Circuit image"
+                                    source={getCurrencyImage(currentSelectedCircuit.name)}
+                                    responsive
                                 />
-                                GitHub Repository
-                            </Label>
-                        </p>
-                        <ReactJson
-                            src={currentSelectedCircuit}
-                            collapsed={1}
-                            name={null}
-                            displayDataTypes={false}
-                            displayObjectSize={false}
-                            theme={jsonViewerTheme}
-                        />
-                    </div>
-                ) : loadingCircuits ? (
-                    <Spinner grow />
-                ) : (
-                    <div>Nothing is selected.</div>
-                )}
+                            </div>
+                            <h5 className={styles.description}>
+                                {currentSelectedCircuit.description}
+                            </h5>
+                            <p>
+                                <Label
+                                    href={currentSelectedCircuit.repository}
+                                    target="_blank"
+                                >
+                                    <Icon
+                                        iconName="fa-brands fa-github"
+                                        srOnlyText="github repository link"
+                                    />
+                                    GitHub Repository
+                                </Label>
+                            </p>
+                            <ReactJson
+                                src={currentSelectedCircuit}
+                                collapsed={1}
+                                name={null}
+                                displayDataTypes={false}
+                                displayObjectSize={false}
+                                theme={jsonViewerTheme}
+                            />
+                        </>
+                    ) : loadingCircuits ? (
+                        <Spinner grow />
+                    ) : (
+                        <div>Nothing is selected.</div>
+                    )}
+                </div>
             </Details>
         </DashboardCard>
     );

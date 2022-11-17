@@ -5,3 +5,4 @@
 
 export * from './CircuitDto';
 export * from './Circuit';
+export * from './CircuitInfo';

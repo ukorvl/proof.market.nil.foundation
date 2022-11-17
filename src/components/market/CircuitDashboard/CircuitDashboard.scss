@@ -1,4 +1,5 @@
 @import 'src/styles/constants.scss';
+@import 'src/styles/mixins/responsive';
 
 .circuitDashboard {
   height: 614px;
@@ -33,7 +34,7 @@
   padding: 25px 50px 100px;
   background-color: $c-base-darker;
 
-  .circuitChart {
-    height: 100%;
+  @include responsive(xs) {
+    padding: calc(20px + env(safe-area-inset-top)) 25px calc(20px + env(safe-area-inset-bottom));
   }
 }

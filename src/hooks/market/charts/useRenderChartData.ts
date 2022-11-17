@@ -87,6 +87,8 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
             price && setPrice(price);
         };
 
+        chart.subscribeCrosshairMove(crosshairMoveHandler);
+
         return () => {
             chart.removeSeries(series);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);

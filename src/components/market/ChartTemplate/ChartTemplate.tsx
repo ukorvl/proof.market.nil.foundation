@@ -20,7 +20,7 @@ import { formatUTCTimestamp } from 'src/utils';
 import { getDateFormatBasedOnDateUnit } from 'src/enums';
 import { DataRangeContext } from '../CircuitDashboard';
 import { ChartLegend } from '../ChartLegend';
-import './ChartTemplate.scss';
+import styles from './ChartTemplate.module.scss';
 
 /**
  * Props.
@@ -81,7 +81,7 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
     return (
         <div
             ref={ref}
-            className="circuitChart"
+            className={styles.circuitChart}
         >
             <ChartLegend
                 price={price}

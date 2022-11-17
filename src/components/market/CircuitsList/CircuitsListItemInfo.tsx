@@ -4,9 +4,10 @@
  */
 
 import { ReactElement, memo } from 'react';
-import { Icon, Media } from '@nilfoundation/react-components';
+import { Icon, Media, Spinner } from '@nilfoundation/react-components';
+import { dequal as deepEqual } from 'dequal';
 import clsx from 'clsx';
-import { useGetCircuitBriefInfo } from 'src/hooks';
+import { useAppSelector } from 'src/redux';
 
 /**
  * Props.
@@ -26,8 +27,15 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
     id,
     isSelected,
 }: CircuitsListItemInfoProps): ReactElement {
-    const { currentPrice, dailyChange } = useGetCircuitBriefInfo(id);
-    const isGrow = !!dailyChange && dailyChange > 0;
+    const isLoadingInfo = useAppSelector(s => s.circuitsState.isLoadingCircuitsInfo);
+    const info = useAppSelector(
+        s => s.circuitsState.circuitsInfo.find(x => x.circuit_id === id),
+        deepEqual,
+    );
+
+    const change = info?.daily_change;
+    const cost = info?.current_cost;
+    const isGrow = !!change && change > 0;
     const iconName = `fa-solid fa-arrow-${isGrow ? 'up' : 'down'}`;
     const className = clsx(
         'dailyChangeIndicator',
@@ -36,13 +44,14 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
 
     return (
         <Media.Item position="right">
-            {currentPrice && <div>{`$${currentPrice.toFixed(4)}`}</div>}
-            {dailyChange && (
+            {cost && <div>{`$${cost.toFixed(4)}`}</div>}
+            {change && (
                 <div className={className}>
                     <Icon iconName={`fa-solid fa-${iconName}`} />
-                    {`${dailyChange.toFixed(2)}%`}
+                    {`${change.toFixed(2)}%`}
                 </div>
             )}
+            {isLoadingInfo && !info && <Spinner grow />}
         </Media.Item>
     );
 });

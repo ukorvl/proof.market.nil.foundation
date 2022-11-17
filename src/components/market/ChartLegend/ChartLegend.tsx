@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { BarPrice, BarPrices } from 'lightweight-charts';
-import './ChartLegend.scss';
+import styles from './ChartLegend.module.scss';
 
 /**
  * Props.
@@ -22,24 +22,21 @@ type ChartLegendProps = {
  * @returns React component.
  */
 export const ChartLegend = ({ name, price }: ChartLegendProps): ReactElement => {
-    const displayPrice = () =>
-        typeof price === 'object' ? (
-            Object.keys(price).map(x => (
-                <span
-                    className="text-muted"
-                    key={x}
-                >
-                    {`${x}: ${price[x as keyof BarPrices]?.toFixed(2)}`}
-                </span>
-            ))
-        ) : (
-            <span className="text-muted">{price?.toFixed(2)}</span>
-        );
-
     return (
-        <div className="chartLegend">
-            <h5>{name.toUpperCase()}</h5>
-            {displayPrice()}
+        <div className={styles.chartLegend}>
+            <h5 className={styles.chartName}>{name.toUpperCase()}</h5>
+            {typeof price === 'object' ? (
+                Object.keys(price).map(x => (
+                    <div
+                        className="text-muted"
+                        key={x}
+                    >
+                        {`${x}: ${price[x as keyof BarPrices]?.toFixed(2)}`}
+                    </div>
+                ))
+            ) : (
+                <div className="text-muted">{price?.toFixed(2)}</div>
+            )}
         </div>
     );
 };

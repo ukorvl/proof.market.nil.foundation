@@ -4,12 +4,14 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Circuit } from 'src/models';
+import { Circuit, CircuitInfo } from 'src/models';
 import {
     UpdateCircuitsList,
     UpdateSelectedCircuitId,
     UpdateIsLoadingCircuits,
     UpdateCircuitsError,
+    UpdateCircuitsInfoList,
+    UpdateIsLoadingCircuitsInfo,
 } from '../actions';
 
 /**
@@ -20,6 +22,8 @@ export type CircuitsReducerState = {
     selectedid?: string;
     isLoading: boolean;
     error?: boolean;
+    circuitsInfo: CircuitInfo[];
+    isLoadingCircuitsInfo: boolean;
 };
 
 /**
@@ -30,6 +34,8 @@ const initialState: CircuitsReducerState = {
     selectedid: undefined,
     isLoading: false,
     error: false,
+    circuitsInfo: [],
+    isLoadingCircuitsInfo: false,
 };
 
 /**
@@ -52,5 +58,13 @@ export const CircuitsReducer = createReducer(initialState, builder =>
         .addCase(UpdateCircuitsError, (state, { payload }) => ({
             ...state,
             error: payload,
+        }))
+        .addCase(UpdateCircuitsInfoList, (state, { payload }) => ({
+            ...state,
+            circuitsInfo: payload,
+        }))
+        .addCase(UpdateIsLoadingCircuitsInfo, (state, { payload }) => ({
+            ...state,
+            isLoadingCircuitsInfo: payload,
         })),
 );
