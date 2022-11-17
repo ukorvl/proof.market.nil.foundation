@@ -11,6 +11,7 @@ const MarketView = lazy(() => import('../views/MarketView'));
 const LoginView = lazy(() => import('../views/LoginView'));
 const PortfolioView = lazy(() => import('../views/PortfolioView'));
 const Page404 = lazy(() => import('../views/404'));
+const ProofGeneratorsView = lazy(() => import('../views/ProofGeneratorsView'));
 
 /**
  * Login route.
@@ -33,7 +34,11 @@ export const routes: RouteModel[] = [
         Component: PortfolioView,
     },
     {
-        path: Path.any,
+        path: Path.proofGenerators,
+        Component: ProofGeneratorsView,
+    },
+    {
+        path: Path.any, // This should always be the last
         Component: Page404,
     },
 ];

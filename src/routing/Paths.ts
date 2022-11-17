@@ -11,4 +11,5 @@ export enum Path {
     any = '*',
     login = '/login',
     portfolio = '/portfolio',
+    proofGenerators = '/proof-generators',
 }
