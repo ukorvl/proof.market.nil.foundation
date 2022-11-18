@@ -39,7 +39,7 @@ export const ChartTypeSelect = ({
                     key={x}
                     active={x === chartType}
                     onClick={() => onSelectChartType(x)}
-                    disabled={disabled || x === ChartType.proofGenCostChart}
+                    disabled={disabled}
                 >
                     {x}
                 </Nav.Item>

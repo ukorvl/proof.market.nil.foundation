@@ -10,7 +10,7 @@ import { useLocalStorage } from 'src/hooks';
 import { DashboardCard, FullScreenView } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
 import { DataRangeSelect } from './DataRangeSelect';
-import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../CircuitCharts';
+import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
 import { ChartSettingsContext } from './ChartSettingsContext';
 import { DashboardToolbar } from './DashboardToolbar';
 import './CircuitDashboard.scss';
@@ -73,8 +73,6 @@ const ChartFactory = ({ chartType }: { chartType: ChartType }) => {
             return <ProofCostChart />;
         case ChartType.proofGetTimeChart:
             return <ProofTimeGenChart />;
-        case ChartType.proofGenCostChart:
-            return <ProofGenCostChart />;
         default:
             return <></>;
     }
