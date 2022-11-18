@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, memo, useCallback } from 'react';
-import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
+import { Cell, Column, TableInstance, TableState } from 'react-table';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
 

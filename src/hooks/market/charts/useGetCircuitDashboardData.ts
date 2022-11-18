@@ -61,12 +61,15 @@ export const useGetCircuitDashboardData = (
 const getCandlestickData = <T extends Bid | Ask>(
     ordersGrouppedByDate: Record<string, T[]>,
 ): CandlestickData[] => {
-    return Object.keys(ordersGrouppedByDate).map(x => {
+    const keys = Object.keys(ordersGrouppedByDate);
+
+    return keys.map((x, index) => {
         const ordersCosts = ordersGrouppedByDate[x].map(x => x.cost);
 
         const high = Math.max(...ordersCosts);
         const low = Math.min(...ordersCosts);
-        const open = ordersCosts[0];
+        const open =
+            index === 0 ? ordersCosts[0] : ordersGrouppedByDate[keys[index - 1]].at(-1)!.cost;
         const close = ordersCosts[ordersCosts.length - 1];
 
         return {
