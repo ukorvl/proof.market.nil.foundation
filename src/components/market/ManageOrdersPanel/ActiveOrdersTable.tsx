@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, memo, useCallback, useState } from 'react';
-import { Cell, Column, Row, TableState } from 'react-table';
+import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
 import { useDispatch } from 'react-redux';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
@@ -98,7 +98,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
     }, [setSelectedRow]);
 
     const renderRows = useCallback(
-        (rows: Row<ManageOrdersData>[], prepareRow: (row: Row<ManageOrdersData>) => void) =>
+        ({ rows, prepareRow }: TableInstance<ManageOrdersData>) =>
             rows.map(row => {
                 prepareRow(row);
                 return (

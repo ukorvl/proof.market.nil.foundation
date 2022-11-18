@@ -7,7 +7,7 @@ import { ReactElement, ReactNode, useEffect } from 'react';
 import {
     Column,
     ColumnInstance,
-    Row,
+    TableInstance,
     TableState,
     useFilters,
     useSortBy,
@@ -25,10 +25,11 @@ type ReactTableProps<T extends Record<string, unknown>> = {
     name: string;
     data: T[];
     columns: ReadonlyArray<Column<T>>;
-    renderRows: (rows: Row<T>[], prepareRow: (row: Row<T>) => void) => ReactNode;
+    renderRows: (tableInstance: TableInstance<T>) => ReactNode;
     initialState?: Partial<TableState<T>>;
     className?: string;
     reversed?: boolean;
+    showTableHeader?: boolean;
 };
 
 /**
@@ -50,13 +51,12 @@ export const ReactTable = <T extends Record<string, unknown>>({
     initialState: defaultInitialState,
     className,
     reversed,
+    showTableHeader = true,
 }: ReactTableProps<T>): ReactElement => {
     const [initialState, setInitialState] = useInitialTableState(name, defaultInitialState);
 
-    const { getTableBodyProps, visibleColumns, rows, prepareRow, state } = useTable<T>(
-        { columns, data, initialState },
-        ...tableHooks,
-    );
+    const tableInstance = useTable<T>({ columns, data, initialState }, ...tableHooks);
+    const { getTableBodyProps, visibleColumns, state } = tableInstance;
 
     const debouncedState = useDebounce(state, 500);
 
@@ -66,9 +66,9 @@ export const ReactTable = <T extends Record<string, unknown>>({
 
     return (
         <Table className={className}>
-            {!reversed && renderTableHead(visibleColumns)}
-            <TBody {...getTableBodyProps()}>{renderRows(rows, prepareRow)}</TBody>
-            {reversed && renderTableHead(visibleColumns)}
+            {!reversed && showTableHeader && renderTableHead(visibleColumns)}
+            <TBody {...getTableBodyProps()}>{renderRows(tableInstance)}</TBody>
+            {reversed && showTableHeader && renderTableHead(visibleColumns)}
         </Table>
     );
 };

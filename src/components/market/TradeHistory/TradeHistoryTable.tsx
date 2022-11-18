@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, memo, useCallback } from 'react';
-import { Row, TableState } from 'react-table';
+import { Row, TableInstance, TableState } from 'react-table';
 import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
 
@@ -40,7 +40,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
     data,
 }: TradeHistoryTableProps): ReactElement {
     const renderRows = useCallback(
-        (rows: Row<TradeHistoryData>[], prepareRow: (row: Row<TradeHistoryData>) => void) =>
+        ({ rows, prepareRow }: TableInstance<TradeHistoryData>) =>
             rows.map(row => {
                 prepareRow(row);
                 return (

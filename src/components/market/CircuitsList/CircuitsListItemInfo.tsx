@@ -5,7 +5,6 @@
 
 import { ReactElement, memo } from 'react';
 import { Icon, Media, Spinner } from '@nilfoundation/react-components';
-import { dequal as deepEqual } from 'dequal';
 import clsx from 'clsx';
 import { useAppSelector } from 'src/redux';
 
@@ -13,8 +12,9 @@ import { useAppSelector } from 'src/redux';
  * Props.
  */
 type CircuitsListItemInfoProps = {
-    id: string;
     isSelected: boolean;
+    cost?: number;
+    change?: number;
 };
 
 /**
@@ -24,17 +24,11 @@ type CircuitsListItemInfoProps = {
  * @returns React component.
  */
 export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
-    id,
+    cost,
+    change,
     isSelected,
 }: CircuitsListItemInfoProps): ReactElement {
     const isLoadingInfo = useAppSelector(s => s.circuitsState.isLoadingCircuitsInfo);
-    const info = useAppSelector(
-        s => s.circuitsState.circuitsInfo.find(x => x.circuit_id === id),
-        deepEqual,
-    );
-
-    const change = info?.daily_change;
-    const cost = info?.current_cost;
     const isGrow = !!change && change > 0;
     const iconName = `fa-solid fa-arrow-${isGrow ? 'up' : 'down'}`;
     const className = clsx(
@@ -51,7 +45,7 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
                     {`${change.toFixed(2)}%`}
                 </div>
             )}
-            {isLoadingInfo && !info && <Spinner grow />}
+            {isLoadingInfo && !cost && !change && <Spinner grow />}
         </Media.Item>
     );
 });

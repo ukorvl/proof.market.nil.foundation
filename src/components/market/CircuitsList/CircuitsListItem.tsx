@@ -7,14 +7,14 @@ import { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
-import { Circuit } from 'src/models';
+import { CircuitsListData } from 'src/models';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
 
 /**
  * Props.
  */
 type CurcuitsListItemProps = {
-    circuit: Circuit;
+    data: CircuitsListData;
 };
 
 /**
@@ -24,7 +24,7 @@ type CurcuitsListItemProps = {
  * @returns React component.
  */
 export const CurcuitsListItem = ({
-    circuit: { id, name, info },
+    data: { id, cost, change, name },
 }: CurcuitsListItemProps): ReactElement => {
     const dispatch = useDispatch();
     const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
@@ -40,9 +40,10 @@ export const CurcuitsListItem = ({
             onClick={onSelectItem}
         >
             <Media>
-                <Media.Body>{`${name.toUpperCase()} (${info.toUpperCase()})/USD`}</Media.Body>
+                <Media.Body>{name}</Media.Body>
                 <CircuitsListItemInfo
-                    id={id}
+                    cost={cost}
+                    change={change}
                     isSelected={isSelected}
                 />
             </Media>

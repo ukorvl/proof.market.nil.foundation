@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, memo, useCallback, useRef, useLayoutEffect } from 'react';
-import { Row, TableState } from 'react-table';
+import { Row, TableInstance, TableState } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { ReactTable } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
@@ -55,7 +55,7 @@ export const OrderBookTable = memo(function OrderBookTable({
     }, []);
 
     const renderRows = useCallback(
-        (rows: Row<OrderBookTableData>[], prepareRow: (row: Row<OrderBookTableData>) => void) => {
+        ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
             const asks = rows.filter(x => x.values.type === 'ask');
             const bids = rows.filter(x => x.values.type === 'bid');
 

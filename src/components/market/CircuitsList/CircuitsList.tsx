@@ -4,9 +4,10 @@
  */
 
 import { ReactElement } from 'react';
-import { ListGroup, Spinner } from '@nilfoundation/react-components';
+import { Spinner } from '@nilfoundation/react-components';
+import { dequal as deepEqual } from 'dequal';
 import { selectCircuits, useAppSelector } from 'src/redux';
-import { CurcuitsListItem } from './CircuitsListItem';
+import { CircuitsListTable } from './CircuitsListTable';
 import { Details, DashboardCard } from '../../common';
 import './CircuitsList.scss';
 
@@ -16,7 +17,7 @@ import './CircuitsList.scss';
  * @returns React component.
  */
 export const CircuitsList = (): ReactElement => {
-    const circuitsList = useAppSelector(selectCircuits);
+    const circuitsList = useAppSelector(selectCircuits, deepEqual);
     const loadingCircuits = useAppSelector(s => s.circuitsState.isLoading);
 
     return (
@@ -26,14 +27,7 @@ export const CircuitsList = (): ReactElement => {
                     {loadingCircuits && !circuitsList.length ? (
                         <Spinner grow />
                     ) : (
-                        <ListGroup>
-                            {circuitsList.map(x => (
-                                <CurcuitsListItem
-                                    key={x.id}
-                                    circuit={x}
-                                />
-                            ))}
-                        </ListGroup>
+                        <CircuitsListTable circuitsList={circuitsList} />
                     )}
                 </div>
             </Details>

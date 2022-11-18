@@ -3,12 +3,16 @@
 @import 'src/styles/mixins/hideScrollbar';
 
 .circuitsList {
-  height: 350px;
-  overflow: auto;
-  @include hideScrollbar;
+
+  .input-group {
+    margin-bottom: 8px;
+  }
 
   .list-group {
     @include styledList;
+    height: 300px;
+    overflow: auto;
+    @include hideScrollbar;
 
     .list-group-item {
 

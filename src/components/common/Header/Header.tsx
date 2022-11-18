@@ -7,11 +7,11 @@ import { ReactElement } from 'react';
 import { Container, Navbar, Nav } from '@nilfoundation/react-components';
 import { Link, useLocation } from 'react-router-dom';
 import { navigationLinks } from 'src/constants';
+import { Path } from 'src/routing';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../UserMenu';
 import { Breadcrumbs } from '../BreadCrumbs';
 import './Header.scss';
-import { Path } from 'src/routing';
 
 /**
  * Header.
