@@ -1,5 +1,6 @@
 @import 'src/styles/constants.scss';
 @import 'src/styles/mixins/tableColumns';
+@import 'src/styles/mixins/responsive';
 
 .manageOrdersPanel {
   height: 500px;
@@ -11,7 +12,6 @@
 
   .activeOrdersTable {
     @include tableColumns(28%, 16%, 20%, 30%, 6%);
-    height: 432px;
 
     .removeButton {
       display: inline-block;
@@ -29,7 +29,14 @@
 
   .historyOrdersTable {
     @include tableColumns(24%, 16%, 28%, 32%);
+  }
+
+  .activeOrdersTable,
+  .historyOrdersTable {
     height: 432px;
+    @include responsive(sm) {
+      height: 382px;
+    }
   }
 }
 

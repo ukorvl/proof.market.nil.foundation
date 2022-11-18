@@ -1,3 +1,5 @@
+@import 'src/styles/mixins/responsive';
+
 .cerateOrdersPanel {
   height: 500px;
 
@@ -9,6 +11,10 @@
     height: 420px;
     display: flex;
     flex-direction: column;
+
+    @include responsive(sm) {
+      height: 380px;
+    }
 
     .btn {
       margin-top: auto;

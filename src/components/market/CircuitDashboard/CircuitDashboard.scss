@@ -38,7 +38,7 @@
     height: 100%;
   }
 
-  @include responsive(xs) {
-    padding: calc(20px + env(safe-area-inset-top)) 25px calc(20px + env(safe-area-inset-bottom));
+  @include responsive(sm) {
+    padding: calc(10px + env(safe-area-inset-top)) 15px calc(75px + env(safe-area-inset-bottom));
   }
 }
