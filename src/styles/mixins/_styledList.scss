@@ -4,10 +4,11 @@
   .list-group-item {
     border: none;
     border-radius: 6px!important;
-    height: 68px;
+    padding: 6px 15px!important;
+    height: 60px;
 
     + .list-group-item {
-      margin-top: 12px;
+      margin-top: 8px;
     }
   }
 }

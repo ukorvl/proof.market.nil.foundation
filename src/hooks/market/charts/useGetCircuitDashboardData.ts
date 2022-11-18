@@ -28,11 +28,11 @@ type UseGetCircuitDashboardDataReturnType = {
 /**
  * Get data to draw circuit chart.
  *
- * @param dataRange Data range.
+ * @param [dataRange] Data range.
  * @returns Data to draw circuit chart.
  */
 export const useGetCircuitDashboardData = (
-    dataRange: DateUnit,
+    dataRange = DateUnit.day,
 ): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);

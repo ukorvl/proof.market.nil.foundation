@@ -13,11 +13,10 @@ import {
     useSortBy,
     useTable,
 } from 'react-table';
-import { notEmpty, genericMemo } from 'src/utils';
+import { notEmpty } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { ReactTableHeader } from './ReactTableHeader';
 import { Table, TBody, THead, TRow } from '../Table';
-import './ReactTable.scss';
 
 /**
  * Props.
@@ -43,7 +42,7 @@ const tableHooks = [useFilters, useSortBy].filter(notEmpty);
  * @param {ReactTableProps} props Props.
  * @returns React component.
  */
-export const ReactTable = genericMemo(function ReactTable<T extends Record<string, unknown>>({
+export const ReactTable = <T extends Record<string, unknown>>({
     name,
     columns,
     data,
@@ -51,7 +50,7 @@ export const ReactTable = genericMemo(function ReactTable<T extends Record<strin
     initialState: defaultInitialState,
     className,
     reversed,
-}: ReactTableProps<T>): ReactElement {
+}: ReactTableProps<T>): ReactElement => {
     const [initialState, setInitialState] = useInitialTableState(name, defaultInitialState);
 
     const { getTableBodyProps, visibleColumns, rows, prepareRow, state } = useTable<T>(
@@ -72,7 +71,7 @@ export const ReactTable = genericMemo(function ReactTable<T extends Record<strin
             {reversed && renderTableHead(visibleColumns)}
         </Table>
     );
-});
+};
 
 /**
  * Renders table head.

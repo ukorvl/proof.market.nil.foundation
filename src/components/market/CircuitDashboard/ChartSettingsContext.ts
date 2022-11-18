@@ -9,11 +9,13 @@ import { DateUnit } from 'src/enums';
 /**
  * Context type.
  */
-type DataRangeContextModel = {
+type ChartSettingsContectModel = {
     dataRange: DateUnit;
 };
 
 /**
  * Data range context.
  */
-export const DataRangeContext = createContext<DataRangeContextModel>({} as DataRangeContextModel);
+export const ChartSettingsContext = createContext<ChartSettingsContectModel>(
+    {} as ChartSettingsContectModel,
+);

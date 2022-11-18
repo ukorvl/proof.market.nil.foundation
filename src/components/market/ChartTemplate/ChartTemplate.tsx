@@ -18,9 +18,9 @@ import { Spinner } from '@nilfoundation/react-components';
 import { useChart, useRenderChartData } from 'src/hooks';
 import { formatUTCTimestamp } from 'src/utils';
 import { getDateFormatBasedOnDateUnit } from 'src/enums';
-import { DataRangeContext } from '../CircuitDashboard';
+import { ChartSettingsContext } from '../CircuitDashboard';
 import { ChartLegend } from '../ChartLegend';
-import styles from './ChartTemplate.module.scss';
+import './ChartTemplate.scss';
 
 /**
  * Props.
@@ -51,7 +51,7 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
     chartOptions,
 }: ChartTemplateProps<T>): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const { dataRange } = useContext(DataRangeContext);
+    const { dataRange } = useContext(ChartSettingsContext);
     const options = useMemo(
         () => ({
             ...chartOptions,
@@ -81,7 +81,7 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
     return (
         <div
             ref={ref}
-            className={styles.circuitChart}
+            className="circuitChart"
         >
             <ChartLegend
                 price={price}

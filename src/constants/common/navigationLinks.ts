@@ -11,12 +11,14 @@ import { Path } from 'src/routing';
 export const navigationLinks = [
     {
         title: 'Market',
-        icon: 'fa-boxes-stacked',
         path: Path.root,
     },
     {
         title: 'Portfolio',
-        icon: 'fa-suitcase',
         path: Path.portfolio,
+    },
+    {
+        title: 'Proof Generators',
+        path: Path.proofGenerators,
     },
 ];

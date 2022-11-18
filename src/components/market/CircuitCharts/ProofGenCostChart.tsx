@@ -7,7 +7,7 @@ import { ReactElement, useContext, useMemo } from 'react';
 import { useGetCircuitDashboardData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from '../ChartTemplate';
-import { DataRangeContext } from '../CircuitDashboard';
+import { ChartSettingsContext } from '../CircuitDashboard';
 
 /**
  * Proof gen cost chart.
@@ -21,7 +21,7 @@ export const ProofGenCostChart = (): ReactElement => {
         }),
         [],
     );
-    const { dataRange } = useContext(DataRangeContext);
+    const { dataRange } = useContext(ChartSettingsContext);
     const {
         chartData: { proofGenCostData },
         loadingData,

@@ -4,4 +4,4 @@
  */
 
 export * from './CircuitDashboard';
-export * from './DataRangeContext';
+export * from './ChartSettingsContext';

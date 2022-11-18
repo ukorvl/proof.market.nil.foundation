@@ -17,7 +17,7 @@ type DataRangeSelectProps = {
 };
 
 /**
- * Chart template toolbar.
+ * Data range select.
  *
  * @param {DataRangeSelectProps} props Props.
  * @returns React component.

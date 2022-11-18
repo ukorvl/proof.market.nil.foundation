@@ -11,6 +11,7 @@ import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../UserMenu';
 import { Breadcrumbs } from '../BreadCrumbs';
 import './Header.scss';
+import { Path } from 'src/routing';
 
 /**
  * Header.
@@ -32,6 +33,7 @@ export const Header = (): ReactElement => {
                         <Nav.Item
                             key={title}
                             active={pathname === path}
+                            disabled={path === Path.proofGenerators}
                             renderLink={({ active: _, ...props }) => (
                                 <Link
                                     to={path}

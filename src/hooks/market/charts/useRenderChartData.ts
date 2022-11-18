@@ -16,6 +16,8 @@ import {
     SeriesOptionsCommon,
     LineStyleOptions,
     Range,
+    SeriesMarker,
+    UTCTimestamp,
 } from 'lightweight-charts';
 import { DateUnit } from 'src/enums';
 
@@ -40,6 +42,7 @@ type UseRenderChartDataProps<T extends 'Line' | 'Candlestick'> = {
         (T extends 'Line' ? LineStyleOptions : CandlestickStyleOptions) & SeriesOptionsCommon
     >;
     visibleRange?: DateUnit;
+    markers?: SeriesMarker<UTCTimestamp>[];
 };
 
 /**
@@ -54,6 +57,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
     chart,
     options,
     visibleRange,
+    markers,
 }: UseRenderChartDataProps<T>): UseRenderChartDataReturnType => {
     const [price, setPrice] = useState<BarPrice | BarPrices>();
 
@@ -64,18 +68,18 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
 
         const addSeriesMethod =
             seriesType === 'Line'
-                ? chart.addLineSeries.bind(
-                      chart,
-                      options as DeepPartial<LineStyleOptions & SeriesOptionsCommon>,
-                  )
-                : chart.addCandlestickSeries.bind(
-                      chart,
-                      options as DeepPartial<CandlestickStyleOptions & SeriesOptionsCommon>,
-                  );
+                ? chart.addLineSeries.bind(chart, {
+                      ...seriesDefaultOptions,
+                      ...options,
+                  } as DeepPartial<LineStyleOptions & SeriesOptionsCommon>)
+                : chart.addCandlestickSeries.bind(chart, {
+                      ...seriesDefaultOptions,
+                      ...options,
+                  } as DeepPartial<CandlestickStyleOptions & SeriesOptionsCommon>);
 
         const series = addSeriesMethod();
-        series.applyOptions(seriesOptions);
         series.setData(seriesData);
+        markers && series.setMarkers(markers);
 
         const crosshairMoveHandler: MouseEventHandler = param => {
             if (!param.time) {
@@ -94,7 +98,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
             setPrice(undefined);
         };
-    }, [seriesData, chart, seriesType, options]);
+    }, [seriesData, chart, seriesType, options, markers]);
 
     useEffect(() => {
         if (!chart || !seriesData.length) {
@@ -115,7 +119,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
 /**
  * Series options.
  */
-const seriesOptions: Partial<SeriesOptionsCommon> = {
+const seriesDefaultOptions: Partial<SeriesOptionsCommon> = {
     priceFormat: {
         type: 'price',
         precision: 4,

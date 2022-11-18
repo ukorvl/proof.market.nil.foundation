@@ -11,7 +11,7 @@ import { DashboardCard, FullScreenView } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
 import { DataRangeSelect } from './DataRangeSelect';
 import { ProofCostChart, ProofGenCostChart, ProofTimeGenChart } from '../CircuitCharts';
-import { DataRangeContext } from './DataRangeContext';
+import { ChartSettingsContext } from './ChartSettingsContext';
 import { DashboardToolbar } from './DashboardToolbar';
 import './CircuitDashboard.scss';
 
@@ -52,9 +52,9 @@ export const CircuitDashboard = (): ReactElement => {
                             setFullScreen={setFullScreen}
                         />
                     </div>
-                    <DataRangeContext.Provider value={{ dataRange }}>
+                    <ChartSettingsContext.Provider value={{ dataRange }}>
                         <ChartFactory chartType={chartType} />
-                    </DataRangeContext.Provider>
+                    </ChartSettingsContext.Provider>
                 </FullScreenView>
             </Details>
         </DashboardCard>

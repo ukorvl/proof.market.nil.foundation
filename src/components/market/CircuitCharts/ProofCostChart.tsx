@@ -8,7 +8,7 @@ import { LineWidth } from 'lightweight-charts';
 import { useGetCircuitDashboardData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from '../ChartTemplate';
-import { DataRangeContext } from '../CircuitDashboard';
+import { ChartSettingsContext } from '../CircuitDashboard';
 
 /**
  * Proof cost chart.
@@ -24,7 +24,7 @@ export const ProofCostChart = (): ReactElement => {
         }),
         [],
     );
-    const { dataRange } = useContext(DataRangeContext);
+    const { dataRange } = useContext(ChartSettingsContext);
     const {
         chartData: { candlestickChartData },
         loadingData: isLoadingChartData,

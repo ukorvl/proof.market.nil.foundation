@@ -4,15 +4,15 @@
  */
 
 declare const colors: {
-    readonly primaryColor;
-    readonly dangerColor;
-    readonly successColor;
-    readonly baseColor;
-    readonly infoColor;
-    readonly baseDarkerColor;
-    readonly baseLightColor;
-    readonly secondaryColor;
-    readonly secondaryDarkerColor;
+    readonly primaryColor: string;
+    readonly dangerColor: string;
+    readonly successColor: string;
+    readonly baseColor: string;
+    readonly infoColor: string;
+    readonly baseDarkerColor: string;
+    readonly baseLightColor: string;
+    readonly secondaryColor: string;
+    readonly secondaryDarkerColor: string;
 };
 
 export = colors;
