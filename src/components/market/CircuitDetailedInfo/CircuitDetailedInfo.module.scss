@@ -4,7 +4,7 @@
 
 .circuitDetailedInfo {
   position: relative;
-  height: 700px;
+  height: 740px;
   overflow: auto;
   @include hideScrollbar;
 
@@ -16,7 +16,7 @@
     position: relative;
   }
 
-  .react-json-view {
+  > div:last-of-type {
     line-break: anywhere;
   }
 }

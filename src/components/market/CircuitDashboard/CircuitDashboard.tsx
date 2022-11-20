@@ -13,6 +13,7 @@ import { DataRangeSelect } from './DataRangeSelect';
 import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
 import { ChartSettingsContext } from './ChartSettingsContext';
 import { DashboardToolbar } from './DashboardToolbar';
+import { FullScreenChartInfo } from './FullScreenChartInfo';
 import './CircuitDashboard.scss';
 
 /**
@@ -40,6 +41,7 @@ export const CircuitDashboard = (): ReactElement => {
                     showFullScreen={fullScreen}
                     className="fullScreenChartContainer"
                 >
+                    {fullScreen && <FullScreenChartInfo />}
                     <div className="circuitDashboard__toolbar">
                         <DataRangeSelect
                             currentDataRange={dataRange}

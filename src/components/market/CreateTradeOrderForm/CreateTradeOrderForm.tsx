@@ -6,9 +6,10 @@
 import { ReactElement, ReactNode, useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
-import { Button, Form, Input, Size, Spinner, Variant } from '@nilfoundation/react-components';
+import { Button, Input, Size, Spinner, Variant, Form } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
+import { BaseFormGroup } from './BaseFormGroup';
 
 /**
  * Props.
@@ -51,32 +52,60 @@ export const CreateTradeOrderForm = ({
     }, [selectedValues]);
 
     return (
-        <>
-            <Form.Group hasError={!!errors['cost']}>
-                <Form.Label htmlFor="cost">Cost, $</Form.Label>
-                <Input
-                    type="number"
+        <Form>
+            <div className="formContent">
+                <BaseFormGroup
                     id="cost"
-                    {...register('cost', { required: true, min: 0, valueAsNumber: true })}
-                />
-            </Form.Group>
-            <Form.Group hasError={!!errors['eval_time']}>
-                <Form.Label htmlFor="eval_time">Generation time, ms</Form.Label>
-                <Input
-                    type="number"
+                    hasError={!!errors['cost']}
+                    labelText="Cost, $"
+                    hintText="Cost of proof generation"
+                >
+                    {id => (
+                        <Input
+                            type="number"
+                            id={id}
+                            {...register('cost', { required: true, min: 0, valueAsNumber: true })}
+                        />
+                    )}
+                </BaseFormGroup>
+                <BaseFormGroup
                     id="eval_time"
-                    {...register('eval_time', { required: true, min: 0, valueAsNumber: true })}
-                />
-            </Form.Group>
-            <Form.Group hasError={!!errors['wait_period']}>
-                <Form.Label htmlFor="wait_period">Wait period, ms</Form.Label>
-                <Input
-                    type="number"
+                    hasError={!!errors['eval_time']}
+                    labelText="Generation time, ms"
+                    hintText="Time that proof generation takes"
+                >
+                    {id => (
+                        <Input
+                            type="number"
+                            id={id}
+                            {...register('eval_time', {
+                                required: true,
+                                min: 0,
+                                valueAsNumber: true,
+                            })}
+                        />
+                    )}
+                </BaseFormGroup>
+                <BaseFormGroup
                     id="wait_period"
-                    {...register('wait_period', { required: true, min: 0, valueAsNumber: true })}
-                />
-            </Form.Group>
-            {children}
+                    hasError={!!errors['wait_period']}
+                    labelText="Timeout, ms"
+                    hintText="Time that your order should wait for a match"
+                >
+                    {id => (
+                        <Input
+                            type="number"
+                            id={id}
+                            {...register('wait_period', {
+                                required: true,
+                                min: 0,
+                                valueAsNumber: true,
+                            })}
+                        />
+                    )}
+                </BaseFormGroup>
+                {children}
+            </div>
             <Button
                 variant={Variant.success}
                 onClick={onSubmit}
@@ -99,6 +128,6 @@ export const CreateTradeOrderForm = ({
                     {errorMessage}
                 </div>
             </CSSTransition>
-        </>
+        </Form>
     );
 };

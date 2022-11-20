@@ -7,10 +7,9 @@ import { ReactElement, memo, useCallback, useState } from 'react';
 import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
 import { useDispatch } from 'react-redux';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
-import { ReactTable, TRow, TCell } from 'src/components';
+import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
-import { RemoveOrderCell } from './RemoveOrderCell';
 import { ToolbarPanel } from './ToolbarPanel';
 
 /**
@@ -114,12 +113,16 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
 
                             if (column.id === 'orderId') {
                                 return (
-                                    <RemoveOrderCell
+                                    <TCell
                                         key={key}
-                                        cell={cell}
-                                        disabled={processing}
-                                        setSelectedRow={setSelectedRow}
-                                    />
+                                        {...rest}
+                                    >
+                                        <ClicableIcon
+                                            iconName="fa-solid fa-ban"
+                                            disabled={processing}
+                                            onClick={() => setSelectedRow(cell.row)}
+                                        />
+                                    </TCell>
                                 );
                             }
 

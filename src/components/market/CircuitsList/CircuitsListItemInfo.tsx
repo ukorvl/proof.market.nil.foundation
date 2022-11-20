@@ -4,17 +4,18 @@
  */
 
 import { ReactElement, memo } from 'react';
-import { Icon, Media, Spinner } from '@nilfoundation/react-components';
+import { Media, Spinner } from '@nilfoundation/react-components';
 import clsx from 'clsx';
 import { useAppSelector } from 'src/redux';
+import { PriceChangeIndicator } from '../PriceChangeIndicator';
 
 /**
  * Props.
  */
 type CircuitsListItemInfoProps = {
     isSelected: boolean;
-    cost?: number;
-    change?: number;
+    cost?: number | null;
+    change?: number | null;
 };
 
 /**
@@ -29,23 +30,18 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
     isSelected,
 }: CircuitsListItemInfoProps): ReactElement {
     const isLoadingInfo = useAppSelector(s => s.circuitsState.isLoadingCircuitsInfo);
-    const isGrow = !!change && change > 0;
-    const iconName = `fa-solid fa-arrow-${isGrow ? 'up' : 'down'}`;
-    const className = clsx(
-        'dailyChangeIndicator',
-        !isSelected && (isGrow ? 'growTextColor' : 'lossTextColor'),
-    );
+    const className = clsx('dailyChangeIndicator', isSelected && 'dailyChangeIndicator_selected');
 
     return (
         <Media.Item position="right">
             {cost && <div>{`$${cost.toFixed(4)}`}</div>}
-            {change && (
-                <div className={className}>
-                    <Icon iconName={`fa-solid fa-${iconName}`} />
-                    {`${change.toFixed(2)}%`}
-                </div>
+            {!!change && (
+                <PriceChangeIndicator
+                    change={change}
+                    className={className}
+                />
             )}
-            {isLoadingInfo && !cost && !change && <Spinner grow />}
+            {isLoadingInfo && cost === undefined && change === undefined && <Spinner />}
         </Media.Item>
     );
 });

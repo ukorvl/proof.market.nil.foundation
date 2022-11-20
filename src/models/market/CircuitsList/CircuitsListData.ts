@@ -9,6 +9,6 @@
 export type CircuitsListData = {
     id: string;
     name: string;
-    cost?: number;
-    change?: number;
+    cost?: number | null;
+    change?: number | null;
 };

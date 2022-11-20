@@ -3,7 +3,7 @@
 @import 'src/styles/mixins/responsive';
 
 .manageOrdersPanel {
-  height: 500px;
+  height: 570px;
   position: relative;
 
   .nav {
@@ -12,19 +12,6 @@
 
   .activeOrdersTable {
     @include tableColumns(28%, 16%, 20%, 30%, 6%);
-
-    .removeButton {
-      display: inline-block;
-      padding: 0!important;
-      color: $c-secondary-darker;
-      background-color: $c-base-darker!important;
-      border: none!important;
-
-      &:hover,
-      &:focus {
-        color: $c-secondary!important;
-      }
-    }
   }
 
   .historyOrdersTable {
@@ -33,9 +20,10 @@
 
   .activeOrdersTable,
   .historyOrdersTable {
-    height: 432px;
+    height: 502px;
+
     @include responsive(sm) {
-      height: 382px;
+      height: 452px;
     }
   }
 }

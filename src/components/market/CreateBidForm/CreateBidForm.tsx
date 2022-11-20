@@ -6,7 +6,7 @@
 import { ReactElement, useContext, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form, notificationActions, Variant } from '@nilfoundation/react-components';
+import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { createBid } from 'src/api/market/BidsApi';
@@ -54,15 +54,13 @@ export const CreateBidForm = (): ReactElement => {
     });
 
     return (
-        <Form>
-            <FormProvider {...form}>
-                <CreateTradeOrderForm
-                    onSubmit={onSubmitBid}
-                    errorMessage={errorMessage}
-                >
-                    <PublicInput />
-                </CreateTradeOrderForm>
-            </FormProvider>
-        </Form>
+        <FormProvider {...form}>
+            <CreateTradeOrderForm
+                onSubmit={onSubmitBid}
+                errorMessage={errorMessage}
+            >
+                <PublicInput />
+            </CreateTradeOrderForm>
+        </FormProvider>
     );
 };

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@nilfoundation/dbmsjs": "^7.6.2",
-    "@nilfoundation/react-components": "^0.7.0",
+    "@nilfoundation/react-components": "^0.8.1",
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "clsx": "^1.2.1",

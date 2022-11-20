@@ -4,17 +4,12 @@
  */
 
 import { ReactElement, useCallback, useContext } from 'react';
-import {
-    Controller,
-    ControllerRenderProps,
-    useFormContext,
-    UseFormSetError,
-} from 'react-hook-form';
-import { Form } from '@nilfoundation/react-components';
+import { Controller, ControllerRenderProps, useFormContext } from 'react-hook-form';
 import { FileRejection } from 'react-dropzone';
 import { CreateBid } from 'src/models';
 import { FileUploader as FileUploaderTemplate } from 'src/components';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
+import { BaseFormGroup } from '../CreateTradeOrderForm';
 import './PublicInput.scss';
 
 /**
@@ -26,33 +21,31 @@ export const PublicInput = (): ReactElement => {
     const { processing } = useContext(OrderManagementContext);
     const {
         control,
-        setError,
         formState: { errors },
     } = useFormContext<CreateBid>();
 
     return (
-        <Form.Group
+        <BaseFormGroup
             hasError={!!errors['public_input']}
-            className="publicInputContainer"
+            labelText="Public Input"
+            className="publicInput"
         >
-            <div className="publicInputContainer__label">
-                <Form.Label htmlFor="public_input">Public_input</Form.Label>
-            </div>
-            <Controller<CreateBid, 'public_input'>
-                name="public_input"
-                control={control}
-                rules={{
-                    validate: val => val !== null,
-                }}
-                render={({ field: { ref: _, ...rest } }) => (
-                    <FileUploader
-                        {...rest}
-                        setError={setError}
-                        disabled={processing}
-                    />
-                )}
-            />
-        </Form.Group>
+            {() => (
+                <Controller<CreateBid, 'public_input'>
+                    name="public_input"
+                    control={control}
+                    rules={{
+                        validate: val => val !== null,
+                    }}
+                    render={({ field: { ref: _, ...rest } }) => (
+                        <FileUploader
+                            {...rest}
+                            disabled={processing}
+                        />
+                    )}
+                />
+            )}
+        </BaseFormGroup>
     );
 };
 
@@ -61,7 +54,6 @@ export const PublicInput = (): ReactElement => {
  */
 type FileUploaderProps = {
     disabled?: boolean;
-    setError: UseFormSetError<CreateBid>;
 } & Omit<ControllerRenderProps<CreateBid, 'public_input'>, 'ref'>;
 
 /**

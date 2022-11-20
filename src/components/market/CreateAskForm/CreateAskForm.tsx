@@ -6,7 +6,7 @@
 import { ReactElement, useState, useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Form, notificationActions, Variant } from '@nilfoundation/react-components';
+import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { CreateAsk } from 'src/models';
 import { AddAsk, useAppSelector } from 'src/redux';
 import { createAsk } from 'src/api/market/AsksApi';
@@ -53,13 +53,11 @@ export const CreateAskForm = (): ReactElement => {
     });
 
     return (
-        <Form>
-            <FormProvider {...form}>
-                <CreateTradeOrderForm
-                    onSubmit={onSubmitAsk}
-                    errorMessage={errorMessage}
-                />
-            </FormProvider>
-        </Form>
+        <FormProvider {...form}>
+            <CreateTradeOrderForm
+                onSubmit={onSubmitAsk}
+                errorMessage={errorMessage}
+            />
+        </FormProvider>
     );
 };

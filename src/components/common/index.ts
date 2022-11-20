@@ -13,3 +13,4 @@ export * from './ReactTable';
 export * from './FileUploader';
 export * from './Table';
 export * from './FullScreenView';
+export * from './ClicableIcon';
