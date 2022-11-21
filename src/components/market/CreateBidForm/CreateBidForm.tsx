@@ -30,7 +30,6 @@ export const CreateBidForm = (): ReactElement => {
         defaultValues: {
             sender: user,
             circuit_id: selectedCircuitId,
-            wait_period: 86400000,
         },
     });
 

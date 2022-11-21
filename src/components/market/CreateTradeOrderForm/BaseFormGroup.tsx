@@ -3,18 +3,17 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode } from 'react';
-import { Form } from '@nilfoundation/react-components';
+import { ReactElement, ReactNode, useRef } from 'react';
+import { Form, uniqueId } from '@nilfoundation/react-components';
 
 /**
  * Props.
  */
 type BaseFormGroupProps = {
     hasError: boolean;
-    children: (id?: string) => ReactNode;
+    children: ({ placeholder, id }: { placeholder?: string; id?: string }) => ReactNode;
     hintText?: string;
     labelText?: string;
-    id?: string;
     className?: string;
 };
 
@@ -25,21 +24,24 @@ type BaseFormGroupProps = {
  * @returns React component.
  */
 export const BaseFormGroup = ({
-    id,
     hasError,
     children,
     hintText,
     labelText,
     className,
 }: BaseFormGroupProps): ReactElement => {
+    const { current } = useRef(uniqueId(labelText));
+
     return (
         <Form.Group
             hasError={hasError}
             className={className}
         >
-            <Form.Label htmlFor={id}>{labelText}</Form.Label>
-            {children(id)}
-            <Form.Hint>{hintText}</Form.Hint>
+            {labelText && <Form.Label htmlFor={current}>{labelText}</Form.Label>}
+            {children({
+                placeholder: hintText,
+                id: current,
+            })}
         </Form.Group>
     );
 };

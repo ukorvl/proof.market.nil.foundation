@@ -6,10 +6,19 @@
 import { ReactElement, ReactNode, useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
-import { Button, Input, Size, Spinner, Variant, Form } from '@nilfoundation/react-components';
+import {
+    Button,
+    Input,
+    Size,
+    Spinner,
+    Variant,
+    Form,
+    InputGroup,
+} from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { BaseFormGroup } from './BaseFormGroup';
+import './CreateTradeOrderForm.scss';
 
 /**
  * Props.
@@ -52,56 +61,66 @@ export const CreateTradeOrderForm = ({
     }, [selectedValues]);
 
     return (
-        <Form>
+        <Form className="createTradeOrderForm">
             <div className="formContent">
                 <BaseFormGroup
-                    id="cost"
                     hasError={!!errors['cost']}
-                    labelText="Cost, $"
-                    hintText="Cost of proof generation"
+                    labelText="Cost"
+                    hintText="Proof cost"
                 >
-                    {id => (
-                        <Input
-                            type="number"
-                            id={id}
-                            {...register('cost', { required: true, min: 0, valueAsNumber: true })}
-                        />
+                    {props => (
+                        <InputGroup>
+                            <Input
+                                type="number"
+                                {...props}
+                                {...register('cost', {
+                                    required: true,
+                                    min: 0,
+                                    valueAsNumber: true,
+                                })}
+                            />
+                            <InputGroup.Addon>USD</InputGroup.Addon>
+                        </InputGroup>
                     )}
                 </BaseFormGroup>
                 <BaseFormGroup
-                    id="eval_time"
                     hasError={!!errors['eval_time']}
-                    labelText="Generation time, ms"
-                    hintText="Time that proof generation takes"
+                    labelText="Generation time"
+                    hintText="Proof generation time"
                 >
-                    {id => (
-                        <Input
-                            type="number"
-                            id={id}
-                            {...register('eval_time', {
-                                required: true,
-                                min: 0,
-                                valueAsNumber: true,
-                            })}
-                        />
+                    {props => (
+                        <InputGroup>
+                            <Input
+                                type="number"
+                                {...props}
+                                {...register('eval_time', {
+                                    required: true,
+                                    min: 0,
+                                    valueAsNumber: true,
+                                })}
+                            />
+                            <InputGroup.Addon>Mins</InputGroup.Addon>
+                        </InputGroup>
                     )}
                 </BaseFormGroup>
                 <BaseFormGroup
-                    id="wait_period"
                     hasError={!!errors['wait_period']}
-                    labelText="Timeout, ms"
-                    hintText="Time that your order should wait for a match"
+                    labelText="Order timeout"
+                    hintText="Order cancellation time"
                 >
-                    {id => (
-                        <Input
-                            type="number"
-                            id={id}
-                            {...register('wait_period', {
-                                required: true,
-                                min: 0,
-                                valueAsNumber: true,
-                            })}
-                        />
+                    {props => (
+                        <InputGroup>
+                            <Input
+                                type="number"
+                                {...props}
+                                {...register('wait_period', {
+                                    required: true,
+                                    min: 0,
+                                    valueAsNumber: true,
+                                })}
+                            />
+                            <InputGroup.Addon>Mins</InputGroup.Addon>
+                        </InputGroup>
                     )}
                 </BaseFormGroup>
                 {children}

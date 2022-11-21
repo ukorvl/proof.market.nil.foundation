@@ -14,6 +14,7 @@ import styles from './PriceChangeIndicator.module.scss';
 type PriceChangeIndicatorProps = {
     change: number;
     className?: string;
+    toFixed?: number;
 };
 
 /**
@@ -25,6 +26,7 @@ type PriceChangeIndicatorProps = {
 export const PriceChangeIndicator = ({
     change,
     className,
+    toFixed = 4,
 }: PriceChangeIndicatorProps): ReactElement => {
     const isGrow = !!change && change > 0;
     const iconName = `fa-solid fa-arrow-${isGrow ? 'up' : 'down'}`;
@@ -37,7 +39,7 @@ export const PriceChangeIndicator = ({
     return (
         <div className={computedClassName}>
             <Icon iconName={iconName} />
-            {`${change.toFixed(2)}%`}
+            {`${change.toFixed(toFixed)}%`}
         </div>
     );
 };

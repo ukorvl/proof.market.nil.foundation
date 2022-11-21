@@ -3,7 +3,7 @@
 @import 'src/styles/mixins/responsive';
 
 .manageOrdersPanel {
-  height: 570px;
+  height: 500px;
   position: relative;
 
   .nav {
@@ -20,10 +20,10 @@
 
   .activeOrdersTable,
   .historyOrdersTable {
-    height: 502px;
+    height: 432px;
 
     @include responsive(sm) {
-      height: 452px;
+      height: 382px;
     }
   }
 }
