@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, fork, put, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
@@ -14,6 +14,7 @@ import {
     UpdateIsLoadingAsks,
     UpdateAsksError,
 } from '../actions';
+import { selectCurrentUser } from '../../login';
 
 const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
@@ -56,6 +57,12 @@ function* GetAsksSaga(): SagaIterator<void> {
  */
 function* RevalidateAsksSaga() {
     while (true) {
+        const user: string | null = yield select(selectCurrentUser);
+
+        if (!user) {
+            return;
+        }
+
         yield fork(GetAsksSaga);
         yield delay(revalidateAsksDelay);
     }

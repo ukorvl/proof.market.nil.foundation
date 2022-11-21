@@ -15,7 +15,7 @@ import {
     UpdateIsLoadingCircuitsInfo,
     UpdateSelectedCircuitId,
 } from '../actions';
-import { ProtectedApiCall, UpdateUser } from '../../login';
+import { ProtectedApiCall, selectCurrentUser, UpdateUser } from '../../login';
 import { selectCurrentCircuitId } from '../selectors';
 
 const revalidateInterval = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
@@ -87,6 +87,12 @@ function* SelectCircuitSaga({
  */
 function* revalidateCircuitsInfoSaga() {
     while (true) {
+        const user: string | null = yield select(selectCurrentUser);
+
+        if (!user) {
+            return;
+        }
+
         try {
             yield put(UpdateIsLoadingCircuitsInfo(true));
             const circutsInfo: CircuitInfo[] = yield call(ProtectedApiCall, getCircuitsInfo);
