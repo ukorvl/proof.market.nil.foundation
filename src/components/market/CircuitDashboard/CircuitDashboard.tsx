@@ -30,34 +30,36 @@ export const CircuitDashboard = (): ReactElement => {
     );
 
     return (
-        <DashboardCard className="circuitDashboard">
+        <DashboardCard>
             <Details title={<h4>Circuit dashboard</h4>}>
-                <ChartTypeSelect
-                    chartType={chartType}
-                    onSelectChartType={setChartType}
-                    disabled={false}
-                />
-                <FullScreenView
-                    showFullScreen={fullScreen}
-                    className="fullScreenChartContainer"
-                >
-                    {fullScreen && <FullScreenChartInfo />}
-                    <div className="circuitDashboard__toolbar">
-                        <DataRangeSelect
-                            currentDataRange={dataRange}
-                            setDataRange={setDataRange}
-                            disabled={false}
-                        />
-                        <DashboardToolbar
-                            disabled={false}
-                            isFullscreen={fullScreen}
-                            setFullScreen={setFullScreen}
-                        />
-                    </div>
-                    <ChartSettingsContext.Provider value={{ dataRange }}>
-                        <ChartFactory chartType={chartType} />
-                    </ChartSettingsContext.Provider>
-                </FullScreenView>
+                <div className="circuitDashboard">
+                    <ChartTypeSelect
+                        chartType={chartType}
+                        onSelectChartType={setChartType}
+                        disabled={false}
+                    />
+                    <FullScreenView
+                        showFullScreen={fullScreen}
+                        className="fullScreenChartContainer"
+                    >
+                        {fullScreen && <FullScreenChartInfo />}
+                        <div className="circuitDashboard__toolbar">
+                            <DataRangeSelect
+                                currentDataRange={dataRange}
+                                setDataRange={setDataRange}
+                                disabled={false}
+                            />
+                            <DashboardToolbar
+                                disabled={false}
+                                isFullscreen={fullScreen}
+                                setFullScreen={setFullScreen}
+                            />
+                        </div>
+                        <ChartSettingsContext.Provider value={{ dataRange }}>
+                            <ChartFactory chartType={chartType} />
+                        </ChartSettingsContext.Provider>
+                    </FullScreenView>
+                </div>
             </Details>
         </DashboardCard>
     );
