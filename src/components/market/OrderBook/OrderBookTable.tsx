@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback, useRef, useLayoutEffect } from 'react';
+import { ReactElement, memo, useCallback } from 'react';
 import { Row, TableInstance, TableState } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { ReactTable } from 'src/components';
@@ -47,13 +47,6 @@ export const OrderBookTable = memo(function OrderBookTable({
     lastOrderData,
     maxVolume,
 }: OrderBookTableProps): ReactElement {
-    const asksContainerRef = useRef<HTMLDivElement>(null);
-
-    useLayoutEffect(() => {
-        const { current: el } = asksContainerRef;
-        el && el.scrollTo(0, el.scrollHeight);
-    }, []);
-
     const renderRows = useCallback(
         ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
             const asks = rows.filter(x => x.values.type === 'ask');
@@ -61,11 +54,8 @@ export const OrderBookTable = memo(function OrderBookTable({
 
             return (
                 <>
-                    <div
-                        className={styles.rowsContainer}
-                        ref={asksContainerRef}
-                    >
-                        {getDataWithVolumes(asks, maxVolume, true).map(row =>
+                    <div className={styles.rowsContainer}>
+                        {getDataWithVolumes(asks, maxVolume).map(row =>
                             renderRow(row, prepareRow, styles.ask),
                         )}
                     </div>
@@ -135,17 +125,15 @@ const renderRow = (
  *
  * @param data Data.
  * @param maxVolume Max volume.
- * @param reverse Count volumes in a reverse order.
  * @returns Data with voulmes.
  */
 const getDataWithVolumes = (
     data: Row<OrderBookTableData>[],
     maxVolume: number,
-    reverse?: boolean,
 ): RowWithVolume[] => {
     let count = 0;
 
-    const finalData = (reverse ? data.reverse() : data).map(x => {
+    const finalData = data.map(x => {
         count = count + x.values.ordersAmount;
 
         return {
@@ -154,5 +142,5 @@ const getDataWithVolumes = (
         };
     });
 
-    return reverse ? finalData.reverse() : finalData;
+    return finalData;
 };

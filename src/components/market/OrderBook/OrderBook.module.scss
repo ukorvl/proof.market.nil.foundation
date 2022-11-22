@@ -15,6 +15,15 @@
   overflow: auto;
   @include hideScrollbar;
 
+  &:first-child {
+    display: flex;
+    flex-direction: column-reverse;
+
+    div[role=cell] {
+      height: 28px;
+    }
+  }
+
   div[role=row] {
     position: relative;
     cursor: pointer;
