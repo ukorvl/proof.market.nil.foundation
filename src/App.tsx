@@ -5,13 +5,8 @@
 
 import { ReactElement, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {
-    Layout,
-    ErrorBoundary,
-    NotificationProvider,
-    Spinner,
-} from '@nilfoundation/react-components';
-import { Header, Footer, ProtectedRoute } from './components';
+import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
+import { Header, Footer, ProtectedRoute, ErrorBoundary } from './components';
 import { routes, loginRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
