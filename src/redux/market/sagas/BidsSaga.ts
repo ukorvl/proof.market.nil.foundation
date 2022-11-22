@@ -3,18 +3,18 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, delay, fork, put, select, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getBids } from 'src/api';
 import { Bid } from 'src/models';
-import { ProtectedApiCall } from 'src/redux';
+import { ProtectedCall } from 'src/redux';
 import {
     UpdateCircuitsList,
     UpdateBidsList,
     UpdateIsLoadingBids,
     UpdateBidsError,
 } from '../actions';
-import { selectCurrentUser } from '../../login';
+import { RevalidateSaga } from '../../common';
 
 const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
@@ -25,7 +25,7 @@ const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  */
 export function* BidsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateCircuitsList, GetBidsSaga);
-    yield fork(RevalidateBidsSaga);
+    yield fork(RevalidateSaga, GetBidsSaga, revalidateBidsDelay);
 }
 
 /**
@@ -38,7 +38,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(ProtectedApiCall, getBids);
+        const bids: Bid[] = yield call(ProtectedCall, getBids);
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));
@@ -47,23 +47,5 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(true));
     } finally {
         yield put(UpdateIsLoadingBids(false));
-    }
-}
-
-/**
- * Revalidate asks.
- *
- * @yields
- */
-function* RevalidateBidsSaga() {
-    while (true) {
-        const user: string | null = yield select(selectCurrentUser);
-
-        if (!user) {
-            return;
-        }
-
-        yield fork(GetBidsSaga);
-        yield delay(revalidateBidsDelay);
     }
 }

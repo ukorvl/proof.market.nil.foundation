@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, delay, put, select, takeLatest, fork } from 'redux-saga/effects';
+import { call, put, select, takeLatest, fork } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo } from 'src/api';
 import { Circuit, CircuitInfo } from 'src/models';
@@ -15,10 +15,12 @@ import {
     UpdateIsLoadingCircuitsInfo,
     UpdateSelectedCircuitId,
 } from '../actions';
-import { ProtectedApiCall, selectCurrentUser, UpdateUser } from '../../login';
+import { ProtectedCall, UpdateUser } from '../../login';
 import { selectCurrentCircuitId } from '../selectors';
+import { RevalidateSaga } from '../../common';
 
-const revalidateInterval = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
+const revalidateCircuitsInfoInterval =
+    Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
 /**
  * Circuits main saga.
@@ -28,7 +30,7 @@ const revalidateInterval = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERV
 export function* CircuitsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateUser, GetCircuitsSaga);
     yield takeLatest(UpdateCircuitsList, SelectCircuitSaga);
-    yield fork(revalidateCircuitsInfoSaga);
+    yield fork(RevalidateSaga, GetCircuitsInfoSaga, revalidateCircuitsInfoInterval);
 }
 
 /**
@@ -46,7 +48,7 @@ function* GetCircuitsSaga({ payload: user }: ReturnType<typeof UpdateUser>): Sag
         yield put(UpdateIsLoadingCircuits(true));
         yield put(UpdateCircuitsError(false));
 
-        const circuitsList: Circuit[] = yield call(ProtectedApiCall, getCircuits);
+        const circuitsList: Circuit[] = yield call(ProtectedCall, getCircuits);
 
         if (circuitsList !== undefined) {
             yield put(UpdateCircuitsList(circuitsList));
@@ -85,24 +87,14 @@ function* SelectCircuitSaga({
  *
  * @yields
  */
-function* revalidateCircuitsInfoSaga() {
-    while (true) {
-        const user: string | null = yield select(selectCurrentUser);
-
-        if (!user) {
-            return;
-        }
-
-        try {
-            yield put(UpdateIsLoadingCircuitsInfo(true));
-            const circutsInfo: CircuitInfo[] = yield call(ProtectedApiCall, getCircuitsInfo);
-            yield put(UpdateCircuitsInfoList(circutsInfo));
-        } catch {
-            // Do nothing
-        } finally {
-            yield put(UpdateIsLoadingCircuitsInfo(false));
-        }
-
-        yield delay(revalidateInterval);
+function* GetCircuitsInfoSaga() {
+    try {
+        yield put(UpdateIsLoadingCircuitsInfo(true));
+        const circutsInfo: CircuitInfo[] = yield call(ProtectedCall, getCircuitsInfo);
+        yield put(UpdateCircuitsInfoList(circutsInfo));
+    } catch {
+        // Do nothing
+    } finally {
+        yield put(UpdateIsLoadingCircuitsInfo(false));
     }
 }

@@ -17,10 +17,10 @@ import { UpdateUser } from '../actions';
  * @yields
  * @example
  * ```ts
- * const result = yield call(ProtectedApiCall, callMethod, callArguments);
+ * const result = yield call(ProtectedCall, callMethod, callArguments);
  * ```
  */
-export function* ProtectedApiCall<T extends (...args: unknown[]) => unknown>(
+export function* ProtectedCall<T extends (...args: unknown[]) => unknown>(
     fn: T,
     ...args: Parameters<T>
 ): Generator<StrictEffect, unknown, unknown> {

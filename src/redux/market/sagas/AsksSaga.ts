@@ -3,18 +3,18 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, delay, fork, put, select, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
-import { ProtectedApiCall } from 'src/redux';
+import { ProtectedCall } from 'src/redux';
 import {
     UpdateCircuitsList,
     UpdateAsksList,
     UpdateIsLoadingAsks,
     UpdateAsksError,
 } from '../actions';
-import { selectCurrentUser } from '../../login';
+import { RevalidateSaga } from '../../common';
 
 const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
 
@@ -25,7 +25,7 @@ const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  */
 export function* AsksSaga(): SagaIterator<void> {
     yield takeLatest(UpdateCircuitsList, GetAsksSaga);
-    yield fork(RevalidateAsksSaga);
+    yield fork(RevalidateSaga, GetAsksSaga, revalidateAsksDelay);
 }
 
 /**
@@ -38,7 +38,7 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(false));
         yield put(UpdateIsLoadingAsks(true));
 
-        const asks: Ask[] = yield call(ProtectedApiCall, getAsks);
+        const asks: Ask[] = yield call(ProtectedCall, getAsks);
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));
@@ -47,23 +47,5 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(true));
     } finally {
         yield put(UpdateIsLoadingAsks(false));
-    }
-}
-
-/**
- * Revalidate asks.
- *
- * @yields
- */
-function* RevalidateAsksSaga() {
-    while (true) {
-        const user: string | null = yield select(selectCurrentUser);
-
-        if (!user) {
-            return;
-        }
-
-        yield fork(GetAsksSaga);
-        yield delay(revalidateAsksDelay);
     }
 }
