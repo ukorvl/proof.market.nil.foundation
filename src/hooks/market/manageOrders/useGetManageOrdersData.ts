@@ -67,8 +67,8 @@ const mapToManageOrdersData = <T extends Ask | Bid>(
     { init_time, timestamp, cost, eval_time, id }: T,
     type: TradeOrderType,
 ): ManageOrdersData => ({
-    init_time: formatDate(init_time, 'DD.MM hh:mm'),
-    timestamp: formatDate(timestamp!, 'DD.MM hh:mm'),
+    init_time: formatDate(init_time, 'DD.MM HH:mm'),
+    timestamp: formatDate(timestamp!, 'DD.MM HH:mm'),
     cost,
     eval_time,
     type,

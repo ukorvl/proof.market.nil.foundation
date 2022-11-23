@@ -73,7 +73,7 @@ const mapToTradeHistoryData = (
     i: number,
     asks: Ask[],
 ): TradeHistoryData => ({
-    timestamp: formatDate(timestamp!, 'DD.MM hh:mm'),
+    timestamp: formatDate(timestamp!, 'DD.MM HH:mm'),
     cost,
     eval_time,
     type: i !== 0 ? getType(asks.at(i - 1)!.cost, cost) : undefined,
