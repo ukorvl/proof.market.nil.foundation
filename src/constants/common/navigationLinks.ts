@@ -17,8 +17,4 @@ export const navigationLinks = [
         title: 'Portfolio',
         path: Path.portfolio,
     },
-    {
-        title: 'Proof Generators',
-        path: Path.proofGenerators,
-    },
 ];
