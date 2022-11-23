@@ -11,7 +11,7 @@ ENV REACT_APP_BASE_API_URL=$REACT_APP_BASE_API_URL \
 
 WORKDIR /app
 COPY . .
-RUN npm set-script prepare "" && npm install --omit=dev && npm run build
+RUN npm set-script prepare "" && npm install && npm run build
 
 # STAGE 2. Serve static files with nginx
 FROM nginx:alpine
