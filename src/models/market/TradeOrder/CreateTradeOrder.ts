@@ -18,11 +18,11 @@ export interface CreateTradeOrder {
     /**
      * Eval time.
      */
-    eval_time: number;
+    eval_time?: number;
     /**
      * Wait period.
      */
-    wait_period: number;
+    wait_period?: number;
     /**
      * User, that created an order.
      */

@@ -7,6 +7,7 @@ import { ReactElement, memo, useCallback } from 'react';
 import { Cell, Column, TableInstance, TableState } from 'react-table';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
+import { renderDashOnEmptyValue } from 'src/utils';
 
 /**
  * Props.
@@ -79,7 +80,9 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    <span>{shouldUseToFixed ? value.toFixed(4) : value}</span>
+                                    <span>
+                                        {shouldUseToFixed ? renderDashOnEmptyValue(value) : value}
+                                    </span>
                                 </TCell>
                             );
                         })}

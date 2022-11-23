@@ -76,7 +76,7 @@ const FileUploader = ({ onChange, disabled }: FileUploaderProps): ReactElement =
                     return;
                 }
 
-                const obj = JSON.parse(target.result as string);
+                const obj = target.result as string;
                 onChange(obj);
             };
 

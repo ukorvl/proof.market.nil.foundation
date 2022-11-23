@@ -10,6 +10,7 @@ import { ManageOrdersData, TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
+import { renderDashOnEmptyValue } from 'src/utils';
 import { ToolbarPanel } from './ToolbarPanel';
 
 /**
@@ -132,7 +133,9 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    <span>{shouldUseToFixed ? value.toFixed(4) : value}</span>
+                                    <span>
+                                        {shouldUseToFixed ? renderDashOnEmptyValue(value) : value}
+                                    </span>
                                 </TCell>
                             );
                         })}

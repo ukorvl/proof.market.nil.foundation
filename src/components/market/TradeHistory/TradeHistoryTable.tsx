@@ -7,6 +7,7 @@ import { ReactElement, memo, useCallback } from 'react';
 import { Row, TableInstance, TableState } from 'react-table';
 import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
+import { renderDashOnEmptyValue } from 'src/utils';
 
 /**
  * Props.
@@ -58,7 +59,9 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                                     key={key}
                                     {...rest}
                                 >
-                                    {column.id !== 'timestamp' ? value.toFixed(4) : value}
+                                    {column.id !== 'timestamp'
+                                        ? renderDashOnEmptyValue(value)
+                                        : value}
                                 </TCell>
                             );
                         })}

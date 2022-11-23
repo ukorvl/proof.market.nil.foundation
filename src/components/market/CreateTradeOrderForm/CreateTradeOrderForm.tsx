@@ -30,6 +30,14 @@ type CreateTradeOrderFormProps = {
 };
 
 /**
+ * Validates input value.
+ *
+ * @param v Value.
+ * @returns Validation result.
+ */
+const validateFn = (v?: number) => v !== undefined && (v >= 0 || isNaN(v));
+
+/**
  * Create trade order form.
  *
  * @param {CreateTradeOrderFormProps} props Props.
@@ -94,8 +102,8 @@ export const CreateTradeOrderForm = ({
                                 type="number"
                                 {...props}
                                 {...register('eval_time', {
-                                    required: true,
-                                    min: 0,
+                                    required: false,
+                                    validate: validateFn,
                                     valueAsNumber: true,
                                 })}
                             />
@@ -114,8 +122,8 @@ export const CreateTradeOrderForm = ({
                                 type="number"
                                 {...props}
                                 {...register('wait_period', {
-                                    required: true,
-                                    min: 0,
+                                    required: false,
+                                    validate: validateFn,
                                     valueAsNumber: true,
                                 })}
                             />

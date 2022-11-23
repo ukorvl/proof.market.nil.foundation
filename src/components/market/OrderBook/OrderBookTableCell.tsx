@@ -8,6 +8,7 @@ import { Label } from '@nilfoundation/react-components';
 import { Cell } from 'react-table';
 import { OrderBookTableData } from 'src/models';
 import { TCell } from 'src/components';
+import { renderDashOnEmptyValue } from 'src/utils';
 
 /**
  * Props.
@@ -30,7 +31,7 @@ export const OrderBookTableCell = ({
     const { column, value, getCellProps } = cell;
     return (
         <TCell {...getCellProps()}>
-            <span>{column.id === 'ordersAmount' ? value : value.toFixed(4)}</span>
+            <span>{column.id === 'ordersAmount' ? value : renderDashOnEmptyValue(value)}</span>
             {!!userOrdersAmount && (
                 <Label>
                     <span>{userOrdersAmount}</span>

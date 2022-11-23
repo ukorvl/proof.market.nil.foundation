@@ -12,7 +12,7 @@ export type ManageOrdersData = {
     init_time: string;
     timestamp: string | null;
     cost: number;
-    eval_time: number;
+    eval_time?: number;
     type: TradeOrderType;
     orderId: string;
 };
