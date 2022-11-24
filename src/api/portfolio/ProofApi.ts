@@ -22,7 +22,7 @@ export const getProofs = (): Promise<Proof> =>
             bindVars: {
                 '@relation': 'proof',
                 offset: 0,
-                count: 100,
+                count: 1000,
             },
             batchSize: 100,
         })

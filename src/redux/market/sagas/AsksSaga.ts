@@ -25,7 +25,10 @@ const revalidateAsksDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  * @yields
  */
 export function* AsksSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateSelectedCircuitId, GetAsksSaga);
+    yield takeLatest(UpdateSelectedCircuitId, function* () {
+        yield put(UpdateAsksList([]));
+        yield fork(GetAsksSaga);
+    });
     yield fork(RevalidateSaga, GetAsksSaga, revalidateAsksDelay);
 }
 

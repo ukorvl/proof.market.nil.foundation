@@ -25,7 +25,10 @@ const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  * @yields
  */
 export function* BidsSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateSelectedCircuitId, GetBidsSaga);
+    yield takeLatest(UpdateSelectedCircuitId, function* () {
+        yield put(UpdateBidsList([]));
+        yield fork(GetBidsSaga);
+    });
     yield fork(RevalidateSaga, GetBidsSaga, revalidateBidsDelay);
 }
 
