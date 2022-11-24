@@ -8,7 +8,7 @@ import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
-import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
+import { useAppSelector, selectCompletedAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 import { DateUnit } from 'src/enums';
@@ -35,7 +35,7 @@ export const useGetCircuitDashboardData = (
     dataRange = DateUnit.day,
 ): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
+    const asks = useSelector(selectCompletedAsks, deepEqual);
     const grouppedOrders = useMemo(() => {
         return reduceOrdersByDate(asks, dataRange);
     }, [asks, dataRange]);

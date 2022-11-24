@@ -8,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import {
     useAppSelector,
-    selectCurrentCircuitCurrentUserCreatedBids,
-    selectCurrentCircuitCurrentUserCompletedBids,
-    selectCurrentCircuitCurrentUserCreatedAsks,
-    selectCurrentCircuitCurrentUserCompletedAsks,
+    selectCurrentUserCreatedBids,
+    selectCurrentUserCompletedBids,
+    selectCurrentUserCreatedAsks,
+    selectCurrentUserCompletedAsks,
 } from 'src/redux';
 import { Ask, Bid, ManageOrdersData, TradeOrderType } from 'src/models';
 import { formatDate } from 'src/utils';
@@ -33,10 +33,10 @@ export type UseGetManageOrdersDataReturnType = {
  */
 export const useGetManageOrdersData = (): UseGetManageOrdersDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
-    const createdBids = useSelector(selectCurrentCircuitCurrentUserCreatedBids, deepEqual);
-    const completedBids = useSelector(selectCurrentCircuitCurrentUserCompletedBids, deepEqual);
-    const createdAsks = useSelector(selectCurrentCircuitCurrentUserCreatedAsks, deepEqual);
-    const completedAsks = useSelector(selectCurrentCircuitCurrentUserCompletedAsks, deepEqual);
+    const createdBids = useSelector(selectCurrentUserCreatedBids, deepEqual);
+    const completedBids = useSelector(selectCurrentUserCompletedBids, deepEqual);
+    const createdAsks = useSelector(selectCurrentUserCreatedAsks, deepEqual);
+    const completedAsks = useSelector(selectCurrentUserCompletedAsks, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const activeOrdersData = useMemo(() => {

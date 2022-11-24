@@ -3,17 +3,18 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, fork, put, takeLatest } from 'redux-saga/effects';
+import { call, fork, put, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getBids } from 'src/api';
+import { getBidsByCircuitId } from 'src/api';
 import { Bid } from 'src/models';
 import { ProtectedCall } from 'src/redux';
 import {
-    UpdateCircuitsList,
+    UpdateSelectedCircuitId,
     UpdateBidsList,
     UpdateIsLoadingBids,
     UpdateBidsError,
 } from '../actions';
+import { selectCurrentCircuitId } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
@@ -24,7 +25,7 @@ const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTER
  * @yields
  */
 export function* BidsSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateCircuitsList, GetBidsSaga);
+    yield takeLatest(UpdateSelectedCircuitId, GetBidsSaga);
     yield fork(RevalidateSaga, GetBidsSaga, revalidateBidsDelay);
 }
 
@@ -34,11 +35,17 @@ export function* BidsSaga(): SagaIterator<void> {
  * @yields
  */
 function* GetBidsSaga(): SagaIterator<void> {
+    const circuitId: string | undefined = yield select(selectCurrentCircuitId);
+
+    if (circuitId === undefined) {
+        return;
+    }
+
     try {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(ProtectedCall, getBids);
+        const bids: Bid[] = yield call(ProtectedCall, getBidsByCircuitId, circuitId);
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));

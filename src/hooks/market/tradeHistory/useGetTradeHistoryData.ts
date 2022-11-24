@@ -6,7 +6,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
-import { useAppSelector, selectCurrentCircuitCompletedAsks } from 'src/redux';
+import { useAppSelector, selectCompletedAsks } from 'src/redux';
 import { Ask, TradeHistoryData, TradeHistoryTableColumn, TradeOrderChange } from 'src/models';
 import { formatDate } from 'src/utils';
 
@@ -28,7 +28,7 @@ export type UseGetTradeHistoryDataReturnType = {
  */
 export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCurrentCircuitCompletedAsks, deepEqual);
+    const asks = useSelector(selectCompletedAsks, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
     const columns = useMemo(

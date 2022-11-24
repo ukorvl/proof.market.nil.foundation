@@ -17,8 +17,8 @@ import {
     OrderBookTableData,
 } from 'src/models';
 import {
-    selectCurrentCircuitBids,
-    selectCurrentCircuitAsks,
+    selectBidsList,
+    selectAsksList,
     useAppSelector,
     selectCurrentUserAsks,
     selectCurrentUserBids,
@@ -49,8 +49,8 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
  */
 export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCurrentCircuitAsks, deepEqual);
-    const bids = useSelector(selectCurrentCircuitBids, deepEqual);
+    const asks = useSelector(selectAsksList, deepEqual);
+    const bids = useSelector(selectBidsList, deepEqual);
     const userAsks = useSelector(selectCurrentUserAsks, deepEqual);
     const userBids = useSelector(selectCurrentUserBids, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);

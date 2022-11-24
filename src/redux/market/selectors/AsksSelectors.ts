@@ -6,7 +6,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { Ask } from 'src/models';
 import { RootStateType } from 'src/redux';
-import { selectCurrentCircuitId } from './CircuitsSelectors';
 import { selectCurrentUser } from '../../login';
 
 /**
@@ -18,18 +17,9 @@ import { selectCurrentUser } from '../../login';
 export const selectAsksList = (s: RootStateType): Ask[] => s.asksState.asks;
 
 /**
- * Select all current circuit - related proposals.
- */
-export const selectCurrentCircuitAsks = createSelector(
-    selectAsksList,
-    selectCurrentCircuitId,
-    (asks, selectedid) => asks.filter(x => x.circuit_id === selectedid),
-);
-
-/**
  * Select all completed asks.
  */
-export const selectCurrentCircuitCompletedAsks = createSelector(selectCurrentCircuitAsks, asks =>
+export const selectCompletedAsks = createSelector(selectAsksList, asks =>
     asks.filter(x => x.status === 'completed'),
 );
 
@@ -43,26 +33,15 @@ export const selectCurrentUserAsks = createSelector(
 );
 
 /**
- * Select asks, created by current user in current circuit.
+ * Select asks, created by current user with 'created' status.
  */
-export const selectCurrentCircuitCurrentUserAsks = createSelector(
-    selectCurrentCircuitAsks,
-    selectCurrentUser,
-    (asks, user) => asks.filter(x => x.sender === user),
+export const selectCurrentUserCreatedAsks = createSelector(selectCurrentUserAsks, asks =>
+    asks.filter(x => x.status === 'created'),
 );
 
 /**
- * Select asks, created by current user in current circuit with 'created' status.
+ * Select asks, created by current user with 'compelted' status.
  */
-export const selectCurrentCircuitCurrentUserCreatedAsks = createSelector(
-    selectCurrentCircuitCurrentUserAsks,
-    asks => asks.filter(x => x.status === 'created'),
-);
-
-/**
- * Select asks, created by current user in current circuit with 'compelted' status.
- */
-export const selectCurrentCircuitCurrentUserCompletedAsks = createSelector(
-    selectCurrentCircuitCurrentUserAsks,
-    asks => asks.filter(x => x.status === 'completed'),
+export const selectCurrentUserCompletedAsks = createSelector(selectCurrentUserAsks, asks =>
+    asks.filter(x => x.status === 'completed'),
 );

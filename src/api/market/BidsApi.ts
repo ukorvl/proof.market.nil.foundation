@@ -15,18 +15,19 @@ const createFetcher = createBearerHttpClient('/market/bid');
 /**
  * Get bids.
  *
+ * @param circuitId Circuit id.
  * @returns Bids.
  */
-export const getBids = (): Promise<Bid[]> =>
+export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
     httpFetcher
         .post('cursor', {
-            query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
+            query: `
+                FOR x IN @@relation
+                FILTER x.circuit_id == ${circuitId}
+                RETURN x`,
             bindVars: {
-                '@relation': 'bid',
-                offset: 0,
-                count: 10000,
+                '@relation': 'ask',
             },
-            batchSize: 10000,
         })
         .then((x: any) => x.result);
 

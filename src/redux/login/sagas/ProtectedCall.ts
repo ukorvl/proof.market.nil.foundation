@@ -20,7 +20,8 @@ import { UpdateUser } from '../actions';
  * const result = yield call(ProtectedCall, callMethod, callArguments);
  * ```
  */
-export function* ProtectedCall<T extends (...args: unknown[]) => unknown>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function* ProtectedCall<T extends (...args: any[]) => any>(
     fn: T,
     ...args: Parameters<T>
 ): Generator<StrictEffect, unknown, unknown> {

@@ -6,7 +6,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { Bid } from 'src/models';
 import { RootStateType } from 'src/redux';
-import { selectCurrentCircuitId } from './CircuitsSelectors';
 import { selectCurrentUser } from '../../login';
 
 /**
@@ -18,15 +17,6 @@ import { selectCurrentUser } from '../../login';
 export const selectBidsList = (s: RootStateType): Bid[] => s.bidsState.bids;
 
 /**
- * Select all current circuit - related bids from all users.
- */
-export const selectCurrentCircuitBids = createSelector(
-    selectBidsList,
-    selectCurrentCircuitId,
-    (bids, selectedid) => bids.filter(x => x.circuit_id === selectedid),
-);
-
-/**
  * Select bids, created by current user.
  */
 export const selectCurrentUserBids = createSelector(
@@ -36,26 +26,15 @@ export const selectCurrentUserBids = createSelector(
 );
 
 /**
- * Select bids, created by current user in current circuit.
+ * Select bids, created by current user with 'created' status.
  */
-export const selectCurrentCircuitCurrentUserBids = createSelector(
-    selectCurrentCircuitBids,
-    selectCurrentUser,
-    (bids, user) => bids.filter(x => x.sender === user),
+export const selectCurrentUserCreatedBids = createSelector(selectCurrentUserBids, asks =>
+    asks.filter(x => x.status === 'created'),
 );
 
 /**
- * Select bids, created by current user in current circuit with 'created' status.
+ * Select bids, created by current user with 'compelted' status.
  */
-export const selectCurrentCircuitCurrentUserCreatedBids = createSelector(
-    selectCurrentCircuitCurrentUserBids,
-    asks => asks.filter(x => x.status === 'created'),
-);
-
-/**
- * Select bids, created by current user in current circuit with 'compelted' status.
- */
-export const selectCurrentCircuitCurrentUserCompletedBids = createSelector(
-    selectCurrentCircuitCurrentUserBids,
-    asks => asks.filter(x => x.status === 'completed'),
+export const selectCurrentUserCompletedBids = createSelector(selectCurrentUserBids, asks =>
+    asks.filter(x => x.status === 'completed'),
 );
