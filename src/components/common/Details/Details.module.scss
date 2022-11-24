@@ -1,0 +1,17 @@
+.title {
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.bottomIndent {
+  + * {
+    margin-top: 12px;
+  }
+}

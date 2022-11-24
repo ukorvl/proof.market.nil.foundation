@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useState } from 'react';
+import { KeyboardEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { Icon } from '@nilfoundation/react-components';
-import './Details.scss';
+import styles from './Details.module.scss';
 
 /**
  * Props.
@@ -14,6 +14,7 @@ type DetailsProps = {
     children: ReactNode;
     title: ReactNode;
     defaultOpen?: boolean;
+    bottomIndent?: boolean;
 };
 
 /**
@@ -22,20 +23,36 @@ type DetailsProps = {
  * @param {DetailsProps} props Props.
  * @returns React component.
  */
-export const Details = ({ children, title, defaultOpen = true }: DetailsProps): ReactElement => {
+export const Details = ({
+    children,
+    title,
+    defaultOpen = true,
+    bottomIndent = true,
+}: DetailsProps): ReactElement => {
     const [isOpen, setIsOpen] = useState(defaultOpen);
     const toggleIsOpen = () => setIsOpen(!isOpen);
 
+    const onKeyDownHandler: KeyboardEventHandler = e => {
+        if (e.key !== 'Enter' && e.key !== ' ') {
+            return;
+        }
+
+        toggleIsOpen();
+    };
+
     return (
-        <details
-            className="details"
-            open={defaultOpen}
-        >
-            <summary onClick={toggleIsOpen}>
+        <>
+            <div
+                className={`${styles.title} ${bottomIndent ? styles.bottomIndent : ''}`}
+                onClick={toggleIsOpen}
+                onKeyDown={onKeyDownHandler}
+                role="button"
+                tabIndex={0}
+            >
                 {title}
                 <Icon iconName={`fa-solid fa-angle-${isOpen ? 'up' : 'down'}`} />
-            </summary>
-            {children}
-        </details>
+            </div>
+            <>{isOpen && children}</>
+        </>
     );
 };

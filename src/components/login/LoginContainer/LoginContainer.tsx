@@ -7,6 +7,9 @@ import { ReactElement, ReactNode } from 'react';
 import { FullScreenView } from 'src/components/common';
 import styles from './LoginContainer.module.scss';
 
+/**
+ * Props.
+ */
 type LoginContainerProps = {
     children: ReactNode;
 };

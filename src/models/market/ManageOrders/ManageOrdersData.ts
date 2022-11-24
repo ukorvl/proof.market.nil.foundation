@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { TradeOrderType } from '../TradeOrder';
+import { TradeOrderStatus, TradeOrderType } from '../TradeOrder';
 
 /**
  * Manage orders data.
@@ -15,4 +15,5 @@ export type ManageOrdersData = {
     eval_time?: number;
     type: TradeOrderType;
     orderId: string;
+    status: TradeOrderStatus;
 };

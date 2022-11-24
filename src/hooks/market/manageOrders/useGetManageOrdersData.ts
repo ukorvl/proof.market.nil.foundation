@@ -10,7 +10,7 @@ import {
     useAppSelector,
     selectCurrentUserCreatedBids,
     selectCurrentUserCompletedBids,
-    selectCurrentUserCreatedAsks,
+    selectCurrentUserActiveAsks,
     selectCurrentUserCompletedAsks,
 } from 'src/redux';
 import { Ask, Bid, ManageOrdersData, TradeOrderType } from 'src/models';
@@ -35,7 +35,7 @@ export const useGetManageOrdersData = (): UseGetManageOrdersDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const createdBids = useSelector(selectCurrentUserCreatedBids, deepEqual);
     const completedBids = useSelector(selectCurrentUserCompletedBids, deepEqual);
-    const createdAsks = useSelector(selectCurrentUserCreatedAsks, deepEqual);
+    const createdAsks = useSelector(selectCurrentUserActiveAsks, deepEqual);
     const completedAsks = useSelector(selectCurrentUserCompletedAsks, deepEqual);
     const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
 
@@ -64,7 +64,7 @@ export const useGetManageOrdersData = (): UseGetManageOrdersDataReturnType => {
  * @returns Manage orders table data list.
  */
 const mapToManageOrdersData = <T extends Ask | Bid>(
-    { init_time, timestamp, cost, eval_time, id }: T,
+    { init_time, timestamp, cost, eval_time, id, status }: T,
     type: TradeOrderType,
 ): ManageOrdersData => ({
     init_time: formatDate(init_time, 'DD.MM HH:mm'),
@@ -73,4 +73,5 @@ const mapToManageOrdersData = <T extends Ask | Bid>(
     eval_time,
     type,
     orderId: id,
+    status,
 });

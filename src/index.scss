@@ -47,10 +47,6 @@ button {
   color: $c-success!important;
 }
 
-details summary::-webkit-details-marker {
-  display:none!important;
-}
-
 .nav {
   li.disabled > a {
     pointer-events: none;

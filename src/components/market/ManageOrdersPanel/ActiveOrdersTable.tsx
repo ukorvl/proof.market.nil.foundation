@@ -7,7 +7,7 @@ import { ReactElement, memo, useCallback, useState } from 'react';
 import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
 import { useDispatch } from 'react-redux';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
-import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
+import { ReactTable, TRow, TCell, ClicableIcon, Details } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
@@ -25,7 +25,7 @@ type ActiveOrdersTableProps = {
  */
 const columns: Column<ManageOrdersData>[] = [
     {
-        Header: 'Created',
+        Header: 'Time',
         accessor: 'init_time',
     },
     {
@@ -44,6 +44,9 @@ const columns: Column<ManageOrdersData>[] = [
         accessor: 'orderId',
         disableSortBy: true,
     },
+    {
+        accessor: 'status',
+    },
 ];
 
 /**
@@ -56,6 +59,7 @@ const defaultTableState: Partial<TableState<ManageOrdersData>> = {
             desc: true,
         },
     ],
+    hiddenColumns: ['status'],
 };
 
 /**
@@ -97,52 +101,86 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
         setSelectedRow(null);
     }, [setSelectedRow]);
 
-    const renderRows = useCallback(
-        ({ rows, prepareRow }: TableInstance<ManageOrdersData>) =>
-            rows.map(row => {
-                prepareRow(row);
-                return (
-                    <TRow
-                        {...row.getRowProps()}
-                        key={row.id}
-                    >
-                        {row.cells.map(cell => {
-                            const { value, column, getCellProps } = cell;
-                            const { key, ...rest } = getCellProps();
-                            const shouldUseToFixed =
-                                column.id === 'eval_time' || column.id === 'cost';
+    const renderRow = useCallback(
+        (
+            row: Row<ManageOrdersData>,
+            prepareRow: (r: Row<ManageOrdersData>) => void,
+            canRemove = false,
+        ) => {
+            prepareRow(row);
 
-                            if (column.id === 'orderId') {
-                                return (
-                                    <TCell
-                                        key={key}
-                                        {...rest}
-                                    >
-                                        <ClicableIcon
-                                            iconName="fa-solid fa-ban"
-                                            disabled={processing}
-                                            onClick={() => setSelectedRow(cell.row)}
-                                        />
-                                    </TCell>
-                                );
-                            }
+            return (
+                <TRow
+                    {...row.getRowProps()}
+                    key={row.id}
+                >
+                    {row.cells.map(cell => {
+                        const { value, column, getCellProps } = cell;
+                        const { key, ...rest } = getCellProps();
+                        const shouldUseToFixed = column.id === 'eval_time' || column.id === 'cost';
 
-                            return (
+                        if (column.id === 'orderId') {
+                            return canRemove ? (
                                 <TCell
-                                    className={getCellClassName(cell)}
                                     key={key}
                                     {...rest}
                                 >
-                                    <span>
-                                        {shouldUseToFixed ? renderDashOnEmptyValue(value) : value}
-                                    </span>
+                                    <ClicableIcon
+                                        iconName="fa-solid fa-ban"
+                                        disabled={processing}
+                                        onClick={() => setSelectedRow(cell.row)}
+                                    />
                                 </TCell>
+                            ) : (
+                                <></>
                             );
-                        })}
-                    </TRow>
-                );
-            }),
-        [processing],
+                        }
+
+                        return (
+                            <TCell
+                                className={getCellClassName(cell)}
+                                key={key}
+                                {...rest}
+                            >
+                                <span>
+                                    {shouldUseToFixed ? renderDashOnEmptyValue(value) : value}
+                                </span>
+                            </TCell>
+                        );
+                    })}
+                </TRow>
+            );
+        },
+        [processing, setSelectedRow],
+    );
+
+    const renderRows = useCallback(
+        ({ rows, prepareRow }: TableInstance<ManageOrdersData>) => {
+            const activeOrders = rows.filter(x => x.values.status === 'created');
+            const inProgressOrders = rows.filter(x => x.values.status === 'processing');
+
+            return (
+                <>
+                    {activeOrders.length !== 0 && (
+                        <Details
+                            bottomIndent={false}
+                            title={<TRow className="titleRow">CREATED</TRow>}
+                        >
+                            {activeOrders.map(x => renderRow(x, prepareRow, true))}
+                        </Details>
+                    )}
+                    {inProgressOrders.length !== 0 && (
+                        <Details
+                            bottomIndent={false}
+                            title={<TRow className="titleRow">IN PROGRESS</TRow>}
+                        >
+                            {inProgressOrders.map(x => renderRow(x, prepareRow))}
+                        </Details>
+                    )}
+                </>
+            );
+        },
+        [renderRow],
     );
 
     return (

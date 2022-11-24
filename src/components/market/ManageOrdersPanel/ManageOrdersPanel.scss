@@ -12,6 +12,14 @@
 
   .activeOrdersTable {
     @include tableColumns(28%, 16%, 20%, 30%, 6%);
+
+    .titleRow {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 2rem;
+    }
   }
 
   .historyOrdersTable {
@@ -30,7 +38,7 @@
 
 .toolbarPanel {
   width: 100%;
-  padding: 20px 0 25px;
+  padding: 20px 0 20px;
   position: absolute;
   background-color: $c-base-darker;
   z-index: 3;

@@ -35,8 +35,8 @@ export const selectCurrentUserAsks = createSelector(
 /**
  * Select asks, created by current user with 'created' status.
  */
-export const selectCurrentUserCreatedAsks = createSelector(selectCurrentUserAsks, asks =>
-    asks.filter(x => x.status === 'created'),
+export const selectCurrentUserActiveAsks = createSelector(selectCurrentUserAsks, asks =>
+    asks.filter(x => x.status === 'created' || x.status === 'processing'),
 );
 
 /**
