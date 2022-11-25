@@ -37,3 +37,15 @@ export const UpdateCircuitsInfoList = createAction<CircuitInfo[]>('@circuits/UPD
 export const UpdateIsLoadingCircuitsInfo = createAction<boolean>(
     '@circuits/UPDATE_IS_LOADING_CIRCUITS_INFO',
 );
+
+/**
+ * Update circuit stats.
+ */
+export const UpdateCircuitsStats = createAction<[]>('@circuits/UPDATE_STATS');
+
+/**
+ * Update circuit stats loading state.
+ */
+export const UpdateIsLoadingCircuitsStats = createAction<boolean>(
+    '@circuits/UPDATE_IS_LOADING_CIRCUITS_STATS',
+);

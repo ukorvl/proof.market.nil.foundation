@@ -3,16 +3,18 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, select, takeLatest, fork } from 'redux-saga/effects';
+import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getCircuits, getCircuitsInfo } from 'src/api';
+import { getCircuits, getCircuitsInfo, getCircuitsStats } from 'src/api';
 import { Circuit, CircuitInfo } from 'src/models';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
     UpdateCircuitsList,
+    UpdateCircuitsStats,
     UpdateIsLoadingCircuits,
     UpdateIsLoadingCircuitsInfo,
+    UpdateIsLoadingCircuitsStats,
     UpdateSelectedCircuitId,
 } from '../actions';
 import { ProtectedCall, UpdateUser } from '../../login';
@@ -30,7 +32,7 @@ const revalidateCircuitsInfoInterval =
 export function* CircuitsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateUser, GetCircuitsSaga);
     yield takeLatest(UpdateCircuitsList, SelectCircuitSaga);
-    yield fork(RevalidateSaga, GetCircuitsInfoSaga, revalidateCircuitsInfoInterval);
+    yield fork(RevalidateSaga, GetCircuitsAdditionalData, revalidateCircuitsInfoInterval);
 }
 
 /**
@@ -97,4 +99,30 @@ function* GetCircuitsInfoSaga() {
     } finally {
         yield put(UpdateIsLoadingCircuitsInfo(false));
     }
+}
+
+/**
+ * Revalidate circuits stats.
+ *
+ * @yields
+ */
+function* GetCircuitsStatsSaga() {
+    try {
+        yield put(UpdateIsLoadingCircuitsStats(true));
+        const circutsStats: [] = yield call(ProtectedCall, getCircuitsStats);
+        yield put(UpdateCircuitsStats(circutsStats));
+    } catch {
+        // Do nothing
+    } finally {
+        yield put(UpdateIsLoadingCircuitsStats(false));
+    }
+}
+
+/**
+ * Revalidate circuit additional data (info and statistics).
+ *
+ * @yields
+ */
+function* GetCircuitsAdditionalData() {
+    yield all([fork(GetCircuitsInfoSaga), fork(GetCircuitsStatsSaga)]);
 }

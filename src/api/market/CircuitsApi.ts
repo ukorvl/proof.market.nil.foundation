@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Circuit } from 'src/models';
+import { Circuit, CircuitInfo } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
@@ -35,4 +35,11 @@ export const getCircuits = (): Promise<Circuit> =>
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<void> => newFetcher.get('/info');
+export const getCircuitsInfo = (): Promise<CircuitInfo> => newFetcher.get('/info');
+
+/**
+ * Get circuits stats.
+ *
+ * @returns .
+ */
+export const getCircuitsStats = (): Promise<void> => newFetcher.get('/statistics');

@@ -12,6 +12,8 @@ import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
     UpdateIsLoadingCircuitsInfo,
+    UpdateCircuitsStats,
+    UpdateIsLoadingCircuitsStats,
 } from '../actions';
 
 /**
@@ -24,6 +26,8 @@ export type CircuitsReducerState = {
     error?: boolean;
     circuitsInfo: CircuitInfo[];
     isLoadingCircuitsInfo: boolean;
+    circuitsStats: [];
+    isLoadingCircuitsStats: boolean;
 };
 
 /**
@@ -36,6 +40,8 @@ const initialState: CircuitsReducerState = {
     error: false,
     circuitsInfo: [],
     isLoadingCircuitsInfo: false,
+    circuitsStats: [],
+    isLoadingCircuitsStats: false,
 };
 
 /**
@@ -66,5 +72,13 @@ export const CircuitsReducer = createReducer(initialState, builder =>
         .addCase(UpdateIsLoadingCircuitsInfo, (state, { payload }) => ({
             ...state,
             isLoadingCircuitsInfo: payload,
+        }))
+        .addCase(UpdateCircuitsStats, (state, { payload }) => ({
+            ...state,
+            circuitsStats: payload,
+        }))
+        .addCase(UpdateIsLoadingCircuitsStats, (state, { payload }) => ({
+            ...state,
+            isLoadingCircuitsStats: payload,
         })),
 );
