@@ -6,7 +6,7 @@
 import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo, getCircuitsStats } from 'src/api';
-import { Circuit, CircuitInfo } from 'src/models';
+import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -109,7 +109,7 @@ function* GetCircuitsInfoSaga() {
 function* GetCircuitsStatsSaga() {
     try {
         yield put(UpdateIsLoadingCircuitsStats(true));
-        const circutsStats: [] = yield call(ProtectedCall, getCircuitsStats);
+        const circutsStats: CircuitStats[] = yield call(ProtectedCall, getCircuitsStats);
         yield put(UpdateCircuitsStats(circutsStats));
     } catch {
         // Do nothing

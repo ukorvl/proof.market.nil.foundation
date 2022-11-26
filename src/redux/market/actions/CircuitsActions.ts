@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Circuit, CircuitInfo } from 'src/models';
+import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 
 /**
  * Update circuits list.
@@ -41,7 +41,7 @@ export const UpdateIsLoadingCircuitsInfo = createAction<boolean>(
 /**
  * Update circuit stats.
  */
-export const UpdateCircuitsStats = createAction<[]>('@circuits/UPDATE_STATS');
+export const UpdateCircuitsStats = createAction<CircuitStats[]>('@circuits/UPDATE_STATS');
 
 /**
  * Update circuit stats loading state.

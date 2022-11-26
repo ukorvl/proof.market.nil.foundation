@@ -2,9 +2,12 @@
 @import 'src/styles/mixins/responsive';
 @import 'src/styles/mixins/hideScrollbar';
 
-.circuitDetailedInfo {
+.container {
   position: relative;
-  height: 670px;
+}
+
+.content {
+  height: 594px;
   overflow: auto;
   @include hideScrollbar;
 
@@ -15,8 +18,10 @@
   p {
     position: relative;
   }
+}
 
-  > div:last-of-type {
+.jsonView {
+  > div {
     line-break: anywhere;
   }
 }
@@ -27,17 +32,24 @@
 
 .imageContainer {
   position: absolute;
+  top: 100;
+  left: 0;
   background-color: transparent;
   aspect-ratio: 1/1;
   width: 100%;
-  padding: 2rem;
-  margin: 2rem 0;
+  padding: 5rem;
   z-index: 0;
-  filter: grayscale(0.75);
+  filter: grayscale(1);
 
   > img {
     height: 100%;
     width: 100%;
     opacity: 0.15;
   }
+}
+
+.toolbar {
+  height: 64px;
+  padding-top: 8px;
+  margin-bottom: 12px!important;
 }
