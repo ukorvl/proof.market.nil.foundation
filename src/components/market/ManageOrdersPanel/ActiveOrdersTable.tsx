@@ -5,9 +5,10 @@
 
 import { ReactElement, memo, useCallback, useState } from 'react';
 import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
+import { Icon } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
 import { ManageOrdersData, TradeOrderType } from 'src/models';
-import { ReactTable, TRow, TCell, ClicableIcon, Details } from 'src/components';
+import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
@@ -24,6 +25,10 @@ type ActiveOrdersTableProps = {
  * Table columns.
  */
 const columns: Column<ManageOrdersData>[] = [
+    {
+        accessor: 'status',
+        disableSortBy: true,
+    },
     {
         Header: 'Time',
         accessor: 'init_time',
@@ -44,9 +49,6 @@ const columns: Column<ManageOrdersData>[] = [
         accessor: 'orderId',
         disableSortBy: true,
     },
-    {
-        accessor: 'status',
-    },
 ];
 
 /**
@@ -59,7 +61,6 @@ const defaultTableState: Partial<TableState<ManageOrdersData>> = {
             desc: true,
         },
     ],
-    hiddenColumns: ['status'],
 };
 
 /**
@@ -117,7 +118,25 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                     {row.cells.map(cell => {
                         const { value, column, getCellProps } = cell;
                         const { key, ...rest } = getCellProps();
-                        const shouldUseToFixed = column.id === 'eval_time' || column.id === 'cost';
+
+                        if (column.id === 'status') {
+                            const title = value === 'created' ? 'rrrrr' : 'In progress';
+                            const icon = `fa-solid fa-${
+                                value === 'created' ? 'circle-plus' : 'spinner'
+                            }`;
+
+                            return (
+                                <TCell
+                                    key={key}
+                                    {...rest}
+                                >
+                                    <Icon
+                                        title={title}
+                                        iconName={icon}
+                                    />
+                                </TCell>
+                            );
+                        }
 
                         if (column.id === 'orderId') {
                             return canRemove ? (
@@ -135,6 +154,8 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                 <></>
                             );
                         }
+
+                        const shouldUseToFixed = column.id === 'eval_time' || column.id === 'cost';
 
                         return (
                             <TCell
@@ -161,22 +182,10 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
 
             return (
                 <>
-                    {activeOrders.length !== 0 && (
-                        <Details
-                            bottomIndent={false}
-                            title={<TRow className="titleRow">CREATED</TRow>}
-                        >
-                            {activeOrders.map(x => renderRow(x, prepareRow, true))}
-                        </Details>
-                    )}
-                    {inProgressOrders.length !== 0 && (
-                        <Details
-                            bottomIndent={false}
-                            title={<TRow className="titleRow">IN PROGRESS</TRow>}
-                        >
-                            {inProgressOrders.map(x => renderRow(x, prepareRow))}
-                        </Details>
-                    )}
+                    {activeOrders.length !== 0 &&
+                        activeOrders.map(x => renderRow(x, prepareRow, true))}
+                    {inProgressOrders.length !== 0 &&
+                        inProgressOrders.map(x => renderRow(x, prepareRow))}
                 </>
             );
         },

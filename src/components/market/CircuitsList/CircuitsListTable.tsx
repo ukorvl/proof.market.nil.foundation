@@ -101,7 +101,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
 
     const tableData: CircuitsListData[] = useMemo(() => {
         return circuitsList.map(x => {
-            const info = circuitsInfo.find(y => y.circuit_id === x.id);
+            const info = circuitsInfo && circuitsInfo.find(y => y.circuit_id === x.id);
 
             return {
                 id: x.id,

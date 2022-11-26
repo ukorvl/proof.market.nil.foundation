@@ -11,7 +11,7 @@
   }
 
   .activeOrdersTable {
-    @include tableColumns(28%, 16%, 20%, 30%, 6%);
+    @include tableColumns(6%, 24%, 20%, 20%, 24%, 6%);
 
     .titleRow {
       font-weight: bold;
