@@ -13,7 +13,6 @@ import { reportWebVitals } from './reportWebVitals';
 import './index.scss';
 
 configureSentry();
-
 render(
     <React.StrictMode>
         <Provider store={store}>
@@ -22,5 +21,4 @@ render(
     </React.StrictMode>,
     document.getElementById('root'),
 );
-
 reportWebVitals();
