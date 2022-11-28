@@ -6,7 +6,8 @@
 import { ReactElement, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
-import { Header, Footer, ProtectedRoute, ErrorBoundary } from './components';
+import * as Sentry from '@sentry/react';
+import { Header, Footer, ProtectedRoute } from './components';
 import { routes, loginRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -15,7 +16,7 @@ import ErrorView from './views/ErrorView';
  */
 function App(): ReactElement {
     return (
-        <ErrorBoundary errorView={<ErrorView />}>
+        <Sentry.ErrorBoundary fallback={<ErrorView />}>
             <NotificationProvider>
                 <BrowserRouter>
                     <Layout
@@ -45,7 +46,7 @@ function App(): ReactElement {
                     </Layout>
                 </BrowserRouter>
             </NotificationProvider>
-        </ErrorBoundary>
+        </Sentry.ErrorBoundary>
     );
 }
 
