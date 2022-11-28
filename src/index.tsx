@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './redux';
 import { configureSentry } from './sentry';
+import { reportWebVitals } from './reportWebVitals';
 import './index.scss';
 
 configureSentry();
@@ -21,3 +22,5 @@ render(
     </React.StrictMode>,
     document.getElementById('root'),
 );
+
+reportWebVitals();

@@ -50,4 +50,4 @@ function App(): ReactElement {
     );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
