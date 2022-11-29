@@ -29,6 +29,7 @@ export const OrderBookTableCell = ({
     userOrdersAmount,
 }: OrderBookTableCellProps): ReactElement => {
     const { column, value, getCellProps } = cell;
+
     return (
         <TCell {...getCellProps()}>
             <span>{column.id === 'ordersAmount' ? value : renderDashOnEmptyValue(value)}</span>
