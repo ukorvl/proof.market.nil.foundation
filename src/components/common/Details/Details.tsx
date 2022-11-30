@@ -3,7 +3,15 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement, ReactNode, useState } from 'react';
+import {
+    KeyboardEventHandler,
+    ReactElement,
+    ReactNode,
+    useState,
+    Children,
+    isValidElement,
+    cloneElement,
+} from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import styles from './Details.module.scss';
 
@@ -15,6 +23,7 @@ type DetailsProps = {
     title: ReactNode;
     defaultOpen?: boolean;
     bottomIndent?: boolean;
+    unmountOnClose?: boolean;
 };
 
 /**
@@ -28,6 +37,7 @@ export const Details = ({
     title,
     defaultOpen = true,
     bottomIndent = true,
+    unmountOnClose = false,
 }: DetailsProps): ReactElement => {
     const [isOpen, setIsOpen] = useState(defaultOpen);
     const toggleIsOpen = () => setIsOpen(!isOpen);
@@ -52,7 +62,20 @@ export const Details = ({
                 {title}
                 <Icon iconName={`fa-solid fa-angle-${isOpen ? 'up' : 'down'}`} />
             </div>
-            <>{isOpen && children}</>
+            <>
+                {(!unmountOnClose || isOpen) &&
+                    Children.map(children, child => {
+                        if (isValidElement(child)) {
+                            const props = {
+                                className: `${child.props.className} ${!isOpen ? ' hidden' : ''}`,
+                            };
+
+                            return cloneElement(child, props);
+                        }
+
+                        return child;
+                    })}
+            </>
         </>
     );
 };
