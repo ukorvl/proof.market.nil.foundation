@@ -26,7 +26,7 @@ export const UserMenu = (): ReactElement => {
                 onClick={() => navigate(Path.login)}
             >
                 <Icon iconName="fa-solid fa-circle-user" />
-                Log in
+                sign in
             </Button>
         );
     }

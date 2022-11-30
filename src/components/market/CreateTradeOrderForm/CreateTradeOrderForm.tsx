@@ -16,9 +16,10 @@ import {
     InputGroup,
 } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
+import { Details } from '../../common';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { BaseFormGroup } from './BaseFormGroup';
-import './CreateTradeOrderForm.scss';
+import styles from './CreateTradeOrderForm.module.scss';
 
 /**
  * Props.
@@ -69,7 +70,7 @@ export const CreateTradeOrderForm = ({
     }, [selectedValues]);
 
     return (
-        <Form className="createTradeOrderForm">
+        <Form>
             <div className="formContent">
                 <BaseFormGroup
                     hasError={!!errors['cost']}
@@ -77,7 +78,7 @@ export const CreateTradeOrderForm = ({
                     hintText="Proof cost"
                 >
                     {props => (
-                        <InputGroup>
+                        <InputGroup className={styles.control}>
                             <Input
                                 type="number"
                                 {...props}
@@ -91,46 +92,57 @@ export const CreateTradeOrderForm = ({
                         </InputGroup>
                     )}
                 </BaseFormGroup>
-                <BaseFormGroup
-                    hasError={!!errors['eval_time']}
-                    labelText="Generation time"
-                    hintText="Proof generation time"
+                <Details
+                    title={
+                        <div className={`${styles.detailsTitle} text-muted`}>
+                            Additional parameters
+                        </div>
+                    }
+                    bottomIndent={false}
+                    defaultOpen={false}
                 >
-                    {props => (
-                        <InputGroup>
-                            <Input
-                                type="number"
-                                {...props}
-                                {...register('eval_time', {
-                                    required: false,
-                                    validate: validateFn,
-                                    valueAsNumber: true,
-                                })}
-                            />
-                            <InputGroup.Addon>Mins</InputGroup.Addon>
-                        </InputGroup>
-                    )}
-                </BaseFormGroup>
-                <BaseFormGroup
-                    hasError={!!errors['wait_period']}
-                    labelText="Order timeout"
-                    hintText="Order cancellation time"
-                >
-                    {props => (
-                        <InputGroup>
-                            <Input
-                                type="number"
-                                {...props}
-                                {...register('wait_period', {
-                                    required: false,
-                                    validate: validateFn,
-                                    valueAsNumber: true,
-                                })}
-                            />
-                            <InputGroup.Addon>Mins</InputGroup.Addon>
-                        </InputGroup>
-                    )}
-                </BaseFormGroup>
+                    <BaseFormGroup
+                        hasError={!!errors['eval_time']}
+                        labelText="Generation time"
+                        hintText="Proof generation time"
+                    >
+                        {props => (
+                            <InputGroup>
+                                <Input
+                                    type="number"
+                                    {...props}
+                                    {...register('eval_time', {
+                                        required: false,
+                                        validate: validateFn,
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                                <InputGroup.Addon>Mins</InputGroup.Addon>
+                            </InputGroup>
+                        )}
+                    </BaseFormGroup>
+                    <BaseFormGroup
+                        hasError={!!errors['wait_period']}
+                        labelText="Order timeout"
+                        hintText="Order cancellation time"
+                    >
+                        {props => (
+                            <InputGroup>
+                                <Input
+                                    type="number"
+                                    {...props}
+                                    {...register('wait_period', {
+                                        required: false,
+                                        validate: validateFn,
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                                <InputGroup.Addon>Mins</InputGroup.Addon>
+                            </InputGroup>
+                        )}
+                    </BaseFormGroup>
+                </Details>
+
                 {children}
             </div>
             <Button
