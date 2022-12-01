@@ -4,9 +4,9 @@
  */
 
 import { ReactElement } from 'react';
-import { Container, Row, Col, Icon } from '@nilfoundation/react-components';
-import { socialLinks } from '../../../constants';
-import './Footer.scss';
+import { Container, Row, Col } from '@nilfoundation/react-components';
+import { SocialLinks } from '../SocialLinks';
+import styles from './Footer.module.scss';
 
 /**
  * Footer.
@@ -14,21 +14,10 @@ import './Footer.scss';
  * @returns React component.
  */
 export const Footer = (): ReactElement => (
-    <Container>
+    <Container className={styles.footer}>
         <Row>
             <Col>
-                <ul className="socialLinks">
-                    {socialLinks.map(({ icon, url }) => (
-                        <li key={icon}>
-                            <a href={url}>
-                                <Icon
-                                    iconName={`fa-brands fa-${icon}`}
-                                    srOnlyText={`${icon} link`}
-                                />
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+                <SocialLinks />
             </Col>
         </Row>
         <Row className="text-center">

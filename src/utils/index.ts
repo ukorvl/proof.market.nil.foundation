@@ -6,3 +6,4 @@
 export * from './login';
 export * from './dates';
 export * from './common';
+export * from './regexp';

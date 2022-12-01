@@ -1,4 +1,4 @@
-@import '../../../styles/constants.scss';
+@import 'src/styles/constants.scss';
 
 div.loginForm {
   padding: 20px!important;
@@ -6,6 +6,9 @@ div.loginForm {
   border: 1px solid $c-base-light;
   width: 360px;
   margin-bottom: auto!important;
+  height: 480px;
+  display: flex;
+  flex-flow: column nowrap;
 
   img {
     border: 1px solid $c-base-light;

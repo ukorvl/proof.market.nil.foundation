@@ -4,7 +4,7 @@
  */
 
 /**
- * Circuit.
+ * Login data.
  */
 export type LoginData = {
     /**

@@ -5,22 +5,22 @@
 
 import { ReactElement, ReactNode } from 'react';
 import { FullScreenView } from 'src/components/common';
-import styles from './LoginContainer.module.scss';
+import styles from './AuthContainer.module.scss';
 
 /**
  * Props.
  */
-type LoginContainerProps = {
+type AuthContainerProps = {
     children: ReactNode;
 };
 
 /**
- * Login container.
+ * Auth container.
  *
- * @param {LoginContainerProps} props Props.
+ * @param {AuthContainerProps} props Props.
  * @returns React component.
  */
-export const LoginContainer = ({ children }: LoginContainerProps): ReactElement => {
+export const AuthContainer = ({ children }: AuthContainerProps): ReactElement => {
     return (
         <FullScreenView
             showFullScreen

@@ -7,7 +7,6 @@ import { ReactElement } from 'react';
 import { Container, Navbar, Nav } from '@nilfoundation/react-components';
 import { Link, useLocation } from 'react-router-dom';
 import { navigationLinks } from 'src/constants';
-import { Path } from 'src/routing';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../UserMenu';
 import { Breadcrumbs } from '../BreadCrumbs';
@@ -33,7 +32,6 @@ export const Header = (): ReactElement => {
                         <Nav.Item
                             key={title}
                             active={pathname === path}
-                            disabled={path === Path.proofGenerators}
                             renderLink={({ active: _, ...props }) => (
                                 <Link
                                     to={path}

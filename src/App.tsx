@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import * as Sentry from '@sentry/react';
 import { Header, Footer, ProtectedRoute } from './components';
-import { routes, loginRoute } from './routing';
+import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
 /**
@@ -26,6 +26,10 @@ function App(): ReactElement {
                     >
                         <Suspense fallback={<Spinner grow />}>
                             <Routes>
+                                <Route
+                                    path={registerRoute.path}
+                                    element={<registerRoute.Component />}
+                                />
                                 <Route
                                     path={loginRoute.path}
                                     element={<loginRoute.Component />}

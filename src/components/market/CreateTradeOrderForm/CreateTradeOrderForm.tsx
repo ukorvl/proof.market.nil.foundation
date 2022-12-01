@@ -107,7 +107,7 @@ export const CreateTradeOrderForm = ({
                         hintText="Proof generation time"
                     >
                         {props => (
-                            <InputGroup>
+                            <InputGroup className={styles.control}>
                                 <Input
                                     type="number"
                                     {...props}
@@ -127,7 +127,7 @@ export const CreateTradeOrderForm = ({
                         hintText="Order cancellation time"
                     >
                         {props => (
-                            <InputGroup>
+                            <InputGroup className={styles.control}>
                                 <Input
                                     type="number"
                                     {...props}

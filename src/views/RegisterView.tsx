@@ -4,17 +4,17 @@
  */
 
 import { ReactElement } from 'react';
-import { AuthContainer, LoginForm } from '../components';
+import { AuthContainer, RegisterForm } from 'src/components';
 
 /**
- * Login view.
+ * Register user view.
  *
  * @returns React component.
  */
-const LoginView = (): ReactElement => (
+const RegisterView = (): ReactElement => (
     <AuthContainer>
-        <LoginForm />
+        <RegisterForm />
     </AuthContainer>
 );
 
-export default LoginView;
+export default RegisterView;

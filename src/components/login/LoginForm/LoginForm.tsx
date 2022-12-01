@@ -5,7 +5,6 @@
 
 import { ReactElement, useRef, useState, useEffect } from 'react';
 import {
-    Jumbotron,
     Image,
     InputGroup,
     Icon,
@@ -21,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { LoginData } from 'src/models';
 import { login } from 'src/api';
 import { useAuth } from 'src/hooks';
+import { AuthCard } from '../AuthCard';
 import './LoginForm.scss';
 
 /**
@@ -68,14 +68,14 @@ export const LoginForm = (): ReactElement => {
     const { ref, ...restRegister } = register('username', { required: true });
 
     return (
-        <Jumbotron className="loginForm">
+        <AuthCard>
             <Image
                 source={`${process.env.PUBLIC_URL}/logo512x384.png`}
                 alt="=nil; Foundation logo"
                 responsive
                 rounded
             />
-            <Form onSubmit={undefined}>
+            <Form>
                 <Form.Group hasError={!!errors['username']}>
                     <InputGroup size={Size.lg}>
                         <InputGroup.Addon>
@@ -139,6 +139,6 @@ export const LoginForm = (): ReactElement => {
                     </div>
                 </CSSTransition>
             </Form>
-        </Jumbotron>
+        </AuthCard>
     );
 };

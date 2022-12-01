@@ -14,3 +14,4 @@ export * from './FileUploader';
 export * from './Table';
 export * from './FullScreenView';
 export * from './ClicableIcon';
+export * from './SocialLinks';

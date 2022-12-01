@@ -14,7 +14,7 @@ type ClicableIconProps = {
 } & ButtonProps<HTMLButtonElement>;
 
 /**
- * Button, that looks like icon.
+ * Button, that looks like an icon.
  *
  * @param {ClicableIconProps} props Props.
  * @returns React component.
