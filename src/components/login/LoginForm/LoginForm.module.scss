@@ -1,29 +1,16 @@
 @import 'src/styles/constants.scss';
 
-div.loginForm {
-  padding: 20px!important;
-  padding-top: 24px!important;
+.logoImage {
   border: 1px solid $c-base-light;
-  width: 360px;
-  margin-bottom: auto!important;
-  height: 480px;
-  display: flex;
-  flex-flow: column nowrap;
+  margin-bottom: 24px;
+  width: 100%;
+}
 
-  img {
-    border: 1px solid $c-base-light;
-    margin-bottom: 24px;
-    width: 100%;
-  }
+.icon {
+  width: 20px;
+}
 
-  i {
-    width: 20px;
-  }
-
-  .form-group {
-    margin-bottom: 18px;
-  }
-
+.control {
   /* Change Autocomplete styles in Chrome*/
   input:-webkit-autofill,
   input:-webkit-autofill:hover,

@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, ReactNode } from 'react';
-import { FullScreenView } from 'src/components/common';
+import { Copyright, FullScreenView } from 'src/components';
 import styles from './AuthContainer.module.scss';
 
 /**
@@ -27,6 +27,9 @@ export const AuthContainer = ({ children }: AuthContainerProps): ReactElement =>
             className={styles.loginContainer}
         >
             {children}
+            <div className={styles.copyright}>
+                <Copyright />
+            </div>
         </FullScreenView>
     );
 };

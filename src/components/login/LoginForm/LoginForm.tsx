@@ -21,7 +21,7 @@ import { LoginData } from 'src/models';
 import { login } from 'src/api';
 import { useAuth } from 'src/hooks';
 import { AuthCard } from '../AuthCard';
-import './LoginForm.scss';
+import styles from './LoginForm.module.scss';
 
 /**
  * Password input type.
@@ -74,12 +74,19 @@ export const LoginForm = (): ReactElement => {
                 alt="=nil; Foundation logo"
                 responsive
                 rounded
+                className={styles.logoImage}
             />
             <Form>
                 <Form.Group hasError={!!errors['username']}>
-                    <InputGroup size={Size.lg}>
+                    <InputGroup
+                        size={Size.lg}
+                        className={styles.control}
+                    >
                         <InputGroup.Addon>
-                            <Icon iconName="fa-solid fa-user" />
+                            <Icon
+                                iconName="fa-solid fa-user"
+                                className={styles.icon}
+                            />
                         </InputGroup.Addon>
                         <Input
                             type="text"
@@ -95,9 +102,15 @@ export const LoginForm = (): ReactElement => {
                     </InputGroup>
                 </Form.Group>
                 <Form.Group hasError={!!errors['password']}>
-                    <InputGroup size={Size.lg}>
+                    <InputGroup
+                        size={Size.lg}
+                        className={styles.control}
+                    >
                         <InputGroup.Addon>
-                            <Icon iconName="fa-solid fa-lock" />
+                            <Icon
+                                iconName="fa-solid fa-lock"
+                                className={styles.icon}
+                            />
                         </InputGroup.Addon>
                         <Input
                             type={pwdInputType}
@@ -109,7 +122,10 @@ export const LoginForm = (): ReactElement => {
                         />
                         <InputGroup.Buttons>
                             <Button onClick={switchPwdInputType}>
-                                <Icon iconName={`fa-solid ${pwdInputIconName}`} />
+                                <Icon
+                                    iconName={`fa-solid ${pwdInputIconName}`}
+                                    className={styles.icon}
+                                />
                             </Button>
                         </InputGroup.Buttons>
                     </InputGroup>

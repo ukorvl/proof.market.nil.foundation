@@ -6,6 +6,7 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { SocialLinks } from '../SocialLinks';
+import { Copyright } from '../Copyright';
 import styles from './Footer.module.scss';
 
 /**
@@ -21,7 +22,9 @@ export const Footer = (): ReactElement => (
             </Col>
         </Row>
         <Row className="text-center">
-            <Col>{`Copyright © =nil; Foundation ${new Date().getFullYear()}`}</Col>
+            <Col>
+                <Copyright />
+            </Col>
         </Row>
     </Container>
 );

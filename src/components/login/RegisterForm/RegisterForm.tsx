@@ -21,6 +21,7 @@ import { SocialLinks } from 'src/components/common';
 import { emailRegExp } from 'src/utils';
 import { AuthCard } from '../AuthCard';
 import styles from './RegisterForm.module.scss';
+import { SuccessRegisterMessage } from './SuccessRegisterMessage';
 
 /**
  * Register form.
@@ -124,6 +125,7 @@ export const RegisterForm = (): ReactElement => {
                     </h5>
                     <SocialLinks />
                 </div>
+                <SuccessRegisterMessage />
             </Form>
         </AuthCard>
     );

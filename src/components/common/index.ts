@@ -15,3 +15,4 @@ export * from './Table';
 export * from './FullScreenView';
 export * from './ClicableIcon';
 export * from './SocialLinks';
+export * from './Copyright';
