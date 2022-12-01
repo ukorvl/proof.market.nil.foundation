@@ -14,3 +14,14 @@
 .control {
   margin-top: 12px;
 }
+
+.form {
+  position: relative;
+}
+
+.successMessage {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  bottom: 140px;
+}

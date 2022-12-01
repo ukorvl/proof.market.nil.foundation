@@ -20,8 +20,8 @@ import { RegisterData } from 'src/models';
 import { SocialLinks } from 'src/components/common';
 import { emailRegExp } from 'src/utils';
 import { AuthCard } from '../AuthCard';
-import styles from './RegisterForm.module.scss';
 import { SuccessRegisterMessage } from './SuccessRegisterMessage';
+import styles from './RegisterForm.module.scss';
 
 /**
  * Register form.
@@ -35,8 +35,9 @@ export const RegisterForm = (): ReactElement => {
 
     const {
         register,
-        formState: { isSubmitting, isValid, errors },
+        formState: { isSubmitting, isValid, errors, isSubmitSuccessful },
         handleSubmit,
+        reset,
     } = useForm<RegisterData>({
         mode: 'onChange',
     });
@@ -44,12 +45,14 @@ export const RegisterForm = (): ReactElement => {
     const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
         setErrorMessage('');
 
-        await fetch(`https://formspree.io/${process.env.SITE_EMAIL}`, {
+        await fetch(`https://formspree.io/${process.env.REACT_APP_SITE_EMAIL}`, {
             method: 'POST',
             body: JSON.stringify(data),
         })
             .then(response => {
                 if (response.status >= 200 && response.status <= 299) {
+                    reset();
+
                     return response.json();
                 } else {
                     throw Error(response.statusText);
@@ -66,7 +69,7 @@ export const RegisterForm = (): ReactElement => {
 
     return (
         <AuthCard>
-            <Form>
+            <Form className={styles.form}>
                 <h4 className={styles.title}>Request your beta-test credentials via email</h4>
                 <div className={`${styles.description} text-muted`}>
                     If you would like to get involved early, leave email below and we will let you
@@ -125,7 +128,7 @@ export const RegisterForm = (): ReactElement => {
                     </h5>
                     <SocialLinks />
                 </div>
-                <SuccessRegisterMessage />
+                {isSubmitSuccessful && <SuccessRegisterMessage />}
             </Form>
         </AuthCard>
     );
