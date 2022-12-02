@@ -37,4 +37,16 @@ export type CircuitDto = {
      * Bp.
      */
     bp: string;
+    /**
+     * Internal id.
+     */
+    _id: string;
+    /**
+     * Internal key.
+     */
+    _key: string;
+    /**
+     * Internal update key.
+     */
+    _rev: string;
 };

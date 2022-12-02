@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import ReactJson from 'react-json-view';
 import { jsonViewerTheme } from 'src/constants';
-import { Circuit } from 'src/models';
+import { Circuit, getCircuitPublicData } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
 
 /**
@@ -26,7 +26,7 @@ export const CircuitJsonView = ({ circuit }: CircuitJsonViewProps): ReactElement
     return (
         <div className={styles.jsonView}>
             <ReactJson
-                src={circuit}
+                src={getCircuitPublicData(circuit)}
                 collapsed={1}
                 name={null}
                 displayDataTypes={false}
