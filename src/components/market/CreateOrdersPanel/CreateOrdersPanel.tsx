@@ -45,7 +45,7 @@ export const CreateOrdersPanel = (): ReactElement => {
  */
 const tabFactory = (tab: TradeOrderType, selectedCircuitId?: string) => {
     if (selectedCircuitId === undefined) {
-        return <h4>Please, select circuit to create orders.</h4>;
+        return <h5>Please, select circuit to create orders.</h5>;
     }
 
     switch (tab) {

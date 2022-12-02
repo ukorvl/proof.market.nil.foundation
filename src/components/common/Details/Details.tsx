@@ -24,6 +24,7 @@ type DetailsProps = {
     defaultOpen?: boolean;
     bottomIndent?: boolean;
     unmountOnClose?: boolean;
+    disabled?: boolean;
 };
 
 /**
@@ -38,6 +39,7 @@ export const Details = ({
     defaultOpen = true,
     bottomIndent = true,
     unmountOnClose = false,
+    disabled = false,
 }: DetailsProps): ReactElement => {
     const [isOpen, setIsOpen] = useState(defaultOpen);
     const toggleIsOpen = () => setIsOpen(!isOpen);
@@ -47,8 +49,12 @@ export const Details = ({
             return;
         }
 
-        toggleIsOpen();
+        !disabled && toggleIsOpen();
     };
+
+    const iconClassName = `fa-solid fa-angle-${isOpen ? 'up' : 'down'} ${
+        disabled ? 'text-muted' : ''
+    }`;
 
     return (
         <>
@@ -60,7 +66,7 @@ export const Details = ({
                 tabIndex={0}
             >
                 {title}
-                <Icon iconName={`fa-solid fa-angle-${isOpen ? 'up' : 'down'}`} />
+                <Icon iconName={iconClassName} />
             </div>
             <>
                 {(!unmountOnClose || isOpen) &&

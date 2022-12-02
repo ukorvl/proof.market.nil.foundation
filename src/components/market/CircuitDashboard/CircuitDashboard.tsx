@@ -6,6 +6,7 @@
 import { ReactElement, useState } from 'react';
 import { Details } from 'src/components';
 import { ChartType, DateUnit } from 'src/enums';
+import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { useLocalStorage } from 'src/hooks';
 import { DashboardCard, FullScreenView } from '../../common';
 import { ChartTypeSelect } from './ChartTypeSelect';
@@ -22,6 +23,7 @@ import './CircuitDashboard.scss';
  * @returns React component.
  */
 export const CircuitDashboard = (): ReactElement => {
+    const currentCircuit = useAppSelector(selectCurrentCircuit);
     const [chartType, setChartType] = useState(ChartType.proofCostChart);
     const [fullScreen, setFullScreen] = useState(false);
     const [dataRange, setDataRange] = useLocalStorage<DateUnit>(
@@ -36,7 +38,7 @@ export const CircuitDashboard = (): ReactElement => {
                     <ChartTypeSelect
                         chartType={chartType}
                         onSelectChartType={setChartType}
-                        disabled={false}
+                        disabled={!currentCircuit}
                     />
                     <FullScreenView
                         showFullScreen={fullScreen}
@@ -47,10 +49,10 @@ export const CircuitDashboard = (): ReactElement => {
                             <DataRangeSelect
                                 currentDataRange={dataRange}
                                 setDataRange={setDataRange}
-                                disabled={false}
+                                disabled={!currentCircuit}
                             />
                             <DashboardToolbar
-                                disabled={false}
+                                disabled={!currentCircuit}
                                 isFullscreen={fullScreen}
                                 setFullScreen={setFullScreen}
                             />

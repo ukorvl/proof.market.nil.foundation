@@ -41,7 +41,7 @@ export const ManageOrdersPanel = (): ReactElement => {
                             tab === ManageOrdersTab.active ? activeOrdersData : historyOrdersData,
                         )
                     ) : (
-                        <h4>Please, select circuit to display orders.</h4>
+                        <h5>Please, select circuit to display orders.</h5>
                     )}
                 </div>
             </Details>
