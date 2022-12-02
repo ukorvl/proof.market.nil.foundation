@@ -2,26 +2,26 @@
 @import '/src/styles/mixins/primaryLink';
 @import 'src/styles/constants.scss';
 
-.customBreadcumbs {
+.breadcrumbs {
   padding: 0!important;
   margin-top: 0;
   margin-bottom: 0!important;
   display: inline-block;
   margin-right: auto;
+}
+
+.item {
+  height: 64px;
+  display: inline-flex!important;
+  align-items: center;
 
   @include responsive(sm) {
-    > li:last-child {
+    > &:last-child {
       display: none!important;
     }
   }
 
-  > li {
-    height: 64px;
-    display: inline-flex!important;
-    align-items: center;
-  }
-
-  > li > a {
+  a {
     padding: 10px 15px;
     font-size: 20px;
     font-weight: 400;
@@ -29,6 +29,6 @@
 
     @include primaryLink {
       text-decoration: underline 1.5px;
-    };
+    }
   }
 }
