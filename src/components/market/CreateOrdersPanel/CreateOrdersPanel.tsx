@@ -21,6 +21,7 @@ import './CreateOrdersPanel.scss';
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const user = useAppSelector(s => s.userState.user);
 
     return (
         <DashboardCard>
@@ -30,9 +31,11 @@ export const CreateOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
-                    <Overlay>
-                        <RequestRegisterCard />
-                    </Overlay>
+                    {!user && (
+                        <Overlay>
+                            <RequestRegisterCard />
+                        </Overlay>
+                    )}
                     {tabFactory(tab, selectedCircuitId)}
                 </div>
             </Details>
