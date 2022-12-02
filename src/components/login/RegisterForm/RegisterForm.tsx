@@ -45,6 +45,8 @@ export const RegisterForm = (): ReactElement => {
     const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
         setErrorMessage('');
 
+        data._subject = 'Message from proof.market';
+
         await fetch(`https://formspree.io/${process.env.REACT_APP_SITE_EMAIL}`, {
             method: 'POST',
             body: JSON.stringify(data),
@@ -123,8 +125,9 @@ export const RegisterForm = (): ReactElement => {
                 </CSSTransition>
                 <div className={styles.social}>
                     <h5 className={styles.title}>
-                        Join our Discord’s proof-market channel/Telegram for questions/to stay
-                        updated
+                        {
+                            "Join our Discord's proof-market channel/Telegram for questions/to stay updated"
+                        }
                     </h5>
                     <SocialLinks />
                 </div>

@@ -11,4 +11,8 @@ export type RegisterData = {
      * User email.
      */
     email: string;
+    /**
+     * Email subject.
+     */
+    _subject?: string;
 };
