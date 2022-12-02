@@ -17,3 +17,4 @@ export * from './ClicableIcon';
 export * from './SocialLinks';
 export * from './Copyright';
 export * from './NetConnectionHandler';
+export * from './Overlay';

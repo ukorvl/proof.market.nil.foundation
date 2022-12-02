@@ -6,6 +6,9 @@
 import { ReactElement } from 'react';
 import { Button, Size, Variant, Spinner } from '@nilfoundation/react-components';
 
+/**
+ * Props.
+ */
 type ToolbarPanelProps = {
     onAccept: () => void;
     onDecline: () => void;

@@ -6,10 +6,11 @@
 import { ReactElement, useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
-import { DashboardCard, Details } from '../../common';
+import { DashboardCard, Details, Overlay } from '../../common';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateAskForm } from '../CreateAskForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
+import { RequestRegisterCard } from './RequestRegisterCard';
 import './CreateOrdersPanel.scss';
 
 /**
@@ -29,6 +30,9 @@ export const CreateOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
+                    <Overlay>
+                        <RequestRegisterCard />
+                    </Overlay>
                     {tabFactory(tab, selectedCircuitId)}
                 </div>
             </Details>
