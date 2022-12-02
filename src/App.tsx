@@ -40,9 +40,9 @@ function App(): ReactElement {
                                             key={path}
                                             path={path}
                                             element={
-                                                <ProtectedRoute>
-                                                    <Component />
-                                                </ProtectedRoute>
+                                                // <ProtectedRoute>
+                                                <Component />
+                                                // </ProtectedRoute>
                                             }
                                         />
                                     ))}

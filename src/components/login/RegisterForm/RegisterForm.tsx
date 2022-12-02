@@ -36,7 +36,7 @@ export const RegisterForm = (): ReactElement => {
 
     const {
         register,
-        formState: { isSubmitting, isValid, errors },
+        formState: { isSubmitting, isValid, errors, isSubmitSuccessful },
         handleSubmit,
         reset,
     } = useForm<RegisterData>({
@@ -53,7 +53,7 @@ export const RegisterForm = (): ReactElement => {
             body: JSON.stringify(data),
         })
             .then(response => {
-                if (response.status >= 200 && response.status <= 299) {
+                if (response.status >= 200 && response.status <= 399) {
                     reset();
 
                     return response.json();
@@ -124,6 +124,7 @@ export const RegisterForm = (): ReactElement => {
                         {errorMessage}
                     </div>
                 </CSSTransition>
+                {isSubmitSuccessful && !errorMessage && <div>Thanks for registration!</div>}
                 <div className={styles.social}>
                     <h5 className={styles.title}>
                         {

@@ -146,7 +146,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                 >
                                     <ClicableIcon
                                         iconName="fa-solid fa-ban"
-                                        disabled={processing}
+                                        disabled={true} // Temp
                                         onClick={() => setSelectedRow(cell.row)}
                                     />
                                 </TCell>
