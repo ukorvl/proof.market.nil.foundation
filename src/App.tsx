@@ -7,7 +7,7 @@ import { ReactElement, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import * as Sentry from '@sentry/react';
-import { Header, Footer, ProtectedRoute } from './components';
+import { Header, Footer, ProtectedRoute, NetConnectionHandler } from './components';
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -25,27 +25,29 @@ function App(): ReactElement {
                         stickyHeader
                     >
                         <Suspense fallback={<Spinner grow />}>
-                            <Routes>
-                                <Route
-                                    path={registerRoute.path}
-                                    element={<registerRoute.Component />}
-                                />
-                                <Route
-                                    path={loginRoute.path}
-                                    element={<loginRoute.Component />}
-                                />
-                                {routes.map(({ path, Component }) => (
+                            <NetConnectionHandler>
+                                <Routes>
                                     <Route
-                                        key={path}
-                                        path={path}
-                                        element={
-                                            <ProtectedRoute>
-                                                <Component />
-                                            </ProtectedRoute>
-                                        }
+                                        path={registerRoute.path}
+                                        element={<registerRoute.Component />}
                                     />
-                                ))}
-                            </Routes>
+                                    <Route
+                                        path={loginRoute.path}
+                                        element={<loginRoute.Component />}
+                                    />
+                                    {routes.map(({ path, Component }) => (
+                                        <Route
+                                            key={path}
+                                            path={path}
+                                            element={
+                                                <ProtectedRoute>
+                                                    <Component />
+                                                </ProtectedRoute>
+                                            }
+                                        />
+                                    ))}
+                                </Routes>
+                            </NetConnectionHandler>
                         </Suspense>
                     </Layout>
                 </BrowserRouter>

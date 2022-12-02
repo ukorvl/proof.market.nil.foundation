@@ -16,11 +16,12 @@ import {
 } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { RegisterData } from 'src/models';
+import { Path } from 'src/routing';
 import { SocialLinks } from 'src/components/common';
 import { emailRegExp } from 'src/utils';
 import { AuthCard } from '../AuthCard';
-import { SuccessRegisterMessage } from './SuccessRegisterMessage';
 import styles from './RegisterForm.module.scss';
 
 /**
@@ -35,7 +36,7 @@ export const RegisterForm = (): ReactElement => {
 
     const {
         register,
-        formState: { isSubmitting, isValid, errors, isSubmitSuccessful },
+        formState: { isSubmitting, isValid, errors },
         handleSubmit,
         reset,
     } = useForm<RegisterData>({
@@ -131,7 +132,9 @@ export const RegisterForm = (): ReactElement => {
                     </h5>
                     <SocialLinks />
                 </div>
-                {isSubmitSuccessful && <SuccessRegisterMessage />}
+                <div className={styles.successMessage}>
+                    <Link to={Path.root}>Continue exploring</Link>
+                </div>
             </Form>
         </AuthCard>
     );

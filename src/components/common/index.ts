@@ -16,3 +16,4 @@ export * from './FullScreenView';
 export * from './ClicableIcon';
 export * from './SocialLinks';
 export * from './Copyright';
+export * from './NetConnectionHandler';
