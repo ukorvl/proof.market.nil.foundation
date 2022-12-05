@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import OfflineView from 'src/views/OfflineView';
 
 /**

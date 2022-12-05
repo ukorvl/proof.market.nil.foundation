@@ -16,10 +16,10 @@ import styles from './UserMenu.module.scss';
  * @returns React component.
  */
 export const UserMenu = (): ReactElement => {
-    const { user, processLogout } = useAuth();
+    const { user, isReadonly, processLogout } = useAuth();
     const navigate = useNavigate();
 
-    if (!user) {
+    if (!user || isReadonly) {
         return (
             <Button
                 className={styles.button}

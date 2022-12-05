@@ -21,6 +21,9 @@ export const loginRoute: RouteModel = {
     Component: LoginView,
 };
 
+/**
+ * Register route.
+ */
 export const registerRoute: RouteModel = {
     path: Path.register,
     Component: RegisterView,

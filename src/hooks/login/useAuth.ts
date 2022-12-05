@@ -18,6 +18,7 @@ import { getUserFromJwt } from 'src/utils';
 type UseAuthReturnType = {
     user: string | null;
     isAuthentificated: boolean;
+    isReadonly: boolean;
     processLogin: (jwt: string) => void;
     processLogout: () => void;
 };
@@ -34,6 +35,9 @@ export const useAuth = (): UseAuthReturnType => {
     const user = useAppSelector(selectCurrentUser);
     const isAuthentificated = useMemo(() => {
         return !!user;
+    }, [user]);
+    const isReadonly = useMemo(() => {
+        return user === process.env.REACT_APP_READONLY_USER;
     }, [user]);
 
     /**
@@ -70,5 +74,6 @@ export const useAuth = (): UseAuthReturnType => {
         isAuthentificated,
         processLogin,
         processLogout,
+        isReadonly,
     };
 };

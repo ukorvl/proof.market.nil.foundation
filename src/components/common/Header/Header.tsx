@@ -8,7 +8,7 @@ import { Container, Navbar, Nav } from '@nilfoundation/react-components';
 import { Link, useLocation } from 'react-router-dom';
 import { navigationLinks } from 'src/constants';
 import { MobileMenu } from '../MobileMenu';
-import { UserMenu } from '../UserMenu';
+import { UserMenu } from '../../login';
 import { Breadcrumbs } from '../BreadCrumbs';
 import './Header.scss';
 

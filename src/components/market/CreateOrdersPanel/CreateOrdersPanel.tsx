@@ -6,6 +6,7 @@
 import { ReactElement, useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
+import { useAuth } from 'src/hooks';
 import { DashboardCard, Details, Overlay } from '../../common';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateAskForm } from '../CreateAskForm';
@@ -21,7 +22,7 @@ import './CreateOrdersPanel.scss';
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
-    const user = useAppSelector(s => s.userState.user);
+    const { user, isReadonly } = useAuth();
 
     return (
         <DashboardCard>
@@ -31,7 +32,7 @@ export const CreateOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
-                    {!user && (
+                    {(!user || isReadonly) && (
                         <Overlay>
                             <RequestRegisterCard />
                         </Overlay>

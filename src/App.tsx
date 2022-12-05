@@ -7,7 +7,13 @@ import { ReactElement, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import * as Sentry from '@sentry/react';
-import { Header, Footer, ProtectedRoute, NetConnectionHandler } from './components';
+import {
+    Header,
+    Footer,
+    ProtectedRoute,
+    NetConnectionHandler,
+    ReadonlyProvider,
+} from './components';
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -40,9 +46,11 @@ function App(): ReactElement {
                                             key={path}
                                             path={path}
                                             element={
-                                                // <ProtectedRoute>
-                                                <Component />
-                                                // </ProtectedRoute>
+                                                <ReadonlyProvider>
+                                                    <ProtectedRoute>
+                                                        <Component />
+                                                    </ProtectedRoute>
+                                                </ReadonlyProvider>
                                             }
                                         />
                                     ))}
