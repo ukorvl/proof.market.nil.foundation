@@ -122,7 +122,6 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                         const { key, ...rest } = getCellProps();
 
                         if (column.id === 'status') {
-                            const title = value === 'created' ? 'rrrrr' : 'In progress';
                             const icon = `fa-solid fa-${
                                 value === 'created' ? 'circle-plus' : 'spinner'
                             }`;
@@ -133,7 +132,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                     {...rest}
                                 >
                                     <Icon
-                                        title={title}
+                                        title={value}
                                         iconName={icon}
                                     />
                                 </TCell>
