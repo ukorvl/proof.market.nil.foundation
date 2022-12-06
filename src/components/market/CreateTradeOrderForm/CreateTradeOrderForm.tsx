@@ -151,7 +151,7 @@ export const CreateTradeOrderForm = ({
                 variant={Variant.success}
                 onClick={onSubmit}
                 size={Size.lg}
-                disabled={!isValid || isSubmitting || !user || !isReadonly}
+                disabled={!isValid || isSubmitting || !user || isReadonly}
             >
                 Submit
                 {isSubmitting && <Spinner />}

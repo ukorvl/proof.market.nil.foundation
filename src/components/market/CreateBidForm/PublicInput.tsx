@@ -35,7 +35,7 @@ export const PublicInput = (): ReactElement => {
                     name="public_input"
                     control={control}
                     rules={{
-                        validate: val => val !== null,
+                        validate: val => val !== null && !!val,
                     }}
                     render={({ field: { ref: _, ...rest } }) => (
                         <FileUploader
