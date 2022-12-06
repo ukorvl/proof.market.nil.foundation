@@ -83,14 +83,14 @@ const CircuitDetailedInfoFactory = ({
     circuit: Circuit;
 }): ReactElement => {
     switch (type) {
-        case (type = DetailedInfoTab.info):
+        case DetailedInfoTab.info:
             return (
                 <>
                     <CircuitInfoCard circuit={circuit} />
                     <CircuitJsonView circuit={circuit} />
                 </>
             );
-        case (type = DetailedInfoTab.stats):
+        case DetailedInfoTab.stats:
             return <CircuitStatsCard circuitId={circuit.id} />;
         default:
             return <></>;
