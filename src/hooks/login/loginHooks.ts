@@ -12,6 +12,8 @@ import { selectCurrentUser, UpdateUser, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
 
+const readonlyUser = process.env.REACT_APP_READONLY_USER;
+
 /**
  * Provides access to auth state.
  *
@@ -27,7 +29,7 @@ export const useAuth = (): {
         return !!user;
     }, [user]);
     const isReadonly = useMemo(() => {
-        return user === process.env.REACT_APP_READONLY_USER;
+        return user === readonlyUser;
     }, [user]);
 
     return {
@@ -54,6 +56,10 @@ export const useLogin = (): ((jwt: string) => void) => {
             user && dispatch(UpdateUser(user));
 
             navigate(Path.root, { replace: true });
+
+            if (user === readonlyUser) {
+                return;
+            }
 
             notificationActions?.create({
                 title: 'Login success',
