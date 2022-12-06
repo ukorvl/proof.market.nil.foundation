@@ -4,7 +4,7 @@
  */
 
 import { ReactElement } from 'react';
-import { Button, Size, Variant } from '@nilfoundation/react-components';
+import { Button, Size, useBreakpoints, Variant } from '@nilfoundation/react-components';
 import { useNavigate } from 'react-router-dom';
 import { Path } from 'src/routing';
 
@@ -15,6 +15,7 @@ import { Path } from 'src/routing';
  */
 export const RequestRegisterCard = (): ReactElement => {
     const navigate = useNavigate();
+    const { lg } = useBreakpoints();
 
     return (
         <div className="requestRegisterCard">
@@ -23,6 +24,7 @@ export const RequestRegisterCard = (): ReactElement => {
                 variant={Variant.success}
                 size={Size.lg}
                 onClick={() => navigate(Path.register)}
+                block={!lg}
             >
                 Request beta-test credentials
             </Button>
