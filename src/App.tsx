@@ -12,7 +12,7 @@ import {
     Footer,
     ProtectedRoute,
     NetConnectionHandler,
-    ReadonlyProvider,
+    ReadonlyAccessProvider,
 } from './components';
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
@@ -46,11 +46,11 @@ function App(): ReactElement {
                                             key={path}
                                             path={path}
                                             element={
-                                                <ReadonlyProvider>
+                                                <ReadonlyAccessProvider fallback={<Spinner grow />}>
                                                     <ProtectedRoute>
                                                         <Component />
                                                     </ProtectedRoute>
-                                                </ReadonlyProvider>
+                                                </ReadonlyAccessProvider>
                                             }
                                         />
                                     ))}

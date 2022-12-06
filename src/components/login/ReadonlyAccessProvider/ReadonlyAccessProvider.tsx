@@ -10,7 +10,7 @@ import { useAuth } from 'src/hooks';
 /**
  * Props.
  */
-type ReadonlyProviderProps = {
+type ReadonlyAccessProviderProps = {
     children?: ReactNode;
     fallback?: ReactNode;
     errorView?: ReactNode;
@@ -19,14 +19,14 @@ type ReadonlyProviderProps = {
 /**
  * Provider automatic auth with readonly user.
  *
- * @param {ReadonlyProviderProps} props Props.
+ * @param {ReadonlyAccessProviderProps} props Props.
  * @returns React component.
  */
-export const ReadonlyProvider = ({
+export const ReadonlyAccessProvider = ({
     children,
     fallback,
     errorView,
-}: ReadonlyProviderProps): ReactElement => {
+}: ReadonlyAccessProviderProps): ReactElement => {
     const [error, setError] = useState(false);
     const { processLogin, isAuthentificated } = useAuth();
 
@@ -50,8 +50,8 @@ export const ReadonlyProvider = ({
             }
         };
 
-        loginWithReadonly(readonlyUser);
-    }, [processLogin]);
+        !isAuthentificated && loginWithReadonly(readonlyUser);
+    }, [processLogin, isAuthentificated]);
 
     if (error) {
         return <>{errorView}</>;

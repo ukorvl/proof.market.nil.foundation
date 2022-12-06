@@ -16,7 +16,7 @@ import {
     InputGroup,
 } from '@nilfoundation/react-components';
 import { CreateTradeOrder } from 'src/models';
-import { useAppSelector } from 'src/redux';
+import { useAuth } from 'src/hooks';
 import { Details } from '../../common';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { BaseFormGroup } from './BaseFormGroup';
@@ -57,7 +57,7 @@ export const CreateTradeOrderForm = ({
         setValue,
         formState: { isSubmitting, isValid, errors },
     } = useFormContext<CreateTradeOrder>();
-    const user = useAppSelector(s => s.userState.user);
+    const { user, isReadonly } = useAuth();
 
     useEffect(() => {
         if (!selectedValues) {
@@ -102,7 +102,7 @@ export const CreateTradeOrderForm = ({
                     }
                     bottomIndent={false}
                     defaultOpen={false}
-                    disabled={!user}
+                    disabled={!user || !isReadonly}
                 >
                     <BaseFormGroup
                         hasError={!!errors['eval_time']}
@@ -152,7 +152,7 @@ export const CreateTradeOrderForm = ({
                 variant={Variant.success}
                 onClick={onSubmit}
                 size={Size.lg}
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid || isSubmitting || !user || !isReadonly}
             >
                 Submit
                 {isSubmitting && <Spinner />}
