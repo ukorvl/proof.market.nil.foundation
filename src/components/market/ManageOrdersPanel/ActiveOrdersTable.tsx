@@ -12,6 +12,7 @@ import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
+import { useAuth } from 'src/hooks';
 import { ToolbarPanel } from './ToolbarPanel';
 
 /**
@@ -75,6 +76,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
     const [selectedRow, setSelectedRow] = useState<Row<ManageOrdersData> | null>(null);
     const [processing, setProcessing] = useState(false);
     const dispatch = useDispatch();
+    const { isReadonly } = useAuth();
 
     const onAcceptRemoveOrder = useCallback(async () => {
         setProcessing(true);
@@ -146,7 +148,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                                 >
                                     <ClicableIcon
                                         iconName="fa-solid fa-ban"
-                                        disabled={true} // Temp
+                                        disabled={isReadonly || processing}
                                         onClick={() => setSelectedRow(cell.row)}
                                     />
                                 </TCell>
@@ -172,7 +174,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                 </TRow>
             );
         },
-        [processing, setSelectedRow],
+        [processing, setSelectedRow, isReadonly],
     );
 
     const renderRows = useCallback(

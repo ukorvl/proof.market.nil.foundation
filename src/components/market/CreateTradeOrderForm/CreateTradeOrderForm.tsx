@@ -102,7 +102,6 @@ export const CreateTradeOrderForm = ({
                     }
                     bottomIndent={false}
                     defaultOpen={false}
-                    disabled={!user || !isReadonly}
                 >
                     <BaseFormGroup
                         hasError={!!errors['eval_time']}

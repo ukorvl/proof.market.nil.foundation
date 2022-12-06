@@ -31,7 +31,7 @@ export const CircuitStatsCard = ({ circuitId }: CircuitStatsCardProps): ReactEle
     switch (true) {
         case isLoadingStats && stats === undefined:
             return <Spinner grow />;
-        case stats === undefined:
+        case !stats:
             return <h4>No data.</h4>;
         default:
             return (
