@@ -39,9 +39,12 @@ export const CreateBidForm = (): ReactElement => {
         try {
             const bid = await createBid(data);
             dispatch(AddBid(bid));
+
+            const { cost, eval_time } = data;
+
             notificationActions?.create({
                 title: 'Order successfully created',
-                message: `Cost: ${data.cost}, eval_time: ${data.eval_time}`,
+                message: `Cost: ${cost}${eval_time ? `, eval_time: ${eval_time}` : ''}`,
                 variant: Variant.success,
             });
             form.reset();

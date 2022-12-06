@@ -38,9 +38,12 @@ export const CreateAskForm = (): ReactElement => {
         try {
             const ask = await createAsk(data);
             dispatch(AddAsk(ask));
+
+            const { cost, eval_time } = data;
+
             notificationActions?.create({
                 title: 'Order successfully created',
-                message: `Cost: ${data.cost}, eval_time: ${data.eval_time}`,
+                message: `Cost: ${cost}${eval_time ? `, eval_time: ${eval_time}` : ''}`,
                 variant: Variant.success,
             });
             form.reset();
