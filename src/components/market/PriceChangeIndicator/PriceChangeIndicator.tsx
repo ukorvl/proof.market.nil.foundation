@@ -39,7 +39,7 @@ export const PriceChangeIndicator = ({
     return (
         <div className={computedClassName}>
             <Icon iconName={iconName} />
-            {`${change.toFixed(toFixed)}%`}
+            {`${Math.abs(change).toFixed(toFixed)}%`}
         </div>
     );
 };
