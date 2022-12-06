@@ -30,7 +30,7 @@ export const ProofTimeGenChart = (): ReactElement => {
     return (
         <ChartTemplate
             loadingData={isLoadingChartData}
-            chartName="Proof Generation Time, ms"
+            chartName="Proof Generation Time, min"
             seriesData={proofGenTimeData}
             seriesType="Line"
             seriesOptions={seriesOptions}

@@ -69,7 +69,7 @@ export const OrderBookTable = memo(function OrderBookTable({
                             {lastOrderData.eval_time && (
                                 <div className="text-muted">{`${lastOrderData.eval_time.toFixed(
                                     4,
-                                )} ms`}</div>
+                                )} min`}</div>
                             )}
                         </div>
                     )}
