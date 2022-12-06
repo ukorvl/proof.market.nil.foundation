@@ -5,7 +5,7 @@
 
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { login } from 'src/api';
-import { useAuth } from 'src/hooks';
+import { useAuth, useLogin } from 'src/hooks';
 
 /**
  * Props.
@@ -28,7 +28,8 @@ export const ReadonlyAccessProvider = ({
     errorView,
 }: ReadonlyAccessProviderProps): ReactElement => {
     const [error, setError] = useState(false);
-    const { processLogin, isAuthentificated } = useAuth();
+    const processLogin = useLogin();
+    const { isAuthentificated } = useAuth();
 
     useEffect(() => {
         const readonlyUser = process.env.REACT_APP_READONLY_USER;

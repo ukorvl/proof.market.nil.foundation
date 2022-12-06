@@ -144,7 +144,6 @@ export const CreateTradeOrderForm = ({
                         )}
                     </BaseFormGroup>
                 </Details>
-
                 {children}
             </div>
             <Button

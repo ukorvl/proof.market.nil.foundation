@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { Button, Dropdown, Icon } from '@nilfoundation/react-components';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'src/hooks';
+import { useAuth, useLogout } from 'src/hooks';
 import { Path } from 'src/routing';
 import styles from './UserMenu.module.scss';
 
@@ -16,7 +16,8 @@ import styles from './UserMenu.module.scss';
  * @returns React component.
  */
 export const UserMenu = (): ReactElement => {
-    const { user, isReadonly, processLogout } = useAuth();
+    const { user, isReadonly } = useAuth();
+    const processLogout = useLogout();
     const navigate = useNavigate();
 
     if (!user || isReadonly) {

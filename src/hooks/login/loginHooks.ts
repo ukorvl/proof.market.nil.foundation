@@ -13,25 +13,15 @@ import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
 
 /**
- * Hook return type.
+ * Provides access to auth state.
+ *
+ * @returns Auth state.
  */
-type UseAuthReturnType = {
+export const useAuth = (): {
     user: string | null;
     isAuthentificated: boolean;
     isReadonly: boolean;
-    processLogin: (jwt: string) => void;
-    processLogout: () => void;
-};
-
-/**
- * Provides access to all auth features.
- *
- * @returns Auth hook return type.
- */
-export const useAuth = (): UseAuthReturnType => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+} => {
     const user = useAppSelector(selectCurrentUser);
     const isAuthentificated = useMemo(() => {
         return !!user;
@@ -40,9 +30,22 @@ export const useAuth = (): UseAuthReturnType => {
         return user === process.env.REACT_APP_READONLY_USER;
     }, [user]);
 
-    /**
-     * Login.
-     */
+    return {
+        user,
+        isAuthentificated,
+        isReadonly,
+    };
+};
+
+/**
+ * Returns callback to process login with jwt token.
+ *
+ * @returns Login callback.
+ */
+export const useLogin = (): ((jwt: string) => void) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const processLogin = useCallback(
         (jwt: string) => {
             setItemIntoLocalStorage('jwt', jwt);
@@ -61,19 +64,21 @@ export const useAuth = (): UseAuthReturnType => {
         [dispatch, navigate],
     );
 
-    /**
-     * Logout.
-     */
+    return processLogin;
+};
+
+/**
+ * Returns callback to logout with existed user.
+ *
+ * @returns Logout callback.
+ */
+export const useLogout = (): (() => void) => {
+    const dispatch = useDispatch();
+
     const processLogout = useCallback(() => {
         dispatch(UpdateUser(null));
         removeItemFromLocalStorage('jwt');
     }, [dispatch]);
 
-    return {
-        user,
-        isAuthentificated,
-        processLogin,
-        processLogout,
-        isReadonly,
-    };
+    return processLogout;
 };

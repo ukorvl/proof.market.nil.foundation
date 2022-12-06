@@ -19,7 +19,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
 import { LoginData } from 'src/models';
 import { login } from 'src/api';
-import { useAuth } from 'src/hooks';
+import { useLogin } from 'src/hooks';
 import { AuthCard } from '../AuthCard';
 import styles from './LoginForm.module.scss';
 
@@ -36,7 +36,7 @@ type PwdInputType = 'password' | 'text';
 export const LoginForm = (): ReactElement => {
     const nodeRef = useRef(null);
     const userNameInputRef = useRef<HTMLInputElement | null>(null);
-    const { processLogin } = useAuth();
+    const processLogin = useLogin();
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
     const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
