@@ -14,5 +14,5 @@ export type RegisterData = {
     /**
      * Email subject.
      */
-    _subject?: string;
+    subject?: string;
 };

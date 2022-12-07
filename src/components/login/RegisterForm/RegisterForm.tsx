@@ -46,9 +46,9 @@ export const RegisterForm = (): ReactElement => {
     const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
         setErrorMessage('');
 
-        data._subject = 'Message from proof.market';
+        data.subject = 'Message from proof.market';
 
-        await fetch(`https://formspree.io/${process.env.REACT_APP_SITE_EMAIL}`, {
+        await fetch(`${process.env.PUBLIC_URL}/contact/contact_me.php`, {
             method: 'POST',
             body: JSON.stringify(data),
         })
