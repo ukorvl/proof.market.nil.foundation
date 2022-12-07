@@ -11,6 +11,9 @@ import { DateUnit } from 'src/enums';
  */
 type ChartSettingsContectModel = {
     dataRange: DateUnit;
+    setDataRange: (unit: DateUnit) => void;
+    displayVolumes: boolean;
+    setDisplayVolumes: (b: boolean) => void;
 };
 
 /**
