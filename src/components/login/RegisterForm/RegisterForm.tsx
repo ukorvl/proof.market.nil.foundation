@@ -41,12 +41,13 @@ export const RegisterForm = (): ReactElement => {
         reset,
     } = useForm<RegisterData>({
         mode: 'onChange',
+        defaultValues: {
+            to: process.env.REACT_APP_SITE_EMAIL,
+        },
     });
 
     const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
         setErrorMessage('');
-
-        data.subject = 'Message from proof.market';
 
         await fetch(`${process.env.PUBLIC_URL}/contact/contact_me.php`, {
             method: 'POST',
@@ -61,7 +62,7 @@ export const RegisterForm = (): ReactElement => {
                     throw Error(response.statusText);
                 }
             })
-            .catch(() => setErrorMessage('Error while processing form.'));
+            .catch(e => setErrorMessage(`Error while processing form. ${e}`));
     });
 
     useEffect(() => {

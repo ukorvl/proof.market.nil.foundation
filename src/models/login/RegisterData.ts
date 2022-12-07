@@ -12,7 +12,7 @@ export type RegisterData = {
      */
     email: string;
     /**
-     * Email subject.
+     * Mail recepient.
      */
-    subject?: string;
+    to: string;
 };
