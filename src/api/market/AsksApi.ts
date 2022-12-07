@@ -47,4 +47,13 @@ export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('
  * @returns Ask.
  */
 export const removeAsk = (askToRemoveId: Ask['id']): Promise<void> =>
-    httpFetcher.put('simple/remove-by-keys', { keys: [askToRemoveId], relation: 'ask' });
+    httpFetcher.post('cursor', {
+        query: `
+            FOR x IN @@relation
+                FILTER x.id == ${askToRemoveId}
+                REMOVE { _key: x._key } IN @@relation
+            `,
+        bindVars: {
+            '@relation': 'ask',
+        },
+    });

@@ -23,8 +23,8 @@ export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
         .post('cursor', {
             query: `
                 FOR x IN @@relation
-                FILTER x.circuit_id == ${circuitId}
-                RETURN x`,
+                    FILTER x.circuit_id == ${circuitId}
+                    RETURN x`,
             bindVars: {
                 '@relation': 'bid',
             },
@@ -44,8 +44,19 @@ export const createBid = (data: CreateBid): Promise<Bid> =>
 /**
  * Remove Bid.
  *
- * @param bidToRemoveId Ask to remove id.
+ * @param bidToRemoveId Bid to remove id.
  * @returns Ask.
  */
 export const removeBid = (bidToRemoveId: Bid['id']): Promise<void> =>
-    httpFetcher.put('simple/remove-by-keys', { keys: [bidToRemoveId], relation: 'bid' });
+    httpFetcher
+        .post('cursor', {
+            query: `
+            FOR x IN @@relation
+                FILTER x.id == ${bidToRemoveId}
+                REMOVE { _key: x._key } IN @@relation
+            `,
+            bindVars: {
+                '@relation': 'bid',
+            },
+        })
+        .then((x: any) => x.result);
