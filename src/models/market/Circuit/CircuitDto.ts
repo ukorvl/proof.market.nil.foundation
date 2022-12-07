@@ -4,11 +4,12 @@
  */
 
 import { Currency } from '../../../enums';
+import { DbmsDocument } from '../../dbms';
 
 /**
  * Circuit dto.
  */
-export type CircuitDto = {
+export interface CircuitDto extends DbmsDocument {
     /**
      * Name.
      */
@@ -37,16 +38,4 @@ export type CircuitDto = {
      * Bp.
      */
     bp: string;
-    /**
-     * Internal id.
-     */
-    _id: string;
-    /**
-     * Internal key.
-     */
-    _key: string;
-    /**
-     * Internal update key.
-     */
-    _rev: string;
-};
+}
