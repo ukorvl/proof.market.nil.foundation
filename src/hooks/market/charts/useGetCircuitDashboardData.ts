@@ -4,7 +4,13 @@
  */
 
 import { useMemo } from 'react';
-import { CandlestickData, LineData, UTCTimestamp } from 'lightweight-charts';
+import {
+    CandlestickData,
+    HistogramData,
+    LineData,
+    UTCTimestamp,
+    WhitespaceData,
+} from 'lightweight-charts';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
@@ -12,6 +18,7 @@ import { useAppSelector, selectCompletedAsks } from 'src/redux';
 import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 import { DateUnit } from 'src/enums';
+import colors from 'src/styles/export.module.scss';
 
 /**
  * Hook return type.
@@ -20,7 +27,7 @@ type UseGetCircuitDashboardDataReturnType = {
     chartData: {
         candlestickChartData: CandlestickData[];
         proofGenTimeData: LineData[];
-        proofGenCostData: LineData[];
+        volumesData?: Array<WhitespaceData | HistogramData>;
     };
     loadingData: boolean;
 };
@@ -28,10 +35,12 @@ type UseGetCircuitDashboardDataReturnType = {
 /**
  * Get data to draw circuit chart.
  *
+ * @param [withVolumes] Should calculate volumes data.
  * @param [dataRange] Data range.
  * @returns Data to draw circuit chart.
  */
 export const useGetCircuitDashboardData = (
+    withVolumes = false,
     dataRange = DateUnit.day,
 ): UseGetCircuitDashboardDataReturnType => {
     const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
@@ -44,12 +53,31 @@ export const useGetCircuitDashboardData = (
         () => ({
             candlestickChartData: getCandlestickData(grouppedOrders),
             proofGenTimeData: getProofGenTimeData(grouppedOrders),
-            proofGenCostData: getProofGenTimeData(grouppedOrders), // TODO - replace when proof cost will be avial.
+            volumesData: withVolumes ? getVolumesData(grouppedOrders) : undefined,
         }),
-        [grouppedOrders],
+        [grouppedOrders, withVolumes],
     );
 
     return { chartData, loadingData };
+};
+
+/**
+ * Takes orders array and returns dict, where keys are dates, and values are arrays of orders.
+ *
+ * @param asks Asks.
+ * @param dataRange Data range.
+ * @returns Orders, grouped by date.
+ */
+const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
+    return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
+        const date = getUTCTimestamp(currentValue.timestamp!, dataRange);
+
+        if (!previousValue[date]) previousValue[date] = [];
+
+        previousValue[date].push(currentValue);
+
+        return previousValue;
+    }, {});
 };
 
 /**
@@ -100,20 +128,26 @@ const getProofGenTimeData = <T extends Bid | Ask>(
 };
 
 /**
- * Takes orders array and returns dict, where keys are dates, and values are arrays of orders.
+ * Generates volume data.
  *
- * @param asks Asks.
- * @param dataRange Data range.
- * @returns Orders, grouped by date.
+ * @param ordersGrouppedByDate Orders array.
+ * @returns Volume data.
  */
-const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
-    return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
-        const date = getUTCTimestamp(currentValue.timestamp!, dataRange);
+const getVolumesData = <T extends Bid | Ask>(
+    ordersGrouppedByDate: Record<string, T[]>,
+): Array<WhitespaceData | HistogramData> => {
+    const keys = Object.keys(ordersGrouppedByDate);
 
-        if (!previousValue[date]) previousValue[date] = [];
+    return keys.map((x, index) => {
+        const costs = ordersGrouppedByDate[x].map(x => x.cost);
 
-        previousValue[date].push(currentValue);
+        const open = index === 0 ? costs[0] : ordersGrouppedByDate[keys[index - 1]].at(-1)!.cost;
+        const close = costs[costs.length - 1];
 
-        return previousValue;
-    }, {});
+        return {
+            time: Number(x) as UTCTimestamp,
+            value: ordersGrouppedByDate[x].length,
+            color: open < close ? colors.transparentSuccessColor : colors.transparentDangerColor,
+        };
+    });
 };

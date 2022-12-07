@@ -13,6 +13,9 @@ declare const colors: {
     readonly baseLightColor: string;
     readonly secondaryColor: string;
     readonly secondaryDarkerColor: string;
+    readonly transparentSuccessColor: string;
+    readonly transparentDangerColor: string;
+    readonly transparentBaseLightColor: string;
 };
 
 export = colors;

@@ -18,8 +18,12 @@ import {
     Range,
     SeriesMarker,
     UTCTimestamp,
+    WhitespaceData,
+    HistogramData,
+    HistogramStyleOptions,
 } from 'lightweight-charts';
 import { DateUnit } from 'src/enums';
+import colors from 'src/styles/export.module.scss';
 
 /**
  * Return type.
@@ -43,6 +47,7 @@ type UseRenderChartDataProps<T extends 'Line' | 'Candlestick'> = {
     >;
     visibleRange?: DateUnit;
     markers?: SeriesMarker<UTCTimestamp>[];
+    volumes?: (WhitespaceData | HistogramData)[];
 };
 
 /**
@@ -58,6 +63,7 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
     options,
     visibleRange,
     markers,
+    volumes,
 }: UseRenderChartDataProps<T>): UseRenderChartDataReturnType => {
     const [price, setPrice] = useState<BarPrice | BarPrices>();
 
@@ -81,6 +87,9 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
         series.setData(seriesData);
         markers && series.setMarkers(markers);
 
+        const volumeSeries = chart.addHistogramSeries(volumeSeriesDefaultOptions);
+        volumes && volumeSeries.setData(volumes);
+
         const crosshairMoveHandler: MouseEventHandler = param => {
             if (!param.time) {
                 setPrice(undefined);
@@ -95,10 +104,11 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
 
         return () => {
             chart.removeSeries(series);
+            chart.removeSeries(volumeSeries);
             chart.unsubscribeCrosshairMove(crosshairMoveHandler);
             setPrice(undefined);
         };
-    }, [seriesData, chart, seriesType, options, markers]);
+    }, [seriesData, chart, seriesType, options, markers, volumes]);
 
     useEffect(() => {
         if (!chart || !seriesData.length) {
@@ -117,13 +127,28 @@ export const useRenderChartData = <T extends 'Line' | 'Candlestick'>({
 };
 
 /**
- * Series options.
+ * Series default options.
  */
 const seriesDefaultOptions: Partial<SeriesOptionsCommon> = {
     priceFormat: {
         type: 'price',
         precision: 4,
         minMove: 0.0001,
+    },
+};
+
+/**
+ * Volume series default options.
+ */
+const volumeSeriesDefaultOptions: DeepPartial<HistogramStyleOptions & SeriesOptionsCommon> = {
+    color: colors.transparentBaseLightColor,
+    priceFormat: {
+        type: 'volume',
+    },
+    priceScaleId: '',
+    scaleMargins: {
+        top: 0.8,
+        bottom: 0,
     },
 };
 

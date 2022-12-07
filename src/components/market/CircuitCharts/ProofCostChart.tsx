@@ -24,11 +24,11 @@ export const ProofCostChart = (): ReactElement => {
         }),
         [],
     );
-    const { dataRange } = useContext(ChartSettingsContext);
+    const { dataRange, displayVolumes } = useContext(ChartSettingsContext);
     const {
-        chartData: { candlestickChartData },
+        chartData: { candlestickChartData, volumesData },
         loadingData: isLoadingChartData,
-    } = useGetCircuitDashboardData(dataRange);
+    } = useGetCircuitDashboardData(displayVolumes, dataRange);
 
     return (
         <ChartTemplate
@@ -37,6 +37,7 @@ export const ProofCostChart = (): ReactElement => {
             seriesData={candlestickChartData}
             seriesType="Candlestick"
             seriesOptions={seriesOptions}
+            volumesData={volumesData}
         />
     );
 };

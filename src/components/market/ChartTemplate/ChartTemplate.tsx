@@ -9,10 +9,12 @@ import {
     CandlestickStyleOptions,
     ChartOptions,
     DeepPartial,
+    HistogramData,
     LineData,
     LineStyleOptions,
     SeriesOptionsCommon,
     UTCTimestamp,
+    WhitespaceData,
 } from 'lightweight-charts';
 import { Spinner } from '@nilfoundation/react-components';
 import { useChart, useRenderChartData } from 'src/hooks';
@@ -34,6 +36,7 @@ type ChartTemplateProps<T extends 'Line' | 'Candlestick'> = {
         (T extends 'Line' ? LineStyleOptions : CandlestickStyleOptions) & SeriesOptionsCommon
     >;
     chartOptions?: DeepPartial<ChartOptions>;
+    volumesData?: Array<WhitespaceData | HistogramData>;
 };
 
 /**
@@ -49,11 +52,12 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
     seriesData,
     seriesOptions,
     chartOptions,
+    volumesData,
 }: ChartTemplateProps<T>): ReactElement => {
     const ref = useRef<HTMLDivElement>(null);
-    const { dataRange } = useContext(ChartSettingsContext);
+    const { dataRange, displayVolumes } = useContext(ChartSettingsContext);
     const options = useMemo(
-        () => ({
+        (): DeepPartial<ChartOptions> => ({
             ...chartOptions,
             localization: {
                 timeFormatter: (t: UTCTimestamp) =>
@@ -64,8 +68,14 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
                     formatUTCTimestamp(t, getDateFormatBasedOnDateUnit(dataRange)),
                 fixRightEdge: true,
             },
+            rightPriceScale: {
+                scaleMargins: {
+                    top: 0.2,
+                    bottom: displayVolumes ? 0.3 : 0.2,
+                },
+            },
         }),
-        [chartOptions, dataRange],
+        [chartOptions, dataRange, displayVolumes],
     );
 
     const { chart } = useChart({ ref, options });
@@ -76,6 +86,7 @@ export const ChartTemplate = <T extends 'Line' | 'Candlestick'>({
         chart,
         options: seriesOptions,
         visibleRange: dataRange,
+        volumes: volumesData,
     });
 
     return (

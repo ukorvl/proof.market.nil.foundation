@@ -3,8 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useContext } from 'react';
 import { Icon, Nav } from '@nilfoundation/react-components';
+import { ChartSettingsContext } from './ChartSettingsContext';
 
 /**
  * Props.
@@ -26,8 +27,17 @@ export const DashboardToolbar = ({
     isFullscreen,
     setFullScreen,
 }: DashboardToolbarProps): ReactElement => {
+    const { displayVolumes, setDisplayVolumes } = useContext(ChartSettingsContext);
+
     return (
         <Nav>
+            <Nav.Item
+                disabled={disabled}
+                active={displayVolumes}
+                onClick={() => setDisplayVolumes(!displayVolumes)}
+            >
+                <Icon iconName="fa-solid fa-chart-simple" />
+            </Nav.Item>
             <Nav.Item
                 disabled={disabled}
                 active={isFullscreen}

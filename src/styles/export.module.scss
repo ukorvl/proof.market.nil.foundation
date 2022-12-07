@@ -10,4 +10,8 @@
   baseLightColor: $c-base-light;
   secondaryColor: $c-secondary;
   secondaryDarkerColor: $c-secondary-darker;
+  // transparentized colors
+  transparentSuccessColor: rgba($c-success, 0.3);
+  transparentDangerColor: rgba($c-danger, 0.3);
+  transparentBaseLightColor: rgba($c-base-light, 0.4);
 }

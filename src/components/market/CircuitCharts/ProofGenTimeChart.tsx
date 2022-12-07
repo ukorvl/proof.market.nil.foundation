@@ -21,11 +21,11 @@ export const ProofTimeGenChart = (): ReactElement => {
         }),
         [],
     );
-    const { dataRange } = useContext(ChartSettingsContext);
+    const { dataRange, displayVolumes } = useContext(ChartSettingsContext);
     const {
-        chartData: { proofGenTimeData },
+        chartData: { proofGenTimeData, volumesData },
         loadingData: isLoadingChartData,
-    } = useGetCircuitDashboardData(dataRange);
+    } = useGetCircuitDashboardData(displayVolumes, dataRange);
 
     return (
         <ChartTemplate
@@ -34,6 +34,7 @@ export const ProofTimeGenChart = (): ReactElement => {
             seriesData={proofGenTimeData}
             seriesType="Line"
             seriesOptions={seriesOptions}
+            volumesData={volumesData}
         />
     );
 };
