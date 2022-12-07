@@ -26,8 +26,9 @@ export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
                 FILTER x.circuit_id == ${circuitId}
                 RETURN x`,
             bindVars: {
-                '@relation': 'ask',
+                '@relation': 'bid',
             },
+            batchSize: 10000,
         })
         .then((x: any) => x.result);
 

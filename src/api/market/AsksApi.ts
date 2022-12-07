@@ -28,6 +28,7 @@ export const getAsksByCircuitId = (circuitId: string): Promise<Ask[]> =>
             bindVars: {
                 '@relation': 'ask',
             },
+            batchSize: 10000,
         })
         .then((x: any) => x.result);
 

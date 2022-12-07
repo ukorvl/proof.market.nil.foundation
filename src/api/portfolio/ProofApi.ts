@@ -24,6 +24,6 @@ export const getProofs = (): Promise<Proof> =>
                 offset: 0,
                 count: 1000,
             },
-            batchSize: 100,
+            batchSize: 1000,
         })
         .then((x: any) => x.result);
