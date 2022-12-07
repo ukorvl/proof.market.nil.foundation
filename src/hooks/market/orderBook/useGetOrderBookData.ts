@@ -203,6 +203,7 @@ const getLastOrderData = (currentAsks: Ask[]): LastOrderData => {
 
 /**
  * Creates react table sort by provided field fucntion.
+ * Puts asks always before bids.
  *
  * @param sortField Sort field.
  * @returns Sort function.
