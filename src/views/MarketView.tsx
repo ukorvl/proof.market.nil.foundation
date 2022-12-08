@@ -14,6 +14,7 @@ import {
     CreateOrdersPanel,
     TradeHistory,
     ManageOrdersPanel,
+    CircuitInfoPanel,
 } from '../components';
 
 /**
@@ -44,7 +45,16 @@ const MarketView = (): ReactElement => (
                         md={7}
                         lg={8}
                     >
-                        <CircuitDashboard />
+                        <Row>
+                            <Col xs={12}>
+                                <CircuitInfoPanel />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12}>
+                                <CircuitDashboard />
+                            </Col>
+                        </Row>
                     </Col>
                     <OrderManagementContextProvider>
                         <Col

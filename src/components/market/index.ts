@@ -14,3 +14,4 @@ export * from './CreateOrdersPanel';
 export * from './TradeHistory';
 export * from './ManageOrdersPanel';
 export * from './PriceChangeIndicator';
+export * from './CircuitInfoPanel';

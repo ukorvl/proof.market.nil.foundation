@@ -49,15 +49,15 @@ export const OrderBookTable = memo(function OrderBookTable({
 }: OrderBookTableProps): ReactElement {
     const renderRows = useCallback(
         ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
-            const asks = rows.filter(x => x.values.type === 'ask');
-            const bids = rows.filter(x => x.values.type === 'bid');
+            //const bids = rows.filter(x => x.values.type === 'bid');
 
             return (
                 <>
                     <div className={styles.rowsContainer}>
-                        {getDataWithVolumes(asks, maxVolume).map(row =>
-                            renderRow(row, prepareRow, styles.ask),
-                        )}
+                        {getDataWithVolumes(
+                            rows.filter(x => x.values.type === 'ask'),
+                            maxVolume,
+                        ).map(row => renderRow(row, prepareRow, styles.ask))}
                     </div>
                     {lastOrderData && (
                         <div className={styles.lastOrderDataContainer}>
@@ -74,9 +74,10 @@ export const OrderBookTable = memo(function OrderBookTable({
                         </div>
                     )}
                     <div className={styles.rowsContainer}>
-                        {getDataWithVolumes(bids, maxVolume).map(row =>
-                            renderRow(row, prepareRow, styles.bid),
-                        )}
+                        {getDataWithVolumes(
+                            rows.filter(x => x.values.type === 'bid'),
+                            maxVolume,
+                        ).map(row => renderRow(row, prepareRow, styles.bid))}
                     </div>
                 </>
             );

@@ -2,7 +2,7 @@
 @import 'src/styles/mixins/responsive';
 
 .circuitChart {
-  height: 458px;
+  height: 406px;
   position: relative;
 
   @include responsive(sm) {

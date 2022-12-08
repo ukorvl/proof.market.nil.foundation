@@ -203,27 +203,16 @@ const getLastOrderData = (currentAsks: Ask[]): LastOrderData => {
 
 /**
  * Creates react table sort by provided field fucntion.
- * Puts asks always before bids.
  *
  * @param sortField Sort field.
  * @returns Sort function.
  */
 const sortFunctionCreator = (sortField: keyof OrderBookTableData) => {
-    const sortFn: SortByFn<OrderBookTableData> = (rowFirst, rowSecond, _id, desc) => {
+    const sortFn: SortByFn<OrderBookTableData> = (rowFirst, rowSecond, _id) => {
         const { values: valuesFirst } = rowFirst;
         const { values: valuesSecond } = rowSecond;
-        const isAskFirst = !!valuesFirst.ask;
-        const isAskSecond = !!valuesSecond.ask;
 
-        if (isAskFirst && !isAskSecond) {
-            return desc ? 1 : -1;
-        }
-
-        if (!isAskFirst && isAskSecond) {
-            return desc ? -1 : 1;
-        }
-
-        return valuesFirst[sortField] - valuesSecond[sortField] > 0 ? 1 : -1;
+        return valuesFirst[sortField] - valuesSecond[sortField] > 0 ? -1 : 1;
     };
 
     return sortFn;

@@ -4,7 +4,6 @@
  */
 
 import { ReactElement, useState } from 'react';
-import { Details } from 'src/components';
 import { ChartType } from 'src/enums';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { DashboardCard, FullScreenView } from '../../common';
@@ -13,7 +12,7 @@ import { DataRangeSelect } from './DataRangeSelect';
 import { ProofCostChart, ProofTimeGenChart } from '../CircuitCharts';
 import { ChartSettingsProvider } from './ChartSettingsProvider';
 import { DashboardToolbar } from './DashboardToolbar';
-import { FullScreenChartInfo } from './FullScreenChartInfo';
+import { CircuitInfoPanel } from '../CircuitInfoPanel';
 import './CircuitDashboard.scss';
 
 /**
@@ -28,32 +27,30 @@ export const CircuitDashboard = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <Details title={<h4>Circuit dashboard</h4>}>
-                <div className="circuitDashboard">
-                    <ChartSettingsProvider>
-                        <ChartTypeSelect
-                            chartType={chartType}
-                            onSelectChartType={setChartType}
-                            disabled={!currentCircuit}
-                        />
-                        <FullScreenView
-                            showFullScreen={fullScreen}
-                            className="fullScreenChartContainer"
-                        >
-                            {fullScreen && <FullScreenChartInfo />}
-                            <div className="circuitDashboard__toolbar">
-                                <DataRangeSelect disabled={!currentCircuit} />
-                                <DashboardToolbar
-                                    disabled={!currentCircuit}
-                                    isFullscreen={fullScreen}
-                                    setFullScreen={setFullScreen}
-                                />
-                            </div>
-                            <ChartFactory chartType={chartType} />
-                        </FullScreenView>
-                    </ChartSettingsProvider>
-                </div>
-            </Details>
+            <div className="circuitDashboard">
+                <ChartSettingsProvider>
+                    <ChartTypeSelect
+                        chartType={chartType}
+                        onSelectChartType={setChartType}
+                        disabled={!currentCircuit}
+                    />
+                    <FullScreenView
+                        showFullScreen={fullScreen}
+                        className="fullScreenChartContainer"
+                    >
+                        {fullScreen && <CircuitInfoPanel />}
+                        <div className="circuitDashboard__toolbar">
+                            <DataRangeSelect disabled={!currentCircuit} />
+                            <DashboardToolbar
+                                disabled={!currentCircuit}
+                                isFullscreen={fullScreen}
+                                setFullScreen={setFullScreen}
+                            />
+                        </div>
+                        <ChartFactory chartType={chartType} />
+                    </FullScreenView>
+                </ChartSettingsProvider>
+            </div>
         </DashboardCard>
     );
 };
