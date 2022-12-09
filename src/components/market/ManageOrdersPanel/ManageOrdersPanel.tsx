@@ -9,6 +9,7 @@ import { useAppSelector } from 'src/redux';
 import { useGetManageOrdersData } from 'src/hooks';
 import { ManageOrdersData } from 'src/models';
 import { DashboardCard, Details } from '../../common';
+import { ProtectedContent } from '../../login';
 import { ManageOrdersTab } from './ManageOrdersTab';
 import { ManageOrdersPanelTabs } from './ManageOrdersPanelTabs';
 import { ActiveOrdersTable } from './ActiveOrdersTable';
@@ -29,20 +30,24 @@ export const ManageOrdersPanel = (): ReactElement => {
         <DashboardCard>
             <Details title={<h4>Manage orders</h4>}>
                 <div className="manageOrdersPanel">
-                    <ManageOrdersPanelTabs
-                        currentTab={tab}
-                        onSetTab={setTab}
-                    />
-                    {selectedCircuitId !== undefined ? (
-                        tabFactory(
-                            tab,
-                            isError,
-                            loadingData,
-                            tab === ManageOrdersTab.active ? activeOrdersData : historyOrdersData,
-                        )
-                    ) : (
-                        <h5>Please, select circuit to display orders.</h5>
-                    )}
+                    <ProtectedContent overlayTitle="Authorization required to manage orders">
+                        <ManageOrdersPanelTabs
+                            currentTab={tab}
+                            onSetTab={setTab}
+                        />
+                        {selectedCircuitId !== undefined ? (
+                            tabFactory(
+                                tab,
+                                isError,
+                                loadingData,
+                                tab === ManageOrdersTab.active
+                                    ? activeOrdersData
+                                    : historyOrdersData,
+                            )
+                        ) : (
+                            <h5>Please, select circuit to display orders.</h5>
+                        )}
+                    </ProtectedContent>
                 </div>
             </Details>
         </DashboardCard>

@@ -6,12 +6,11 @@
 import { ReactElement, useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
-import { useAuth } from 'src/hooks';
-import { DashboardCard, Details, Overlay } from '../../common';
+import { DashboardCard, Details } from '../../common';
+import { ProtectedContent } from '../../login';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateAskForm } from '../CreateAskForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
-import { RequestRegisterCard } from './RequestRegisterCard';
 import './CreateOrdersPanel.scss';
 
 /**
@@ -22,22 +21,18 @@ import './CreateOrdersPanel.scss';
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
-    const { user, isReadonly } = useAuth();
 
     return (
         <DashboardCard>
             <Details title={<h4>Create orders</h4>}>
                 <div className="cerateOrdersPanel">
-                    <CreateOrdersTabs
-                        currentTab={tab}
-                        onSetTab={setTab}
-                    />
-                    {(!user || isReadonly) && (
-                        <Overlay>
-                            <RequestRegisterCard />
-                        </Overlay>
-                    )}
-                    {tabFactory(tab, selectedCircuitId)}
+                    <ProtectedContent overlayTitle="Authorization required to create orders">
+                        <CreateOrdersTabs
+                            currentTab={tab}
+                            onSetTab={setTab}
+                        />
+                        {tabFactory(tab, selectedCircuitId)}
+                    </ProtectedContent>
                 </div>
             </Details>
         </DashboardCard>

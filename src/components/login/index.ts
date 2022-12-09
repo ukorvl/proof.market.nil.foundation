@@ -9,3 +9,4 @@ export * from './ProtectedRoute';
 export * from './RegisterForm';
 export * from './ReadonlyAccessProvider';
 export * from './UserMenu';
+export * from './ProtectedContent';
