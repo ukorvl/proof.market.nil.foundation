@@ -40,10 +40,12 @@ export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataR
             {
                 Header: 'Cost',
                 accessor: 'cost',
+                disableSortBy: true,
             },
             {
                 Header: 'Generation time',
                 accessor: 'eval_time',
+                disableSortBy: true,
             },
             {
                 accessor: 'type',
