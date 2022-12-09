@@ -24,9 +24,11 @@ export const CircuitInfoPanel = (): ReactElement => {
 
     return (
         <DashboardCard className={styles.container}>
-            <div>
-                {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.info.toUpperCase()})/USD`}
-            </div>
+            {currentCircuit && (
+                <div>
+                    {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.info.toUpperCase()})/USD`}
+                </div>
+            )}
             <div>
                 <div className={`text-muted ${styles.title}`}>Current cost</div>
                 <div>{renderDashOnEmptyValue(circuitInfo?.current)}</div>
