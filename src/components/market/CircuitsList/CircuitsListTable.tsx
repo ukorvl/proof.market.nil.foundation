@@ -106,7 +106,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
             return {
                 id: x.id,
                 name: `${x.name.toUpperCase()} (${x.info.toUpperCase()})/USD`,
-                cost: info?.current_cost,
+                cost: info?.current,
                 change: info?.daily_change,
             };
         });

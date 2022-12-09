@@ -20,7 +20,6 @@ export const CircuitInfoPanel = (): ReactElement => {
     const circuitInfo = useAppSelector(s =>
         s.circuitsState.circuitsInfo.find(x => x.circuit_id === currentCircuit?.id),
     );
-    const cost = circuitInfo?.current_cost;
     const change = circuitInfo?.daily_change;
 
     return (
@@ -30,7 +29,7 @@ export const CircuitInfoPanel = (): ReactElement => {
             </div>
             <div>
                 <div className={`text-muted ${styles.title}`}>Current cost</div>
-                <div>{renderDashOnEmptyValue(cost)}</div>
+                <div>{renderDashOnEmptyValue(circuitInfo?.current)}</div>
             </div>
             <div>
                 <div className={`text-muted ${styles.title}`}>24h Change</div>
@@ -44,15 +43,15 @@ export const CircuitInfoPanel = (): ReactElement => {
             </div>
             <div>
                 <div className={`text-muted ${styles.title}`}>24h High</div>
-                <div>{renderDashOnEmptyValue(undefined)}</div>
+                <div>{renderDashOnEmptyValue(circuitInfo?.max)}</div>
             </div>
             <div>
                 <div className={`text-muted ${styles.title}`}>24h Low</div>
-                <div>{renderDashOnEmptyValue(undefined)}</div>
+                <div>{renderDashOnEmptyValue(circuitInfo?.min)}</div>
             </div>
             <div>
                 <div className={`text-muted ${styles.title}`}>24h Volume</div>
-                <div>{renderDashOnEmptyValue(undefined)}</div>
+                <div>{renderDashOnEmptyValue(circuitInfo?.volume, 0)}</div>
             </div>
         </DashboardCard>
     );

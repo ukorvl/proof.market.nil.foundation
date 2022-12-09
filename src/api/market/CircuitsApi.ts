@@ -6,11 +6,12 @@
 import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
+const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const databaseUrl = `_db/${dbName}`;
 const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
-const newFetcher = createBearerHttpClient('market/circuit');
+const newFetcher = createBearerHttpClient('');
 
 /**
  * Get circuits.
@@ -35,11 +36,13 @@ export const getCircuits = (): Promise<Circuit> =>
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<CircuitInfo> => newFetcher.get('/info');
+export const getCircuitsInfo = (): Promise<CircuitInfo> =>
+    newFetcher.get(`/${databaseUrl}/${dbName}/circuit/info`);
 
 /**
  * Get circuits stats.
  *
  * @returns .
  */
-export const getCircuitsStats = (): Promise<CircuitStats> => newFetcher.get('/statistics');
+export const getCircuitsStats = (): Promise<CircuitStats> =>
+    newFetcher.get(`/${dbName}/circuit/statistics`);

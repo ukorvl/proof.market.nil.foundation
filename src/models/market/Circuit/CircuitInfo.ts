@@ -14,9 +14,29 @@ export type CircuitInfo = {
     /**
      * Current circuit cost.
      */
-    current_cost: number;
+    current: number;
+    /**
+     * Open price.
+     */
+    open: number;
+    /**
+     * Close (latest) price.
+     */
+    close: number;
     /**
      * Daily change of circuit cost. Can be positive or negative.
      */
     daily_change: number;
+    /**
+     * 24h volume.
+     */
+    volume: number;
+    /**
+     * 24h low.
+     */
+    min: number;
+    /**
+     * 24h hight.
+     */
+    max: number;
 };
