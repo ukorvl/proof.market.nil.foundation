@@ -13,6 +13,7 @@ import {
     ProtectedRoute,
     NetConnectionHandler,
     ReadonlyAccessProvider,
+    AuthContainer,
 } from './components';
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
@@ -35,11 +36,19 @@ function App(): ReactElement {
                                 <Routes>
                                     <Route
                                         path={registerRoute.path}
-                                        element={<registerRoute.Component />}
+                                        element={
+                                            <AuthContainer>
+                                                <registerRoute.Component />
+                                            </AuthContainer>
+                                        }
                                     />
                                     <Route
                                         path={loginRoute.path}
-                                        element={<loginRoute.Component />}
+                                        element={
+                                            <AuthContainer>
+                                                <loginRoute.Component />
+                                            </AuthContainer>
+                                        }
                                     />
                                     {routes.map(({ path, Component }) => (
                                         <Route

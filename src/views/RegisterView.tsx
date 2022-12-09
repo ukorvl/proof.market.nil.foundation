@@ -4,17 +4,13 @@
  */
 
 import { ReactElement } from 'react';
-import { AuthContainer, RegisterForm } from 'src/components';
+import { RegisterForm } from 'src/components';
 
 /**
  * Register user view.
  *
  * @returns React component.
  */
-const RegisterView = (): ReactElement => (
-    <AuthContainer>
-        <RegisterForm />
-    </AuthContainer>
-);
+const RegisterView = (): ReactElement => <RegisterForm />;
 
 export default RegisterView;

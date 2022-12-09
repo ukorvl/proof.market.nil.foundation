@@ -18,7 +18,7 @@ export const Footer = (): ReactElement => (
     <Container className={styles.footer}>
         <Row>
             <Col>
-                <SocialLinks />
+                <SocialLinks bottomIndent />
             </Col>
         </Row>
         <Row className="text-center">

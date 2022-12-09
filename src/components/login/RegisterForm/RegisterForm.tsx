@@ -136,6 +136,12 @@ export const RegisterForm = (): ReactElement => {
                 <div className={styles.successMessage}>
                     <Link to={Path.root}>Continue exploring</Link>
                 </div>
+                <div className="text-right">
+                    <h5>
+                        <span className="text-muted">{'Already have an account? '}</span>
+                        <Link to={Path.login}>Sign in</Link>
+                    </h5>
+                </div>
             </Form>
         </AuthCard>
     );

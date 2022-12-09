@@ -13,6 +13,7 @@ import styles from './SocialLinks.module.scss';
  */
 type SocialLinksProps = {
     className?: string;
+    bottomIndent?: boolean;
 };
 
 /**
@@ -21,10 +22,12 @@ type SocialLinksProps = {
  * @param {SocialLinksProps} props Props.
  * @returns React component.
  */
-export const SocialLinks = ({ className }: SocialLinksProps): ReactElement => (
+export const SocialLinks = ({ className, bottomIndent }: SocialLinksProps): ReactElement => (
     <ul
         aria-label="Social media links"
-        className={`${styles.socialLinks} ${className ?? ''}`}
+        className={`${styles.socialLinks} ${className ?? ''} ${
+            bottomIndent ? styles.bottomIndent : ''
+        }`}
     >
         {socialLinks.map(({ icon, url }) => (
             <li key={icon}>

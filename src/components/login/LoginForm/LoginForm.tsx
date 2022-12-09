@@ -22,6 +22,8 @@ import { login } from 'src/api';
 import { useLogin } from 'src/hooks';
 import { AuthCard } from '../AuthCard';
 import styles from './LoginForm.module.scss';
+import { Link } from 'react-router-dom';
+import { Path } from 'src/routing';
 
 /**
  * Password input type.
@@ -154,6 +156,12 @@ export const LoginForm = (): ReactElement => {
                         {errorMessage}
                     </div>
                 </CSSTransition>
+                <div className="text-right">
+                    <h5>
+                        <span className="text-muted">{"Don't have an account? "}</span>
+                        <Link to={Path.register}>Request credentials</Link>
+                    </h5>
+                </div>
             </Form>
         </AuthCard>
     );
