@@ -49,8 +49,6 @@ export const OrderBookTable = memo(function OrderBookTable({
 }: OrderBookTableProps): ReactElement {
     const renderRows = useCallback(
         ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
-            //const bids = rows.filter(x => x.values.type === 'bid');
-
             return (
                 <>
                     <div className={styles.rowsContainer}>
@@ -75,7 +73,7 @@ export const OrderBookTable = memo(function OrderBookTable({
                     )}
                     <div className={styles.rowsContainer}>
                         {getDataWithVolumes(
-                            rows.filter(x => x.values.type === 'bid'),
+                            rows.reverse().filter(x => x.values.type === 'bid'),
                             maxVolume,
                         ).map(row => renderRow(row, prepareRow, styles.bid))}
                     </div>
