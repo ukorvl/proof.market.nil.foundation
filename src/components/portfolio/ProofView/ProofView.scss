@@ -1,7 +1,7 @@
-@import 'src/styles/constants';
+@import "src/styles/constants";
 
 .proofView {
-  padding-top: 0!important;
+  padding-top: 0 !important;
   min-height: calc(100vh - 110px);
 
   .proofJsonViewContainer {
@@ -10,7 +10,6 @@
     background-color: $c-base-darker;
 
     .react-json-view {
-
       .variable-row:last-of-type {
         * {
           line-break: anywhere;

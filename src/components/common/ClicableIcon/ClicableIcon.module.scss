@@ -1,16 +1,16 @@
-@import 'src/styles/constants.scss';
+@import "src/styles/constants.scss";
 
 .button {
-  outline: none!important;
+  outline: none !important;
   display: inline-block;
-  padding: 4px 8px!important;
-  color: $c-secondary-darker!important;
-  background-color: $c-base-darker!important;
-  border: none!important;
+  padding: 4px 8px !important;
+  color: $c-secondary-darker !important;
+  background-color: $c-base-darker !important;
+  border: none !important;
 
   &:hover,
   &:focus {
-    color: $c-secondary!important;
+    color: $c-secondary !important;
   }
 
   i {

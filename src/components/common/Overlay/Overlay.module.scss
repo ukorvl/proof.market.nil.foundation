@@ -1,4 +1,4 @@
-@import 'src/styles/constants.scss';
+@import "src/styles/constants.scss";
 
 .overlay {
   position: absolute;
@@ -7,5 +7,5 @@
   height: 100%;
   width: 100%;
   z-index: 1000;
-  background-color:rgba($c-base-darker,0.9);
+  background-color: rgba($c-base-darker, 0.9);
 }

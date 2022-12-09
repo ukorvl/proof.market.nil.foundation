@@ -1,6 +1,6 @@
-@mixin tableColumns ($args...) {
-  div[role=columnheader],
-  div[role=cell] {
+@mixin tableColumns($args...) {
+  div[role="columnheader"],
+  div[role="cell"] {
     @for $i from 1 through length($args) {
       &:nth-child(#{$i}) {
         min-width: nth($args, $i);

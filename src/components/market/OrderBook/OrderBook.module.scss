@@ -1,6 +1,6 @@
-@import 'src/styles/constants.scss';
-@import 'src/styles/mixins/hideScrollbar';
-@import 'src/styles/mixins/tableColumns';
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/hideScrollbar";
+@import "src/styles/mixins/tableColumns";
 
 .orderBook {
   height: 542px;
@@ -19,12 +19,12 @@
     display: flex;
     flex-direction: column-reverse;
 
-    div[role=cell] {
+    div[role="cell"] {
       height: 28px;
     }
   }
 
-  div[role=row] {
+  div[role="row"] {
     position: relative;
     cursor: pointer;
 
@@ -45,13 +45,13 @@
       left: 0;
     }
 
-    div[role=cell] {
+    div[role="cell"] {
       z-index: 2;
       position: relative;
 
       > span + span {
         margin-left: 4px;
-        background-color: $c-base-light!important;
+        background-color: $c-base-light !important;
       }
 
       &:first-child {
@@ -67,7 +67,7 @@
     background-color: $c-danger;
   }
 
-  div[role=cell]:first-child {
+  div[role="cell"]:first-child {
     color: $c-danger;
   }
 }
@@ -77,7 +77,7 @@
     background-color: $c-success;
   }
 
-  div[role=cell]:first-child {
+  div[role="cell"]:first-child {
     color: $c-success;
   }
 }

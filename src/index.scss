@@ -1,23 +1,23 @@
-@import './styles/constants.scss';
-@import './styles/gridOverrides.scss';
+@import "./styles/constants.scss";
+@import "./styles/gridOverrides.scss";
 
 .form-control,
 .input-group-addon,
 .form-control[readonly],
 .input-group-btn .btn {
-  background-color: $c-base!important;
-  border-color: $c-base-light!important;
+  background-color: $c-base !important;
+  border-color: $c-base-light !important;
 }
 
 .input-group-btn .btn {
-  color: $c-secondary-darker!important;
+  color: $c-secondary-darker !important;
 
   &:hover {
-    background-color: $c-base!important;
+    background-color: $c-base !important;
   }
 
   &:active:focus {
-    color: $c-secondary!important;
+    color: $c-secondary !important;
   }
 }
 
@@ -36,15 +36,15 @@ button {
 .errorMessage {
   padding-top: 8px;
   height: 1rem;
-  color: $c-danger
+  color: $c-danger;
 }
 
 .lossTextColor {
-  color: $c-danger!important;
+  color: $c-danger !important;
 }
 
 .growTextColor {
-  color: $c-success!important;
+  color: $c-success !important;
 }
 
 .nav {
@@ -54,5 +54,5 @@ button {
 }
 
 .help-block {
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }

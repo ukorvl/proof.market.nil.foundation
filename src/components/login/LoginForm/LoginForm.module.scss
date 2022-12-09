@@ -1,4 +1,4 @@
-@import 'src/styles/constants.scss';
+@import "src/styles/constants.scss";
 
 .logoImage {
   border: 1px solid $c-base-light;
@@ -15,7 +15,7 @@
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    background-color: $c-secondary-darker!important;
+    background-color: $c-secondary-darker !important;
     -webkit-text-fill-color: $c-secondary;
     caret-color: $c-secondary;
     transition: background-color 5000s ease-in-out 0s;

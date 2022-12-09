@@ -1,5 +1,5 @@
-@import '/src/styles/mixins/responsive';
-@import '/src/styles/constants.scss';
+@import "/src/styles/mixins/responsive";
+@import "/src/styles/constants.scss";
 
 .headerContainer {
   display: flex;
@@ -10,8 +10,8 @@
     letter-spacing: 1px;
 
     > li > a {
-      border-radius: 0!important;
-      color: $c-secondary!important;
+      border-radius: 0 !important;
+      color: $c-secondary !important;
       padding-top: 14px;
       padding-bottom: 14px;
     }
@@ -22,7 +22,7 @@
   }
 
   code {
-    font-family: 'Menlo', Courier, monospace!important;
+    font-family: "Menlo", Courier, monospace !important;
   }
 }
 

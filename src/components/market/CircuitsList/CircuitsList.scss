@@ -1,6 +1,6 @@
-@import 'src/styles/constants.scss';
-@import 'src/styles/mixins/styledList';
-@import 'src/styles/mixins/hideScrollbar';
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/styledList";
+@import "src/styles/mixins/hideScrollbar";
 
 .circuitsList {
   height: 372px;
@@ -16,7 +16,6 @@
     @include hideScrollbar;
 
     .list-group-item {
-
       .media-body {
         vertical-align: middle;
         height: 44px;
@@ -27,10 +26,9 @@
         margin-top: 4px;
 
         &_selected {
-          color: $c-secondary!important;
+          color: $c-secondary !important;
         }
       }
     }
   }
 }
-

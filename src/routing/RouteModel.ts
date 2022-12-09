@@ -10,6 +10,6 @@ import { Path } from './Paths';
  * Route model.
  */
 export type RouteModel = {
-    path: Path
-    Component: LazyExoticComponent<FC>
+    path: Path;
+    Component: LazyExoticComponent<FC>;
 };

@@ -8,26 +8,29 @@ main {
 }
 
 .jumbotron {
-  margin-bottom: $grid-gutter-width!important;
+  margin-bottom: $grid-gutter-width !important;
 }
 
 @mixin make-container($gutter: $grid-gutter-width) {
-  padding-right: ceil(math.div($gutter, 1.5))!important;
-  padding-left: floor(math.div($gutter, 1.5))!important;
+  padding-right: ceil(math.div($gutter, 1.5)) !important;
+  padding-left: floor(math.div($gutter, 1.5)) !important;
 }
 
 @mixin make-row($gutter: $grid-gutter-width) {
-  margin-right: floor(math.div($gutter, -2))!important;
-  margin-left: ceil(math.div($gutter, -2))!important;
+  margin-right: floor(math.div($gutter, -2)) !important;
+  margin-left: ceil(math.div($gutter, -2)) !important;
 }
 
-@mixin make-grid-columns($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}") {
+@mixin make-grid-columns(
+  $i: 1,
+  $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}"
+) {
   @for $i from (1 + 1) through $grid-columns {
     $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
   }
   #{$list} {
-    padding-right: floor(math.div($grid-gutter-width, 2))!important;
-    padding-left: ceil(math.div($grid-gutter-width, 2))!important;
+    padding-right: floor(math.div($grid-gutter-width, 2)) !important;
+    padding-left: ceil(math.div($grid-gutter-width, 2)) !important;
   }
 }
 

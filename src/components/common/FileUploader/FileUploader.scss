@@ -1,4 +1,4 @@
-@import 'src/styles/constants.scss';
+@import "src/styles/constants.scss";
 
 .fileUploader {
   height: 48px;
@@ -27,7 +27,7 @@
   }
 
   &-dragActive {
-    border: 1px dashed $c-secondary-darker!important;
+    border: 1px dashed $c-secondary-darker !important;
   }
 
   &__message {

@@ -1,6 +1,6 @@
-@import 'src/styles/constants.scss';
-@import 'src/styles/mixins/responsive';
-@import 'src/styles/mixins/hideScrollbar';
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/responsive";
+@import "src/styles/mixins/hideScrollbar";
 
 .container {
   position: relative;
@@ -51,5 +51,5 @@
 .toolbar {
   height: 64px;
   padding-top: 8px;
-  margin-bottom: 12px!important;
+  margin-bottom: 12px !important;
 }

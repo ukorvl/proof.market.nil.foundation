@@ -1,5 +1,5 @@
-@import 'src/styles/mixins/hideScrollbar';
-@import 'src/styles/constants.scss';
+@import "src/styles/mixins/hideScrollbar";
+@import "src/styles/constants.scss";
 
 .styledTable {
   display: flex;
@@ -10,7 +10,7 @@
   color: $c-secondary-darker;
   margin-top: 2px;
 
-  div[role=rowgroup] {
+  div[role="rowgroup"] {
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
@@ -27,28 +27,28 @@
     }
   }
 
-  div[role=row] {
+  div[role="row"] {
     display: flex;
     flex-flow: row nowrap;
     width: 100%;
     height: 28px;
   }
 
-  div[role=columnheader],
-  div[role=cell] {
+  div[role="columnheader"],
+  div[role="cell"] {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
   }
 
-  div[role=columnheader] {
+  div[role="columnheader"] {
     color: $c-secondary;
     white-space: nowrap;
     font-weight: bold;
   }
 
-  div[role=cell] {
+  div[role="cell"] {
     font-size: 1.2rem;
 
     > span {

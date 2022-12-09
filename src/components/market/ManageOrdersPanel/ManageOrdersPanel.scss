@@ -1,6 +1,6 @@
-@import 'src/styles/constants.scss';
-@import 'src/styles/mixins/tableColumns';
-@import 'src/styles/mixins/responsive';
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/tableColumns";
+@import "src/styles/mixins/responsive";
 
 .manageOrdersPanel {
   height: 500px;
@@ -49,7 +49,7 @@
 
     .btn + .btn {
       margin-left: 8px;
-      margin-top: 0!important;
+      margin-top: 0 !important;
     }
   }
 

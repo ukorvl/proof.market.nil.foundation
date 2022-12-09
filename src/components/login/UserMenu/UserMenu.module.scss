@@ -1,4 +1,4 @@
-@import '../../../styles/constants.scss';
+@import "../../../styles/constants.scss";
 
 .dropdown {
   display: inline-block;
@@ -6,15 +6,15 @@
 }
 
 .button {
-  background: transparent!important;
-  border: none!important;
-  color: $c-secondary!important;
-  letter-spacing: 1px!important;
-  padding-top: 10px!important;
-  padding-bottom: 10px!important;
+  background: transparent !important;
+  border: none !important;
+  color: $c-secondary !important;
+  letter-spacing: 1px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 
   &:focus {
-    outline: 1.5px solid $c-secondary!important;
+    outline: 1.5px solid $c-secondary !important;
   }
 
   > i:first-child {

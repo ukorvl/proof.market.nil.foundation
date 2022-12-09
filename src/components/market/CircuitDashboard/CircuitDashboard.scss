@@ -1,5 +1,5 @@
-@import 'src/styles/constants.scss';
-@import 'src/styles/mixins/responsive';
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/responsive";
 
 .circuitDashboard {
   height: 486px;
@@ -12,13 +12,15 @@
 
     .nav {
       > li > a {
-        padding: 5px 12px!important;
+        padding: 5px 12px !important;
       }
     }
 
     .nav-pills > li.active {
-      a, a:hover, a:focus {
-        background-color: unset!important;
+      a,
+      a:hover,
+      a:focus {
+        background-color: unset !important;
         font-weight: bold;
       }
     }
@@ -39,7 +41,8 @@
   }
 
   @include responsive(sm) {
-    padding: calc(10px + env(safe-area-inset-top)) 15px calc(75px + env(safe-area-inset-bottom));
+    padding: calc(10px + env(safe-area-inset-top)) 15px
+      calc(75px + env(safe-area-inset-bottom));
   }
 }
 
