@@ -15,6 +15,7 @@ import {
     Spinner,
 } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { RegisterData } from 'src/models';
@@ -49,20 +50,18 @@ export const RegisterForm = (): ReactElement => {
     const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
         setErrorMessage('');
 
-        await fetch(`${process.env.PUBLIC_URL}/contact/contact_me.php`, {
-            method: 'POST',
-            body: JSON.stringify(data),
-        })
+        await axios
+            .post(`${process.env.PUBLIC_URL}/contact/contact_me.php`, data)
             .then(response => {
                 if (response.status >= 200 && response.status <= 399) {
                     reset();
 
-                    return response.json();
+                    return response;
                 } else {
                     throw Error(response.statusText);
                 }
             })
-            .catch(e => setErrorMessage(`Error while processing form. ${e}`));
+            .catch(() => setErrorMessage('Error while processing form.'));
     });
 
     useEffect(() => {

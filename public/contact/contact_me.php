@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
 $email_address = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 
 // Check for empty fields
