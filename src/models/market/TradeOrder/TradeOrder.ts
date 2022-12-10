@@ -3,14 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { DbmsDocument } from '../../dbms';
 import { CreateTradeOrder } from './CreateTradeOrder';
 import { TradeOrderStatus } from './TradeOrderStatus';
 
 /**
  * Trade order.
  */
-export interface TradeOrder extends CreateTradeOrder, DbmsDocument {
+export interface TradeOrder extends CreateTradeOrder {
     /**
      * Id.
      */

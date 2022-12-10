@@ -17,13 +17,13 @@ import {
 } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { Path } from 'src/routing';
 import { LoginData } from 'src/models';
 import { login } from 'src/api';
 import { useLogin } from 'src/hooks';
 import { AuthCard } from '../AuthCard';
 import styles from './LoginForm.module.scss';
-import { Link } from 'react-router-dom';
-import { Path } from 'src/routing';
 
 /**
  * Password input type.

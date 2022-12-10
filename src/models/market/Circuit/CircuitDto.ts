@@ -4,12 +4,11 @@
  */
 
 import { Currency } from '../../../enums';
-import { DbmsDocument } from '../../dbms';
 
 /**
  * Circuit dto.
  */
-export interface CircuitDto extends DbmsDocument {
+export interface CircuitDto {
     /**
      * Name.
      */

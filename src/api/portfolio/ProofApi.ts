@@ -13,17 +13,18 @@ const httpFetcher = createBearerHttpClient(apiUrl);
 /**
  * Get proofs.
  *
+ * @param currentUser Current user.
  * @returns Proofs.
  */
-export const getProofs = (): Promise<Proof> =>
+export const getProofs = (currentUser: string): Promise<Proof> =>
     httpFetcher
         .post('cursor', {
-            query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
+            query: `
+                FOR x IN @@relation
+                    RETURN UNSET(x, 'proof')
+            `,
             bindVars: {
                 '@relation': 'proof',
-                offset: 0,
-                count: 10,
             },
-            batchSize: 10,
         })
         .then((x: any) => x.result);

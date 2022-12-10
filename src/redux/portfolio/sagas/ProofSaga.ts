@@ -9,7 +9,7 @@ import { getProofs } from 'src/api';
 import { Proof } from 'src/models';
 import { UpdateProofList, UpdateIsLoadingProofs, UpdateProofsError } from '../actions';
 import { RootStateType } from '../../RootStateType';
-import { UpdateUser } from '../../login';
+import { ProtectedCall, UpdateUser } from '../../login';
 
 const selectUser = (s: RootStateType) => s.userState.user;
 
@@ -38,7 +38,7 @@ function* GetProofSaga(): SagaIterator<void> {
         yield put(UpdateProofsError(false));
         yield put(UpdateIsLoadingProofs(true));
 
-        const proofList: Proof[] = yield call(getProofs);
+        const proofList: Proof[] = yield call(ProtectedCall, getProofs, user);
 
         if (proofList !== undefined) {
             yield put(UpdateProofList(proofList));

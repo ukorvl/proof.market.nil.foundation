@@ -45,4 +45,4 @@ export const getCircuitsInfo = (): Promise<CircuitInfo> =>
  * @returns .
  */
 export const getCircuitsStats = (): Promise<CircuitStats> =>
-    newFetcher.get(`/${dbName}/circuit/statistics`);
+    newFetcher.get(`/${databaseUrl}/${dbName}/circuit/statistics`);

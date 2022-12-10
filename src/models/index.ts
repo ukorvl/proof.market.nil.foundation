@@ -6,4 +6,3 @@
 export * from './market';
 export * from './login';
 export * from './portfolio';
-export * from './dbms';
