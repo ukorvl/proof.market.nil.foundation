@@ -12,8 +12,8 @@ main {
 }
 
 @mixin make-container($gutter: $grid-gutter-width) {
-  padding-right: ceil(math.div($gutter, 1.5)) !important;
-  padding-left: floor(math.div($gutter, 1.5)) !important;
+  padding-right: ceil(math.div($gutter, 2)) !important;
+  padding-left: floor(math.div($gutter, 2)) !important;
 }
 
 @mixin make-row($gutter: $grid-gutter-width) {
