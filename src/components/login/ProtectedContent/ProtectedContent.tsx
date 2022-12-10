@@ -42,7 +42,7 @@ export const ProtectedContent = ({
             {(!isAuthentificated || isReadonly) && (
                 <Overlay>
                     <div className={styles.container}>
-                        {overlayTitle && <h4>{overlayTitle}</h4>}
+                        {overlayTitle && <h4 className="text-center">{overlayTitle}</h4>}
                         <Button
                             variant={Variant.success}
                             size={Size.lg}
