@@ -26,7 +26,7 @@ export const CreateOrdersPanel = (): ReactElement => {
         <DashboardCard>
             <Details title={<h4>Create orders</h4>}>
                 <div className="cerateOrdersPanel">
-                    <ProtectedContent overlayTitle="Authorization required to create orders">
+                    <ProtectedContent overlayTitle="Authorization is required to create orders">
                         <CreateOrdersTabs
                             currentTab={tab}
                             onSetTab={setTab}
