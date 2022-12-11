@@ -21,13 +21,14 @@ const newFetcher = createBearerHttpClient('');
 export const getCircuits = (): Promise<Circuit> =>
     httpFetcher
         .post('cursor', {
-            query: 'FOR x IN @@relation LET att = APPEND(SLICE(ATTRIBUTES(x), 0, 25), "_key", true) LIMIT @offset, @count RETURN KEEP(x, att)',
+            query: `
+                FOR x IN @@relation
+                    LET att = ATTRIBUTES(x, true)
+                    RETURN KEEP(x, att)
+            `,
             bindVars: {
                 '@relation': 'circuit',
-                offset: 0,
-                count: 100,
             },
-            batchSize: 100,
         })
         .then((x: any) => x.result);
 
