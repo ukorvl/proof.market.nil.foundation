@@ -21,7 +21,7 @@ export const OrderBook = (): ReactElement => {
     return (
         <DashboardCard>
             <Details title={<h4>Order book</h4>}>
-                <div className={styles.orderBook}>{OrderBookViewFactory({ ...data })}</div>
+                <div className={styles.orderBook}>{OrderBookViewFactory(data)}</div>
             </Details>
         </DashboardCard>
     );
