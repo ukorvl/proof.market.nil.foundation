@@ -8,6 +8,7 @@ import { Row, TableInstance, TableState } from 'react-table';
 import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
+import styles from './TradeHistory.module.scss';
 
 /**
  * Props.
@@ -74,7 +75,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
     return (
         <ReactTable
             name="tradeHistoryTable"
-            className="tradeHistoryTable"
+            className={styles.table}
             data={data}
             columns={columns}
             renderRows={renderRows}

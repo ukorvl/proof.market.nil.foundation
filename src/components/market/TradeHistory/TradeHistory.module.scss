@@ -1,10 +1,10 @@
 @import "src/styles/mixins/tableColumns";
 
-.tradeHistory {
+.container {
   height: 500px;
 }
 
-.tradeHistoryTable {
+.table {
   @include tableColumns(26%, 32%, 42%);
   height: 100%;
 }
