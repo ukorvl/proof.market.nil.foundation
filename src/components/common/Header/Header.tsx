@@ -12,7 +12,7 @@ import { Path } from 'src/routing';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../../login';
 import { Breadcrumbs } from '../BreadCrumbs';
-import './Header.scss';
+import styles from './Header.module.scss';
 
 /**
  * Header.
@@ -24,13 +24,13 @@ export const Header = (): ReactElement => {
     const { isReadonly } = useAuth();
 
     return (
-        <Navbar>
+        <Navbar className={styles.navbar}>
             <Container
-                className="headerContainer"
+                className={styles.container}
                 fluid
             >
                 <Breadcrumbs />
-                <Nav>
+                <Nav className={styles.nav}>
                     {navigationLinks.map(({ title, path }) => (
                         <Nav.Item
                             key={title}

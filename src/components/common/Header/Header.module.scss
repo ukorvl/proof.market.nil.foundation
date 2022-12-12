@@ -1,28 +1,28 @@
 @import "/src/styles/mixins/responsive";
 @import "/src/styles/constants.scss";
 
-.headerContainer {
+.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .nav {
-    letter-spacing: 1px;
-
-    > li > a {
-      border-radius: 0 !important;
-      color: $c-secondary !important;
-      padding-top: 14px;
-      padding-bottom: 14px;
-    }
-
-    @include responsive(sm) {
-      display: none;
-    }
-  }
-
   code {
     font-family: "Menlo", Courier, monospace !important;
+  }
+}
+
+.nav {
+  letter-spacing: 1px;
+
+  > li > a {
+    border-radius: 0 !important;
+    color: $c-secondary !important;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  @include responsive(sm) {
+    display: none;
   }
 }
 
