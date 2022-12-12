@@ -22,7 +22,7 @@ import { selectCurrentCircuitId } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateCircuitsInfoInterval =
-    Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
+    Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
 
 /**
  * Circuits main saga.

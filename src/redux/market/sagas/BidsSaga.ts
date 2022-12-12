@@ -17,7 +17,7 @@ import {
 import { selectCurrentCircuitId } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
-const revalidateBidsDelay = Number(process.env.REACT_APP_UPDATE_ORDER_BOOK_INTERVAL) || 3000;
+const revalidateBidsDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
 
 /**
  * Bids main saga.
