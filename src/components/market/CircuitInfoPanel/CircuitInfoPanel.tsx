@@ -23,37 +23,39 @@ export const CircuitInfoPanel = (): ReactElement => {
     const change = circuitInfo?.daily_change;
 
     return (
-        <DashboardCard className={styles.container}>
-            {currentCircuit && (
+        <DashboardCard className={styles.panel}>
+            <div className={styles.container}>
+                {currentCircuit && (
+                    <div>
+                        {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.info.toUpperCase()})/USD`}
+                    </div>
+                )}
                 <div>
-                    {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.info.toUpperCase()})/USD`}
+                    <div className={`text-muted ${styles.title}`}>Current cost</div>
+                    <div>{renderDashOnEmptyValue(circuitInfo?.current)}</div>
                 </div>
-            )}
-            <div>
-                <div className={`text-muted ${styles.title}`}>Current cost</div>
-                <div>{renderDashOnEmptyValue(circuitInfo?.current)}</div>
-            </div>
-            <div>
-                <div className={`text-muted ${styles.title}`}>24h Change</div>
                 <div>
-                    {!!change ? (
-                        <PriceChangeIndicator change={change} />
-                    ) : (
-                        renderDashOnEmptyValue(undefined)
-                    )}
+                    <div className={`text-muted ${styles.title}`}>24h Change</div>
+                    <div>
+                        {!!change ? (
+                            <PriceChangeIndicator change={change} />
+                        ) : (
+                            renderDashOnEmptyValue(undefined)
+                        )}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div className={`text-muted ${styles.title}`}>24h High</div>
-                <div>{renderDashOnEmptyValue(circuitInfo?.max)}</div>
-            </div>
-            <div>
-                <div className={`text-muted ${styles.title}`}>24h Low</div>
-                <div>{renderDashOnEmptyValue(circuitInfo?.min)}</div>
-            </div>
-            <div>
-                <div className={`text-muted ${styles.title}`}>24h Volume</div>
-                <div>{renderDashOnEmptyValue(circuitInfo?.volume, 0)}</div>
+                <div>
+                    <div className={`text-muted ${styles.title}`}>24h High</div>
+                    <div>{renderDashOnEmptyValue(circuitInfo?.max)}</div>
+                </div>
+                <div>
+                    <div className={`text-muted ${styles.title}`}>24h Low</div>
+                    <div>{renderDashOnEmptyValue(circuitInfo?.min)}</div>
+                </div>
+                <div>
+                    <div className={`text-muted ${styles.title}`}>24h Volume</div>
+                    <div>{renderDashOnEmptyValue(circuitInfo?.volume, 0)}</div>
+                </div>
             </div>
         </DashboardCard>
     );
