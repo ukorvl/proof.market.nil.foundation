@@ -201,6 +201,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
                 data={data}
                 columns={columns}
                 renderRows={renderRows}
+                disableSortRemove={true}
                 initialState={defaultTableState}
             />
             {selectedRow !== null && (

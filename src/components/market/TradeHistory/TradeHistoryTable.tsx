@@ -78,6 +78,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
             className={styles.table}
             data={data}
             columns={columns}
+            disableSortRemove={true}
             renderRows={renderRows}
             initialState={defaultTableState}
         />

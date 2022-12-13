@@ -90,6 +90,7 @@ export const OrderBookTable = memo(function OrderBookTable({
             renderRows={renderRows}
             data={data}
             columns={columns}
+            disableSortRemove={true}
             initialState={defaultOrderBookState}
         />
     );

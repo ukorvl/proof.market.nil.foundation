@@ -67,12 +67,14 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
             {
                 Header: 'Cost',
                 accessor: 'cost',
-                sortType: sortFunctionCreator('cost'),
+                sortType: customSortFunction,
+                sortDescFirst: true,
             },
             {
                 Header: 'Generation time',
                 accessor: 'eval_time',
-                sortType: sortFunctionCreator('eval_time'),
+                sortType: customSortFunction,
+                sortDescFirst: true,
             },
             {
                 accessor: 'type',
@@ -204,16 +206,18 @@ const getLastOrderData = (currentAsks: Ask[]): LastOrderData => {
 /**
  * Creates react table sort by provided field fucntion.
  *
- * @param sortField Sort field.
+ * @param firstRow First row.
+ * @param  secondRow Second row.
+ * @param columnId Sorted column id.
  * @returns Sort function.
  */
-const sortFunctionCreator = (sortField: keyof OrderBookTableData) => {
-    const sortFn: SortByFn<OrderBookTableData> = (rowFirst, rowSecond, _id) => {
-        const { values: valuesFirst } = rowFirst;
-        const { values: valuesSecond } = rowSecond;
+const customSortFunction: SortByFn<OrderBookTableData> = (firstRow, secondRow, columnId) => {
+    const firstValue = firstRow.values[columnId];
+    const secondValue = secondRow.values[columnId];
 
-        return valuesFirst[sortField] - valuesSecond[sortField] > 0 ? -1 : 1;
-    };
+    if (firstValue === secondValue) {
+        return 0;
+    }
 
-    return sortFn;
+    return firstValue - secondValue > 0 ? -1 : 1;
 };
