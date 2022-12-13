@@ -206,14 +206,18 @@ const getLastOrderData = (currentAsks: Ask[]): LastOrderData => {
 /**
  * Creates react table sort by provided field fucntion.
  *
- * @param rowFirst First row.
- * @param rowSecond Second row.
+ * @param firstRow First row.
+ * @param  secondRow Second row.
  * @param columnId Sorted column id.
  * @returns Sort function.
  */
-const customSortFunction: SortByFn<OrderBookTableData> = (rowFirst, rowSecond, columnId) => {
-    const { values: valuesFirst } = rowFirst;
-    const { values: valuesSecond } = rowSecond;
+const customSortFunction: SortByFn<OrderBookTableData> = (firstRow, secondRow, columnId) => {
+    const firstValue = firstRow.values[columnId];
+    const secondValue = secondRow.values[columnId];
 
-    return valuesFirst[columnId] - valuesSecond[columnId] > 0 ? -1 : 1;
+    if (firstValue === secondValue) {
+        return 0;
+    }
+
+    return firstValue - secondValue > 0 ? -1 : 1;
 };
