@@ -51,7 +51,7 @@ jobs:
         npm run build
 
     - name: Pack build results
-      run: tar -czf build-${{ github.sha }} /build
+      run: tar -czf build-${{ github.sha }} build
 
     - name: Upload workflow artifacts
       uses: actions/upload-artifact@v3
