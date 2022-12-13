@@ -5,6 +5,8 @@ on:
   pull_request:
   # Allows to trigger workflow manually
   workflow_dispatch:
+  # Allows to call from another workflow
+  workflow_call:
 
 jobs:
   build:
