@@ -21,8 +21,11 @@ jobs:
         with:
           name: build-${{ github.sha }}
 
+      - name: Extract build results
+        run: tar -xf build-${{ github.sha }}.tar.gz
+
       - name: Deploy app
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./build
