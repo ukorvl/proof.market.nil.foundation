@@ -46,7 +46,9 @@ jobs:
         set REACT_APP_READONLY_USER=${{ secrets.READONLY_USER }}
 
     - name: Build
-      run: npm run build
+      run: |
+        CI=false
+        npm run build
 
     - name: Pack build results
       run: tar -czf build-${{ github.sha }} /build
