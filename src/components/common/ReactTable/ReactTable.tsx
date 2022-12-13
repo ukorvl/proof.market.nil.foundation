@@ -5,10 +5,9 @@
 
 import { ReactElement, ReactNode, useEffect } from 'react';
 import {
-    Column,
     ColumnInstance,
     TableInstance,
-    TableState,
+    TableOptions,
     useFilters,
     useSortBy,
     useTable,
@@ -23,14 +22,11 @@ import { Table, TBody, THead, TRow } from '../Table';
  */
 type ReactTableProps<T extends Record<string, unknown>> = {
     name: string;
-    data: T[];
-    columns: ReadonlyArray<Column<T>>;
     renderRows: (tableInstance: TableInstance<T>) => ReactNode;
-    initialState?: Partial<TableState<T>>;
     className?: string;
     reversed?: boolean;
     showTableHeader?: boolean;
-};
+} & TableOptions<T>;
 
 /**
  * React-table hook list to pass into table instance.
@@ -45,17 +41,22 @@ const tableHooks = [useFilters, useSortBy].filter(notEmpty);
  */
 export const ReactTable = <T extends Record<string, unknown>>({
     name,
-    columns,
-    data,
     renderRows,
     initialState: defaultInitialState,
     className,
     reversed,
     showTableHeader = true,
+    ...restOptions
 }: ReactTableProps<T>): ReactElement => {
     const [initialState, setInitialState] = useInitialTableState(name, defaultInitialState);
 
-    const tableInstance = useTable<T>({ columns, data, initialState }, ...tableHooks);
+    const tableInstance = useTable<T>(
+        {
+            initialState,
+            ...restOptions,
+        },
+        ...tableHooks,
+    );
     const { getTableBodyProps, visibleColumns, state } = tableInstance;
 
     const debouncedState = useDebounce(state, 500);

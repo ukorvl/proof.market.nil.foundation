@@ -98,6 +98,7 @@ export const HistoryOrdersTable = memo(function ActiveOrdersTable({
             className="historyOrdersTable"
             data={data}
             columns={columns}
+            disableSortRemove={true}
             renderRows={renderRows}
             initialState={defaultTableState}
         />
