@@ -51,12 +51,12 @@ jobs:
         npm run build
 
     - name: Pack build results
-      run: tar -czf build-${{ github.sha }} build
+      run: tar -czf build-${{ github.sha }}.tar.gz build
 
     - name: Upload workflow artifacts
       uses: actions/upload-artifact@v3
       with:
         name: build-${{ github.sha }}
-        path: build-${{ github.sha }}.tgz
+        path: build-${{ github.sha }}.tar.gz
         if-no-files-found: error
         retention-days: 10
