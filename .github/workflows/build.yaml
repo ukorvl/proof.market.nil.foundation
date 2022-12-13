@@ -34,7 +34,7 @@ jobs:
     - name: Install dependencies
       if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
       run: |
-        npm config set "//npm.pkg.github.com/:_authToken" ${{ secrets.GITHUB_AUTH_TOKEN }}
+        npm config set "//npm.pkg.github.com/:_authToken" ${{ secrets.AUTH_TOKEN }}
         npm ci
 
     - name: Setup env
