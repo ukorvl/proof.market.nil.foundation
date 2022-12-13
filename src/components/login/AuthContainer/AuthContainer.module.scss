@@ -1,0 +1,13 @@
+@import "src/styles/constants.scss";
+
+.loginContainer {
+  background-color: $c-base;
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 64px;
+}

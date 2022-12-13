@@ -1,0 +1,10 @@
+@import "src/styles/mixins/tableColumns";
+
+.container {
+  height: 500px;
+}
+
+.table {
+  @include tableColumns(26%, 32%, 42%);
+  height: 100%;
+}

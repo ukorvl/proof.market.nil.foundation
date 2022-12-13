@@ -1,0 +1,17 @@
+@import "./constants.scss";
+
+:export {
+  primaryColor: $c-primary;
+  dangerColor: $c-danger;
+  successColor: $c-success;
+  baseColor: $c-base;
+  infoColor: $c-info;
+  baseDarkerColor: $c-base-darker;
+  baseLightColor: $c-base-light;
+  secondaryColor: $c-secondary;
+  secondaryDarkerColor: $c-secondary-darker;
+  // transparentized colors
+  transparentSuccessColor: rgba($c-success, 0.3);
+  transparentDangerColor: rgba($c-danger, 0.3);
+  transparentBaseLightColor: rgba($c-base-light, 0.4);
+}

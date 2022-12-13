@@ -1,0 +1,18 @@
+@import "../../../styles/constants.scss";
+@import "src/styles/mixins/responsive";
+
+.circuitChart {
+  height: 406px;
+  position: relative;
+
+  @include responsive(sm) {
+    height: 410px;
+  }
+
+  .spinner-grow-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+  }
+}

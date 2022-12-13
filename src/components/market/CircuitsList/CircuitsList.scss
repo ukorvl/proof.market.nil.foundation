@@ -1,0 +1,34 @@
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/styledList";
+@import "src/styles/mixins/hideScrollbar";
+
+.circuitsList {
+  height: 372px;
+
+  .input-group {
+    margin-bottom: 8px;
+  }
+
+  .list-group {
+    @include styledList;
+    height: 330px;
+    overflow: auto;
+    @include hideScrollbar;
+
+    .list-group-item {
+      .media-body {
+        vertical-align: middle;
+        height: 44px;
+      }
+
+      .dailyChangeIndicator {
+        font-size: 1.1rem;
+        margin-top: 4px;
+
+        &_selected {
+          color: $c-secondary !important;
+        }
+      }
+    }
+  }
+}

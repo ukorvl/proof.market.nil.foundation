@@ -1,0 +1,25 @@
+@import "../constants.scss";
+
+@mixin overflowFade($maskWidth) {
+  $mask-image-content: linear-gradient(
+    to right,
+    transparent,
+    $c-base-darker $maskWidth,
+    $c-base-darker calc(100% - $maskWidth),
+    transparent
+  );
+  $maskSize: 100% 100%, 0 100%;
+  $maskPosition: 0 0, 100% 0;
+
+  mask-image: $mask-image-content;
+  -webkit-mask-image: $mask-image-content;
+
+  mask-size: $maskSize;
+  -webkit-mask-size: $maskSize;
+
+  mask-position: $maskPosition;
+  -webkit-mask-position: $maskPosition;
+
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+} ;

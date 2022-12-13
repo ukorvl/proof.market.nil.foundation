@@ -1,0 +1,30 @@
+@import "src/styles/mixins/responsive";
+@import "src/styles/mixins/hideScrollbar";
+
+.cerateOrdersPanel {
+  height: 500px;
+  position: relative;
+
+  .nav {
+    padding: 8px 0 16px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .formContent {
+      height: 370px;
+      overflow: auto;
+      @include hideScrollbar;
+
+      @include responsive(sm) {
+        height: 400px;
+      }
+    }
+
+    .btn {
+      margin-top: auto;
+    }
+  }
+}

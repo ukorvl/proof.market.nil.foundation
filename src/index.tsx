@@ -1,14 +1,27 @@
+/**
+ * @file Root index.
+ * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ */
+
+// eslint-disable-next-line import/order
+import './polyfills';
+
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './App';
+import { store } from './redux';
+import { configureSentry } from './sentry';
+import { reportWebVitals } from './reportWebVitals';
+import './index.scss';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+configureSentry();
+render(
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+reportWebVitals();

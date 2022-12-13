@@ -1,0 +1,16 @@
+/**
+ * @file Type declaration.
+ * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ */
+
+import { CreateTradeOrder } from '../TradeOrder';
+
+/**
+ * Bid dto.
+ */
+export interface CreateBid extends CreateTradeOrder {
+    /**
+     * Public input.
+     */
+    public_input: Record<string, string>;
+}

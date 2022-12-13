@@ -1,0 +1,30 @@
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/hideScrollbar";
+@import "src/styles/mixins/overflowFade";
+
+.panel {
+  height: 80px;
+  padding: 0 5px !important;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  height: 100%;
+  padding: 0 15px;
+
+  > * + * {
+    margin-left: 40px;
+  }
+
+  @include hideScrollbar;
+  @include overflowFade(15px);
+}
+
+.title {
+  font-size: 1.2rem;
+  padding: 0.2rem 0;
+  white-space: nowrap;
+}
