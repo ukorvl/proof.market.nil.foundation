@@ -2,8 +2,8 @@ name: Deploy
 
 on:
   # Triggers the workflow on push to master branch
-  push:
-    branches: [ master ]
+  # push:
+  #   branches: [ master ]
   # Allows to trigger workflow manually
   workflow_dispatch:
 
