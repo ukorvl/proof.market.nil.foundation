@@ -23,6 +23,7 @@ import { Table, TBody, THead, TRow } from '../Table';
 type ReactTableProps<T extends Record<string, unknown>> = {
     name: string;
     renderRows: (tableInstance: TableInstance<T>) => ReactNode;
+    renderHeaders?: (tableInstance: TableInstance<T>) => ReactNode;
     className?: string;
     reversed?: boolean;
     showTableHeader?: boolean;
@@ -42,6 +43,7 @@ const tableHooks = [useFilters, useSortBy].filter(notEmpty);
 export const ReactTable = <T extends Record<string, unknown>>({
     name,
     renderRows,
+    renderHeaders,
     initialState: defaultInitialState,
     className,
     reversed,
@@ -65,11 +67,22 @@ export const ReactTable = <T extends Record<string, unknown>>({
         setInitialState(debouncedState);
     }, [setInitialState, debouncedState]);
 
+    const tableHeadersRenderer = () =>
+        renderHeaders ? renderHeaders(tableInstance) : renderTableHeadersFallback(visibleColumns);
+
     return (
         <Table className={className}>
-            {!reversed && showTableHeader && renderTableHead(visibleColumns)}
+            {!reversed && showTableHeader && (
+                <THead sticky>
+                    <TRow>{tableHeadersRenderer()}</TRow>
+                </THead>
+            )}
             <TBody {...getTableBodyProps()}>{renderRows(tableInstance)}</TBody>
-            {reversed && showTableHeader && renderTableHead(visibleColumns)}
+            {reversed && showTableHeader && (
+                <THead sticky>
+                    <TRow>{tableHeadersRenderer()}</TRow>
+                </THead>
+            )}
         </Table>
     );
 };
@@ -80,15 +93,15 @@ export const ReactTable = <T extends Record<string, unknown>>({
  * @param columns Table columns.
  * @returns Table head.
  */
-const renderTableHead = <T extends Record<string, unknown>>(columns: ColumnInstance<T>[]) => (
-    <THead sticky>
-        <TRow>
-            {columns.map(column => (
-                <ReactTableHeader
-                    key={column.id}
-                    column={column}
-                />
-            ))}
-        </TRow>
-    </THead>
+const renderTableHeadersFallback = <T extends Record<string, unknown>>(
+    columns: ColumnInstance<T>[],
+) => (
+    <>
+        {columns.map(column => (
+            <ReactTableHeader
+                key={column.id}
+                column={column}
+            />
+        ))}
+    </>
 );
