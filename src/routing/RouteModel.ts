@@ -11,5 +11,6 @@ import { Path } from './Paths';
  */
 export type RouteModel = {
     path: Path;
-    Component: LazyExoticComponent<FC>;
+    //Component: LazyExoticComponent<FC>;
+    Component: FC;
 };
