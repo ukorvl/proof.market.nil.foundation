@@ -68,7 +68,7 @@ export const ReactTable = <T extends Record<string, unknown>>({
     }, [setInitialState, debouncedState]);
 
     const tableHeadersRenderer = () =>
-        renderHeaders ? renderHeaders(tableInstance) : renderTableHeadFallback(visibleColumns);
+        renderHeaders ? renderHeaders(tableInstance) : renderTableHeadersFallback(visibleColumns);
 
     return (
         <Table className={className}>
@@ -93,17 +93,15 @@ export const ReactTable = <T extends Record<string, unknown>>({
  * @param columns Table columns.
  * @returns Table head.
  */
-const renderTableHeadFallback = <T extends Record<string, unknown>>(
+const renderTableHeadersFallback = <T extends Record<string, unknown>>(
     columns: ColumnInstance<T>[],
 ) => (
-    <THead sticky>
-        <TRow>
-            {columns.map(column => (
-                <ReactTableHeader
-                    key={column.id}
-                    column={column}
-                />
-            ))}
-        </TRow>
-    </THead>
+    <>
+        {columns.map(column => (
+            <ReactTableHeader
+                key={column.id}
+                column={column}
+            />
+        ))}
+    </>
 );
