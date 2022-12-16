@@ -6,17 +6,12 @@
 import { lazy } from 'react';
 import { RouteModel } from './RouteModel';
 import { Path } from './Paths';
-import LoginView from 'src/views/LoginView';
-import RegisterView from 'src/views/RegisterView';
-import MarketView from 'src/views/MarketView';
-import PortfolioView from 'src/views/PortfolioView';
-import Page404 from 'src/views/404';
 
-// const MarketView = lazy(() => import('../views/MarketView'));
-// const LoginView = lazy(() => import('../views/LoginView'));
-// const PortfolioView = lazy(() => import('../views/PortfolioView'));
-// const Page404 = lazy(() => import('../views/404'));
-// const RegisterView = lazy(() => import('../views/RegisterView'));
+const MarketView = lazy(() => import('../views/MarketView'));
+const LoginView = lazy(() => import('../views/LoginView'));
+const PortfolioView = lazy(() => import('../views/PortfolioView'));
+const Page404 = lazy(() => import('../views/404'));
+const RegisterView = lazy(() => import('../views/RegisterView'));
 
 /**
  * Login route.

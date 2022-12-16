@@ -31,41 +31,41 @@ function App(): ReactElement {
                         footer={<Footer />}
                         stickyHeader
                     >
-                        {/* <Suspense fallback={<Spinner grow />}> */}
-                        <NetConnectionHandler>
-                            <Routes>
-                                <Route
-                                    path={registerRoute.path}
-                                    element={
-                                        <AuthContainer>
-                                            <registerRoute.Component />
-                                        </AuthContainer>
-                                    }
-                                />
-                                <Route
-                                    path={loginRoute.path}
-                                    element={
-                                        <AuthContainer>
-                                            <loginRoute.Component />
-                                        </AuthContainer>
-                                    }
-                                />
-                                {routes.map(({ path, Component }) => (
+                        <Suspense fallback={<Spinner grow />}>
+                            <NetConnectionHandler>
+                                <Routes>
                                     <Route
-                                        key={path}
-                                        path={path}
+                                        path={registerRoute.path}
                                         element={
-                                            <ReadonlyAccessProvider fallback={<Spinner grow />}>
-                                                <ProtectedRoute>
-                                                    <Component />
-                                                </ProtectedRoute>
-                                            </ReadonlyAccessProvider>
+                                            <AuthContainer>
+                                                <registerRoute.Component />
+                                            </AuthContainer>
                                         }
                                     />
-                                ))}
-                            </Routes>
-                        </NetConnectionHandler>
-                        {/* </Suspense> */}
+                                    <Route
+                                        path={loginRoute.path}
+                                        element={
+                                            <AuthContainer>
+                                                <loginRoute.Component />
+                                            </AuthContainer>
+                                        }
+                                    />
+                                    {routes.map(({ path, Component }) => (
+                                        <Route
+                                            key={path}
+                                            path={path}
+                                            element={
+                                                <ReadonlyAccessProvider fallback={<Spinner grow />}>
+                                                    <ProtectedRoute>
+                                                        <Component />
+                                                    </ProtectedRoute>
+                                                </ReadonlyAccessProvider>
+                                            }
+                                        />
+                                    ))}
+                                </Routes>
+                            </NetConnectionHandler>
+                        </Suspense>
                     </Layout>
                 </BrowserRouter>
             </NotificationProvider>
