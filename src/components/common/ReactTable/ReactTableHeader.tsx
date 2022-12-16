@@ -14,6 +14,7 @@ import styles from './ReactTable.module.scss';
  */
 type ReactTableHeaderProps<T extends Record<string, unknown>> = {
     column: ColumnInstance<T>;
+    // TODO - refactor after upgrading to react-table@v8
     onlySortBy?: 'asc' | 'desc';
 };
 
@@ -38,13 +39,14 @@ export const ReactTableHeader = <T extends Record<string, unknown>>({
         toggleSortBy();
     };
 
+    // TODO - refactor after upgrading to react-table@v8
     const shouldToggleSort = useMemo(() => {
         if (onlySortBy === undefined) {
             return false;
         }
 
         const toggleSortCondition = onlySortBy === 'asc' ? isSortedDesc : !isSortedDesc;
-        return isSorted && toggleSortCondition;
+        return isSorted && !!toggleSortCondition;
     }, [onlySortBy, isSortedDesc, isSorted]);
 
     useLayoutEffect(() => {
