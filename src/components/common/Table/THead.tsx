@@ -5,12 +5,14 @@
 
 import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
 import clsx from 'clsx';
+import styles from './Table.module.scss';
 
 /**
  * Props.
  */
 type THeadProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
     sticky?: boolean;
+    isReversed?: boolean;
 };
 
 /**
