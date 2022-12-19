@@ -55,11 +55,11 @@ function App(): ReactElement {
                                             key={path}
                                             path={path}
                                             element={
-                                                <ReadonlyAccessProvider fallback={<Spinner grow />}>
-                                                    <ProtectedRoute>
-                                                        <Component />
-                                                    </ProtectedRoute>
-                                                </ReadonlyAccessProvider>
+                                                // <ReadonlyAccessProvider fallback={<Spinner grow />}>
+                                                <ProtectedRoute>
+                                                    <Component />
+                                                </ProtectedRoute>
+                                                // </ReadonlyAccessProvider>
                                             }
                                         />
                                     ))}
