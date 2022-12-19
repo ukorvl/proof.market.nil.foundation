@@ -28,11 +28,12 @@ jobs:
 
     - name: Setup env
       run: |
-        set REACT_APP_BASE_API_URL=${{ secrets.BASE_API_URL }}
-        set REACT_APP_DBMS_DEFAULT_DATABASE=${{ secrets.DBMS_DEFAULT_DATABASE }}
-        set REACT_APP_SENTRY_DSN=${{ secrets.SENTRY_DSN }}
-        set REACT_APP_SITE_EMAIL=${{ secrets.SITE_EMAIL }}
-        set REACT_APP_READONLY_USER=${{ secrets.READONLY_USER }}
+        touch .env.local
+        echo "REACT_APP_BASE_API_URL=${{ secrets.BASE_API_URL }}" >> .env.local
+        echo "REACT_APP_DBMS_DEFAULT_DATABASE=${{ secrets.DBMS_DEFAULT_DATABASE }}" >> .env.local
+        echo "REACT_APP_SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> .env.local
+        echo "REACT_APP_SITE_EMAIL=${{ secrets.SITE_EMAIL }}" >> .env.local
+        echo "REACT_APP_READONLY_USER=${{ secrets.READONLY_USER }}" >> .env.local
 
     - name: Build
       run: |
