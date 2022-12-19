@@ -35,7 +35,7 @@ export const ReadonlyAccessProvider = ({
         const readonlyUser = process.env.REACT_APP_READONLY_USER;
 
         if (!readonlyUser) {
-            return;
+            throw new Error('Provide readonly user to run this app!');
         }
 
         const loginWithReadonly = async (user: string) => {
