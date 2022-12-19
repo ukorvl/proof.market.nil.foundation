@@ -72,17 +72,15 @@ export const ReactTable = <T extends Record<string, unknown>>({
 
     return (
         <Table className={className}>
-            {!reversed && showTableHeader && (
-                <THead sticky>
+            {showTableHeader && (
+                <THead
+                    sticky
+                    isReversed={reversed}
+                >
                     <TRow>{tableHeadersRenderer()}</TRow>
                 </THead>
             )}
             <TBody {...getTableBodyProps()}>{renderRows(tableInstance)}</TBody>
-            {reversed && showTableHeader && (
-                <THead sticky>
-                    <TRow>{tableHeadersRenderer()}</TRow>
-                </THead>
-            )}
         </Table>
     );
 };

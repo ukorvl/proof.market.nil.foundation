@@ -5,12 +5,14 @@
 
 import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
 import clsx from 'clsx';
+import styles from './Table.module.scss';
 
 /**
  * Props.
  */
 type THeadProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
     sticky?: boolean;
+    isReversed?: boolean;
 };
 
 /**
@@ -19,8 +21,19 @@ type THeadProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivEleme
  * @param {THeadProps} props Props.
  * @returns React component.
  */
-export const THead = ({ sticky, className, children, ...rest }: THeadProps): ReactElement => {
-    const tHeadClassName = clsx('tableHead', className, sticky && 'sticky');
+export const THead = ({
+    sticky,
+    className,
+    children,
+    isReversed,
+    ...rest
+}: THeadProps): ReactElement => {
+    const tHeadClassName = clsx(
+        styles.tableHead,
+        className,
+        sticky && styles.stickyHead,
+        isReversed && styles.reversedHead,
+    );
 
     return (
         <div

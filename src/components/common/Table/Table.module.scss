@@ -1,7 +1,7 @@
 @import "src/styles/mixins/hideScrollbar";
 @import "src/styles/constants.scss";
 
-.styledTable {
+.table {
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
@@ -14,17 +14,6 @@
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
-
-    &.sticky {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-      background-color: $c-base-darker;
-    }
-
-    &.tableHead {
-      border-bottom: 1px solid $c-base-light;
-    }
   }
 
   div[role="row"] {
@@ -57,4 +46,24 @@
       white-space: nowrap;
     }
   }
+}
+
+.tableHead {
+  border-bottom: 1px solid $c-base-light;
+}
+
+.reversedHead {
+  order: 2;
+
+  &.stickyHead {
+    bottom: 0;
+    top: unset;
+  }
+}
+
+.stickyHead {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: $c-base-darker;
 }

@@ -4,7 +4,7 @@
  */
 
 import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
-import './Table.scss';
+import styles from './Table.module.scss';
 
 /**
  * Props.
@@ -21,7 +21,7 @@ export const Table = ({ className, children, ...rest }: TableProps): ReactElemen
     return (
         <div
             role="table"
-            className={`styledTable ${className ?? ''}`}
+            className={`${styles.table} ${className ?? ''}`}
             {...rest}
         >
             {children}
