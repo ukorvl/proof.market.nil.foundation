@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build.yaml
-    name: Build
+    secrets: inherit
 
   deploy:
     name: Deploy
