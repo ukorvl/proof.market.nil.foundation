@@ -164,7 +164,6 @@ export const LoginForm = (): ReactElement => {
                         size={Size.lg}
                     >
                         Request credentials
-                        {isSubmitting && <Spinner />}
                     </Button>
                 </Link>
             </Form>

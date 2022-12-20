@@ -144,7 +144,6 @@ export const RegisterForm = (): ReactElement => {
                         size={Size.lg}
                     >
                         Sign in
-                        {isSubmitting && <Spinner />}
                     </Button>
                 </Link>
             </Form>
