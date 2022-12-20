@@ -1,12 +1,11 @@
 @import "src/styles/constants.scss";
 
 .authCard {
-  padding: 20px !important;
-  padding-top: 24px !important;
+  padding: 24px 20px 20px !important;
   border: 1px solid $c-base-light;
   width: 360px;
   margin-bottom: auto !important;
-  height: 494px;
+  height: 564px;
   display: flex;
   flex-flow: column nowrap;
 }

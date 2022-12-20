@@ -4,10 +4,13 @@
   background-color: $c-base;
   padding-top: 50px;
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .copyright {
-  position: absolute;
-  bottom: 64px;
+  margin: {
+    top: auto;
+    bottom: 64px;
+  }
 }
