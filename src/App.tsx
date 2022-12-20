@@ -4,9 +4,9 @@
  */
 
 import { ReactElement, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
-import * as Sentry from '@sentry/react';
+import { ErrorBoundary, withProfiler } from '@sentry/react';
 import {
     Header,
     Footer,
@@ -18,14 +18,15 @@ import {
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
+// TODO - replace HashRouter with BrowserRouter after migrating from gh pages
 /**
  * @returns App.
  */
 function App(): ReactElement {
     return (
-        <Sentry.ErrorBoundary fallback={<ErrorView />}>
+        <ErrorBoundary fallback={<ErrorView />}>
             <NotificationProvider>
-                <BrowserRouter>
+                <HashRouter>
                     <Layout
                         header={<Header />}
                         footer={<Footer />}
@@ -67,10 +68,10 @@ function App(): ReactElement {
                             </NetConnectionHandler>
                         </Suspense>
                     </Layout>
-                </BrowserRouter>
+                </HashRouter>
             </NotificationProvider>
-        </Sentry.ErrorBoundary>
+        </ErrorBoundary>
     );
 }
 
-export default Sentry.withProfiler(App);
+export default withProfiler(App);
