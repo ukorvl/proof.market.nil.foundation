@@ -18,7 +18,7 @@ const requiredEnv = [
  */
 export const checkEnvVariablesAreDefined = (): void =>
     requiredEnv.forEach(x => {
-        if (x === undefined) {
+        if (!x) {
             throw new Error(
                 'All required environment variables should be defined before running this app',
             );
