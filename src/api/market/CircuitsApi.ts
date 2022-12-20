@@ -7,38 +7,23 @@ import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
-const databaseUrl = `_db/${dbName}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
 
-const newFetcher = createBearerHttpClient('');
+const apiUrl = `_db/${dbName}/${dbName}`;
+const httpFetcher = createBearerHttpClient(apiUrl, false);
 
 /**
  * Get circuits.
  *
  * @returns Circuit list.
  */
-export const getCircuits = (): Promise<Circuit> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    LET att = ATTRIBUTES(x, true)
-                    RETURN KEEP(x, att)
-            `,
-            bindVars: {
-                '@relation': 'circuit',
-            },
-        })
-        .then((x: any) => x.result);
+export const getCircuits = (): Promise<Circuit> => httpFetcher.get('/statement');
 
 /**
  * Get circuits info.
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<CircuitInfo> =>
-    newFetcher.get(`/${databaseUrl}/${dbName}/circuit/info`);
+export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/statement/info`);
 
 /**
  * Get circuits stats.
@@ -46,4 +31,4 @@ export const getCircuitsInfo = (): Promise<CircuitInfo> =>
  * @returns .
  */
 export const getCircuitsStats = (): Promise<CircuitStats> =>
-    newFetcher.get(`/${databaseUrl}/${dbName}/circuit/statistics`);
+    httpFetcher.get(`/statement/statistics`);
