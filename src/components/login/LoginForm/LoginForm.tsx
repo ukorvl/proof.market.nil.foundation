@@ -156,12 +156,17 @@ export const LoginForm = (): ReactElement => {
                         {errorMessage}
                     </div>
                 </CSSTransition>
-                <div className="text-right">
-                    <h5>
-                        <span className="text-muted">{"Don't have an account? "}</span>
-                        <Link to={Path.register}>Request credentials</Link>
-                    </h5>
-                </div>
+                <h5 className="text-muted text-center">{"Don't have an account? "}</h5>
+                <Link to={Path.register}>
+                    <Button
+                        block
+                        variant={Variant.primary}
+                        size={Size.lg}
+                    >
+                        Request credentials
+                        {isSubmitting && <Spinner />}
+                    </Button>
+                </Link>
             </Form>
         </AuthCard>
     );
