@@ -12,7 +12,7 @@ import styles from './Table.module.scss';
  */
 type THeadProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
     sticky?: boolean;
-    isReversed?: boolean;
+    isFooterHeader?: boolean;
 };
 
 /**
@@ -25,14 +25,14 @@ export const THead = ({
     sticky,
     className,
     children,
-    isReversed,
+    isFooterHeader,
     ...rest
 }: THeadProps): ReactElement => {
     const tHeadClassName = clsx(
         styles.tableHead,
         className,
         sticky && styles.stickyHead,
-        isReversed && styles.reversedHead,
+        isFooterHeader && styles.footerHead,
     );
 
     return (

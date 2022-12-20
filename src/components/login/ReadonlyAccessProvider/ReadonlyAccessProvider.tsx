@@ -34,10 +34,6 @@ export const ReadonlyAccessProvider = ({
     useEffect(() => {
         const readonlyUser = process.env.REACT_APP_READONLY_USER;
 
-        if (!readonlyUser) {
-            throw new Error('Provide readonly user to run this app!');
-        }
-
         const loginWithReadonly = async (user: string) => {
             try {
                 const { jwt } = await login({
@@ -51,7 +47,7 @@ export const ReadonlyAccessProvider = ({
             }
         };
 
-        !isAuthentificated && loginWithReadonly(readonlyUser);
+        !isAuthentificated && loginWithReadonly(readonlyUser!);
     }, [processLogin, isAuthentificated]);
 
     if (error) {

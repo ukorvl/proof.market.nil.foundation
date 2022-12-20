@@ -13,8 +13,10 @@ import App from './App';
 import { store } from './redux';
 import { configureSentry } from './sentry';
 import { reportWebVitals } from './reportWebVitals';
+import { checkEnvVariablesAreDefined } from './checkEnv';
 import './index.scss';
 
+checkEnvVariablesAreDefined();
 configureSentry();
 render(
     <React.StrictMode>

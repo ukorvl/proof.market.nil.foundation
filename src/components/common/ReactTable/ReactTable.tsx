@@ -25,7 +25,7 @@ type ReactTableProps<T extends Record<string, unknown>> = {
     renderRows: (tableInstance: TableInstance<T>) => ReactNode;
     renderHeaders?: (tableInstance: TableInstance<T>) => ReactNode;
     className?: string;
-    reversed?: boolean;
+    footerHeader?: boolean;
     showTableHeader?: boolean;
 } & TableOptions<T>;
 
@@ -46,7 +46,7 @@ export const ReactTable = <T extends Record<string, unknown>>({
     renderHeaders,
     initialState: defaultInitialState,
     className,
-    reversed,
+    footerHeader,
     showTableHeader = true,
     ...restOptions
 }: ReactTableProps<T>): ReactElement => {
@@ -75,7 +75,7 @@ export const ReactTable = <T extends Record<string, unknown>>({
             {showTableHeader && (
                 <THead
                     sticky
-                    isReversed={reversed}
+                    isFooterHeader={footerHeader}
                 >
                     <TRow>{tableHeadersRenderer()}</TRow>
                 </THead>

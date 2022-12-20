@@ -48,16 +48,22 @@
   }
 }
 
+$defaultTableHeadBorder: 1px solid $c-base-light;
+
 .tableHead {
-  border-bottom: 1px solid $c-base-light;
+  border-bottom: $defaultTableHeadBorder;
 }
 
-.reversedHead {
+.footerHead {
   order: 2;
 
   &.stickyHead {
     bottom: 0;
     top: unset;
+    border: {
+      bottom: none;
+      top: $defaultTableHeadBorder;
+    }
   }
 }
 
