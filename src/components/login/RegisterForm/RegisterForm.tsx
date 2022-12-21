@@ -29,8 +29,8 @@ import styles from './RegisterForm.module.scss';
  * @returns React component.
  */
 export const RegisterForm = (): ReactElement => {
-    const [emailValue, setEmailValue] = useState('');
-    const isEmailValid = useMemo(() => !!emailValue && emailRegExp.test(emailValue), [emailValue]);
+    const [email, setEmail] = useState('');
+    const isEmailValid = useMemo(() => !!email && emailRegExp.test(email), [email]);
     const emailInputRef = useRef<HTMLInputElement | null>(null);
     const [state, handleSubmit] = useForm(process.env.REACT_APP_FORMSPREE_FORM_ID!, {
         data: {
@@ -40,7 +40,7 @@ export const RegisterForm = (): ReactElement => {
     const { submitting, succeeded, errors } = state;
     const debouncedOnChangeHandler = useRef(
         debounce((e: ChangeEvent<HTMLInputElement>) => {
-            setEmailValue(e.target.value);
+            setEmail(e.target.value);
         }, 180),
     ).current;
 
@@ -76,7 +76,7 @@ export const RegisterForm = (): ReactElement => {
                     If you would like to get involved early, leave email below and we will let you
                     know when proof market opens!
                 </div>
-                <Form.Group hasError={!isEmailValid && !!emailValue}>
+                <Form.Group hasError={!isEmailValid && !!email}>
                     <InputGroup
                         size={Size.lg}
                         className={styles.control}
