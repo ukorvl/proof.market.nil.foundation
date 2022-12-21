@@ -51,7 +51,7 @@ export const RegisterForm = (): ReactElement => {
     if (succeeded) {
         return (
             <div className={styles.successMessage}>
-                <h5>Thank you for request!</h5>
+                <h4>Thank you for request!</h4>
                 <Link to={Path.root}>
                     <Button
                         block
