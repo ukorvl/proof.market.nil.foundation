@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState, useMemo, useEffect } from 'react';
+import { ReactElement, useRef, useState, useMemo, useEffect, ChangeEvent } from 'react';
 import {
     InputGroup,
     Icon,
@@ -16,6 +16,7 @@ import {
 } from '@nilfoundation/react-components';
 import { useForm, ValidationError } from '@formspree/react/dist/index.js';
 import { Link } from 'react-router-dom';
+import debounce from 'lodash/debounce';
 import { Path } from 'src/routing';
 import { SocialLinks } from 'src/components/common';
 import { emailRegExp } from 'src/utils';
@@ -37,6 +38,11 @@ export const RegisterForm = (): ReactElement => {
         },
     });
     const { submitting, succeeded, errors } = state;
+    const debouncedOnChangeHandler = useRef(
+        debounce((e: ChangeEvent<HTMLInputElement>) => {
+            setEmailValue(e.target.value);
+        }, 180),
+    ).current;
 
     useEffect(() => {
         emailInputRef.current && emailInputRef.current.focus();
@@ -86,7 +92,7 @@ export const RegisterForm = (): ReactElement => {
                             placeholder="your email"
                             autoComplete="off"
                             ref={emailInputRef}
-                            onChange={e => setEmailValue(e.target.value)}
+                            onChange={debouncedOnChangeHandler}
                         />
                     </InputGroup>
                 </Form.Group>
