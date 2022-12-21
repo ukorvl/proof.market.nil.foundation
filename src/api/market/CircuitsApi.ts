@@ -9,7 +9,7 @@ import { createBearerHttpClient } from '../common';
 const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 
 const apiUrl = `_db/${dbName}/${dbName}`;
-const httpFetcher = createBearerHttpClient(apiUrl, false);
+const httpFetcher = createBearerHttpClient(apiUrl, false, false);
 
 /**
  * Get circuits.
@@ -23,7 +23,7 @@ export const getCircuits = (): Promise<Circuit> => httpFetcher.get('/statement')
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/statement/info`);
+export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/statement/?info`);
 
 /**
  * Get circuits stats.
@@ -31,4 +31,4 @@ export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/sta
  * @returns .
  */
 export const getCircuitsStats = (): Promise<CircuitStats> =>
-    httpFetcher.get(`/statement/statistics`);
+    httpFetcher.get(`/statement/?statistics`);

@@ -14,15 +14,20 @@ const { REACT_APP_BASE_API_URL } = process.env;
  *
  * @param baseUrl - Base api url.
  * @param withCredentials - Include credentials.
+ * @param injectToken - Should inject token.
  * @returns Bearer http client.
  */
-export const createBearerHttpClient = (baseUrl?: string, withCredentials?: boolean): HttpClient =>
+export const createBearerHttpClient = (
+    baseUrl?: string,
+    withCredentials?: boolean,
+    injectToken = true,
+): HttpClient =>
     new HttpClient(
         {
             baseURL: baseUrl ? `${REACT_APP_BASE_API_URL}/${baseUrl}` : `${REACT_APP_BASE_API_URL}`,
             withCredentials,
         },
-        client => client.interceptors.request.use(injectJwtToken),
+        injectToken ? client => client.interceptors.request.use(injectJwtToken) : undefined,
     );
 
 const getJwtToken = (): string | undefined => {
