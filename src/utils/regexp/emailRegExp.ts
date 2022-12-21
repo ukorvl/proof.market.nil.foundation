@@ -6,4 +6,4 @@
 /**
  * Regexp to validate emails.
  */
-export const emailRegExp = /^(.+)@(.+)$/i;
+export const emailRegExp = /^(.+)@(.+)\.(.{2,})$/i;
