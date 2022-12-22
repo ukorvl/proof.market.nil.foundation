@@ -6,6 +6,8 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col, Button, Variant, Size } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { baseDocumentTitle } from 'src/constants';
 import { Path } from '../routing';
 
 /**
@@ -18,6 +20,9 @@ const Page404 = (): ReactElement => (
         as="main"
         fluid
     >
+        <Helmet>
+            <title>{`${baseDocumentTitle} | Page not found`}</title>
+        </Helmet>
         <Row>
             <Col
                 xs={12}

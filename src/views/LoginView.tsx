@@ -4,6 +4,8 @@
  */
 
 import { ReactElement } from 'react';
+import { Helmet } from 'react-helmet';
+import { baseDocumentTitle } from 'src/constants';
 import { LoginForm } from '../components';
 
 /**
@@ -11,6 +13,13 @@ import { LoginForm } from '../components';
  *
  * @returns React component.
  */
-const LoginView = (): ReactElement => <LoginForm />;
+const LoginView = (): ReactElement => (
+    <>
+        <Helmet>
+            <title>{`${baseDocumentTitle} | Login`}</title>
+        </Helmet>
+        <LoginForm />
+    </>
+);
 
 export default LoginView;

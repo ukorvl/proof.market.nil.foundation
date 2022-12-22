@@ -5,6 +5,8 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
+import { Helmet } from 'react-helmet';
+import { baseDocumentTitle } from 'src/constants';
 import {
     CircuitsList,
     CircuitDetailedInfo,
@@ -27,6 +29,9 @@ const MarketView = (): ReactElement => (
         as="main"
         fluid
     >
+        <Helmet>
+            <title>{`${baseDocumentTitle} | Market`}</title>
+        </Helmet>
         <Row>
             <Col
                 xs={12}

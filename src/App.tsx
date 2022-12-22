@@ -7,6 +7,8 @@ import { ReactElement, Suspense } from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
+import { Helmet } from 'react-helmet';
+import { baseDocumentTitle } from 'src/constants';
 import {
     Header,
     Footer,
@@ -27,6 +29,9 @@ function App(): ReactElement {
         <ErrorBoundary fallback={<ErrorView />}>
             <NotificationProvider>
                 <HashRouter>
+                    <Helmet>
+                        <title>{baseDocumentTitle}</title>
+                    </Helmet>
                     <Layout
                         header={<Header />}
                         footer={<Footer />}

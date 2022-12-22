@@ -7,3 +7,4 @@ export * from './socialLinks';
 export * from './navigationLinks';
 export * from './jsonViewerTheme';
 export * from './mainSiteAddress';
+export * from './baseDocumentTitle';

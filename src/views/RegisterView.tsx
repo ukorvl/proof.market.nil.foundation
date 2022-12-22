@@ -4,6 +4,8 @@
  */
 
 import { ReactElement } from 'react';
+import { Helmet } from 'react-helmet';
+import { baseDocumentTitle } from 'src/constants';
 import { RegisterForm } from 'src/components';
 
 /**
@@ -11,6 +13,13 @@ import { RegisterForm } from 'src/components';
  *
  * @returns React component.
  */
-const RegisterView = (): ReactElement => <RegisterForm />;
+const RegisterView = (): ReactElement => (
+    <>
+        <Helmet>
+            <title>{`${baseDocumentTitle} | Register`}</title>
+        </Helmet>
+        <RegisterForm />
+    </>
+);
 
 export default RegisterView;
