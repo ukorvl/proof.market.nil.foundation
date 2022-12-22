@@ -1,9 +1,22 @@
 @import "src/styles/constants.scss";
 @import "src/styles/mixins/hideScrollbar";
 @import "src/styles/mixins/tableColumns";
+@import "src/styles/mixins/transparentButton";
 
 .orderBook {
-  height: 542px;
+  height: 548px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+  margin-bottom: 10px;
+
+  h4 {
+    margin-bottom: 0;
+  }
 }
 
 .orderBookTable {
@@ -102,5 +115,21 @@
     &.loss {
       color: $c-danger;
     }
+  }
+}
+
+.changePriceStepButton {
+  @include transparentButton;
+  color: $c-secondary-darker !important;
+  transition: color 0.1s;
+  padding: 0 !important;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &:focus,
+  &:hover {
+    color: $c-secondary !important;
   }
 }
