@@ -127,7 +127,7 @@ export const RegisterForm = (): ReactElement => {
                 <Link to={Path.login}>
                     <Button
                         block
-                        variant={Variant.primary}
+                        variant={Variant.success}
                         size={Size.lg}
                     >
                         Sign in

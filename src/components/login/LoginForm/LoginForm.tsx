@@ -160,7 +160,7 @@ export const LoginForm = (): ReactElement => {
                 <Link to={Path.register}>
                     <Button
                         block
-                        variant={Variant.primary}
+                        variant={Variant.success}
                         size={Size.lg}
                     >
                         Request credentials
