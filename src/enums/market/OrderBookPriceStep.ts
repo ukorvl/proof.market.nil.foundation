@@ -6,10 +6,9 @@
 /**
  * Order book price step.
  */
-export enum OrderBookPriceStep {
-    xs = '0.01',
-    sm = '0.1',
-    md = '1',
-    lg = '10',
-    xl = '100',
-}
+export const OrderBookPriceStep = {
+    '0.001': 3,
+    '0.01': 2,
+    '0.1': 1,
+    '1': 0,
+};

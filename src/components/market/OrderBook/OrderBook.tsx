@@ -19,8 +19,11 @@ import styles from './OrderBook.module.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
-    const [priceStep, setPriceStep] = useLocalStorage('orderBookPriceStep', OrderBookPriceStep.sm);
-    const orderBookData = useGetOrderBookData();
+    const [priceStep, setPriceStep] = useLocalStorage<keyof typeof OrderBookPriceStep>(
+        'orderBookPriceStep',
+        '0.001',
+    );
+    const orderBookData = useGetOrderBookData({ priceStep });
 
     return (
         <DashboardCard>

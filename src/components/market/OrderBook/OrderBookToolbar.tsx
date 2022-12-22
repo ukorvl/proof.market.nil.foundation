@@ -34,10 +34,10 @@ export const OrderBookToolbar = ({ disabled }: OrderBookToolbarProps): ReactElem
                 {priceStep}
             </Dropdown.Button>
             <Dropdown.Menu align="right">
-                {Object.values(OrderBookPriceStep).map(x => (
+                {Object.keys(OrderBookPriceStep).map(x => (
                     <Dropdown.Item
                         key={x}
-                        onSelect={() => setPriceStep(x)}
+                        onSelect={() => setPriceStep(x as keyof typeof OrderBookPriceStep)}
                         active={x === priceStep}
                     >
                         <span>{x}</span>

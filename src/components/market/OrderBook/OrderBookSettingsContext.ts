@@ -10,8 +10,8 @@ import { OrderBookPriceStep } from 'src/enums';
  * Context type.
  */
 type OrderBookSettingsContectModel = {
-    priceStep: OrderBookPriceStep;
-    setPriceStep: (s: OrderBookPriceStep) => void;
+    priceStep: keyof typeof OrderBookPriceStep;
+    setPriceStep: (s: keyof typeof OrderBookPriceStep) => void;
 };
 
 /**
