@@ -7,6 +7,7 @@ import { ReactElement, Suspense } from 'react';
 import { Routes, Route, HashRouter } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
+import { Helmet } from 'react-helmet';
 import {
     Header,
     Footer,
@@ -18,6 +19,8 @@ import {
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
 
+const baseDocumentTitle = process.env.REACT_APP_SITE_DEFAULT_TITLE;
+
 // TODO - replace HashRouter with BrowserRouter after migrating from gh pages
 /**
  * @returns App.
@@ -27,6 +30,10 @@ function App(): ReactElement {
         <ErrorBoundary fallback={<ErrorView />}>
             <NotificationProvider>
                 <HashRouter>
+                    <Helmet
+                        titleTemplate={`${baseDocumentTitle} | %s`}
+                        defaultTitle={baseDocumentTitle}
+                    />
                     <Layout
                         header={<Header />}
                         footer={<Footer />}

@@ -4,6 +4,7 @@
  */
 
 import { ReactElement } from 'react';
+import { Helmet } from 'react-helmet';
 import { LoginForm } from '../components';
 
 /**
@@ -11,6 +12,13 @@ import { LoginForm } from '../components';
  *
  * @returns React component.
  */
-const LoginView = (): ReactElement => <LoginForm />;
+const LoginView = (): ReactElement => (
+    <>
+        <Helmet>
+            <title>Login</title>
+        </Helmet>
+        <LoginForm />
+    </>
+);
 
 export default LoginView;

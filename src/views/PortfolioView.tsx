@@ -5,6 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
+import { Helmet } from 'react-helmet';
 import { ProofList, SelectedProofContextProvider, ProofView } from '../components';
 
 /**
@@ -17,6 +18,9 @@ const PortfolioView = (): ReactElement => (
         as="main"
         fluid
     >
+        <Helmet>
+            <title>Portfolio</title>
+        </Helmet>
         <Row>
             <SelectedProofContextProvider>
                 <Col
