@@ -13,3 +13,16 @@ export enum Path {
     portfolio = '/portfolio',
     register = '/register',
 }
+
+/**
+ * Returns true if auth is not required to access path.
+ *
+ * @param p Path.
+ * @returns .
+ */
+export const isAllowPathReadonlyAccess = (p: Path): boolean => !protectedPaths.includes(p);
+
+/**
+ * Protected paths, auth required to access.
+ */
+const protectedPaths = [Path.portfolio];

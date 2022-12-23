@@ -31,13 +31,13 @@ export const ProtectedRoute = ({
     const { pathname } = useLocation();
 
     const getNavigateTo = useCallback(
-        () => (isReadonly ? `${Path.login}/?${UrlQueryParam.ref}=${pathname}` : Path.login),
-        [isReadonly, readonlyAccess, pathname],
+        () => `${Path.login}/?${UrlQueryParam.ref}=${pathname}`,
+        [pathname],
     );
 
     return (
         <>
-            {isAuthentificated ? (
+            {isAuthentificated && (readonlyAccess ? true : !isReadonly) ? (
                 children
             ) : (
                 <Navigate
