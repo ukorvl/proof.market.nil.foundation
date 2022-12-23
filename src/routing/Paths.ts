@@ -13,3 +13,16 @@ export enum Path {
     portfolio = '/portfolio',
     register = '/register',
 }
+
+/**
+ * Returens true if auth is required to access the path.
+ *
+ * @param p Path.
+ * @returns .
+ */
+export const isPathProtected = (p: Path): boolean => protectedPaths.includes(p);
+
+/**
+ * Protected paths, auth required to access.
+ */
+const protectedPaths = [Path.portfolio];
