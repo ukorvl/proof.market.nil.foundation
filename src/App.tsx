@@ -8,7 +8,6 @@ import { Routes, Route, HashRouter } from 'react-router-dom';
 import { Layout, NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
 import { Helmet } from 'react-helmet';
-import { baseDocumentTitle } from 'src/constants';
 import {
     Header,
     Footer,
@@ -19,6 +18,8 @@ import {
 } from './components';
 import { routes, loginRoute, registerRoute } from './routing';
 import ErrorView from './views/ErrorView';
+
+const baseDocumentTitle = process.env.REACT_APP_SITE_DEFAULT_TITLE;
 
 // TODO - replace HashRouter with BrowserRouter after migrating from gh pages
 /**
