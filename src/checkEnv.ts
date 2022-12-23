@@ -8,6 +8,7 @@ const requiredEnv = [
     process.env.REACT_APP_DBMS_DEFAULT_DATABASE,
     process.env.REACT_APP_READONLY_USER,
     process.env.REACT_APP_FORMSPREE_FORM_ID,
+    process.env.REACT_APP_SITE_DEFAULT_TITLE,
 ];
 
 /**
