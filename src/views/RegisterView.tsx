@@ -5,7 +5,6 @@
 
 import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
-import { baseDocumentTitle } from 'src/constants';
 import { RegisterForm } from 'src/components';
 
 /**
@@ -16,7 +15,7 @@ import { RegisterForm } from 'src/components';
 const RegisterView = (): ReactElement => (
     <>
         <Helmet>
-            <title>{`${baseDocumentTitle} | Register`}</title>
+            <title>Register</title>
         </Helmet>
         <RegisterForm />
     </>

@@ -29,9 +29,10 @@ function App(): ReactElement {
         <ErrorBoundary fallback={<ErrorView />}>
             <NotificationProvider>
                 <HashRouter>
-                    <Helmet>
-                        <title>{baseDocumentTitle}</title>
-                    </Helmet>
+                    <Helmet
+                        titleTemplate={`${baseDocumentTitle} | %s`}
+                        defaultTitle={baseDocumentTitle}
+                    />
                     <Layout
                         header={<Header />}
                         footer={<Footer />}

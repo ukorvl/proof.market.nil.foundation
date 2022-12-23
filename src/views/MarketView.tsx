@@ -6,7 +6,6 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { Helmet } from 'react-helmet';
-import { baseDocumentTitle } from 'src/constants';
 import {
     CircuitsList,
     CircuitDetailedInfo,
@@ -30,7 +29,7 @@ const MarketView = (): ReactElement => (
         fluid
     >
         <Helmet>
-            <title>{`${baseDocumentTitle} | Market`}</title>
+            <title>Market</title>
         </Helmet>
         <Row>
             <Col

@@ -6,7 +6,6 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { Helmet } from 'react-helmet';
-import { baseDocumentTitle } from 'src/constants';
 import { ProofList, SelectedProofContextProvider, ProofView } from '../components';
 
 /**
@@ -20,7 +19,7 @@ const PortfolioView = (): ReactElement => (
         fluid
     >
         <Helmet>
-            <title>{`${baseDocumentTitle} | Portfolio`}</title>
+            <title>Portfolio</title>
         </Helmet>
         <Row>
             <SelectedProofContextProvider>
