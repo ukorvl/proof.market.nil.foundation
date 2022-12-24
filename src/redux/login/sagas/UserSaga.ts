@@ -8,6 +8,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { getUserBalance } from 'src/api';
 import { UpdateUserBalance, UpdateUserName } from '../actions';
 import { ProtectedCall } from './ProtectedCall';
+import { AddAsk, AddBid } from '../../market';
 
 /**
  * User main saga.
@@ -15,7 +16,7 @@ import { ProtectedCall } from './ProtectedCall';
  * @yields
  */
 export function* UserSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateUserName, GetUserInfoSaga);
+    yield takeLatest([UpdateUserName, AddAsk, AddBid], GetUserInfoSaga);
 }
 
 /**
