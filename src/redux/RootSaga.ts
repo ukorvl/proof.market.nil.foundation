@@ -5,7 +5,7 @@
 
 import { all, AllEffect, fork, ForkEffect } from 'redux-saga/effects';
 import { CircuitsSaga, AsksSaga, BidsSaga } from './market';
-import { AuthSaga } from './login';
+import { AuthSaga, UserSaga } from './login';
 import { ProofSaga } from './portfolio';
 
 /**
@@ -16,6 +16,7 @@ import { ProofSaga } from './portfolio';
 export default function* RootSaga(): Iterator<AllEffect<ForkEffect>> {
     yield all([
         fork(AuthSaga),
+        fork(UserSaga),
         fork(CircuitsSaga),
         fork(AsksSaga),
         fork(BidsSaga),

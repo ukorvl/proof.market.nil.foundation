@@ -4,3 +4,4 @@
  */
 
 export * from './LoginApi';
+export * from './BalanceApi';

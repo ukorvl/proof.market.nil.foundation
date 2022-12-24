@@ -5,3 +5,4 @@
 
 export * from './AuthSaga';
 export * from './ProtectedCall';
+export * from './UserSaga';
