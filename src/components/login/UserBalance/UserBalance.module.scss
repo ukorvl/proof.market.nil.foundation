@@ -1,0 +1,25 @@
+.balance {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  button {
+    margin-right: 0.5rem;
+  }
+}
+
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hiddenText {
+  text-overflow: unset;
+  padding-top: 0.25rem;
+}
+
+.currency {
+  flex-shrink: 0;
+  padding-left: 0.25rem;
+}
