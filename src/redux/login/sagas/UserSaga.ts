@@ -28,7 +28,8 @@ export function* UserSaga(): SagaIterator<void> {
 function* GetUserInfoSaga({
     payload: user,
 }: ReturnType<typeof UpdateUserName>): SagaIterator<void> {
-    if (user === process.env.REACT_APP_READONLY_USER) {
+    const isReadonly = user === process.env.REACT_APP_READONLY_USER;
+    if (isReadonly || !user) {
         return;
     }
 
