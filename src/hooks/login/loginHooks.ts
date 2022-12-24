@@ -8,7 +8,7 @@ import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
-import { selectCurrentUser, UpdateUser, useAppSelector } from 'src/redux';
+import { selectUserName, UpdateUserName, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
 
@@ -24,7 +24,7 @@ export const useAuth = (): {
     isAuthentificated: boolean;
     isReadonly: boolean;
 } => {
-    const user = useAppSelector(selectCurrentUser);
+    const user = useAppSelector(selectUserName);
     const isAuthentificated = useMemo(() => {
         return !!user;
     }, [user]);
@@ -53,7 +53,7 @@ export const useLogin = (): ((jwt: string) => void) => {
             setItemIntoLocalStorage('jwt', jwt);
 
             const user = getUserFromJwt(jwt);
-            user && dispatch(UpdateUser(user));
+            user && dispatch(UpdateUserName(user));
 
             navigate(Path.root, { replace: true });
 
@@ -82,7 +82,7 @@ export const useLogout = (): (() => void) => {
     const dispatch = useDispatch();
 
     const processLogout = useCallback(() => {
-        dispatch(UpdateUser(null));
+        dispatch(UpdateUserName(null));
         removeItemFromLocalStorage('jwt');
     }, [dispatch]);
 

@@ -9,9 +9,9 @@ import { getProofs } from 'src/api';
 import { Proof } from 'src/models';
 import { UpdateProofList, UpdateIsLoadingProofs, UpdateProofsError } from '../actions';
 import { RootStateType } from '../../RootStateType';
-import { ProtectedCall, UpdateUser } from '../../login';
+import { ProtectedCall, UpdateUserName } from '../../login';
 
-const selectUser = (s: RootStateType) => s.userState.user;
+const selectUser = (s: RootStateType) => s.userState.name;
 
 /**
  * Proof main saga.
@@ -19,7 +19,7 @@ const selectUser = (s: RootStateType) => s.userState.user;
  * @yields
  */
 export function* ProofSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateUser, GetProofSaga);
+    yield takeLatest(UpdateUserName, GetProofSaga);
 }
 
 /**

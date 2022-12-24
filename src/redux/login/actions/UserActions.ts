@@ -6,6 +6,11 @@
 import { createAction } from '@reduxjs/toolkit';
 
 /**
- * Update current user.
+ * Update current user name.
  */
-export const UpdateUser = createAction<string | null>('@user/UPDATE');
+export const UpdateUserName = createAction<string | null>('@user/UPDATE_USER_NAME');
+
+/**
+ * Update current user balance.
+ */
+export const UpdateUserBalance = createAction<number | undefined>('@user/UPDATE_USER_BALANCE');
