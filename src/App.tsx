@@ -16,7 +16,7 @@ import {
     ReadonlyAccessProvider,
     AuthContainer,
 } from './components';
-import { routes, loginRoute, registerRoute } from './routing';
+import { routes, loginRoute, registerRoute, isAllowPathReadonlyAccess } from './routing';
 import ErrorView from './views/ErrorView';
 
 const baseDocumentTitle = process.env.REACT_APP_SITE_DEFAULT_TITLE;
@@ -64,7 +64,11 @@ function App(): ReactElement {
                                             path={path}
                                             element={
                                                 <ReadonlyAccessProvider fallback={<Spinner grow />}>
-                                                    <ProtectedRoute>
+                                                    <ProtectedRoute
+                                                        readonlyAccess={isAllowPathReadonlyAccess(
+                                                            path,
+                                                        )}
+                                                    >
                                                         <Component />
                                                     </ProtectedRoute>
                                                 </ReadonlyAccessProvider>
