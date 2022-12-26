@@ -9,7 +9,7 @@ import { createBearerHttpClient } from '../common';
 const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 
 const apiUrl = `_db/${dbName}/${dbName}`;
-const httpFetcher = createBearerHttpClient(apiUrl, false, false);
+const httpFetcher = createBearerHttpClient(apiUrl);
 
 /**
  * Get circuits.
