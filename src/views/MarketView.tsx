@@ -5,6 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
+import { Helmet } from 'react-helmet';
 import {
     CircuitsList,
     CircuitDetailedInfo,
@@ -27,6 +28,9 @@ const MarketView = (): ReactElement => (
         as="main"
         fluid
     >
+        <Helmet>
+            <title>Market</title>
+        </Helmet>
         <Row>
             <Col
                 xs={12}
