@@ -7,7 +7,7 @@
  * Drops all nullable values from array in a type safe manner.
  *
  * @param value Any value.
- * @returns Filtered array with only nonNullable values.
+ * @returns True if value is not nullable.
  */
 export const notEmpty = <T>(value: T): value is NonNullable<T> => {
     return value !== null && value !== undefined;

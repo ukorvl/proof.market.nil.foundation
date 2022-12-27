@@ -40,7 +40,7 @@ export const ProofView = (): ReactElement => {
  */
 const ProofViewFactory = (loadingProofs: boolean, proof?: Proof) => {
     switch (true) {
-        case loadingProofs:
+        case loadingProofs && !proof:
             return <Spinner grow />;
         case proof !== undefined:
             return <ProofViewJson proof={proof!} />;

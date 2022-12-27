@@ -1,0 +1,17 @@
+@import "src/styles/constants.scss";
+
+.viewer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.item {
+  padding: 0.5rem 0;
+
+  strong {
+    color: $c-secondary-darker;
+  }
+}
