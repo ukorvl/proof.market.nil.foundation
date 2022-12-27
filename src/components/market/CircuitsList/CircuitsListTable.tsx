@@ -12,6 +12,7 @@ import { useAppSelector } from 'src/redux';
 import { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { ReactTable } from 'src/components';
 import { CurcuitsListItem } from './CircuitsListItem';
+import styles from './CircuitsList.module.scss';
 
 /**
  * Props.
@@ -35,7 +36,7 @@ const ByTextColumnFilter = ({ column: { setFilter } }: FilterProps<CircuitsListD
     ).current;
 
     return (
-        <InputGroup>
+        <InputGroup className={styles.inputGroup}>
             <InputGroup.Addon>
                 <Icon iconName="fa-solid fa-search" />
             </InputGroup.Addon>
@@ -116,7 +117,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
         ({ rows, prepareRow, visibleColumns }: TableInstance<CircuitsListData>) => (
             <>
                 {visibleColumns.find(x => x.canFilter)?.render('Filter')}
-                <ListGroup>
+                <ListGroup className={styles.listGroup}>
                     {rows.map(row => {
                         prepareRow(row);
                         return (

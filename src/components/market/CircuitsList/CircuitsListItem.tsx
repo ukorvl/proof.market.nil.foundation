@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
 import { CircuitsListData } from 'src/models';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
+import styles from './CircuitsList.module.scss';
 
 /**
  * Props.
@@ -40,7 +41,7 @@ export const CurcuitsListItem = ({
             onClick={onSelectItem}
         >
             <Media>
-                <Media.Body>{name}</Media.Body>
+                <Media.Body className={styles.itemBody}>{name}</Media.Body>
                 <CircuitsListItemInfo
                     cost={cost}
                     change={change}
