@@ -8,7 +8,7 @@ import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
 import { selectPartialProofList, useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components/common';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
-import './ProofList.scss';
+import styles from './ProofList.module.scss';
 
 /**
  * Proof list.
@@ -21,9 +21,11 @@ export const ProofList = (): ReactElement => {
     const getProofsError = useAppSelector(s => s.proofState.error);
 
     return (
-        <DashboardCard className="proofList">
+        <DashboardCard>
             <h4>Proof list</h4>
-            {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            <div className={styles.container}>
+                {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            </div>
         </DashboardCard>
     );
 };
@@ -42,14 +44,15 @@ const ProofListViewFactory = (
     getProofsError: boolean,
 ) => {
     const { selectedProofId, setSelectedProofId } = useContext(SelectedProofContext);
+
     switch (true) {
-        case loadingProofs:
+        case loadingProofs && !proofList.length:
             return <Spinner grow />;
         case getProofsError:
             return <h5>Error while getting proofs.</h5>;
         case !!proofList.length:
             return (
-                <ListGroup>
+                <ListGroup className={styles.proofList}>
                     {proofList.map(x => (
                         <ListGroup.Item
                             key={x.id}
