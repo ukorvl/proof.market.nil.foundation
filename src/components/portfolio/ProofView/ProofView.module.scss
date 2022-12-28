@@ -17,7 +17,12 @@
   border-top: 1px solid $c-base-light;
   padding-top: 1.5rem;
 
-  button > i {
-    margin-right: 1rem;
+  button {
+    display: flex;
+    align-items: center;
+
+    > i {
+      margin-right: 1rem;
+    }
   }
 }
