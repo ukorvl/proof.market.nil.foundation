@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement } from 'react';
-import { Button, Icon, Variant } from '@nilfoundation/react-components';
+import { KeyboardEventHandler, ReactElement, useMemo } from 'react';
+import { Button, Icon, Spinner, Variant } from '@nilfoundation/react-components';
 import { Proof } from 'src/models';
-import { useDownloadJsonFile } from 'src/hooks';
+import { getProofById } from 'src/api';
+import { useDownloadJson } from 'src/hooks';
 import styles from './ProofView.module.scss';
 
 /**
@@ -23,7 +24,14 @@ type ProofViewHeaderProps = {
  * @returns React component.
  */
 export const ProofViewToolbar = ({ proof }: ProofViewHeaderProps): ReactElement => {
-    const downloadJson = useDownloadJsonFile(`proof-${proof?.id}`, JSON.stringify(proof));
+    const fetcher = useMemo(
+        () => (proof?.id !== undefined ? () => getProofById(proof.id) : undefined),
+        [proof?.id],
+    );
+    const { downloadJson, loading } = useDownloadJson({
+        fileName: `proof-${proof?.id}`,
+        fetcher,
+    });
 
     const keyDownHandler: KeyboardEventHandler = e => {
         if (e.key !== 'Enter' && e.key !== ' ') {
@@ -37,13 +45,14 @@ export const ProofViewToolbar = ({ proof }: ProofViewHeaderProps): ReactElement 
         <div className={styles.toolbar}>
             <Button
                 variant={Variant.primary}
-                disabled={proof === undefined}
+                disabled={proof === undefined || loading}
                 onClick={downloadJson}
                 onKeyDown={keyDownHandler}
                 aria-label="Download proof as JSON file"
             >
                 <Icon iconName="fa-solid fa-download" />
                 JSON
+                {loading && <Spinner />}
             </Button>
         </div>
     );
