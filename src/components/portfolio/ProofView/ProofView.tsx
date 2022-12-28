@@ -6,12 +6,11 @@
 import { ReactElement, useContext } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
-import { DashboardCard } from 'src/components';
+import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
 import { Proof } from 'src/models';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
-import { ProofViewHeader } from './ProofViewHeader';
-import { ProofViewJson } from './ProofViewJson';
-import './ProofView.scss';
+import { ProofViewToolbar } from './ProofViewToolbar';
+import styles from './ProofView.module.scss';
 
 /**
  * Proof view.
@@ -24,9 +23,9 @@ export const ProofView = (): ReactElement => {
     const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
 
     return (
-        <DashboardCard className="proofView">
-            <ProofViewHeader proof={proofData} />
-            {ProofViewFactory(isLoadingProofs, proofData)}
+        <DashboardCard>
+            <h4>Proof detailed info</h4>
+            <div className={styles.container}>{ProofViewFactory(isLoadingProofs, proofData)}</div>
         </DashboardCard>
     );
 };
@@ -43,7 +42,12 @@ const ProofViewFactory = (loadingProofs: boolean, proof?: Proof) => {
         case loadingProofs && !proof:
             return <Spinner grow />;
         case proof !== undefined:
-            return <ProofViewJson proof={proof!} />;
+            return (
+                <>
+                    <ObjectAsPlainTextViewer data={proof!} />
+                    <ProofViewToolbar proof={proof} />
+                </>
+            );
         default:
             <h5>No proof data was found.</h5>;
     }

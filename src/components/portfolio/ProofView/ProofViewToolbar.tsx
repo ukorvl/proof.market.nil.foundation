@@ -4,15 +4,16 @@
  */
 
 import { KeyboardEventHandler, ReactElement } from 'react';
-import { Button, Icon, Size, Variant } from '@nilfoundation/react-components';
-import { ProofDto } from 'src/models';
+import { Button, Icon, Variant } from '@nilfoundation/react-components';
+import { Proof } from 'src/models';
 import { useDownloadJsonFile } from 'src/hooks';
+import styles from './ProofView.module.scss';
 
 /**
  * Props.
  */
 type ProofViewHeaderProps = {
-    proof?: ProofDto;
+    proof?: Proof;
 };
 
 /**
@@ -21,7 +22,7 @@ type ProofViewHeaderProps = {
  * @param {ProofViewHeaderProps} props Props.
  * @returns React component.
  */
-export const ProofViewHeader = ({ proof }: ProofViewHeaderProps): ReactElement => {
+export const ProofViewToolbar = ({ proof }: ProofViewHeaderProps): ReactElement => {
     const downloadJson = useDownloadJsonFile(`proof-${proof?.id}`, JSON.stringify(proof));
 
     const keyDownHandler: KeyboardEventHandler = e => {
@@ -33,12 +34,10 @@ export const ProofViewHeader = ({ proof }: ProofViewHeaderProps): ReactElement =
     };
 
     return (
-        <div className="proofViewHeader">
-            <h4>Proof detailed info</h4>
+        <div className={styles.toolbar}>
             <Button
-                variant={Variant.success}
+                variant={Variant.primary}
                 disabled={proof === undefined}
-                size={Size.sm}
                 onClick={downloadJson}
                 onKeyDown={keyDownHandler}
                 aria-label="Download proof as JSON file"
