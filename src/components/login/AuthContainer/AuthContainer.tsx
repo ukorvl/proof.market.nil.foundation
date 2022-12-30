@@ -36,7 +36,7 @@ export const AuthContainer = ({ children }: AuthContainerProps): ReactElement =>
                 (lg && (
                     <Link
                         className={styles.back}
-                        to={Path.root}
+                        to={Path.market}
                     >
                         <Icon iconName="fa-solid fa-chevron-left" />
                         Back to Market

@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { Helmet } from 'react-helmet';
-import { ProofList, SelectedProofContextProvider, ProofView } from '../components';
+import { ProofList, SelectedProofContextProvider, ProofContentCard } from '../components';
 
 /**
  * Portfolio view.
@@ -33,7 +33,7 @@ const PortfolioView = (): ReactElement => (
                     xs={12}
                     md={9}
                 >
-                    <ProofView />
+                    <ProofContentCard />
                 </Col>
             </SelectedProofContextProvider>
         </Row>

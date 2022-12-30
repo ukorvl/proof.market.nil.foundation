@@ -9,6 +9,8 @@ import './polyfills';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+// TODO - replace HashRouter with BrowserRouter after migrating from gh pages
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 import { store } from './redux';
 import { configureSentry } from './sentry';
@@ -21,7 +23,9 @@ configureSentry();
 render(
     <React.StrictMode>
         <Provider store={store}>
-            <App />
+            <HashRouter>
+                <App />
+            </HashRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root'),
