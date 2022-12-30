@@ -12,4 +12,5 @@ export enum Path {
     login = '/login',
     portfolio = '/portfolio',
     register = '/register',
+    market = '/market',
 }

@@ -5,4 +5,4 @@
  */
 
 export * from './useProofIdState';
-export * from './useDownloadJsonFile';
+export * from './useDownloadJson';

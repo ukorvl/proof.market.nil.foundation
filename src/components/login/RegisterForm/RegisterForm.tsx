@@ -51,14 +51,14 @@ export const RegisterForm = (): ReactElement => {
     if (succeeded) {
         return (
             <div className={styles.successMessage}>
-                <h5>Thank you for request!</h5>
-                <Link to={Path.root}>
+                <h4>Thank you for request!</h4>
+                <Link to={Path.market}>
                     <Button
                         block
                         variant={Variant.primary}
                         size={Size.lg}
                     >
-                        Back to main
+                        Back to market
                     </Button>
                 </Link>
             </div>

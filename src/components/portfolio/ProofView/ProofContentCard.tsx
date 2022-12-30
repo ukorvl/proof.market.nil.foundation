@@ -6,27 +6,26 @@
 import { ReactElement, useContext } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
-import { DashboardCard } from 'src/components';
+import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
 import { Proof } from 'src/models';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
-import { ProofViewHeader } from './ProofViewHeader';
-import { ProofViewJson } from './ProofViewJson';
-import './ProofView.scss';
+import { ProofContentCardToolbar } from './ProofContentCardToolbar';
+import styles from './ProofContentCard.module.scss';
 
 /**
- * Proof view.
+ * Proof content card.
  *
  * @returns React component.
  */
-export const ProofView = (): ReactElement => {
+export const ProofContentCard = (): ReactElement => {
     const { selectedProofId } = useContext(SelectedProofContext);
     const isLoadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
 
     return (
-        <DashboardCard className="proofView">
-            <ProofViewHeader proof={proofData} />
-            {ProofViewFactory(isLoadingProofs, proofData)}
+        <DashboardCard>
+            <h4>Proof detailed info</h4>
+            <div className={styles.container}>{ProofViewFactory(isLoadingProofs, proofData)}</div>
         </DashboardCard>
     );
 };
@@ -40,11 +39,16 @@ export const ProofView = (): ReactElement => {
  */
 const ProofViewFactory = (loadingProofs: boolean, proof?: Proof) => {
     switch (true) {
-        case loadingProofs:
+        case loadingProofs && !proof:
             return <Spinner grow />;
         case proof !== undefined:
-            return <ProofViewJson proof={proof!} />;
-        default:
-            <h5>No proof data was found.</h5>;
+            return (
+                <>
+                    <ObjectAsPlainTextViewer data={proof!} />
+                    <ProofContentCardToolbar proof={proof} />
+                </>
+            );
+        case proof === undefined:
+            return <h5>No proof data was found.</h5>;
     }
 };

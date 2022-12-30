@@ -5,10 +5,12 @@
 
 import { ReactElement, useContext } from 'react';
 import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
+import { Link } from 'react-router-dom';
+import { Path } from 'src/routing';
 import { selectPartialProofList, useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components/common';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
-import './ProofList.scss';
+import styles from './ProofList.module.scss';
 
 /**
  * Proof list.
@@ -21,9 +23,11 @@ export const ProofList = (): ReactElement => {
     const getProofsError = useAppSelector(s => s.proofState.error);
 
     return (
-        <DashboardCard className="proofList">
+        <DashboardCard>
             <h4>Proof list</h4>
-            {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            <div className={styles.container}>
+                {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            </div>
         </DashboardCard>
     );
 };
@@ -41,32 +45,37 @@ const ProofListViewFactory = (
     loadingProofs: boolean,
     getProofsError: boolean,
 ) => {
-    const { selectedProofId, setSelectedProofId } = useContext(SelectedProofContext);
+    const { selectedProofId } = useContext(SelectedProofContext);
+
     switch (true) {
-        case loadingProofs:
+        case loadingProofs && !proofList.length:
             return <Spinner grow />;
         case getProofsError:
             return <h5>Error while getting proofs.</h5>;
+        case proofList.length === 0:
+            return <h5>No proofs.</h5>;
         case !!proofList.length:
             return (
-                <ListGroup>
+                <ListGroup className={styles.proofList}>
                     {proofList.map(x => (
                         <ListGroup.Item
                             key={x.id}
-                            onClick={() => setSelectedProofId(x.id)}
                             active={x.id === selectedProofId}
                         >
-                            <Media>
-                                <Media.Body>
-                                    <Media.Heading>{`id: ${x.id}`}</Media.Heading>
-                                    {`bid_id: ${x.bid_id}`}
-                                </Media.Body>
-                            </Media>
+                            <Link
+                                key={x.id}
+                                to={`${Path.portfolio}/${x.id}`}
+                            >
+                                <Media>
+                                    <Media.Body>
+                                        <Media.Heading>{`id: ${x.id}`}</Media.Heading>
+                                        {`bid_id: ${x.bid_id}`}
+                                    </Media.Body>
+                                </Media>
+                            </Link>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
             );
-        default:
-            <h5>No proofs.</h5>;
     }
 };

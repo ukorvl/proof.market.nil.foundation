@@ -7,8 +7,6 @@ import { ReactElement } from 'react';
 import { Container, Navbar, Nav } from '@nilfoundation/react-components';
 import { Link, useLocation } from 'react-router-dom';
 import { navigationLinks } from 'src/constants';
-import { useAuth } from 'src/hooks';
-import { Path } from 'src/routing';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../../login';
 import { Breadcrumbs } from '../BreadCrumbs';
@@ -21,7 +19,6 @@ import styles from './Header.module.scss';
  */
 export const Header = (): ReactElement => {
     const { pathname } = useLocation();
-    const { isReadonly } = useAuth();
 
     return (
         <Navbar className={styles.navbar}>
@@ -34,10 +31,10 @@ export const Header = (): ReactElement => {
                     {navigationLinks.map(({ title, path }) => (
                         <Nav.Item
                             key={title}
-                            active={pathname === path}
+                            active={pathname.startsWith(path)}
                             renderLink={({ active: _, ...props }) => (
                                 <Link
-                                    to={path === Path.portfolio && isReadonly ? Path.login : path}
+                                    to={path}
                                     {...props}
                                 >
                                     <span>{title}</span>

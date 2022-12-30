@@ -11,7 +11,7 @@ import { Path } from 'src/routing';
 export const navigationLinks = [
     {
         title: 'Market',
-        path: Path.root,
+        path: Path.market,
     },
     {
         title: 'Portfolio',

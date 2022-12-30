@@ -8,8 +8,8 @@ import { Spinner } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import { selectCircuits, useAppSelector } from 'src/redux';
 import { CircuitsListTable } from './CircuitsListTable';
-import { Details, DashboardCard } from '../../common';
-import './CircuitsList.scss';
+import { DashboardCard } from '../../common';
+import styles from './CircuitsList.module.scss';
 
 /**
  * Currencies list.
@@ -22,15 +22,14 @@ export const CircuitsList = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <Details title={<h4>Circuit list</h4>}>
-                <div className="circuitsList">
-                    {loadingCircuits && !circuitsList.length ? (
-                        <Spinner grow />
-                    ) : (
-                        <CircuitsListTable circuitsList={circuitsList} />
-                    )}
-                </div>
-            </Details>
+            <h4>Circuit list</h4>
+            <div className={styles.container}>
+                {loadingCircuits && !circuitsList.length ? (
+                    <Spinner grow />
+                ) : (
+                    <CircuitsListTable circuitsList={circuitsList} />
+                )}
+            </div>
         </DashboardCard>
     );
 };

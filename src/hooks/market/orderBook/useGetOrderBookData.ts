@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { SortByFn } from 'react-table';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
+import round from 'lodash/round';
 import {
     Ask,
     Bid,
@@ -23,6 +24,15 @@ import {
     selectCurrentUserAsks,
     selectCurrentUserBids,
 } from 'src/redux';
+import { OrderBookPriceStep } from 'src/enums';
+
+/**
+ * Hook props.
+ */
+export type UseGetOrderBookDataProps = {
+    priceStep: keyof typeof OrderBookPriceStep;
+    itemsLimit?: number;
+};
 
 /**
  * Hook return type.
@@ -44,10 +54,13 @@ type GrouppedOrdersMap = Map<string, Array<Bid | Ask>>;
 /**
  * Hook to get order book data structured for rendering table.
  *
- * @param itemsLimit - Max count of orderBook items of one type (itemsLimit * 2 overall).
+ * @param {UseGetOrderBookDataProps} props - Orderbook props.
  * @returns Data to render order book table.
  */
-export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnType => {
+export const useGetOrderBookData = ({
+    priceStep,
+    itemsLimit = 25,
+}: UseGetOrderBookDataProps): UseGetOrderBookDataReturnType => {
     const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
     const asks = useSelector(selectAsksList, deepEqual);
     const bids = useSelector(selectBidsList, deepEqual);
@@ -86,6 +99,36 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
         [],
     );
 
+    /**
+     * Takes orders array and returns dict, where keys are costs, and values are arrays of orders.
+     *
+     * @param previousValue Initial value.
+     * @param currentValue Current value.
+     * @returns Orders, grouped by date.
+     */
+    const reduceOrdersByCostAndEvalTime = useCallback(
+        (previousValue: GrouppedOrdersMap, currentValue: Ask | Bid) => {
+            const precision = OrderBookPriceStep[priceStep];
+            const mapKey = JSON.stringify({
+                cost: round(currentValue.cost, precision),
+                eval_time: currentValue.eval_time
+                    ? round(currentValue.eval_time, precision)
+                    : undefined,
+            });
+
+            const value = previousValue.get(mapKey);
+
+            if (!value) {
+                previousValue.set(mapKey, [currentValue]);
+            } else {
+                previousValue.set(mapKey, [...value, currentValue]);
+            }
+
+            return previousValue;
+        },
+        [priceStep],
+    );
+
     const asksData = useMemo(() => {
         return createOrderBookData(
             asks
@@ -94,7 +137,7 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
             'ask',
             userAsks,
         ).slice(-itemsLimit);
-    }, [asks, userAsks, itemsLimit]);
+    }, [asks, userAsks, itemsLimit, reduceOrdersByCostAndEvalTime]);
 
     const bidsData = useMemo(() => {
         return createOrderBookData(
@@ -104,7 +147,7 @@ export const useGetOrderBookData = (itemsLimit = 25): UseGetOrderBookDataReturnT
             'bid',
             userBids,
         ).slice(0, itemsLimit);
-    }, [bids, userBids, itemsLimit]);
+    }, [bids, userBids, itemsLimit, reduceOrdersByCostAndEvalTime]);
 
     const data = useMemo(
         (): OrderBookTableData[] => asksData.concat(bidsData),
@@ -151,33 +194,6 @@ const createOrderBookData = <T extends Bid | Ask>(
     });
 
     return result;
-};
-
-/**
- * Takes orders array and returns dict, where keys are costs, and values are arrays of orders.
- *
- * @param previousValue Initial value.
- * @param currentValue Current value.
- * @returns Orders, grouped by date.
- */
-const reduceOrdersByCostAndEvalTime = <T extends Bid | Ask>(
-    previousValue: GrouppedOrdersMap,
-    currentValue: T,
-) => {
-    const mapKey = JSON.stringify({
-        cost: currentValue.cost,
-        eval_time: currentValue.eval_time,
-    });
-
-    const value = previousValue.get(mapKey);
-
-    if (!value) {
-        previousValue.set(mapKey, [currentValue]);
-    } else {
-        previousValue.set(mapKey, [...value, currentValue]);
-    }
-
-    return previousValue;
 };
 
 /**
