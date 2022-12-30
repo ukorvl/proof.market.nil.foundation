@@ -5,9 +5,9 @@
 
 import { SagaIterator } from '@redux-saga/core';
 import { fork, put } from 'redux-saga/effects';
-import { getItemFromLocalStorage } from '../../../packages/LocalStorage';
-import { getUserFromJwt } from '../../../utils';
-import { UpdateUser } from '../actions';
+import { getItemFromLocalStorage } from 'src/packages/LocalStorage';
+import { getUserFromJwt } from 'src/utils';
+import { UpdateUserName } from '../actions';
 
 /**
  * Auth main saga.
@@ -33,6 +33,6 @@ function* TryGetUserFromLocalStorageTokenSaga(): SagaIterator<void> {
     const user = getUserFromJwt(jwt);
 
     if (user) {
-        yield put(UpdateUser(user));
+        yield put(UpdateUserName(user));
     }
 }

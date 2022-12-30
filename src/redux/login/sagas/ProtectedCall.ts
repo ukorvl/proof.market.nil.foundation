@@ -4,7 +4,7 @@
  */
 
 import { call, put, StrictEffect } from 'redux-saga/effects';
-import { UpdateUser } from '../actions';
+import { UpdateUserName } from '../actions';
 
 /**
  * Removes current user if api call response returns 401 error.
@@ -31,7 +31,7 @@ export function* ProtectedCall<T extends (...args: any[]) => any>(
         return result;
     } catch (e) {
         if (e.response.data.code === 401) {
-            yield put(UpdateUser(null));
+            yield put(UpdateUserName(null));
         }
 
         throw e;

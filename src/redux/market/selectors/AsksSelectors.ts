@@ -6,7 +6,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { Ask } from 'src/models';
 import { RootStateType } from 'src/redux';
-import { selectCurrentUser } from '../../login';
+import { selectUserName } from '../../login';
 
 /**
  * Select all asks from state.
@@ -26,10 +26,8 @@ export const selectCompletedAsks = createSelector(selectAsksList, asks =>
 /**
  * Select asks, created by current user.
  */
-export const selectCurrentUserAsks = createSelector(
-    selectAsksList,
-    selectCurrentUser,
-    (asks, user) => asks.filter(x => x.sender === user),
+export const selectCurrentUserAsks = createSelector(selectAsksList, selectUserName, (asks, user) =>
+    asks.filter(x => x.sender === user),
 );
 
 /**

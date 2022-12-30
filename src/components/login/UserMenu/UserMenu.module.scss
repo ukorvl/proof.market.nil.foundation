@@ -1,6 +1,15 @@
 @import "src/styles/constants.scss";
 @import "src/styles/mixins/transparentButton";
 
+.menu {
+  display: flex;
+}
+
+.balance {
+  margin: 0 1rem 0 3rem;
+  max-width: 12rem;
+}
+
 .dropdown {
   display: inline-block;
   margin-left: 2px;

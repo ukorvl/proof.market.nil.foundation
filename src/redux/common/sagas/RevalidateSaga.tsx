@@ -5,7 +5,7 @@
 
 import { SagaIterator } from 'redux-saga';
 import { delay, call, take, fork, cancel } from 'redux-saga/effects';
-import { UpdateUser } from '../../login';
+import { UpdateUserName } from '../../login';
 
 /**
  * Helps to revalidate data on interval. Revalidation starts when auth completes.
@@ -25,7 +25,7 @@ export function* RevalidateSaga<T extends (...args: unknown[]) => unknown>(
     ...args: Parameters<T>
 ): SagaIterator {
     while (true) {
-        const { payload: user } = yield take(UpdateUser);
+        const { payload: user } = yield take(UpdateUserName);
 
         if (user) {
             yield call(Revalidate, fnToRevalidate, revalidateInterval, ...args);
@@ -46,7 +46,7 @@ export function* Revalidate<T extends (...args: unknown[]) => unknown>(
         }
     });
 
-    const { payload: user } = yield take(UpdateUser);
+    const { payload: user } = yield take(UpdateUserName);
 
     if (!user) {
         yield cancel(task);
