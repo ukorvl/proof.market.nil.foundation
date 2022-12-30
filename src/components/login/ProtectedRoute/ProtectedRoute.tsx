@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useCallback } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { ReactElement, useCallback } from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Path } from 'src/routing';
 import { useAuth } from 'src/hooks';
 import { UrlQueryParam } from 'src/enums';
@@ -13,8 +13,8 @@ import { UrlQueryParam } from 'src/enums';
  * Props.
  */
 type ProtectedRouteProps = {
-    children: ReactNode;
     readonlyAccess?: boolean;
+    redirectPath?: Path;
 };
 
 /**
@@ -23,22 +23,22 @@ type ProtectedRouteProps = {
  * @param {ProtectedRouteProps} props - Props.
  * @returns React component.
  */
-export const ProtectedRoute = ({
-    children,
+const ProtectedRoute = ({
     readonlyAccess = false,
+    redirectPath = Path.login,
 }: ProtectedRouteProps): ReactElement => {
     const { isAuthentificated, isReadonly } = useAuth();
     const { pathname } = useLocation();
 
     const getNavigateTo = useCallback(
-        () => `${Path.login}/?${UrlQueryParam.ref}=${pathname}`,
-        [pathname],
+        () => `${redirectPath}/?${UrlQueryParam.ref}=${pathname}`,
+        [pathname, redirectPath],
     );
 
     return (
         <>
             {isAuthentificated && (readonlyAccess ? true : !isReadonly) ? (
-                children
+                <Outlet />
             ) : (
                 <Navigate
                     replace
@@ -48,3 +48,5 @@ export const ProtectedRoute = ({
         </>
     );
 };
+
+export default ProtectedRoute;

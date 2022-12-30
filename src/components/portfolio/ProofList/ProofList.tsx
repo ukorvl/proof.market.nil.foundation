@@ -5,6 +5,8 @@
 
 import { ReactElement, useContext } from 'react';
 import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
+import { Link } from 'react-router-dom';
+import { Path } from 'src/routing';
 import { selectPartialProofList, useAppSelector } from 'src/redux';
 import { DashboardCard } from 'src/components/common';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
@@ -59,12 +61,17 @@ const ProofListViewFactory = (
                             onClick={() => setSelectedProofId(x.id)}
                             active={x.id === selectedProofId}
                         >
-                            <Media>
-                                <Media.Body>
-                                    <Media.Heading>{`id: ${x.id}`}</Media.Heading>
-                                    {`bid_id: ${x.bid_id}`}
-                                </Media.Body>
-                            </Media>
+                            <Link
+                                key={x.id}
+                                to={`${Path.portfolio}/${x.id}`}
+                            >
+                                <Media>
+                                    <Media.Body>
+                                        <Media.Heading>{`id: ${x.id}`}</Media.Heading>
+                                        {`bid_id: ${x.bid_id}`}
+                                    </Media.Body>
+                                </Media>
+                            </Link>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
