@@ -28,7 +28,7 @@ export const Breadcrumbs = (): JSX.Element => {
             <NativeBreadcrumbs.Item
                 className={styles.item}
                 renderLink={() => (
-                    <Link to={Path.root}>
+                    <Link to={Path.market}>
                         <span>Proof Market</span>
                     </Link>
                 )}

@@ -4,3 +4,4 @@
  */
 
 export * from './UrlQueryParam';
+export * from './RouterParam';

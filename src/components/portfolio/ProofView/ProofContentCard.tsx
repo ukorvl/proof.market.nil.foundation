@@ -9,15 +9,15 @@ import { useAppSelector } from 'src/redux';
 import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
 import { Proof } from 'src/models';
 import { SelectedProofContext } from '../SelectedProofContextProvider';
-import { ProofViewToolbar } from './ProofViewToolbar';
-import styles from './ProofView.module.scss';
+import { ProofContentCardToolbar } from './ProofContentCardToolbar';
+import styles from './ProofContentCard.module.scss';
 
 /**
- * Proof view.
+ * Proof content card.
  *
  * @returns React component.
  */
-export const ProofView = (): ReactElement => {
+export const ProofContentCard = (): ReactElement => {
     const { selectedProofId } = useContext(SelectedProofContext);
     const isLoadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
@@ -45,10 +45,10 @@ const ProofViewFactory = (loadingProofs: boolean, proof?: Proof) => {
             return (
                 <>
                     <ObjectAsPlainTextViewer data={proof!} />
-                    <ProofViewToolbar proof={proof} />
+                    <ProofContentCardToolbar proof={proof} />
                 </>
             );
-        default:
-            <h5>No proof data was found.</h5>;
+        case proof === undefined:
+            return <h5>No proof data was found.</h5>;
     }
 };

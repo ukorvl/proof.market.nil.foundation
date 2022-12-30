@@ -4,7 +4,8 @@
  */
 
 import { lazy } from 'react';
-import { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
+import { RouterParam } from 'src/enums';
 import ProtectedRoute from 'src/components/login/ProtectedRoute/ProtectedRoute';
 import { Path } from './Paths';
 import AuthLayout from '../layouts/AuthLayout';
@@ -20,6 +21,10 @@ const RegisterView = lazy(() => import('../views/RegisterView'));
  * App routes.
  */
 export const routesConfig: RouteObject[] = [
+    {
+        path: Path.root,
+        element: <Navigate to={Path.market} />,
+    },
     {
         element: <AuthLayout />,
         children: [
@@ -40,7 +45,7 @@ export const routesConfig: RouteObject[] = [
                 element: <ProtectedRoute readonlyAccess />,
                 children: [
                     {
-                        path: Path.root,
+                        path: Path.market,
                         element: <MarketView />,
                     },
                 ],
@@ -51,6 +56,12 @@ export const routesConfig: RouteObject[] = [
                     {
                         path: Path.portfolio,
                         element: <PortfolioView />,
+                        children: [
+                            {
+                                path: `:${RouterParam.proofId}`,
+                                element: <PortfolioView />,
+                            },
+                        ],
                     },
                 ],
             },

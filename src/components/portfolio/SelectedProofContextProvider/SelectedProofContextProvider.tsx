@@ -4,7 +4,6 @@
  */
 
 import { ReactElement, ReactNode } from 'react';
-import { useParams } from 'react-router-dom';
 import { useProofIdState } from 'src/hooks';
 import { SelectedProofContext } from './SelectedProofContext';
 

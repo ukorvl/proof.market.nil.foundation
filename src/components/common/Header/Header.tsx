@@ -31,7 +31,7 @@ export const Header = (): ReactElement => {
                     {navigationLinks.map(({ title, path }) => (
                         <Nav.Item
                             key={title}
-                            active={pathname === path}
+                            active={pathname.startsWith(path)}
                             renderLink={({ active: _, ...props }) => (
                                 <Link
                                     to={path}

@@ -45,20 +45,21 @@ const ProofListViewFactory = (
     loadingProofs: boolean,
     getProofsError: boolean,
 ) => {
-    const { selectedProofId, setSelectedProofId } = useContext(SelectedProofContext);
+    const { selectedProofId } = useContext(SelectedProofContext);
 
     switch (true) {
         case loadingProofs && !proofList.length:
             return <Spinner grow />;
         case getProofsError:
             return <h5>Error while getting proofs.</h5>;
+        case proofList.length === 0:
+            return <h5>No proofs.</h5>;
         case !!proofList.length:
             return (
                 <ListGroup className={styles.proofList}>
                     {proofList.map(x => (
                         <ListGroup.Item
                             key={x.id}
-                            onClick={() => setSelectedProofId(x.id)}
                             active={x.id === selectedProofId}
                         >
                             <Link
@@ -76,7 +77,5 @@ const ProofListViewFactory = (
                     ))}
                 </ListGroup>
             );
-        default:
-            <h5>No proofs.</h5>;
     }
 };

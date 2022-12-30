@@ -8,7 +8,7 @@ import { Button, Icon, Spinner, Variant } from '@nilfoundation/react-components'
 import { Proof } from 'src/models';
 import { getProofById } from 'src/api';
 import { useDownloadJson } from 'src/hooks';
-import styles from './ProofView.module.scss';
+import styles from './ProofContentCard.module.scss';
 
 /**
  * Props.
@@ -18,12 +18,12 @@ type ProofViewHeaderProps = {
 };
 
 /**
- * Proof view header.
+ * Proof content card header.
  *
  * @param {ProofViewHeaderProps} props Props.
  * @returns React component.
  */
-export const ProofViewToolbar = ({ proof }: ProofViewHeaderProps): ReactElement => {
+export const ProofContentCardToolbar = ({ proof }: ProofViewHeaderProps): ReactElement => {
     const fetcher = useMemo(
         () => (proof?.id !== undefined ? () => getProofById(proof.id) : undefined),
         [proof?.id],
