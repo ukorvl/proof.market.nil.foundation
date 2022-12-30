@@ -8,19 +8,19 @@
  */
 export type CircuitStats = {
     /**
-     * Circuit id.
+     * Circuit key.
      */
-    circuit_id: string;
+    _key: string;
     /**
      * Average proof cost.
      */
-    avg_cost: number;
+    avg_cost: number | null;
     /**
      * Average proof generation time.
      */
-    avg_eval_time: number;
+    avg_eval_time: number | null;
     /**
      * Count of completed tasks.
      */
-    completed: number;
+    completed: number | null;
 };
