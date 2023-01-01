@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import {
     CircuitsList,
     CircuitDetailedInfo,
