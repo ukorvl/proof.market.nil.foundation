@@ -23,7 +23,10 @@ type HeaderLinkProps = {
  * @returns React component.
  */
 export const HeaderLink = ({ title, to }: HeaderLinkProps): ReactElement => {
-    const match = useMatch(to);
+    const match = useMatch({
+        path: to,
+        end: false,
+    });
 
     return (
         <Nav.Item
