@@ -6,7 +6,7 @@
 import { ReactElement, Suspense } from 'react';
 import { NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { NetConnectionHandler } from './components';
 import { Router } from './routing';
 import ErrorView from './views/ErrorView';
