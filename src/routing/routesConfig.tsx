@@ -23,7 +23,12 @@ const RegisterView = lazy(() => import('../views/RegisterView'));
 export const routesConfig: RouteObject[] = [
     {
         path: Path.root,
-        element: <Navigate to={Path.market} />,
+        element: (
+            <Navigate
+                to={Path.market}
+                replace
+            />
+        ),
     },
     {
         element: <AuthLayout />,
