@@ -35,6 +35,7 @@ jobs:
         echo "REACT_APP_FORMSPREE_FORM_ID=${{ secrets.FORMSPREE_FORM_ID }}" >> .env.local
         echo "REACT_APP_READONLY_USER=${{ secrets.READONLY_USER }}" >> .env.local
         echo "REACT_APP_SITE_DEFAULT_TITLE=${{ secrets.SITE_DEFAULT_TITLE }}" >> .env.local
+        echo "REACT_APP_GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }}" >> .env.local
 
     - name: Build
       run: |

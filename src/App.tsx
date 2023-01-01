@@ -6,8 +6,8 @@
 import { ReactElement, Suspense } from 'react';
 import { NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
-import { Helmet } from 'react-helmet';
-import { NetConnectionHandler } from './components';
+import { Helmet } from 'react-helmet-async';
+import { GALocationTracker, NetConnectionHandler } from './components';
 import { Router } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -30,6 +30,7 @@ function App(): ReactElement {
                     </Suspense>
                 </NetConnectionHandler>
             </NotificationProvider>
+            {process.env.NODE_ENV === 'production' && <GALocationTracker />}
         </ErrorBoundary>
     );
 }

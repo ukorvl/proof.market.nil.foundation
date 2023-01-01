@@ -19,3 +19,4 @@ export * from './Copyright';
 export * from './NetConnectionHandler';
 export * from './Overlay';
 export * from './ObjectAsPlainTextViewer';
+export * from './GALocationTracker';

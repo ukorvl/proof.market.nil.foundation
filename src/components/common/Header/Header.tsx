@@ -5,11 +5,11 @@
 
 import { ReactElement } from 'react';
 import { Container, Navbar, Nav } from '@nilfoundation/react-components';
-import { Link, useLocation } from 'react-router-dom';
 import { navigationLinks } from 'src/constants';
 import { MobileMenu } from '../MobileMenu';
 import { UserMenu } from '../../login';
 import { Breadcrumbs } from '../BreadCrumbs';
+import { HeaderLink } from './HeaderLink';
 import styles from './Header.module.scss';
 
 /**
@@ -18,8 +18,6 @@ import styles from './Header.module.scss';
  * @returns React component.
  */
 export const Header = (): ReactElement => {
-    const { pathname } = useLocation();
-
     return (
         <Navbar className={styles.navbar}>
             <Container
@@ -29,17 +27,10 @@ export const Header = (): ReactElement => {
                 <Breadcrumbs />
                 <Nav className={styles.nav}>
                     {navigationLinks.map(({ title, path }) => (
-                        <Nav.Item
-                            key={title}
-                            active={pathname.startsWith(path)}
-                            renderLink={({ active: _, ...props }) => (
-                                <Link
-                                    to={path}
-                                    {...props}
-                                >
-                                    <span>{title}</span>
-                                </Link>
-                            )}
+                        <HeaderLink
+                            key={path}
+                            title={title}
+                            to={path}
                         />
                     ))}
                 </Nav>
