@@ -12,7 +12,7 @@ import { RouterParam } from 'src/enums';
 /**
  * Hook to manage selected proof id state.
  */
-export const useProofIdState = (): void => {
+export const useSelectedProofId = (): void => {
     const dispatch = useDispatch();
     const selectedProofId = useAppSelector(selectSelectedProofId);
     const proofId = useParams()[RouterParam.proofId];
