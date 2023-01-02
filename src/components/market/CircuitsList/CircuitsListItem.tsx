@@ -35,12 +35,11 @@ export const CurcuitsListItem = ({
     return (
         <ListGroup.Item active={isSelected}>
             <Link to={`${Path.market}/${id}`}>
-                <Media>
+                <Media className={isSelected ? styles.selected : ''}>
                     <Media.Body className={styles.itemBody}>{name}</Media.Body>
                     <CircuitsListItemInfo
                         cost={cost}
                         change={change}
-                        isSelected={isSelected}
                     />
                 </Media>
             </Link>

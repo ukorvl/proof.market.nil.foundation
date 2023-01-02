@@ -26,11 +26,12 @@ type ProofListItemProps = {
  */
 export const ProofListItem = ({ proof: { id } }: ProofListItemProps): ReactElement => {
     const selectedProofId = useAppSelector(selectSelectedProofId);
+    const isSelected = id === selectedProofId;
 
     return (
-        <ListGroup.Item active={id === selectedProofId}>
+        <ListGroup.Item active={isSelected}>
             <Link to={`${Path.portfolio}/${id}`}>
-                <Media>
+                <Media className={isSelected ? styles.selected : ''}>
                     <Media.Body className={styles.itemBody}>{`id: ${id}`}</Media.Body>
                 </Media>
             </Link>
