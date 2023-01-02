@@ -5,7 +5,12 @@
 
 import { createReducer } from '@reduxjs/toolkit';
 import { Proof } from 'src/models';
-import { UpdateIsLoadingProofs, UpdateProofList, UpdateProofsError } from '../actions';
+import {
+    UpdateIsLoadingProofs,
+    UpdateProofList,
+    UpdateProofsError,
+    UpdateSelectedProofId,
+} from '../actions';
 
 /**
  * State.
@@ -14,6 +19,7 @@ export type ProofReducerState = {
     proofs: Proof[];
     isLoadingProofs: boolean;
     error: boolean;
+    selectedProofId?: number;
 };
 
 /**
@@ -23,6 +29,7 @@ const initialState: ProofReducerState = {
     proofs: [],
     isLoadingProofs: false,
     error: false,
+    selectedProofId: undefined,
 };
 
 /**
@@ -41,5 +48,8 @@ export const ProofReducer = createReducer(initialState, builder =>
         .addCase(UpdateProofsError, (state, { payload }) => ({
             ...state,
             error: payload,
-        })),
+        }))
+        .addCase(UpdateSelectedProofId, (s, { payload }) => {
+            s.selectedProofId = payload;
+        }),
 );

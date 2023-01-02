@@ -12,5 +12,5 @@ export type Circuit = {
     /**
      * Id.
      */
-    id: string;
+    id: number;
 } & CircuitDto;

@@ -10,7 +10,7 @@ export type CircuitStats = {
     /**
      * Circuit id.
      */
-    circuit_id: string;
+    circuit_id: number;
     /**
      * Average proof cost.
      */

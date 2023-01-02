@@ -14,7 +14,7 @@ const selectCircuitsList = (s: RootStateType) => s.circuitsState.circuits;
  * @param s State.
  * @returns Current selected circuit id.
  */
-export const selectCurrentCircuitId = (s: RootStateType): string | undefined =>
+export const selectCurrentCircuitId = (s: RootStateType): number | undefined =>
     s.circuitsState.selectedid;
 
 /**

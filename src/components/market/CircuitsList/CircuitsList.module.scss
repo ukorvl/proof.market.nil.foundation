@@ -1,21 +1,21 @@
 @import "src/styles/constants.scss";
 @import "src/styles/mixins/styledList";
 @import "src/styles/mixins/hideScrollbar";
+@import "src/styles/mixins/overflowFade";
 
 .container {
   height: 372px;
 }
 
 .inputGroup {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .dailyChangeIndicator {
   font-size: 1.1rem;
-  margin-top: 4px;
 }
 
-div.selectedIndicator {
+div.selected {
   color: $c-secondary !important;
 }
 
@@ -24,9 +24,11 @@ div.selectedIndicator {
   @include hideScrollbar;
   height: 330px;
   overflow: auto;
+  padding-top: 8px;
+  @include overflowFade(8px, true);
 }
 
 .itemBody {
-  vertical-align: middle;
-  height: 44px;
+  vertical-align: middle !important;
+  height: calc(48px - 1rem);
 }

@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import { selectCircuits, useAppSelector } from 'src/redux';
+import { useSelectedCircuitId } from 'src/hooks';
 import { CircuitsListTable } from './CircuitsListTable';
 import { DashboardCard } from '../../common';
 import styles from './CircuitsList.module.scss';
@@ -19,6 +20,7 @@ import styles from './CircuitsList.module.scss';
 export const CircuitsList = (): ReactElement => {
     const circuitsList = useAppSelector(selectCircuits, deepEqual);
     const loadingCircuits = useAppSelector(s => s.circuitsState.isLoading);
+    useSelectedCircuitId();
 
     return (
         <DashboardCard>

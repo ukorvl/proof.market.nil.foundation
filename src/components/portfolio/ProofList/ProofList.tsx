@@ -3,13 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
-import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
-import { Link } from 'react-router-dom';
-import { Path } from 'src/routing';
-import { selectPartialProofList, useAppSelector } from 'src/redux';
-import { DashboardCard } from 'src/components/common';
-import { SelectedProofContext } from '../SelectedProofContextProvider';
+import { ReactElement } from 'react';
+import { ListGroup, Spinner } from '@nilfoundation/react-components';
+import { selectProofList, useAppSelector } from 'src/redux';
+import { useSelectedProofId } from 'src/hooks';
+import { DashboardCard } from 'src/components';
+import { ProofListItem } from './ProofListItem';
 import styles from './ProofList.module.scss';
 
 /**
@@ -18,9 +17,10 @@ import styles from './ProofList.module.scss';
  * @returns React component.
  */
 export const ProofList = (): ReactElement => {
-    const proofList = useAppSelector(selectPartialProofList);
+    const proofList = useAppSelector(selectProofList);
     const loadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const getProofsError = useAppSelector(s => s.proofState.error);
+    useSelectedProofId();
 
     return (
         <DashboardCard>
@@ -41,12 +41,10 @@ export const ProofList = (): ReactElement => {
  * @returns View, based on proof data state.
  */
 const ProofListViewFactory = (
-    proofList: ReturnType<typeof selectPartialProofList>,
+    proofList: ReturnType<typeof selectProofList>,
     loadingProofs: boolean,
     getProofsError: boolean,
 ) => {
-    const { selectedProofId } = useContext(SelectedProofContext);
-
     switch (true) {
         case loadingProofs && !proofList.length:
             return <Spinner grow />;
@@ -58,22 +56,10 @@ const ProofListViewFactory = (
             return (
                 <ListGroup className={styles.proofList}>
                     {proofList.map(x => (
-                        <ListGroup.Item
+                        <ProofListItem
+                            proof={x}
                             key={x.id}
-                            active={x.id === selectedProofId}
-                        >
-                            <Link
-                                key={x.id}
-                                to={`${Path.portfolio}/${x.id}`}
-                            >
-                                <Media>
-                                    <Media.Body>
-                                        <Media.Heading>{`id: ${x.id}`}</Media.Heading>
-                                        {`bid_id: ${x.bid_id}`}
-                                    </Media.Body>
-                                </Media>
-                            </Link>
-                        </ListGroup.Item>
+                        />
                     ))}
                 </ListGroup>
             );

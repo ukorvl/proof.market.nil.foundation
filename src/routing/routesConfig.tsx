@@ -52,6 +52,12 @@ export const routesConfig: RouteObject[] = [
                     {
                         path: Path.market,
                         element: <MarketView />,
+                        children: [
+                            {
+                                path: `:${RouterParam.circuitId}`,
+                                element: <MarketView />,
+                            },
+                        ],
                     },
                 ],
             },

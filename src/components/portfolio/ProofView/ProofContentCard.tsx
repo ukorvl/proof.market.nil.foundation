@@ -3,12 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useAppSelector } from 'src/redux';
+import { selectSelectedProofId, useAppSelector } from 'src/redux';
 import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
 import { Proof } from 'src/models';
-import { SelectedProofContext } from '../SelectedProofContextProvider';
 import { ProofContentCardToolbar } from './ProofContentCardToolbar';
 import styles from './ProofContentCard.module.scss';
 
@@ -18,7 +17,7 @@ import styles from './ProofContentCard.module.scss';
  * @returns React component.
  */
 export const ProofContentCard = (): ReactElement => {
-    const { selectedProofId } = useContext(SelectedProofContext);
+    const selectedProofId = useAppSelector(selectSelectedProofId);
     const isLoadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
 
