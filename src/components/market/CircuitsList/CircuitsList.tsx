@@ -33,11 +33,11 @@ export const CircuitsList = (): ReactElement => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (selectedCircuitId === circuitId) {
+        if (selectedCircuitId === Number(circuitId)) {
             return;
         }
 
-        if (circuitId !== undefined && Number(circuitId) !== selectedCircuitId) {
+        if (circuitId !== undefined) {
             dispatch(UpdateSelectedCircuitId(Number(circuitId)));
             return;
         }
