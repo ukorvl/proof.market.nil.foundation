@@ -1,15 +1,16 @@
 @import "../constants.scss";
 
-@mixin overflowFade($maskWidth) {
+@mixin overflowFade($maskWidth, $vertical: false) {
   $mask-image-content: linear-gradient(
-    to right,
+    to if($vertical, top, right),
     transparent,
     $c-base-darker $maskWidth,
     $c-base-darker calc(100% - $maskWidth),
     transparent
   );
-  $maskSize: 100% 100%, 0 100%;
-  $maskPosition: 0 0, 100% 0;
+  $maskSize: 100% 100%;
+  $maskPosition: 0 0;
+  $maskRepeat: no-repeat, no-repeat;
 
   mask-image: $mask-image-content;
   -webkit-mask-image: $mask-image-content;
@@ -20,6 +21,6 @@
   mask-position: $maskPosition;
   -webkit-mask-position: $maskPosition;
 
-  mask-repeat: no-repeat, no-repeat;
-  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: $maskRepeat;
+  -webkit-mask-repeat: $maskRepeat;
 }
