@@ -15,3 +15,8 @@
   @include hideScrollbar;
   @include overflowFade(0.5rem, true);
 }
+
+.itemBody {
+  vertical-align: middle !important;
+  height: calc(48px - 1rem);
+}

@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { Helmet } from 'react-helmet-async';
-import { ProofList, SelectedProofContextProvider, ProofContentCard } from '../components';
+import { ProofList, SelectedProofProvider, ProofContentCard } from '../components';
 
 /**
  * Portfolio view.
@@ -21,8 +21,8 @@ const PortfolioView = (): ReactElement => (
         <Helmet>
             <title>Portfolio</title>
         </Helmet>
-        <Row>
-            <SelectedProofContextProvider>
+        <SelectedProofProvider>
+            <Row>
                 <Col
                     xs={12}
                     md={3}
@@ -35,8 +35,8 @@ const PortfolioView = (): ReactElement => (
                 >
                     <ProofContentCard />
                 </Col>
-            </SelectedProofContextProvider>
-        </Row>
+            </Row>
+        </SelectedProofProvider>
     </Container>
 );
 
