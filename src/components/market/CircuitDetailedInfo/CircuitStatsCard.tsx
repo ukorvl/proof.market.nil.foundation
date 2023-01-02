@@ -13,7 +13,7 @@ import { ObjectAsPlainTextViewer } from 'src/components';
  * Props.
  */
 type CircuitStatsCardProps = {
-    circuitId: string;
+    circuitId: number;
 };
 
 /**
