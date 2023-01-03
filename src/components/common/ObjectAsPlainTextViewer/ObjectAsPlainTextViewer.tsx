@@ -32,8 +32,12 @@ export const ObjectAsPlainTextViewer = <T extends Record<string, unknown>>({
                         key={x}
                         className={styles.item}
                     >
-                        <strong>{x}</strong>
-                        <span>{`: ${y}`}</span>
+                        {!!x && !!y && (
+                            <>
+                                <strong>{x}</strong>
+                                <span>{`: ${y}`}</span>
+                            </>
+                        )}
                     </li>
                 ),
             )}
