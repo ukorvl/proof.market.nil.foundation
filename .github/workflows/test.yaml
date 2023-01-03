@@ -1,0 +1,42 @@
+name: Test
+
+on:
+  # Triggers the workflow on every pull-request
+  pull_request:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+    secrets: inherit
+    with:
+      environment: test
+
+  update_test_stand:
+    name: Update test stand
+    runs-on: [ubuntu-latest]
+    environment: test
+    needs: [build]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-${{ github.sha }}
+
+      - name: Extract build results
+        run: tar -xf build-${{ github.sha }}.tar.gz
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.TEST_STAND_SSH_KEY }}
+          known_hosts: 'placeholder'
+
+      - name: Adding known hosts
+        run: ssh-keyscan -H ${{ secrets.TEST_STAND_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy on test stand
+        env:
+          HOST: ${{ secrets.TEST_STAND_HOST }}
+          USER: ${{ secrets.TEST_STAND_USER }}
+          TARGET_DIR: '/home/staging/proof.market.nil.foundation.test-stand'
+          OPTIONS: '-avz --progress --delete'
+        run: rsync ${{ env.OPTIONS }} build/ ${{ env.USER }}@${{ env.HOST }}:${{ env.TARGET_DIR }}
