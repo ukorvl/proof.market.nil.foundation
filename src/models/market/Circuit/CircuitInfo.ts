@@ -10,7 +10,7 @@ export type CircuitInfo = {
     /**
      * Circuit id.
      */
-    circuit_id: string;
+    circuit_id: number;
     /**
      * Current circuit cost.
      */

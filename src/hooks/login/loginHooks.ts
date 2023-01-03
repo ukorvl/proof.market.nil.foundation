@@ -6,11 +6,12 @@
 import { useCallback, useMemo } from 'react';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
-import { selectCurrentUser, UpdateUser, useAppSelector } from 'src/redux';
+import { selectUserName, UpdateUserName, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
 import { getUserFromJwt } from 'src/utils';
+import { UrlQueryParam } from 'src/enums';
 
 const readonlyUser = process.env.REACT_APP_READONLY_USER;
 
@@ -24,7 +25,7 @@ export const useAuth = (): {
     isAuthentificated: boolean;
     isReadonly: boolean;
 } => {
-    const user = useAppSelector(selectCurrentUser);
+    const user = useAppSelector(selectUserName);
     const isAuthentificated = useMemo(() => {
         return !!user;
     }, [user]);
@@ -47,15 +48,18 @@ export const useAuth = (): {
 export const useLogin = (): ((jwt: string) => void) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const refUrlParam = searchParams.get(UrlQueryParam.ref);
 
     const processLogin = useCallback(
         (jwt: string) => {
             setItemIntoLocalStorage('jwt', jwt);
 
             const user = getUserFromJwt(jwt);
-            user && dispatch(UpdateUser(user));
+            user && dispatch(UpdateUserName(user));
 
-            navigate(Path.root, { replace: true });
+            const navigateTo = refUrlParam || Path.root;
+            navigate(navigateTo, { replace: true });
 
             if (user === readonlyUser) {
                 return;
@@ -67,7 +71,7 @@ export const useLogin = (): ((jwt: string) => void) => {
                 variant: Variant.success,
             });
         },
-        [dispatch, navigate],
+        [dispatch, navigate, refUrlParam],
     );
 
     return processLogin;
@@ -82,7 +86,7 @@ export const useLogout = (): (() => void) => {
     const dispatch = useDispatch();
 
     const processLogout = useCallback(() => {
-        dispatch(UpdateUser(null));
+        dispatch(UpdateUserName(null));
         removeItemFromLocalStorage('jwt');
     }, [dispatch]);
 

@@ -4,28 +4,33 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { UpdateUser } from '../actions';
+import { UpdateUserBalance, UpdateUserName } from '../actions';
 
 /**
  * State.
  */
 export type UserReducerState = {
-    user: string | null;
+    name: string | null;
+    balance?: number | null;
 };
 
 /**
  * Initial state.
  */
 const initialState: UserReducerState = {
-    user: null,
+    name: null,
+    balance: null,
 };
 
 /**
  * Reducer of user info.
  */
 export const UserReducer = createReducer(initialState, builder =>
-    builder.addCase(UpdateUser, (state, { payload }) => ({
-        ...state,
-        user: payload,
-    })),
+    builder
+        .addCase(UpdateUserName, (state, { payload }) => {
+            state.name = payload;
+        })
+        .addCase(UpdateUserBalance, (state, { payload }) => {
+            state.balance = payload;
+        }),
 );

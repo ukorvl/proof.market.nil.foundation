@@ -17,7 +17,7 @@ import {
     UpdateIsLoadingCircuitsStats,
     UpdateSelectedCircuitId,
 } from '../actions';
-import { ProtectedCall, UpdateUser } from '../../login';
+import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectCurrentCircuitId } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
@@ -30,7 +30,7 @@ const revalidateCircuitsInfoInterval =
  * @yields
  */
 export function* CircuitsSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateUser, GetCircuitsSaga);
+    yield takeLatest(UpdateUserName, GetCircuitsSaga);
     yield takeLatest(UpdateCircuitsList, SelectCircuitSaga);
     yield fork(RevalidateSaga, GetCircuitsAdditionalData, revalidateCircuitsInfoInterval);
 }
@@ -38,10 +38,12 @@ export function* CircuitsSaga(): SagaIterator<void> {
 /**
  * Get circuits saga.
  *
- * @param {ReturnType<typeof UpdateUser>} action Action return type.
+ * @param {ReturnType<typeof UpdateUserName>} action Action return type.
  * @yields
  */
-function* GetCircuitsSaga({ payload: user }: ReturnType<typeof UpdateUser>): SagaIterator<void> {
+function* GetCircuitsSaga({
+    payload: user,
+}: ReturnType<typeof UpdateUserName>): SagaIterator<void> {
     if (!user) {
         return;
     }

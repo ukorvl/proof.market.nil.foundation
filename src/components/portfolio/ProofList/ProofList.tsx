@@ -3,12 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
-import { ListGroup, Media, Spinner } from '@nilfoundation/react-components';
-import { selectPartialProofList, useAppSelector } from 'src/redux';
-import { DashboardCard } from 'src/components/common';
-import { SelectedProofContext } from '../SelectedProofContextProvider';
-import './ProofList.scss';
+import { ReactElement } from 'react';
+import { ListGroup, Spinner } from '@nilfoundation/react-components';
+import { selectProofList, useAppSelector } from 'src/redux';
+import { useSelectedProofId } from 'src/hooks';
+import { DashboardCard } from 'src/components';
+import { ProofListItem } from './ProofListItem';
+import styles from './ProofList.module.scss';
 
 /**
  * Proof list.
@@ -16,14 +17,17 @@ import './ProofList.scss';
  * @returns React component.
  */
 export const ProofList = (): ReactElement => {
-    const proofList = useAppSelector(selectPartialProofList);
+    const proofList = useAppSelector(selectProofList);
     const loadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const getProofsError = useAppSelector(s => s.proofState.error);
+    useSelectedProofId();
 
     return (
-        <DashboardCard className="proofList">
+        <DashboardCard>
             <h4>Proof list</h4>
-            {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            <div className={styles.container}>
+                {ProofListViewFactory(proofList, loadingProofs, getProofsError)}
+            </div>
         </DashboardCard>
     );
 };
@@ -37,36 +41,27 @@ export const ProofList = (): ReactElement => {
  * @returns View, based on proof data state.
  */
 const ProofListViewFactory = (
-    proofList: ReturnType<typeof selectPartialProofList>,
+    proofList: ReturnType<typeof selectProofList>,
     loadingProofs: boolean,
     getProofsError: boolean,
 ) => {
-    const { selectedProofId, setSelectedProofId } = useContext(SelectedProofContext);
     switch (true) {
-        case loadingProofs:
+        case loadingProofs && !proofList.length:
             return <Spinner grow />;
         case getProofsError:
             return <h5>Error while getting proofs.</h5>;
+        case proofList.length === 0:
+            return <h5>No proofs.</h5>;
         case !!proofList.length:
             return (
-                <ListGroup>
+                <ListGroup className={styles.proofList}>
                     {proofList.map(x => (
-                        <ListGroup.Item
+                        <ProofListItem
+                            proof={x}
                             key={x.id}
-                            onClick={() => setSelectedProofId(x.id)}
-                            active={x.id === selectedProofId}
-                        >
-                            <Media>
-                                <Media.Body>
-                                    <Media.Heading>{`id: ${x.id}`}</Media.Heading>
-                                    {`bid_id: ${x.bid_id}`}
-                                </Media.Body>
-                            </Media>
-                        </ListGroup.Item>
+                        />
                     ))}
                 </ListGroup>
             );
-        default:
-            <h5>No proofs.</h5>;
     }
 };

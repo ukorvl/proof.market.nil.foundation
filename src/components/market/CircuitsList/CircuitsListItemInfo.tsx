@@ -5,15 +5,14 @@
 
 import { ReactElement, memo } from 'react';
 import { Media, Spinner } from '@nilfoundation/react-components';
-import clsx from 'clsx';
 import { useAppSelector } from 'src/redux';
 import { PriceChangeIndicator } from '../PriceChangeIndicator';
+import styles from './CircuitsList.module.scss';
 
 /**
  * Props.
  */
 type CircuitsListItemInfoProps = {
-    isSelected: boolean;
     cost?: number | null;
     change?: number | null;
 };
@@ -27,10 +26,8 @@ type CircuitsListItemInfoProps = {
 export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
     cost,
     change,
-    isSelected,
 }: CircuitsListItemInfoProps): ReactElement {
     const isLoadingInfo = useAppSelector(s => s.circuitsState.isLoadingCircuitsInfo);
-    const className = clsx('dailyChangeIndicator', isSelected && 'dailyChangeIndicator_selected');
 
     return (
         <Media.Item position="right">
@@ -38,7 +35,7 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
             {!!change && (
                 <PriceChangeIndicator
                     change={change}
-                    className={className}
+                    className={styles.dailyChangeIndicator}
                 />
             )}
             {isLoadingInfo && cost === undefined && change === undefined && <Spinner />}

@@ -20,7 +20,7 @@ import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
  */
 export const CreateAskForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementContext);
-    const user = useAppSelector(s => s.userState.user)!;
+    const user = useAppSelector(s => s.userState.name)!;
     const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState('');

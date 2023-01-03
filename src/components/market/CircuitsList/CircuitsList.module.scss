@@ -1,0 +1,34 @@
+@import "src/styles/constants.scss";
+@import "src/styles/mixins/styledList";
+@import "src/styles/mixins/hideScrollbar";
+@import "src/styles/mixins/overflowFade";
+
+.container {
+  height: 372px;
+}
+
+.inputGroup {
+  margin-bottom: 10px;
+}
+
+.dailyChangeIndicator {
+  font-size: 1.1rem;
+}
+
+div.selected {
+  color: $c-secondary !important;
+}
+
+.listGroup {
+  @include styledList;
+  @include hideScrollbar;
+  height: 330px;
+  overflow: auto;
+  padding-top: 8px;
+  @include overflowFade(8px, true);
+}
+
+.itemBody {
+  vertical-align: middle !important;
+  height: calc(48px - 1rem);
+}

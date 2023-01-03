@@ -20,3 +20,8 @@ export const UpdateIsLoadingProofs = createAction<boolean>('@proof/UPDATE_IS_LOA
  * Update proof error state.
  */
 export const UpdateProofsError = createAction<boolean>('@proof/UPDATE_ERROR');
+
+/**
+ * Update selected circuit id.
+ */
+export const UpdateSelectedProofId = createAction<number>('@proof/UPDATE_SELECTED_PROOF_ID');

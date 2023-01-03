@@ -16,11 +16,19 @@ import { RootStateType } from 'src/redux';
 export const selectProofList = (s: RootStateType): Proof[] => s.proofState.proofs;
 
 /**
- * Select all proof without heavy 'proof' field.
+ * Select selected proof id.
+ *
+ * @param s State.
+ * @returns Selected proof id.
  */
-export const selectPartialProofList = createSelector(selectProofList, proofs =>
-    proofs.map(x => {
-        const { id, bid_id } = x;
-        return { id, bid_id };
-    }),
+export const selectSelectedProofId = (s: RootStateType): number | undefined =>
+    s.proofState.selectedProofId;
+
+/**
+ * Select current selected proof.
+ */
+export const selectSelectedProof = createSelector(
+    selectProofList,
+    selectSelectedProofId,
+    (proofs, id) => proofs.find(p => p.id === id),
 );

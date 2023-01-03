@@ -5,9 +5,12 @@
 
 import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetOrderBookData, UseGetOrderBookDataReturnType } from 'src/hooks';
+import { useGetOrderBookData, UseGetOrderBookDataReturnType, useLocalStorage } from 'src/hooks';
+import { OrderBookPriceStep } from 'src/enums';
 import { OrderBookTable } from './OrderBookTable';
-import { Details, DashboardCard } from '../../common';
+import { OrderBookSettingsContext } from './OrderBookSettingsContext';
+import { DashboardCard } from '../../common';
+import { OrderBookToolbar } from './OrderBookToolbar';
 import styles from './OrderBook.module.scss';
 
 /**
@@ -16,13 +19,23 @@ import styles from './OrderBook.module.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
-    const data = useGetOrderBookData();
+    const [priceStep, setPriceStep] = useLocalStorage<keyof typeof OrderBookPriceStep>(
+        'orderBookPriceStep',
+        '0.001',
+    );
+    const orderBookData = useGetOrderBookData({ priceStep });
 
     return (
         <DashboardCard>
-            <Details title={<h4>Order book</h4>}>
-                <div className={styles.orderBook}>{OrderBookViewFactory(data)}</div>
-            </Details>
+            <OrderBookSettingsContext.Provider value={{ priceStep, setPriceStep }}>
+                <div className={styles.header}>
+                    <h4>Order book</h4>
+                    <OrderBookToolbar
+                        disabled={!orderBookData.data.length && orderBookData.loadingData}
+                    />
+                </div>
+                <div className={styles.orderBook}>{OrderBookViewFactory(orderBookData)}</div>
+            </OrderBookSettingsContext.Provider>
         </DashboardCard>
     );
 };

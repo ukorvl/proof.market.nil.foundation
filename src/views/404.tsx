@@ -6,7 +6,7 @@
 import { ReactElement } from 'react';
 import { Container, Row, Col, Button, Variant, Size } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Path } from '../routing';
 
 /**
@@ -29,12 +29,12 @@ const Page404 = (): ReactElement => (
             >
                 This page does not exist.
                 <p aria-hidden={true} />
-                <Link to={Path.root}>
+                <Link to={Path.market}>
                     <Button
                         variant={Variant.primary}
                         size={Size.lg}
                     >
-                        Back to main
+                        Back to market
                     </Button>
                 </Link>
             </Col>

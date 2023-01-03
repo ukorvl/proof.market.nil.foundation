@@ -5,10 +5,13 @@
 
 import { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { UpdateSelectedCircuitId, selectCurrentCircuit } from 'src/redux';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentCircuitId } from 'src/redux';
+import { Path } from 'src/routing';
 import { CircuitsListData } from 'src/models';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
+import styles from './CircuitsList.module.scss';
 
 /**
  * Props.
@@ -26,27 +29,20 @@ type CurcuitsListItemProps = {
 export const CurcuitsListItem = ({
     data: { id, cost, change, name },
 }: CurcuitsListItemProps): ReactElement => {
-    const dispatch = useDispatch();
-    const selectedItem = useSelector(selectCurrentCircuit, (prev, next) => prev?.id === next?.id);
-    const isSelected = id === selectedItem?.id;
-
-    const onSelectItem = () => {
-        dispatch(UpdateSelectedCircuitId(id));
-    };
+    const selectedId = useSelector(selectCurrentCircuitId);
+    const isSelected = id === selectedId;
 
     return (
-        <ListGroup.Item
-            active={isSelected}
-            onClick={onSelectItem}
-        >
-            <Media>
-                <Media.Body>{name}</Media.Body>
-                <CircuitsListItemInfo
-                    cost={cost}
-                    change={change}
-                    isSelected={isSelected}
-                />
-            </Media>
+        <ListGroup.Item active={isSelected}>
+            <Link to={`${Path.market}/${id}`}>
+                <Media className={isSelected ? styles.selected : ''}>
+                    <Media.Body className={styles.itemBody}>{name}</Media.Body>
+                    <CircuitsListItemInfo
+                        cost={cost}
+                        change={change}
+                    />
+                </Media>
+            </Link>
         </ListGroup.Item>
     );
 };
