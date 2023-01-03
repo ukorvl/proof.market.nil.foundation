@@ -60,7 +60,11 @@ jobs:
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.TEST_STAND_SSH_KEY }}
-        known_hosts: ${{secrets.TEST_STAND_KNOWN_HOSTS}}
+        known_hosts: 'placeholder'
+
+    - name: Adding known hosts
+      if: ${{ github.event_name == 'pull_request' }}
+      run: ssh-keyscan -H ${{ secrets.TEST_STAND_HOST }} >> ~/.ssh/known_hosts
 
     - name: Deploy on test stand
       if: ${{ github.event_name == 'pull_request' }}
