@@ -12,7 +12,7 @@ jobs:
       environment: test
 
   update_test_stand:
-    name: Deploy
+    name: Update test stand
     runs-on: [ubuntu-latest]
     environment: test
     needs: [build]
