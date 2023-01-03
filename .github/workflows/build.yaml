@@ -52,3 +52,21 @@ jobs:
         path: build-${{ github.sha }}.tar.gz
         if-no-files-found: error
         retention-days: 10
+
+
+# Update test stand on every pull-request
+    - name: Install SSH Key
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.TEST_STAND_SSH_KEY }}
+        known_hosts: ${{secrets.TEST_STAND_KNOWN_HOSTS}}
+
+    - name: Deploy on test stand
+      if: ${{ github.event_name == 'pull_request' }}
+      env:
+        HOST: ${{ secrets.TEST_STAND_HOST }}
+        USER: ${{ secrets.TEST_STAND_USER }}
+        TARGET_DIR: '/home/staging/proof.market.nil.foundation.test-stand'
+        OPTIONS: '-avz --progress --delete'
+      run: rsync ${{ env.OPTIONS }} build/ ${{ env.USER }}@${{ env.HOST }}:${{ env.TARGET_DIR }}
