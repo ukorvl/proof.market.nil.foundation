@@ -17,5 +17,10 @@ export enum Currency {
  * @param currency Currency.
  * @returns Path to currency image.
  */
-export const getCurrencyImage = (currency: Currency): string =>
-    `${process.env.PUBLIC_URL}currencies/${currency}-icon.svg`;
+export const getCurrencyImage = (currency: Currency): string | null => {
+    if (!Object.keys(Currency).includes(currency)) {
+        return null;
+    }
+
+    return `${process.env.PUBLIC_URL}currencies/${currency}-icon.svg`;
+};

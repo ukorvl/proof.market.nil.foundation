@@ -18,7 +18,7 @@ import styles from './CircuitInfoPanel.module.scss';
 export const CircuitInfoPanel = (): ReactElement => {
     const currentCircuit = useAppSelector(selectCurrentCircuit);
     const circuitInfo = useAppSelector(s =>
-        s.circuitsState.circuitsInfo.find(x => x.circuit_id === currentCircuit?.id),
+        s.circuitsState.circuitsInfo.find(x => x._key === currentCircuit?._key),
     );
     const change = circuitInfo?.daily_change;
 
@@ -27,7 +27,7 @@ export const CircuitInfoPanel = (): ReactElement => {
             <div className={styles.container}>
                 {currentCircuit && (
                     <div>
-                        {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.info.toUpperCase()})/USD`}
+                        {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.inputDescription?.toUpperCase()})/USD`}
                     </div>
                 )}
                 <div>

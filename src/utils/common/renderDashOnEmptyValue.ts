@@ -10,7 +10,7 @@
  * @param [fractionDigits] Number of digits after the value decimal point.
  * @returns Value or long dash symbol.
  */
-export const renderDashOnEmptyValue = (value?: number, fractionDigits = 4): string =>
+export const renderDashOnEmptyValue = (value?: number | null, fractionDigits = 4): string =>
     value ? value?.toFixed(fractionDigits) : longDash;
 
 /**

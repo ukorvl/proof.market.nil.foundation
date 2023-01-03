@@ -19,14 +19,12 @@ export const useSelectedCircuitId = (): void => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const idAsNumber = Number(circuitId);
-
-        if (selectedCircuitId === idAsNumber) {
+        if (selectedCircuitId === circuitId) {
             return;
         }
 
         if (circuitId !== undefined) {
-            dispatch(UpdateSelectedCircuitId(idAsNumber));
+            dispatch(UpdateSelectedCircuitId(circuitId));
             return;
         }
 

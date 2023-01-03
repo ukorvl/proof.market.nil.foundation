@@ -8,12 +8,13 @@ import { dequal as deepEqual } from 'dequal';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
 import { ObjectAsPlainTextViewer } from 'src/components';
+import { Circuit } from 'src/models';
 
 /**
  * Props.
  */
 type CircuitStatsCardProps = {
-    circuitId: number;
+    circuitId: Circuit['_key'];
 };
 
 /**
@@ -25,7 +26,7 @@ type CircuitStatsCardProps = {
 export const CircuitStatsCard = ({ circuitId }: CircuitStatsCardProps): ReactElement => {
     const isLoadingStats = useAppSelector(s => s.circuitsState.isLoadingCircuitsStats);
     const stats = useAppSelector(
-        s => s.circuitsState.circuitsStats.find(x => x.circuit_id === circuitId),
+        s => s.circuitsState.circuitsStats.find(x => x._key === circuitId),
         deepEqual,
     );
 
@@ -33,8 +34,8 @@ export const CircuitStatsCard = ({ circuitId }: CircuitStatsCardProps): ReactEle
         return stats === undefined
             ? {}
             : {
-                  'Average cost': `${stats.avg_cost.toFixed(4)} USD`,
-                  'Average gen time': `${stats.avg_eval_time.toFixed(4)} Mins`,
+                  'Average cost': `${stats.avg_cost?.toFixed(4)} USD`,
+                  'Average gen time': `${stats.avg_eval_time?.toFixed(4)} Mins`,
                   Completed: stats.completed,
               };
     }, [stats]);

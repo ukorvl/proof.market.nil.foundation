@@ -22,13 +22,13 @@ type CircuitInfoCardProps = {
  * @returns React component.
  */
 export const CircuitInfoCard = ({ circuit }: CircuitInfoCardProps): ReactElement => {
-    const { info, name, description, repository } = circuit;
+    const { name, inputDescription, description } = circuit;
 
     return (
         <>
-            <h4>{`${name} (${info})/USD`}</h4>
+            <h4>{`${name} (${inputDescription})/USD`}</h4>
             <h5 className={styles.description}>{description}</h5>
-            <p>
+            {/* <p>
                 <Label
                     href={repository}
                     target="_blank"
@@ -39,7 +39,7 @@ export const CircuitInfoCard = ({ circuit }: CircuitInfoCardProps): ReactElement
                     />
                     GitHub Repository
                 </Label>
-            </p>
+            </p> */}
         </>
     );
 };

@@ -43,11 +43,11 @@ export const CircuitDetailedInfo = (): ReactElement => {
                         </Nav.Item>
                     ))}
                 </Nav>
-                {currentSelectedCircuit && (
+                {currentSelectedCircuit && getCurrencyImage(currentSelectedCircuit.name) && (
                     <div className={styles.imageContainer}>
                         <Image
                             alt="Circuit image"
-                            source={getCurrencyImage(currentSelectedCircuit.name)}
+                            source={getCurrencyImage(currentSelectedCircuit.name)!}
                             responsive
                         />
                     </div>
@@ -91,7 +91,7 @@ const CircuitDetailedInfoFactory = ({
                 </>
             );
         case DetailedInfoTab.stats:
-            return <CircuitStatsCard circuitId={circuit.id} />;
+            return <CircuitStatsCard circuitId={circuit._key} />;
         default:
             return <></>;
     }

@@ -83,7 +83,7 @@ function* SelectCircuitSaga({
         return;
     }
 
-    yield put(UpdateSelectedCircuitId(payload[0].id));
+    yield put(UpdateSelectedCircuitId(payload[0]._key));
 }
 
 /**

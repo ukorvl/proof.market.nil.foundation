@@ -71,7 +71,7 @@ const columns: CircuitsListTableColumn[] = [
         disableFilters: true,
     },
     {
-        accessor: 'id',
+        accessor: '_key',
         disableFilters: true,
     },
 ];
@@ -102,11 +102,13 @@ export const CircuitsListTable = memo(function CircuitsListTable({
 
     const tableData: CircuitsListData[] = useMemo(() => {
         return circuitsList.map(x => {
-            const info = circuitsInfo && circuitsInfo.find(y => y.circuit_id === x.id);
+            const info = circuitsInfo && circuitsInfo.find(y => y._key === x._key);
 
             return {
-                id: x.id,
-                name: `${x.name.toUpperCase()} (${x.info.toUpperCase()})/USD`,
+                _key: x._key,
+                name: `${x.name.toUpperCase()}${
+                    x.inputDescription ? ` (${x.inputDescription?.toUpperCase()})` : ''
+                }/USD`,
                 cost: info?.current,
                 change: info?.daily_change,
             };

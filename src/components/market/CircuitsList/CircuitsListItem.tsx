@@ -27,14 +27,14 @@ type CurcuitsListItemProps = {
  * @returns React component.
  */
 export const CurcuitsListItem = ({
-    data: { id, cost, change, name },
+    data: { _key, cost, change, name },
 }: CurcuitsListItemProps): ReactElement => {
     const selectedId = useSelector(selectCurrentCircuitId);
-    const isSelected = id === selectedId;
+    const isSelected = _key === selectedId;
 
     return (
         <ListGroup.Item active={isSelected}>
-            <Link to={`${Path.market}/${id}`}>
+            <Link to={`${Path.market}/${_key}`}>
                 <Media className={isSelected ? styles.selected : ''}>
                     <Media.Body className={styles.itemBody}>{name}</Media.Body>
                     <CircuitsListItemInfo

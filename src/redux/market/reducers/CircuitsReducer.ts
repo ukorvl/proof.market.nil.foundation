@@ -21,7 +21,7 @@ import {
  */
 export type CircuitsReducerState = {
     circuits: Circuit[];
-    selectedid?: number;
+    selectedid?: string;
     isLoading: boolean;
     error?: boolean;
     circuitsInfo: CircuitInfo[];

@@ -46,7 +46,7 @@ export const CreateOrdersPanel = (): ReactElement => {
  * @param selectedCircuitId Selected circuit id.
  * @returns React Element.
  */
-const tabFactory = (tab: TradeOrderType, selectedCircuitId?: number) => {
+const tabFactory = (tab: TradeOrderType, selectedCircuitId?: string) => {
     if (selectedCircuitId === undefined) {
         return <h5>Please, select circuit to create orders.</h5>;
     }

@@ -9,7 +9,7 @@ import styles from './ObjectAsPlainTextViewer.module.scss';
 /**
  * Props.
  */
-type ObjectAsPlainTextViewerProps<T extends Record<string, string | number | undefined>> = {
+type ObjectAsPlainTextViewerProps<T extends Record<string, unknown>> = {
     data: T;
     className?: string;
 };
@@ -20,7 +20,7 @@ type ObjectAsPlainTextViewerProps<T extends Record<string, string | number | und
  * @param {ObjectAsPlainTextViewerProps} props Props.
  * @returns React component.
  */
-export const ObjectAsPlainTextViewer = <T extends Record<string, string | number | undefined>>({
+export const ObjectAsPlainTextViewer = <T extends Record<string, unknown>>({
     data,
     className,
 }: ObjectAsPlainTextViewerProps<T>): ReactElement => {

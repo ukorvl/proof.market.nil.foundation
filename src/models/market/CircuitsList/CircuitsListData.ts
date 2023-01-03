@@ -7,7 +7,7 @@
  * Circuits list table data.
  */
 export type CircuitsListData = {
-    id: number;
+    _key: string;
     name: string;
     cost?: number | null;
     change?: number | null;
