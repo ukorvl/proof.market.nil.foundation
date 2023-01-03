@@ -4,7 +4,7 @@
  */
 
 import { ReactElement } from 'react';
-import { Icon, Label } from '@nilfoundation/react-components';
+//import { Icon, Label } from '@nilfoundation/react-components';
 import { Circuit } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
 

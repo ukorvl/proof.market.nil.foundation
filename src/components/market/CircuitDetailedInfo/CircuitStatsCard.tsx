@@ -35,7 +35,9 @@ export const CircuitStatsCard = ({ circuitId }: CircuitStatsCardProps): ReactEle
             ? {}
             : {
                   'Average cost': `${stats.avg_cost?.toFixed(4)} USD`,
-                  'Average gen time': `${stats.avg_eval_time?.toFixed(4)} Mins`,
+                  'Average gen time': stats.avg_eval_time
+                      ? `${stats.avg_eval_time?.toFixed(4)} Mins`
+                      : undefined,
                   Completed: stats.completed,
               };
     }, [stats]);
