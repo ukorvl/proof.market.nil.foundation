@@ -19,15 +19,17 @@ export const useSelectedProofId = (): void => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (selectedProofId === Number(proofId)) {
+        const idAsNumber = Number(proofId);
+
+        if (selectedProofId === idAsNumber) {
             return;
         }
 
         if (proofId !== undefined) {
-            dispatch(UpdateSelectedProofId(Number(proofId)));
+            dispatch(UpdateSelectedProofId(idAsNumber));
             return;
         }
 
-        navigate(`${selectedProofId}`);
+        selectedProofId !== undefined && navigate(`${selectedProofId}`);
     }, [proofId, dispatch, selectedProofId, navigate]);
 };

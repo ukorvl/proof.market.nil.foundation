@@ -19,15 +19,17 @@ export const useSelectedCircuitId = (): void => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (selectedCircuitId === Number(circuitId)) {
+        const idAsNumber = Number(circuitId);
+
+        if (selectedCircuitId === idAsNumber) {
             return;
         }
 
         if (circuitId !== undefined) {
-            dispatch(UpdateSelectedCircuitId(Number(circuitId)));
+            dispatch(UpdateSelectedCircuitId(idAsNumber));
             return;
         }
 
-        navigate(`${selectedCircuitId}`);
+        selectedCircuitId !== undefined && navigate(`${selectedCircuitId}`);
     }, [circuitId, dispatch, selectedCircuitId, navigate]);
 };
