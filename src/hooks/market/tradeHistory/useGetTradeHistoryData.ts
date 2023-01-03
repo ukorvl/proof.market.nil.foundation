@@ -71,11 +71,11 @@ export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataR
  * @returns Trade history table data list.
  */
 const mapToTradeHistoryData = (
-    { timestamp, cost, eval_time }: Ask,
+    { matched_time, cost, eval_time }: Ask,
     i: number,
     asks: Ask[],
 ): TradeHistoryData => ({
-    timestamp: formatDate(timestamp!, 'DD.MM HH:mm'),
+    timestamp: formatDate(matched_time!, 'DD.MM HH:mm'),
     cost,
     eval_time,
     type: i !== 0 ? getType(asks.at(i - 1)!.cost, cost) : undefined,

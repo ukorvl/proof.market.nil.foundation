@@ -189,7 +189,7 @@ const createOrderBookData = <T extends Bid | Ask>(
             eval_time: parsedKey?.eval_time,
             ordersAmount: value.length,
             type: orderType,
-            userOrdersAmount: value.filter(x => userOrders.some(y => y.id === x.id)).length,
+            userOrdersAmount: value.filter(x => userOrders.some(y => y._key === x._key)).length,
         });
     });
 

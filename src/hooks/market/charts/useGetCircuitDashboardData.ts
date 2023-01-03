@@ -70,7 +70,7 @@ export const useGetCircuitDashboardData = (
  */
 const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
     return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
-        const date = getUTCTimestamp(currentValue.timestamp!, dataRange);
+        const date = getUTCTimestamp(currentValue.updatedOn!, dataRange);
 
         if (!previousValue[date]) previousValue[date] = [];
 

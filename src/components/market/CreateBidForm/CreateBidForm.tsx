@@ -29,7 +29,7 @@ export const CreateBidForm = (): ReactElement => {
         mode: 'onChange',
         defaultValues: {
             sender: user,
-            circuit_id: selectedCircuitId,
+            statement_key: selectedCircuitId,
         },
     });
 

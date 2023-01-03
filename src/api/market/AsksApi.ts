@@ -9,7 +9,6 @@ import { createBearerHttpClient } from '../common';
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
 const apiUrl = `${databaseUrl}/_api/`;
 const httpFetcher = createBearerHttpClient(apiUrl);
-
 const createFetcher = createBearerHttpClient('/market/ask');
 
 /**
@@ -23,7 +22,7 @@ export const getAsksByCircuitId = (circuitId: string): Promise<Ask[]> =>
         .post('cursor', {
             query: `
                 FOR x IN @@relation
-                FILTER x.circuit_id == ${circuitId}
+                FILTER x.statement_key == '${circuitId}'
                 RETURN x`,
             bindVars: {
                 '@relation': 'ask',
@@ -46,11 +45,11 @@ export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('
  * @param askToRemoveId Ask to remove id.
  * @returns Ask.
  */
-export const removeAsk = (askToRemoveId: Ask['id']): Promise<void> =>
+export const removeAsk = (askToRemoveId: Ask['_key']): Promise<void> =>
     httpFetcher.post('cursor', {
         query: `
             FOR x IN @@relation
-                FILTER x.id == ${askToRemoveId}
+                FILTER x._key == ${askToRemoveId}
                 REMOVE { _key: x._key } IN @@relation
             `,
         bindVars: {

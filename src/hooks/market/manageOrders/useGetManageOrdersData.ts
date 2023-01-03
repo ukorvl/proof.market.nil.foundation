@@ -64,14 +64,14 @@ export const useGetManageOrdersData = (): UseGetManageOrdersDataReturnType => {
  * @returns Manage orders table data list.
  */
 const mapToManageOrdersData = <T extends Ask | Bid>(
-    { init_time, timestamp, cost, eval_time, id, status }: T,
+    { createdOn, matched_time, cost, eval_time, _key, status }: T,
     type: TradeOrderType,
 ): ManageOrdersData => ({
-    init_time: formatDate(init_time, 'DD.MM HH:mm'),
-    timestamp: formatDate(timestamp!, 'DD.MM HH:mm'),
+    init_time: formatDate(createdOn, 'DD.MM HH:mm'),
+    timestamp: formatDate(matched_time!, 'DD.MM HH:mm'),
     cost,
     eval_time,
     type,
-    orderId: id,
+    orderId: _key,
     status,
 });
