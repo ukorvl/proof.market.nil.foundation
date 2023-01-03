@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, nodejs-runner]
+    runs-on: [ubuntu-latest]
     steps:
     - name: Checkout
       uses: actions/checkout@v3
