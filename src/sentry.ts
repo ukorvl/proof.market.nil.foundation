@@ -16,8 +16,14 @@ export const configureSentry = (): void => {
         return;
     }
 
+    const dsn = process.env.REACT_APP_SENTRY_DSN;
+
+    if (!dsn) {
+        return;
+    }
+
     Sentry.init({
-        dsn: process.env.REACT_APP_SENTRY_DSN,
+        dsn,
         integrations: [new BrowserTracing()],
         tracesSampleRate: 0.2,
     });
