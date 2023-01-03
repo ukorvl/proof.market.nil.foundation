@@ -6,6 +6,7 @@
 import { SagaIterator } from '@redux-saga/core';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getUserBalance } from 'src/api';
+import { UserBalance } from 'src/models';
 import { UpdateUserBalance, UpdateUserName } from '../actions';
 import { ProtectedCall } from './ProtectedCall';
 import { AddAsk, AddBid } from '../../market';
@@ -34,7 +35,7 @@ function* GetUserInfoSaga({
     }
 
     try {
-        const balance: number | undefined = yield call(ProtectedCall, getUserBalance, user);
+        const balance: UserBalance | undefined = yield call(ProtectedCall, getUserBalance, user);
         yield put(UpdateUserBalance(balance));
     } catch {
         // Do nothing

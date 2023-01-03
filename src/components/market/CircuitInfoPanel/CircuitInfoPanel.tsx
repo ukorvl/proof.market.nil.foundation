@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import { DashboardCard } from 'src/components/common';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
@@ -22,14 +22,21 @@ export const CircuitInfoPanel = (): ReactElement => {
     );
     const change = circuitInfo?.daily_change;
 
+    const name = useMemo(() => {
+        if (!currentCircuit) {
+            return '';
+        }
+
+        const { name, inputDescription } = currentCircuit;
+        return `${name.toUpperCase()}${
+            inputDescription ? ` (${inputDescription?.toUpperCase()})` : ''
+        }/USD`;
+    }, [currentCircuit]);
+
     return (
         <DashboardCard className={styles.panel}>
             <div className={styles.container}>
-                {currentCircuit && (
-                    <div>
-                        {`${currentCircuit?.name.toUpperCase()} (${currentCircuit?.inputDescription?.toUpperCase()})/USD`}
-                    </div>
-                )}
+                {currentCircuit && <div>{name}</div>}
                 <div>
                     <div className={`text-muted ${styles.title}`}>Current cost</div>
                     <div>{renderDashOnEmptyValue(circuitInfo?.current)}</div>

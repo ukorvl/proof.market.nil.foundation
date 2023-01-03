@@ -4,6 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
+import { UserBalance } from 'src/models';
 import { UpdateUserBalance, UpdateUserName } from '../actions';
 
 /**
@@ -11,7 +12,7 @@ import { UpdateUserBalance, UpdateUserName } from '../actions';
  */
 export type UserReducerState = {
     name: string | null;
-    balance?: number | null;
+    balance?: UserBalance;
 };
 
 /**
@@ -19,7 +20,7 @@ export type UserReducerState = {
  */
 const initialState: UserReducerState = {
     name: null,
-    balance: null,
+    balance: undefined,
 };
 
 /**

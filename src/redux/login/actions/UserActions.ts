@@ -4,6 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
+import { UserBalance } from 'src/models';
 
 /**
  * Update current user name.
@@ -13,4 +14,4 @@ export const UpdateUserName = createAction<string | null>('@user/UPDATE_USER_NAM
 /**
  * Update current user balance.
  */
-export const UpdateUserBalance = createAction<number | undefined>('@user/UPDATE_USER_BALANCE');
+export const UpdateUserBalance = createAction<UserBalance | undefined>('@user/UPDATE_USER_BALANCE');

@@ -26,7 +26,7 @@ export const CircuitInfoCard = ({ circuit }: CircuitInfoCardProps): ReactElement
 
     return (
         <>
-            <h4>{`${name} (${inputDescription})/USD`}</h4>
+            <h4>{`${name}${inputDescription ? ` (${inputDescription})` : ''}/USD`}</h4>
             <h5 className={styles.description}>{description}</h5>
             {/* <p>
                 <Label

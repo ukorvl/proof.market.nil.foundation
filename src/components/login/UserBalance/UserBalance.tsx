@@ -26,11 +26,13 @@ type UserBalanceProps = {
 export const UserBalance = ({ className }: UserBalanceProps): ReactElement => {
     const [hidden, setHidden] = useLocalStorage('userBalanceHidden', false);
     const userBalance = useSelector(selectUserBalance);
-    const iconName = hidden ? 'fa-eye-slash' : 'fa-eye';
+    const balance = userBalance?.balance;
 
-    if (!userBalance) {
+    if (!balance) {
         return <></>;
     }
+
+    const iconName = hidden ? 'fa-eye-slash' : 'fa-eye';
 
     return (
         <div className={`${styles.balance} ${className ?? ''}`}>
@@ -38,8 +40,11 @@ export const UserBalance = ({ className }: UserBalanceProps): ReactElement => {
                 onClick={() => setHidden(!hidden)}
                 iconName={`fa-solid ${iconName}`}
             />
-            <span className={`${styles.text} ${hidden ? styles.hiddenText : ''}`}>
-                {`${hidden ? '*'.repeat(userBalance.toString().length) : userBalance}`}
+            <span
+                className={`${styles.text} ${hidden ? styles.hiddenText : ''}`}
+                title={hidden ? undefined : balance.toString()}
+            >
+                {`${hidden ? '*'.repeat(balance.toString().length) : balance.toFixed(4)}`}
             </span>
             <span className={styles.currency}>USD</span>
         </div>

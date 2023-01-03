@@ -3,6 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import { UserBalance } from 'src/models';
 import { RootStateType } from 'src/redux';
 
 /**
@@ -19,5 +20,4 @@ export const selectUserName = (s: RootStateType): string | null => s.userState.n
  * @param s State.
  * @returns User balance.
  */
-export const selectUserBalance = (s: RootStateType): number | undefined | null =>
-    s.userState.balance;
+export const selectUserBalance = (s: RootStateType): UserBalance | undefined => s.userState.balance;
