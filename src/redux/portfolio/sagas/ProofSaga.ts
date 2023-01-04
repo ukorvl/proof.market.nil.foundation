@@ -74,5 +74,5 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
         return;
     }
 
-    yield put(UpdateSelectedProofId(payload[0].id));
+    yield put(UpdateSelectedProofId(payload[0]._key));
 }

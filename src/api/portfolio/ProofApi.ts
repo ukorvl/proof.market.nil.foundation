@@ -35,12 +35,12 @@ export const getProofs = (currentUser: string): Promise<Proof> =>
  * @param proofId Proof id.
  * @returns Proofs.
  */
-export const getProofById = (proofId: number): Promise<Proof> =>
+export const getProofById = (proofId: string): Promise<Proof> =>
     httpFetcher
         .post('cursor', {
             query: `
                 FOR x IN @@relation
-                    FILTER x.id == ${proofId}
+                    FILTER x.id == '${proofId}'
                     RETURN x
             `,
             bindVars: {

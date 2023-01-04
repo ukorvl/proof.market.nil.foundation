@@ -21,7 +21,7 @@ export const selectProofList = (s: RootStateType): Proof[] => s.proofState.proof
  * @param s State.
  * @returns Selected proof id.
  */
-export const selectSelectedProofId = (s: RootStateType): number | undefined =>
+export const selectSelectedProofId = (s: RootStateType): string | undefined =>
     s.proofState.selectedProofId;
 
 /**
@@ -30,5 +30,5 @@ export const selectSelectedProofId = (s: RootStateType): number | undefined =>
 export const selectSelectedProof = createSelector(
     selectProofList,
     selectSelectedProofId,
-    (proofs, id) => proofs.find(p => p.id === id),
+    (proofs, id) => proofs.find(p => p._key === id),
 );

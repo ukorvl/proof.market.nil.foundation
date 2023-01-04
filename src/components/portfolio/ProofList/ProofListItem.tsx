@@ -24,15 +24,15 @@ type ProofListItemProps = {
  * @param {ProofListItemProps} props Props.
  * @returns React component.
  */
-export const ProofListItem = ({ proof: { id } }: ProofListItemProps): ReactElement => {
+export const ProofListItem = ({ proof: { _key } }: ProofListItemProps): ReactElement => {
     const selectedProofId = useAppSelector(selectSelectedProofId);
-    const isSelected = id === selectedProofId;
+    const isSelected = _key === selectedProofId;
 
     return (
         <ListGroup.Item active={isSelected}>
-            <Link to={`${Path.portfolio}/${id}`}>
+            <Link to={`${Path.portfolio}/${_key}`}>
                 <Media className={isSelected ? styles.selected : ''}>
-                    <Media.Body className={styles.itemBody}>{`id: ${id}`}</Media.Body>
+                    <Media.Body className={styles.itemBody}>{`id: ${_key}`}</Media.Body>
                 </Media>
             </Link>
         </ListGroup.Item>

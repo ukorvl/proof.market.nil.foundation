@@ -19,7 +19,7 @@ export type ProofReducerState = {
     proofs: Proof[];
     isLoadingProofs: boolean;
     error: boolean;
-    selectedProofId?: number;
+    selectedProofId?: string;
 };
 
 /**

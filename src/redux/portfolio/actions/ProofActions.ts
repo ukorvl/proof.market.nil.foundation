@@ -24,4 +24,4 @@ export const UpdateProofsError = createAction<boolean>('@proof/UPDATE_ERROR');
 /**
  * Update selected circuit id.
  */
-export const UpdateSelectedProofId = createAction<number>('@proof/UPDATE_SELECTED_PROOF_ID');
+export const UpdateSelectedProofId = createAction<string>('@proof/UPDATE_SELECTED_PROOF_ID');

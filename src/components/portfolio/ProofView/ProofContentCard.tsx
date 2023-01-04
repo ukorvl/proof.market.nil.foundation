@@ -19,7 +19,9 @@ import styles from './ProofContentCard.module.scss';
 export const ProofContentCard = (): ReactElement => {
     const selectedProofId = useAppSelector(selectSelectedProofId);
     const isLoadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
-    const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
+    const proofData = useAppSelector(s =>
+        s.proofState.proofs.find(x => x._key === selectedProofId),
+    );
 
     return (
         <DashboardCard>

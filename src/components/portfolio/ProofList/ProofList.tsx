@@ -58,7 +58,7 @@ const ProofListViewFactory = (
                     {proofList.map(x => (
                         <ProofListItem
                             proof={x}
-                            key={x.id}
+                            key={x._key}
                         />
                     ))}
                 </ListGroup>
