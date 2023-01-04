@@ -11,10 +11,13 @@ jobs:
   build:
     uses: ./.github/workflows/build.yaml
     secrets: inherit
+    with:
+      environment: github-pages
 
   deploy:
     name: Deploy
     runs-on: [ubuntu-latest]
+    environment: github-pages
     needs: [build]
     steps:
       - uses: actions/download-artifact@v3
