@@ -9,8 +9,8 @@ on:
   workflow_call:
     inputs:
       environment:
-        required: true
         type: string
+        default: test
 
 jobs:
   build:
