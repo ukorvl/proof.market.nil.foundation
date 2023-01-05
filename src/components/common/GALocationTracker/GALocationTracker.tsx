@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, useEffect } from 'react';
-import { set, pageview } from 'react-ga';
+import ReactGa from 'react-ga4';
 import { useLocation } from 'react-router-dom';
 
 /**
@@ -14,11 +14,11 @@ import { useLocation } from 'react-router-dom';
  */
 export const GALocationTracker = (): ReactElement => {
     const { pathname } = useLocation();
+    const mainPath = pathname.split('/').slice(0, 2).join('');
 
     useEffect(() => {
-        set({ page: pathname });
-        pageview(pathname);
-    }, [pathname]);
+        mainPath && ReactGa.send({ hitType: 'pageview', page: mainPath });
+    }, [mainPath]);
 
     return <></>;
 };
