@@ -30,7 +30,7 @@ function App(): ReactElement {
                     </Suspense>
                 </NetConnectionHandler>
             </NotificationProvider>
-            {<GALocationTracker />}
+            <GALocationTracker />
         </ErrorBoundary>
     );
 }

@@ -17,7 +17,7 @@ export const GALocationTracker = (): ReactElement => {
     const mainPath = pathname.split('/').slice(0, 2).join('');
 
     useEffect(() => {
-        ReactGa.send({ hitType: 'pageview', page: mainPath });
+        mainPath && ReactGa.send({ hitType: 'pageview', page: mainPath });
     }, [mainPath]);
 
     return <></>;

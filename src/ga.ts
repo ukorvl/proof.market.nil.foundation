@@ -18,10 +18,6 @@ const gaInitOptions = {
 export default function configureGA(): void {
     const measurementId = process.env.REACT_APP_GA_TRACKING_ID;
 
-    // if (process.env.NODE_ENV !== 'production') {
-    //     return;
-    // }
-
     if (!measurementId) {
         return;
     }
