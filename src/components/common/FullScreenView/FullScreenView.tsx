@@ -32,7 +32,7 @@ export const FullScreenView = ({
 
     return (
         <>
-            {children}
+            {!showFullScreen && children}
             <Portal>
                 <CSSTransition
                     classNames="alert"
