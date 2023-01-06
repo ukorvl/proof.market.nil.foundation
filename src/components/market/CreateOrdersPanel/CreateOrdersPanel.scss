@@ -2,7 +2,7 @@
 @import "src/styles/mixins/hideScrollbar";
 
 .cerateOrdersPanel {
-  height: 500px;
+  height: 542px;
   position: relative;
 
   .nav {
@@ -14,7 +14,7 @@
     flex-direction: column;
 
     .formContent {
-      height: 370px;
+      height: 412px;
       overflow: auto;
       @include hideScrollbar;
 

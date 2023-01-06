@@ -15,6 +15,7 @@ import {
     TradeHistory,
     ManageOrdersPanel,
     CircuitInfoPanel,
+    LastProofProducer,
 } from '../components';
 
 /**
@@ -37,6 +38,7 @@ const MarketView = (): ReactElement => (
             >
                 <CircuitsList />
                 <TradeHistory />
+                <LastProofProducer />
             </Col>
             <Col
                 xs={12}
