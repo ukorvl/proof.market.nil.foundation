@@ -7,6 +7,7 @@ import { ReactElement, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Icon, Label, Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
+import { Circuit } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
 
 /**
@@ -20,15 +21,35 @@ const CircuitDetailedInfoComponent = (): ReactElement => {
 
     return (
         <div className={styles.container}>
-            {loadingCircuits && !currentSelectedCircuit && <Spinner grow />}
-            {currentSelectedCircuit ? (
+            <CircuitInfoViewFactory
+                loading={loadingCircuits}
+                data={currentSelectedCircuit}
+            />
+        </div>
+    );
+};
+
+export const CircuitDetailedInfo = memo(CircuitDetailedInfoComponent);
+
+const CircuitInfoViewFactory = ({
+    loading,
+    data,
+}: {
+    loading: boolean;
+    data?: Circuit;
+}): ReactElement => {
+    switch (true) {
+        case loading && !data:
+            return <Spinner grow />;
+        case data !== undefined:
+            return (
                 <>
                     <div className={styles.description}>
                         <span className="text-muted">Description:</span>
-                        {currentSelectedCircuit.description}
+                        {data!.description}
                     </div>
                     <Label
-                        href={currentSelectedCircuit.repository}
+                        href={data!.repository}
                         target="_blank"
                     >
                         <Icon
@@ -38,11 +59,9 @@ const CircuitDetailedInfoComponent = (): ReactElement => {
                         GitHub Repository
                     </Label>
                 </>
-            ) : (
-                <h4>No circuit info was provided.</h4>
-            )}
-        </div>
-    );
+            );
+        case data === undefined:
+        default:
+            return <h4>No circuit info was provided.</h4>;
+    }
 };
-
-export const CircuitDetailedInfo = memo(CircuitDetailedInfoComponent);
