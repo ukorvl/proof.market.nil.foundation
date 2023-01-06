@@ -6,7 +6,7 @@
 import { ReactElement, useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
-import { DashboardCard, Details } from '../../common';
+import { DashboardCard } from '../../common';
 import { ProtectedContent } from '../../login';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateAskForm } from '../CreateAskForm';
@@ -24,17 +24,16 @@ export const CreateOrdersPanel = (): ReactElement => {
 
     return (
         <DashboardCard>
-            <Details title={<h4>Create orders</h4>}>
-                <div className="cerateOrdersPanel">
-                    <ProtectedContent overlayTitle="Authorization is required to create orders">
-                        <CreateOrdersTabs
-                            currentTab={tab}
-                            onSetTab={setTab}
-                        />
-                        {tabFactory(tab, selectedCircuitId)}
-                    </ProtectedContent>
-                </div>
-            </Details>
+            <h4>Create orders</h4>
+            <div className="cerateOrdersPanel">
+                <ProtectedContent overlayTitle="Authorization is required to create orders">
+                    <CreateOrdersTabs
+                        currentTab={tab}
+                        onSetTab={setTab}
+                    />
+                    {tabFactory(tab, selectedCircuitId)}
+                </ProtectedContent>
+            </div>
         </DashboardCard>
     );
 };
