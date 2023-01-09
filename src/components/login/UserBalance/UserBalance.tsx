@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Label } from '@nilfoundation/react-components';
 import { useSelector } from 'react-redux';
 import { selectUserBalance } from 'src/redux';
@@ -16,6 +16,7 @@ import styles from './UserBalance.module.scss';
  */
 type UserBalanceProps = {
     className?: string;
+    canToggleVisibility?: boolean;
 };
 
 /**
@@ -24,9 +25,13 @@ type UserBalanceProps = {
  * @param {UserBalanceProps} props - Props.
  * @returns React component.
  */
-export const UserBalance = ({ className }: UserBalanceProps): ReactElement => {
+export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps): ReactElement => {
     const [hidden, setHidden] = useLocalStorage('userBalanceHidden', false);
     const userBalance = useSelector(selectUserBalance);
+
+    useEffect(() => {
+        canToggleVisibility && setHidden(false);
+    }, [canToggleVisibility, setHidden]);
 
     if (!userBalance) {
         return <></>;
@@ -38,14 +43,16 @@ export const UserBalance = ({ className }: UserBalanceProps): ReactElement => {
 
     return (
         <div className={`${styles.balance} ${className ?? ''}`}>
-            <ClicableIcon
-                onClick={() => setHidden(!hidden)}
-                iconName={`fa-solid ${iconName}`}
-            />
+            {canToggleVisibility && (
+                <ClicableIcon
+                    onClick={() => setHidden(!hidden)}
+                    iconName={`fa-solid ${iconName}`}
+                />
+            )}
             {balance !== undefined && (
                 <span
                     className={`${styles.text} ${hidden ? styles.hiddenText : ''}`}
-                    title={hidden ? undefined : balance}
+                    title={hidden ? undefined : `Balance: ${balance}`}
                 >
                     {`${hidden ? '*'.repeat(balance.length) : balance}`}
                 </span>
