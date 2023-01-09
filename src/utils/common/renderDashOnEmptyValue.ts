@@ -3,6 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import { longDash } from './longDashSymbol';
+
 /**
  * Renders value or long dash symbol if value is empty.
  *
@@ -12,8 +14,3 @@
  */
 export const renderDashOnEmptyValue = (value?: number | null, fractionDigits = 4): string =>
     value ? value?.toFixed(fractionDigits) : longDash;
-
-/**
- * Long dash HTML symbol.
- */
-const longDash = '—';
