@@ -52,10 +52,8 @@ function* TryGetUserFromLocalStorageTokenSaga(): SagaIterator<void> {
 function* RenewJwtSaga({
     payload: timeout,
 }: ReturnType<typeof SetJwtRevalidateTimeout>): SagaIterator<void> {
-    while (true) {
-        yield delay(timeout);
-        yield call(processRenewJwt);
-    }
+    yield delay(timeout);
+    yield call(processRenewJwt);
 }
 
 /**
@@ -68,16 +66,17 @@ function* processRenewJwt(): SagaIterator<void> {
         const currentUser = yield select(selectUserName);
 
         const result: Awaited<ReturnType<typeof renewJwt>> = yield call(renewJwt, currentUser);
+        const { jwt } = result;
 
-        if (!result.jwt) {
+        if (!jwt) {
             return;
         }
 
-        const user = getUserFromJwt(result.jwt);
-        const timeout = calculateRevalidateJwtTimeout(result.jwt);
+        const user = getUserFromJwt(jwt);
+        const timeout = calculateRevalidateJwtTimeout(jwt);
 
         if (user === currentUser) {
-            setItemIntoLocalStorage('jwt', result.jwt);
+            setItemIntoLocalStorage('jwt', jwt);
 
             yield put(SetJwtRevalidateTimeout(timeout));
         }
