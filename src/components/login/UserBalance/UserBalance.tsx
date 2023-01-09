@@ -4,11 +4,11 @@
  */
 
 import { ReactElement, useEffect } from 'react';
-import { Label } from '@nilfoundation/react-components';
-import { useSelector } from 'react-redux';
-import { selectUserBalance } from 'src/redux';
+import { Label, Spinner } from '@nilfoundation/react-components';
+import { selectUserBalance, useAppSelector } from 'src/redux';
 import { useLocalStorage } from 'src/hooks';
-import { ClicableIcon } from 'src/components/common';
+import { ClicableIcon } from 'src/components';
+import { longDash } from 'src/utils';
 import styles from './UserBalance.module.scss';
 
 /**
@@ -27,19 +27,18 @@ type UserBalanceProps = {
  */
 export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps): ReactElement => {
     const [hidden, setHidden] = useLocalStorage('userBalanceHidden', false);
-    const userBalance = useSelector(selectUserBalance);
+    const userBalance = useAppSelector(selectUserBalance);
+    const loadingUserBalance = useAppSelector(s => s.userState.balanceIsLoading);
 
     useEffect(() => {
         canToggleVisibility && setHidden(false);
     }, [canToggleVisibility, setHidden]);
 
-    if (!userBalance) {
-        return <></>;
-    }
-
-    const balance = userBalance.balance?.toFixed(2);
-    const blocked = userBalance.blocked?.toFixed(2);
+    const balance = userBalance?.balance?.toFixed(2);
+    const blocked = userBalance?.blocked?.toFixed(2);
     const iconName = hidden ? 'fa-eye-slash' : 'fa-eye';
+    const isNoData = balance === undefined && blocked === undefined;
+    const displayLoader = isNoData && loadingUserBalance;
 
     return (
         <div className={`${styles.balance} ${className ?? ''}`}>
@@ -49,6 +48,7 @@ export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps
                     iconName={`fa-solid ${iconName}`}
                 />
             )}
+            {isNoData && !loadingUserBalance && longDash}
             {balance !== undefined && (
                 <span
                     className={`${styles.text} ${hidden ? styles.hiddenText : ''}`}
@@ -67,7 +67,7 @@ export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps
                     </span>
                 </Label>
             )}
-            <span className={styles.currency}>USD</span>
+            {displayLoader ? <Spinner grow /> : <span className={styles.currency}>USD</span>}
         </div>
     );
 };

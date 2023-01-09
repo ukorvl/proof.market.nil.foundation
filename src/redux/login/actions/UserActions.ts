@@ -9,9 +9,21 @@ import { UserBalance } from 'src/models';
 /**
  * Update current user name.
  */
-export const UpdateUserName = createAction<string | null>('@user/UPDATE_USER_NAME');
+export const UpdateUserName = createAction<string | null>('@user/UPDATE_NAME');
 
 /**
  * Update current user balance.
  */
-export const UpdateUserBalance = createAction<UserBalance | undefined>('@user/UPDATE_USER_BALANCE');
+export const UpdateUserBalance = createAction<UserBalance | undefined>('@user/UPDATE_BALANCE');
+
+/**
+ * Update user balance loading status.
+ */
+export const UpdateUserBalanceIsLoading = createAction<boolean>('@user/UPDATE_BALANCE_IS_LOADING');
+
+/**
+ * Update user balance error status.
+ */
+export const UpdateUserBalanceIsLoadingError = createAction<boolean>(
+    '@user/UPDATE_BALANCE_IS_LOADING_ERROR',
+);

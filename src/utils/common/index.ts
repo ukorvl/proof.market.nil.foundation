@@ -5,3 +5,4 @@
 
 export * from './notEmpty';
 export * from './renderDashOnEmptyValue';
+export * from './longDashSymbol';
