@@ -8,9 +8,9 @@ import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
-import { selectUserName, UpdateUserName, useAppSelector } from 'src/redux';
+import { selectUserName, SetJwtRevalidateTimeout, UpdateUserName, useAppSelector } from 'src/redux';
 import { Path } from 'src/routing';
-import { getUserFromJwt } from 'src/utils';
+import { getRevalidateJwtTimeout, getUserFromJwt } from 'src/utils';
 import { UrlQueryParam } from 'src/enums';
 
 const readonlyUser = process.env.REACT_APP_READONLY_USER;
@@ -56,7 +56,10 @@ export const useLogin = (): ((jwt: string) => void) => {
             setItemIntoLocalStorage('jwt', jwt);
 
             const user = getUserFromJwt(jwt);
+            const timeout = getRevalidateJwtTimeout(jwt);
+
             user && dispatch(UpdateUserName(user));
+            dispatch(SetJwtRevalidateTimeout(timeout));
 
             const navigateTo = refUrlParam || Path.root;
             navigate(navigateTo, { replace: true });

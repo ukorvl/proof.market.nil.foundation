@@ -14,3 +14,8 @@ export const UpdateUserName = createAction<string | null>('@user/UPDATE_USER_NAM
  * Update current user balance.
  */
 export const UpdateUserBalance = createAction<number | undefined>('@user/UPDATE_USER_BALANCE');
+
+/**
+ * Set jwt token revalidation timeout.
+ */
+export const SetJwtRevalidateTimeout = createAction<number>('@user/SET_REVALIDATE_JWT_TIMEOUT');
