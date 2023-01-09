@@ -45,4 +45,8 @@ export type Circuit = {
      * Childs.
      */
     childs: Array<Circuit>;
+    /**
+     * If equals true, statement should be hidden.
+     */
+    isPrivate?: boolean;
 };
