@@ -101,18 +101,20 @@ export const CircuitsListTable = memo(function CircuitsListTable({
     const circuitsInfo = useAppSelector(s => s.circuitsState.circuitsInfo, deepEqual);
 
     const tableData: CircuitsListData[] = useMemo(() => {
-        return circuitsList.map(x => {
-            const info = circuitsInfo && circuitsInfo.find(y => y._key === x._key);
+        return circuitsList
+            .filter(x => !x.isPrivate)
+            .map(x => {
+                const info = circuitsInfo && circuitsInfo.find(y => y._key === x._key);
 
-            return {
-                _key: x._key,
-                name: `${x.name.toUpperCase()}${
-                    x.inputDescription ? ` (${x.inputDescription?.toUpperCase()})` : ''
-                }/USD`,
-                cost: info?.current,
-                change: info?.daily_change,
-            };
-        });
+                return {
+                    _key: x._key,
+                    name: `${x.name.toUpperCase()}${
+                        x.inputDescription ? ` (${x.inputDescription?.toUpperCase()})` : ''
+                    }/USD`,
+                    cost: info?.current,
+                    change: info?.daily_change,
+                };
+            });
     }, [circuitsList, circuitsInfo]);
 
     const renderRows = useCallback(
