@@ -4,4 +4,4 @@
  */
 
 export * from './jwtHelpers';
-export * from './getRevalidateJwtTimeout';
+export * from './calculateRevalidateJwtTimeout';

@@ -13,7 +13,7 @@ import { getExpiredAtFromJwt } from './jwtHelpers';
  * @throws If token is invalid.
  * @returns Milliseconds.
  */
-export const getRevalidateJwtTimeout = (jwt: string): number => {
+export const calculateRevalidateJwtTimeout = (jwt: string): number => {
     const expiredAt = getExpiredAtFromJwt(jwt);
 
     return (expiredAt - now()) * 940; // One minute before token expires
