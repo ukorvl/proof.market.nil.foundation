@@ -8,6 +8,7 @@ import { Row } from 'react-table';
 import { TRow } from 'src/components';
 import { OrderBookTableData } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
+import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { OrderBookTableCell } from './OrderBookTableCell';
 
 /**
@@ -31,6 +32,7 @@ export const OrderBookTableRow = ({
     className: propsClassName,
 }: OrderBookTableRowProps): ReactElement => {
     const { setSelectedValues } = useContext(OrderManagementContext);
+    const { displayUserOrders } = useContext(OrderBookSettingsContext);
     const onClickRow = () => {
         setSelectedValues({
             cost: row.values.cost,
@@ -67,7 +69,7 @@ export const OrderBookTableRow = ({
                         key={key}
                         cell={cell}
                         userOrdersAmount={
-                            cell.column.id !== 'ordersAmount'
+                            cell.column.id !== 'ordersAmount' || !displayUserOrders
                                 ? undefined
                                 : row.values.userOrdersAmount
                         }
