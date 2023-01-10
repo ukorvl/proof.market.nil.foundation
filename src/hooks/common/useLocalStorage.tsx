@@ -16,10 +16,7 @@ import { getItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/L
  * @param initialValue Inital value. Used when localStorage is empty.
  * @returns Persisited state.
  */
-export const useLocalStorage = <T extends unknown>(
-    key: string,
-    initialValue: T,
-): [T, (value: T) => void] => {
+export const useLocalStorage = <T,>(key: string, initialValue: T): [T, (value: T) => void] => {
     const [storedValue, setStoredValue] = useState<T>(
         () => getItemFromLocalStorage(key) ?? initialValue,
     );
