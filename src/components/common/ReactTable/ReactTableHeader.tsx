@@ -39,10 +39,6 @@ export const ReactTableHeader = <T extends Record<string, unknown>>({
     };
 
     const shouldToggleSort = useMemo(() => {
-        if (onlySortBy === undefined) {
-            return false;
-        }
-
         const toggleSortCondition = onlySortBy === 'asc' ? isSortedDesc : !isSortedDesc;
         return isSorted && toggleSortCondition;
     }, [onlySortBy, isSortedDesc, isSorted]);
