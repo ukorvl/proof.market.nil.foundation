@@ -3,8 +3,10 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { now } from '../dates';
+import dayjs from 'dayjs';
 import { getExpiredAtFromJwt } from './jwtHelpers';
+
+const renewExpiraitionDifference = 1 * 60;
 
 /**
  * Returns revalidate jwt timeout in milliseconds.
@@ -16,5 +18,5 @@ import { getExpiredAtFromJwt } from './jwtHelpers';
 export const calculateRevalidateJwtTimeout = (jwt: string): number => {
     const expiredAt = getExpiredAtFromJwt(jwt);
 
-    return (expiredAt - now()) * 940; // One minute before token expires
+    return (expiredAt - dayjs().unix()) * (1000 - renewExpiraitionDifference);
 };
