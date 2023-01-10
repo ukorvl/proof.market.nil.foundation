@@ -23,11 +23,17 @@ export const OrderBook = (): ReactElement => {
         'orderBookPriceStep',
         '0.001',
     );
+    const [displayUserOrders, setDisplayUserOrders] = useLocalStorage<boolean>(
+        'displayUserOrdersInOrderbook',
+        true,
+    );
     const orderBookData = useGetOrderBookData({ priceStep });
 
     return (
         <DashboardCard>
-            <OrderBookSettingsContext.Provider value={{ priceStep, setPriceStep }}>
+            <OrderBookSettingsContext.Provider
+                value={{ priceStep, setPriceStep, displayUserOrders, setDisplayUserOrders }}
+            >
                 <div className={styles.header}>
                     <h4>Order book</h4>
                     <OrderBookToolbar
