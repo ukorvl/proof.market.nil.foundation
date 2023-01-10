@@ -4,7 +4,7 @@
  */
 
 import { SagaIterator } from '@redux-saga/core';
-import { call, delay, fork, put, select, takeLatest } from 'redux-saga/effects';
+import { call, cancel, delay, fork, put, select, take, takeLatest } from 'redux-saga/effects';
 import { renewJwt } from 'src/api';
 import { getItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
 import { calculateRevalidateJwtTimeout, getUserFromJwt } from 'src/utils';
@@ -52,16 +52,25 @@ function* TryGetUserFromLocalStorageTokenSaga(): SagaIterator<void> {
 function* RenewJwtSaga({
     payload: timeout,
 }: ReturnType<typeof SetJwtRevalidateTimeout>): SagaIterator<void> {
-    yield delay(timeout);
-    yield call(processRenewJwt);
+    const task = yield fork(processRenewJwt, timeout);
+
+    while (true) {
+        const { payload: user } = yield take(UpdateUserName);
+        if (!user) {
+            yield cancel(task);
+        }
+    }
 }
 
 /**
  * Renew jwt process.
  *
+ * @param timeout Revalidation timeout.
  * @yields
  */
-function* processRenewJwt(): SagaIterator<void> {
+function* processRenewJwt(timeout: number): SagaIterator<void> {
+    yield delay(timeout);
+
     try {
         const currentUser = yield select(selectUserName);
 
