@@ -12,6 +12,8 @@ import { OrderBookPriceStep } from 'src/enums';
 type OrderBookSettingsContectModel = {
     priceStep: keyof typeof OrderBookPriceStep;
     setPriceStep: (s: keyof typeof OrderBookPriceStep) => void;
+    displayUserOrders: boolean;
+    setDisplayUserOrders: (v: boolean) => void;
 };
 
 /**

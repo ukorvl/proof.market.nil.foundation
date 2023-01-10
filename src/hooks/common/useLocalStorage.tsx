@@ -21,7 +21,7 @@ export const useLocalStorage = <T extends unknown>(
     initialValue: T,
 ): [T, (value: T) => void] => {
     const [storedValue, setStoredValue] = useState<T>(
-        () => getItemFromLocalStorage(key) || initialValue,
+        () => getItemFromLocalStorage(key) ?? initialValue,
     );
 
     const setValue = useCallback(

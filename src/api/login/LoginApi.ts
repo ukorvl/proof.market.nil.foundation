@@ -21,8 +21,8 @@ export const login = (loginData: LoginData): Promise<LoginDto> =>
 /**
  * Renew jtw tocken.
  *
- * @deprecated
+ * @param username Username.
  * @returns .
  */
-export const renewJwt = (): Promise<LoginDto> =>
-    httpFetcher.post<LoginDto>(`${databaseUrl}/_open/auth/renew`);
+export const renewJwt = (username: string): Promise<LoginDto | Record<string, never>> =>
+    httpFetcher.post(`${databaseUrl}/_open/auth/renew`, { username });
