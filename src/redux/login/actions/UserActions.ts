@@ -27,3 +27,8 @@ export const UpdateUserBalanceIsLoading = createAction<boolean>('@user/UPDATE_BA
 export const UpdateUserBalanceIsLoadingError = createAction<boolean>(
     '@user/UPDATE_BALANCE_IS_LOADING_ERROR',
 );
+
+/**
+ * Set jwt token revalidation timeout.
+ */
+export const SetJwtRevalidateTimeout = createAction<number>('@user/SET_REVALIDATE_JWT_TIMEOUT');
