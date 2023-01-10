@@ -6,7 +6,7 @@
 import dayjs from 'dayjs';
 import { getExpiredAtFromJwt } from './jwtHelpers';
 
-const renewExpiraitionDifference = 1 * 60;
+const renewExpiraitionDifference = 0.25 * 60;
 
 /**
  * Returns revalidate jwt timeout in milliseconds.
