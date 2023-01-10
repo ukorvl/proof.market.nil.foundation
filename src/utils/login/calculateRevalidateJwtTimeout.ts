@@ -15,8 +15,8 @@ const renewExpiraitionDifference = 1 * 60;
  * @throws If token is invalid.
  * @returns Milliseconds.
  */
-export const calculateRevalidateJwtTimeout = (jwt: string): number => {
+export const calculateRenewJwtTimeGap = (jwt: string): number => {
     const expiredAt = getExpiredAtFromJwt(jwt);
 
-    return (expiredAt - dayjs().unix()) * (1000 - renewExpiraitionDifference);
+    return (expiredAt - dayjs().unix() - renewExpiraitionDifference) * 1000;
 };
