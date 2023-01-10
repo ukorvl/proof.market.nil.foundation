@@ -56,7 +56,11 @@ const tabFactory = (tab: TradeOrderType, selectedCircuitId?: number) => {
             return (
                 <div className="text-center">
                     If you want generate proofs, please consider to use our{' '}
-                    <a href={process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO}>
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO}
+                    >
                         proof-market toolchain repository
                     </a>
                 </div>
