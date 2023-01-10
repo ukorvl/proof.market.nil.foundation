@@ -117,9 +117,7 @@
   z-index: 3;
   height: 64px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 
   > div:first-of-type {
     font-size: 1.75rem;

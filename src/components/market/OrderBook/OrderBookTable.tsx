@@ -6,7 +6,7 @@
 import { ReactElement, memo, useCallback } from 'react';
 import { Row, TableInstance, TableState } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
-import { ReactTable, ReactTableHeader } from 'src/components';
+import { ReactTable } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
 import styles from './OrderBook.module.scss';
 
@@ -59,15 +59,11 @@ export const OrderBookTable = memo(function OrderBookTable({
                     </div>
                     {lastOrderData && (
                         <div className={styles.lastOrderDataContainer}>
+                            <div>Last deal:</div>
                             {lastOrderData.cost && (
                                 <div className={lastOrderData.type}>{`${lastOrderData.cost.toFixed(
                                     4,
                                 )} $`}</div>
-                            )}
-                            {lastOrderData.eval_time && (
-                                <div className="text-muted">{`${lastOrderData.eval_time.toFixed(
-                                    4,
-                                )} min`}</div>
                             )}
                         </div>
                     )}
@@ -83,26 +79,11 @@ export const OrderBookTable = memo(function OrderBookTable({
         [lastOrderData, maxVolume],
     );
 
-    const renderHeaders = useCallback(({ visibleColumns }: TableInstance<OrderBookTableData>) => {
-        return (
-            <>
-                {visibleColumns.map(column => (
-                    <ReactTableHeader
-                        key={column.id}
-                        column={column}
-                        onlySortBy="desc"
-                    />
-                ))}
-            </>
-        );
-    }, []);
-
     return (
         <ReactTable
             name="orderBookTable"
             className={styles.orderBookTable}
             renderRows={renderRows}
-            renderHeaders={renderHeaders}
             data={data}
             columns={columns}
             disableSortRemove={true}
