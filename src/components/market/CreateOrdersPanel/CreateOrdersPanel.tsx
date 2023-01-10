@@ -9,7 +9,6 @@ import { TradeOrderType } from 'src/models';
 import { DashboardCard } from '../../common';
 import { ProtectedContent } from '../../login';
 import { CreateBidForm } from '../CreateBidForm';
-import { CreateAskForm } from '../CreateAskForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
 import './CreateOrdersPanel.scss';
 
@@ -54,7 +53,14 @@ const tabFactory = (tab: TradeOrderType, selectedCircuitId?: number) => {
         case TradeOrderType.buy:
             return <CreateBidForm />;
         case TradeOrderType.sell:
-            return <CreateAskForm />;
+            return (
+                <div className="text-center">
+                    If you want generate proofs, please consider to use our{' '}
+                    <a href={process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO}>
+                        proof-market toolchain repository
+                    </a>
+                </div>
+            );
         default:
             return <></>;
     }
