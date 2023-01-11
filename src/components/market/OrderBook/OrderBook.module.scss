@@ -82,54 +82,34 @@
         margin-left: 4px;
         background-color: $c-base-light !important;
       }
-
-      &:first-child {
-        justify-content: flex-start;
-        padding-left: 5%;
-      }
     }
   }
 }
 
 .ask {
-  &::after {
-    background-color: $c-danger;
-  }
-
   div[role="cell"]:first-child {
     color: $c-danger;
   }
 }
 
 .bid {
-  &::after {
-    background-color: $c-success;
-  }
-
   div[role="cell"]:first-child {
     color: $c-success;
   }
 }
 
-.lastOrderDataContainer {
+.lastDeal {
   width: 100%;
   background-color: $c-base-darker;
   z-index: 3;
-  height: 64px;
+  height: 36px;
   display: flex;
   align-items: center;
+}
 
-  > div:first-of-type {
-    font-size: 1.75rem;
-
-    &.grow {
-      color: $c-success;
-    }
-
-    &.loss {
-      color: $c-danger;
-    }
-  }
+.lastDealTitle {
+  margin-right: 0.5rem;
+  font-weight: bold;
 }
 
 .changePriceStepButton {

@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
-import { Row, TableInstance, TableState } from 'react-table';
+import { ReactElement, memo, useCallback, useMemo } from 'react';
+import { Row, TableInstance, TableState, SortByFn } from 'react-table';
 import { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
 import { ReactTable } from 'src/components';
 import { OrderBookTableRow } from './OrderBookTableRow';
@@ -14,7 +14,7 @@ import styles from './OrderBook.module.scss';
  * Props.
  */
 type OrderBookTableProps = {
-    columns: OrderBookTableColumn[];
+    type: 'bids' | 'asks';
     data: OrderBookTableData[];
     lastOrderData?: LastOrderData;
     maxVolume: number;
@@ -42,46 +42,55 @@ const defaultOrderBookState: Partial<TableState<OrderBookTableData>> = {
  * @returns React component.
  */
 export const OrderBookTable = memo(function OrderBookTable({
-    columns,
+    type,
     data,
-    lastOrderData,
     maxVolume,
 }: OrderBookTableProps): ReactElement {
+    const columns = useMemo(
+        (): OrderBookTableColumn[] => [
+            {
+                Header: type === 'asks' ? 'Ask' : 'Bid',
+                accessor: 'ordersAmount',
+                disableSortBy: true,
+            },
+            {
+                Header: 'Cost',
+                accessor: 'cost',
+                sortType: customSortFunction,
+                sortDescFirst: true,
+            },
+            {
+                Header: 'Generation time',
+                accessor: 'eval_time',
+                sortType: customSortFunction,
+                sortDescFirst: true,
+            },
+            {
+                accessor: 'type',
+            },
+            {
+                accessor: 'userOrdersAmount',
+            },
+        ],
+        [type],
+    );
+
     const renderRows = useCallback(
         ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
             return (
-                <>
-                    <div className={styles.rowsContainer}>
-                        {getDataWithVolumes(
-                            rows.filter(x => x.values.type === 'ask'),
-                            maxVolume,
-                        ).map(row => renderRow(row, prepareRow, styles.ask))}
-                    </div>
-                    {lastOrderData && (
-                        <div className={styles.lastOrderDataContainer}>
-                            <div>Last deal:</div>
-                            {lastOrderData.cost && (
-                                <div className={lastOrderData.type}>{`${lastOrderData.cost.toFixed(
-                                    4,
-                                )} $`}</div>
-                            )}
-                        </div>
+                <div className={styles.rowsContainer}>
+                    {getDataWithVolumes(rows, maxVolume).map(row =>
+                        renderRow(row, prepareRow, type === 'asks' ? styles.ask : styles.bid),
                     )}
-                    <div className={styles.rowsContainer}>
-                        {getDataWithVolumes(
-                            rows.reverse().filter(x => x.values.type === 'bid'),
-                            maxVolume,
-                        ).map(row => renderRow(row, prepareRow, styles.bid))}
-                    </div>
-                </>
+                </div>
             );
         },
-        [lastOrderData, maxVolume],
+        [maxVolume, type],
     );
 
     return (
         <ReactTable
-            name="orderBookTable"
+            name={type === 'asks' ? 'asksTable' : 'bidsTable'}
             className={styles.orderBookTable}
             renderRows={renderRows}
             data={data}
@@ -139,4 +148,23 @@ const getDataWithVolumes = (
     });
 
     return finalData;
+};
+
+/**
+ * Creates react table sort by provided field fucntion.
+ *
+ * @param firstRow First row.
+ * @param  secondRow Second row.
+ * @param columnId Sorted column id.
+ * @returns Sort function.
+ */
+const customSortFunction: SortByFn<OrderBookTableData> = (firstRow, secondRow, columnId) => {
+    const firstValue = firstRow.values[columnId];
+    const secondValue = secondRow.values[columnId];
+
+    if (firstValue === secondValue) {
+        return 0;
+    }
+
+    return firstValue - secondValue > 0 ? -1 : 1;
 };
