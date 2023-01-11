@@ -46,7 +46,7 @@
 
   &:first-child {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 
     div[role="cell"] {
       height: 28px;
