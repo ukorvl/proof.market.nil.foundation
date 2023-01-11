@@ -40,23 +40,23 @@ const MarketView = (): ReactElement => (
                 <TradeHistory />
                 <LastProofProducer />
             </Col>
-            <Col
-                xs={12}
-                md={6}
-            >
-                <CircuitInfoPanel />
-                <CircuitDashboard />
-                <OrderBook />
-            </Col>
-            <Col
-                xs={12}
-                md={3}
-            >
-                <OrderManagementContextProvider>
+            <OrderManagementContextProvider>
+                <Col
+                    xs={12}
+                    md={6}
+                >
+                    <CircuitInfoPanel />
+                    <CircuitDashboard />
+                    <OrderBook />
+                </Col>
+                <Col
+                    xs={12}
+                    md={3}
+                >
                     <CreateOrdersPanel />
                     <ManageOrdersPanel />
-                </OrderManagementContextProvider>
-            </Col>
+                </Col>
+            </OrderManagementContextProvider>
         </Row>
     </Container>
 );
