@@ -5,7 +5,8 @@
 
 import { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetTradeHistoryData, UseGetTradeHistoryDataReturnType } from 'src/hooks';
+import { useInfiniteLoadItems } from 'src/hooks';
+import { getCompletedTradeOrdersByLimit } from 'src/api';
 import { Details, DashboardCard } from '../../common';
 import { TradeHistoryTable } from './TradeHistoryTable';
 import styles from './TradeHistory.module.scss';
@@ -16,42 +17,15 @@ import styles from './TradeHistory.module.scss';
  * @returns React component.
  */
 export const TradeHistory = (): ReactElement => {
-    const data = useGetTradeHistoryData();
+    const data = useInfiniteLoadItems({ fetcher: getCompletedTradeOrdersByLimit });
 
     return (
         <DashboardCard>
             <Details title={<h4>Trades</h4>}>
-                <div className={styles.container}>{TradeHistoryViewFactory({ ...data })}</div>
+                <div className={styles.container}>
+                    <TradeHistoryTable />
+                </div>
             </Details>
         </DashboardCard>
     );
-};
-
-/**
- * Renders trade history view.
- *
- * @param {UseGetTradeHistoryDataReturnType} props Props.
- * @returns React element.
- */
-const TradeHistoryViewFactory = ({
-    data,
-    columns,
-    loadingData,
-    isError,
-}: UseGetTradeHistoryDataReturnType) => {
-    switch (true) {
-        case loadingData && !data.length:
-            return <Spinner grow />;
-        case isError:
-            return <h5>Error while loading data.</h5>;
-        case !!data.length:
-            return (
-                <TradeHistoryTable
-                    data={data}
-                    columns={columns}
-                />
-            );
-        default:
-            return <h5>Empty history.</h5>;
-    }
 };

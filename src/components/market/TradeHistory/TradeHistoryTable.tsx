@@ -3,85 +3,63 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
-import { Row, TableInstance, TableState } from 'react-table';
+import { ReactElement, memo, ReactNode } from 'react';
+import { ListChildComponentProps } from 'react-window';
 import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
-import { ReactTable, TRow, TCell } from 'src/components';
+import { ReactTable, TRow, TCell, Table, THead, TBody, VirtualList, THeader } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
 import styles from './TradeHistory.module.scss';
+import { Icon } from '@nilfoundation/react-components';
 
 /**
- * Props.
+ * Table head configuration.
  */
-type TradeHistoryTableProps = {
-    columns: TradeHistoryTableColumn[];
-    data: TradeHistoryData[];
-};
+const tradeHistoryTableHeadConfig: Array<Record<'Header', ReactNode>> = [
+    {
+        Header: (
+            <>
+                Time <Icon iconName="fa-solid fa-angle-down" />
+            </>
+        ),
+    },
+    {
+        Header: 'Cost',
+    },
+    {
+        Header: 'Generation time',
+    },
+];
 
 /**
- * Initial table state without user interactions.
- */
-const defaultTableState: Partial<TableState<TradeHistoryData>> = {
-    sortBy: [
-        {
-            id: 'timestamp',
-            desc: true,
-        },
-    ],
-    hiddenColumns: ['type'],
-};
-
-/**
- * Order book table.
+ * Trades table.
  *
- * @param {TradeHistoryTableProps} props Props.
  * @returns React component.
  */
-export const TradeHistoryTable = memo(function TradeHistoryTable({
-    columns,
-    data,
-}: TradeHistoryTableProps): ReactElement {
-    const renderRows = useCallback(
-        ({ rows, prepareRow }: TableInstance<TradeHistoryData>) =>
-            rows.map(row => {
-                prepareRow(row);
-                return (
-                    <TRow
-                        {...row.getRowProps()}
-                        key={row.id}
-                    >
-                        {row.cells.map(cell => {
-                            const { value, column, getCellProps } = cell;
-                            const { key, ...rest } = getCellProps();
+export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement {
+    const Element = ({ index, style }) => {
+        let content;
+        if (!isItemLoaded(index)) {
+            content = 'Loading...';
+        } else {
+            content = items[index].name;
+        }
 
-                            return (
-                                <TCell
-                                    className={getCellClassName(row)}
-                                    key={key}
-                                    {...rest}
-                                >
-                                    {column.id !== 'timestamp'
-                                        ? renderDashOnEmptyValue(value)
-                                        : value}
-                                </TCell>
-                            );
-                        })}
-                    </TRow>
-                );
-            }),
-        [],
-    );
+        return <TRow style={style}>{content}</TRow>;
+    };
 
     return (
-        <ReactTable
-            name="tradeHistoryTable"
-            className={styles.table}
-            data={data}
-            columns={columns}
-            disableSortRemove={true}
-            renderRows={renderRows}
-            initialState={defaultTableState}
-        />
+        <Table>
+            <THead sticky>
+                <TRow>
+                    {tradeHistoryTableHeadConfig.map(({ Header }, i) => (
+                        <THeader key={i}>{Header}</THeader>
+                    ))}
+                </TRow>
+            </THead>
+            <TBody>
+                <VirtualList>{Element}</VirtualList>
+            </TBody>
+        </Table>
     );
 });
 
@@ -91,7 +69,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
  * @param row Row.
  * @returns Class name.
  */
-const getCellClassName = (row: Row<TradeHistoryData>) => {
+const getCellClassName = () => {
     if (row.values.type === undefined) {
         return undefined;
     }
