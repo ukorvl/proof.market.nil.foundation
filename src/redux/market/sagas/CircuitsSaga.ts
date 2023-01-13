@@ -137,9 +137,13 @@ function* GetCircuitsAdditionalData() {
  * @yields
  */
 function* GetLastProofProducer() {
-    const result: Array<{ circuit_id: string; sender: string }> | undefined = yield call(
-        getLastProofProducerData,
-    );
+    try {
+        const result: Array<{ circuit_id: string; sender: string }> | undefined = yield call(
+            getLastProofProducerData,
+        );
 
-    yield put(UpdateLastProofProducer(result));
+        yield put(UpdateLastProofProducer(result));
+    } catch (e) {
+        throw e;
+    }
 }

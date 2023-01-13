@@ -11,6 +11,9 @@ const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 const apiUrl = `_db/${dbName}/${dbName}/statement`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
+//TODO - remove after api is ready
+const tempFetcher = createBearerHttpClient(`_db/${dbName}/_api/`);
+
 /**
  * Get circuits.
  *
@@ -39,16 +42,16 @@ export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`/?
 export const getLastProofProducerData = (): Promise<
     Array<{ circuit_id: string; sender: string }> | undefined
 > =>
-    httpFetcher
+    tempFetcher
         .post('cursor', {
             query: `
-                FOR s IN circuit
-                LET temp = first(for doc in ask
-                    filter doc.status == 'completed'
-                    filter doc.circuit_id == s.id
-                    sort doc.timestamp desc
-                    return {circuit_id: s.id, sender: doc.sender})
-                RETURN temp
+                for s in statement
+                let temp = first(for doc in ask
+                filter doc.status == 'completed'
+                filter doc.statement_key == s._key
+                sort doc.updatedOn desc
+                return {statement_key: s._key, sender: doc.sender})
+                return temp
             `,
         })
         .then((x: any) => x.result);
