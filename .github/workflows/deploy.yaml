@@ -46,6 +46,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.PROOF_MARKET_PUSH_TOKEN }}
         with:
           source-directory: 'build'
-          destination-github-username: 'nemothenoone'
-          destination-repository-name: 'proof.market'
+          destination-github-username: ${{ secrets.PROOF_MARKET_REPO_OWNER }}
+          destination-repository-name: ${{ secrets.PROOF_MARKET_REPO_NAME }}
           target-branch: gh-pages
