@@ -9,7 +9,7 @@ on:
     inputs:
       update-proof-market:
         type: boolean
-        default: false
+        default: true
         description: Update proof.market repository also
 
 
@@ -39,11 +39,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
 
+      - name: Overwrite CNAME for proof.market repository
+        run: echo ${{ secrets.PROOF_MARKET_REPO_DOMAIN }} > 'build/CNAME'
+
       - name: Update proof.market repository
         if: ${{ inputs.update-proof-market }}
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.PROOF_MARKET_PUSH_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.PROOF_MARKET_REPO_PUSH_TOKEN }}
         with:
           source-directory: 'build'
           destination-github-username: ${{ secrets.PROOF_MARKET_REPO_OWNER }}
