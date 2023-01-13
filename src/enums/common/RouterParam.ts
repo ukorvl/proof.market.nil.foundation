@@ -8,5 +8,5 @@
  */
 export const enum RouterParam {
     proofId = 'proofId',
-    circuitId = 'circuitId',
+    statementId = 'statementId',
 }

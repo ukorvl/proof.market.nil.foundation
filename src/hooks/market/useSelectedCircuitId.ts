@@ -14,7 +14,7 @@ import { RouterParam } from 'src/enums';
  */
 export const useSelectedCircuitId = (): void => {
     const selectedCircuitId = useAppSelector(selectCurrentCircuitId);
-    const circuitId = useParams()[RouterParam.circuitId];
+    const circuitId = useParams()[RouterParam.statementId];
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
