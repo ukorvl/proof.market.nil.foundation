@@ -6,11 +6,14 @@
 import { ReactElement, useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
-import { DashboardCard } from '../../common';
+import { socialLinks as links } from 'src/constants';
+import { DashboardCard, SocialLinks } from '../../common';
 import { ProtectedContent } from '../../login';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
 import './CreateOrdersPanel.scss';
+
+const socialLinks = links.filter(({ icon }) => ['discord', 'telegram'].includes(icon));
 
 /**
  * Create orders panel.
@@ -55,14 +58,19 @@ const tabFactory = (tab: TradeOrderType, selectedCircuitId?: string) => {
         case TradeOrderType.sell:
             return (
                 <div className="text-center">
-                    If you want generate proofs, please consider to use our{' '}
+                    If you wish to generate proofs, please see instructions on our{' '}
                     <a
                         target="_blank"
                         rel="noreferrer"
                         href={process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO}
                     >
-                        proof-market toolchain repository
+                        <strong>toolchain repository</strong>
                     </a>
+                    <p></p>
+                    <div>
+                        or join us on Discord or Telegram:
+                        <SocialLinks socialLinks={socialLinks} />
+                    </div>
                 </div>
             );
         default:

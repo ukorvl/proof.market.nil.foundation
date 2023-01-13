@@ -18,6 +18,7 @@ import { useForm, ValidationError } from '@formspree/react/dist/index.js';
 import { Link } from 'react-router-dom';
 import debounce from 'lodash/debounce';
 import { Path } from 'src/routing';
+import { socialLinks } from 'src/constants';
 import { SocialLinks } from 'src/components/common';
 import { emailRegExp } from 'src/utils';
 import { AuthCard } from '../AuthCard';
@@ -121,7 +122,7 @@ export const RegisterForm = (): ReactElement => {
                             "Join our Discord's proof-market channel/Telegram for questions/to stay updated"
                         }
                     </h5>
-                    <SocialLinks />
+                    <SocialLinks socialLinks={socialLinks} />
                 </div>
                 <h5 className="text-center text-muted">{'Already have an account? '}</h5>
                 <Link to={Path.login}>
