@@ -40,6 +40,7 @@ jobs:
           publish_dir: ./build
 
       - name: Overwrite CNAME for proof.market repository
+        if: ${{ inputs.update-proof-market }}
         run: echo ${{ secrets.PROOF_MARKET_REPO_DOMAIN }} > 'build/CNAME'
 
       - name: Update proof.market repository
