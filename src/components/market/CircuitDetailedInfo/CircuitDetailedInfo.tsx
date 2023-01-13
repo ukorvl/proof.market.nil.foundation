@@ -48,7 +48,7 @@ const CircuitInfoViewFactory = ({
                         <span className="text-muted">Description:</span>
                         {data!.description}
                     </div>
-                    <Label
+                    {/* <Label
                         href={data!.repository}
                         target="_blank"
                     >
@@ -57,7 +57,7 @@ const CircuitInfoViewFactory = ({
                             srOnlyText="github repository link"
                         />
                         GitHub Repository
-                    </Label>
+                    </Label> */}
                 </>
             );
         case data === undefined:
