@@ -6,6 +6,12 @@ on:
   #   branches: [ master ]
   # Allows to trigger workflow manually
   workflow_dispatch:
+    inputs:
+      update-proof-market:
+        type: boolean
+        default: false
+        description: Update proof.market repository also
+
 
 jobs:
   build:
@@ -32,3 +38,14 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+
+      - name: Update proof.market repository
+        if: ${{ inputs.update-proof-market }}
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PROOF_MARKET_PUSH_TOKEN }}
+        with:
+          source-directory: 'build'
+          destination-github-username: 'nemothenoone'
+          destination-repository-name: 'proof.market'
+          target-branch: gh-pages
