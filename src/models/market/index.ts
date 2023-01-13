@@ -12,3 +12,4 @@ export * from './TradeHistory';
 export * from './ManageOrders';
 export * from './CircuitsList';
 export * from './UserBalance';
+export * from './LastProofProducer';

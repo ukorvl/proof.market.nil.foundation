@@ -6,7 +6,7 @@
 import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -138,9 +138,7 @@ function* GetCircuitsAdditionalData() {
  */
 function* GetLastProofProducer() {
     try {
-        const result: Array<{ circuit_id: string; sender: string }> | undefined = yield call(
-            getLastProofProducerData,
-        );
+        const result: Array<LastProofProducer> | undefined = yield call(getLastProofProducerData);
 
         yield put(UpdateLastProofProducer(result));
     } catch (e) {

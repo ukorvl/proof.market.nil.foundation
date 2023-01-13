@@ -4,7 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import {
     UpdateCircuitsList,
     UpdateSelectedCircuitId,
@@ -29,7 +29,7 @@ export type CircuitsReducerState = {
     isLoadingCircuitsInfo: boolean;
     circuitsStats: CircuitStats[];
     isLoadingCircuitsStats: boolean;
-    lastProofProducer?: Array<{ circuit_id: string; sender: string }>;
+    lastProofProducer?: Array<LastProofProducer>;
 };
 
 /**

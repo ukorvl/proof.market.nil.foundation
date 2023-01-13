@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
@@ -39,9 +39,7 @@ export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`/?
  *
  * @returns .
  */
-export const getLastProofProducerData = (): Promise<
-    Array<{ circuit_id: string; sender: string }> | undefined
-> =>
+export const getLastProofProducerData = (): Promise<Array<LastProofProducer> | undefined> =>
     tempFetcher
         .post('cursor', {
             query: `
