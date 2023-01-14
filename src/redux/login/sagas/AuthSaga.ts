@@ -90,6 +90,6 @@ function* processRenewJwt(timeout: number): SagaIterator<void> {
             yield put(SetJwtRevalidateTimeout(timeout));
         }
     } catch (e) {
-        throw e;
+        // Do nothing
     }
 }
