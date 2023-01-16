@@ -122,15 +122,19 @@ export const CircuitsListTable = memo(function CircuitsListTable({
             <>
                 {visibleColumns.find(x => x.canFilter)?.render('Filter')}
                 <ListGroup className={styles.listGroup}>
-                    {rows.map(row => {
-                        prepareRow(row);
-                        return (
-                            <CurcuitsListItem
-                                key={row.id}
-                                data={row.values as CircuitsListData}
-                            />
-                        );
-                    })}
+                    {rows.length === 0 ? (
+                        <span className="text-muted">No circuits found</span>
+                    ) : (
+                        rows.map(row => {
+                            prepareRow(row);
+                            return (
+                                <CurcuitsListItem
+                                    key={row.id}
+                                    data={row.values as CircuitsListData}
+                                />
+                            );
+                        })
+                    )}
                 </ListGroup>
             </>
         ),
