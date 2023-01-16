@@ -166,5 +166,5 @@ const customSortFunction: SortByFn<OrderBookTableData> = (firstRow, secondRow, c
         return 0;
     }
 
-    return firstValue - secondValue > 0 ? -1 : 1;
+    return firstValue - secondValue > 0 ? 1 : -1;
 };
