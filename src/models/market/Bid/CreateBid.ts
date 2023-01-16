@@ -12,5 +12,5 @@ export interface CreateBid extends CreateTradeOrder {
     /**
      * Public input.
      */
-    public_input: Record<string, string>;
+    input: Record<string, string>;
 }

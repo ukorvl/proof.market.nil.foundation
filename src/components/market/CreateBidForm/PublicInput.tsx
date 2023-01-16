@@ -26,13 +26,13 @@ export const PublicInput = (): ReactElement => {
 
     return (
         <BaseFormGroup
-            hasError={!!errors['public_input']}
+            hasError={!!errors['input']}
             labelText="Public Input"
             className="publicInput"
         >
             {() => (
-                <Controller<CreateBid, 'public_input'>
-                    name="public_input"
+                <Controller<CreateBid, 'input'>
+                    name="input"
                     control={control}
                     rules={{
                         validate: val => val !== null && !!val,
@@ -54,7 +54,7 @@ export const PublicInput = (): ReactElement => {
  */
 type FileUploaderProps = {
     disabled?: boolean;
-} & Omit<ControllerRenderProps<CreateBid, 'public_input'>, 'ref'>;
+} & Omit<ControllerRenderProps<CreateBid, 'input'>, 'ref'>;
 
 /**
  * Renders file uploader.

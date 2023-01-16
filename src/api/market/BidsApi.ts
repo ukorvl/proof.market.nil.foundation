@@ -6,11 +6,12 @@
 import { Bid, CreateBid } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
+const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 
-const createFetcher = createBearerHttpClient('/market/bid');
+const apiUrl = `_db/${dbName}/${dbName}/bid`;
+const httpFetcher = createBearerHttpClient(`_db/${dbName}/_api/`);
+
+const createFetcher = createBearerHttpClient(apiUrl);
 
 /**
  * Get bids.
