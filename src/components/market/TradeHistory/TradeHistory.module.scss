@@ -1,4 +1,5 @@
 @import "src/styles/mixins/tableColumns";
+@import "src/styles/mixins/hideScrollbar";
 
 .container {
   height: 407px;
@@ -7,4 +8,8 @@
 .table {
   @include tableColumns(26%, 32%, 42%);
   height: 100%;
+}
+
+.virtualList {
+  @include hideScrollbar;
 }

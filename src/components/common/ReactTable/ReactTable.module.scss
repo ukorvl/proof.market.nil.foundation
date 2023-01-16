@@ -1,10 +1,6 @@
 @import "src/styles/constants.scss";
 
 .sortableColumnHeader {
-  > i {
-    margin-left: 8px;
-  }
-
   &:hover,
   &:focus {
     background-color: $c-base-light;

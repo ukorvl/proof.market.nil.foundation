@@ -4,4 +4,3 @@
  */
 
 export * from './TradeHistoryData';
-export * from './TradeHistoryTableColumn';

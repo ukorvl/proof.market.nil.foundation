@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Bid } from 'src/models';
+import { TradeHistoryData } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const apiUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}/_api/`;
@@ -12,10 +12,14 @@ const httpFetcher = createBearerHttpClient(apiUrl);
 /**
  * Get last n alount of completed orders.
  *
- * @param limit Amount orders to get.
+ * @param length Amount orders to get.
+ * @param start Start position.
  * @returns Bids.
  */
-export const getCompletedTradeOrdersByLimit = (limit: number): Promise<Bid[]> =>
+export const getCompletedTradeOrdersByLimit = (
+    length: number,
+    start: number,
+): Promise<TradeHistoryData[]> =>
     httpFetcher
         .post('cursor', {
             query: `
@@ -23,7 +27,7 @@ export const getCompletedTradeOrdersByLimit = (limit: number): Promise<Bid[]> =>
                     for doc in ask
                     filter doc.status == 'completed'
                     sort doc.updatedOn desc
-                    limit ${limit}
+                    limit ${start}, ${length}
                     return doc
                 )
 
@@ -31,15 +35,19 @@ export const getCompletedTradeOrdersByLimit = (limit: number): Promise<Bid[]> =>
                     for doc in bid
                     filter doc.status == 'completed'
                     sort doc.updatedOn desc
-                    limit ${limit}
+                    limit ${start}, ${length}
                     return doc
                 )
 
                 let orders = append(asks, bids)
                 for doc in orders
                 sort doc.updatedOn desc
-                limit ${limit}
-                return doc
+                limit ${length}
+                return {
+                    time: doc.matched_time,
+                    cost: doc.cost,
+                    eval_time: doc.eval_time,
+                }
             `,
         })
         .then((x: any) => x.result);

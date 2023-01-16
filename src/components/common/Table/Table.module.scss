@@ -35,6 +35,10 @@
     color: $c-secondary;
     white-space: nowrap;
     font-weight: bold;
+
+    > i {
+      margin-left: 8px;
+    }
   }
 
   div[role="cell"] {

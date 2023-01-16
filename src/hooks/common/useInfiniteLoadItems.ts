@@ -8,8 +8,21 @@ import { useCallback, useState } from 'react';
 const items: Record<string, unknown> = {};
 const requestCache: Record<string, boolean> = {};
 
+/**
+ * Hook parameters type.
+ */
 type UseInfiniteLoadItemsParams<T> = {
-    fetcher: () => Promise<T[]>;
+    fetcher: (length: number, start: number) => Promise<T[]>;
+};
+
+/**
+ * Hook return type.
+ */
+type UseInfiniteLoadItemsReturnType<T> = {
+    items: Record<string, T>;
+    loading: boolean;
+    error: boolean;
+    loadMoreItems: (startIndex: number, stopIndex: number) => Promise<void>;
 };
 
 /**
@@ -23,13 +36,14 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
     const [error, setError] = useState(false);
 
     const loadMoreItems = useCallback(
-        (startIndex: number, stopIndex: number) => {
+        async (startIndex: number, stopIndex: number) => {
             const key = `${startIndex}:${stopIndex}`;
             if (requestCache[key]) {
                 return;
             }
 
-            const visibleRange = [...Array(stopIndex - startIndex).keys()].map(x => x + startIndex);
+            const length = stopIndex - startIndex;
+            const visibleRange = [...Array(length).keys()].map(x => x + startIndex);
             const itemsRetreived = visibleRange.every(index => !!items[index]);
 
             if (itemsRetreived) {
@@ -37,10 +51,21 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
                 return;
             }
 
-            return fetcher;
+            try {
+                setLoading(true);
+                const result = await fetcher(length, startIndex);
+
+                result.forEach((item, index) => {
+                    items[index + startIndex] = item;
+                });
+            } catch {
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
         },
-        [fetcher],
+        [fetcher, setError, setLoading],
     );
 
-    return { items, loading, error, loadMoreItems };
+    return { items, loading, error, loadMoreItems } as UseInfiniteLoadItemsReturnType<T>;
 };

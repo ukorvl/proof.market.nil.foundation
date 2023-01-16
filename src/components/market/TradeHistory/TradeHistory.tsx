@@ -4,8 +4,6 @@
  */
 
 import { ReactElement } from 'react';
-import { useInfiniteLoadItems } from 'src/hooks';
-import { getCompletedTradeOrdersByLimit } from 'src/api';
 import { DashboardCard } from '../../common';
 import { TradeHistoryTable } from './TradeHistoryTable';
 import styles from './TradeHistory.module.scss';
@@ -16,8 +14,6 @@ import styles from './TradeHistory.module.scss';
  * @returns React component.
  */
 export const TradeHistory = (): ReactElement => {
-    const data = useInfiniteLoadItems({ fetcher: getCompletedTradeOrdersByLimit });
-
     return (
         <DashboardCard>
             <h4>Trades</h4>

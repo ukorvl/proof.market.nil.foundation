@@ -9,7 +9,7 @@ import { TradeOrderChange } from '../TradeOrder';
  * Trade history data.
  */
 export type TradeHistoryData = {
-    timestamp: string;
+    time: string;
     cost: number;
     eval_time?: number;
     type: TradeOrderChange;
