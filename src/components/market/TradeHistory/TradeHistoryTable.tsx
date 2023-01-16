@@ -38,7 +38,7 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', ReactNode>> = [
  * @returns React component.
  */
 export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement {
-    const { items, loadMoreItems } = useInfiniteLoadItems<TradeHistoryData>({
+    const { items, loadMoreItems, loading } = useInfiniteLoadItems<TradeHistoryData>({
         fetcher: getCompletedTradeOrdersByLimit,
     });
 
@@ -46,7 +46,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement
         const item = items[index];
 
         if (item === undefined) {
-            return <Spinner grow />;
+            return <></>;
         }
 
         const { type, time, cost, eval_time } = item;
@@ -73,6 +73,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement
                 </TRow>
             </THead>
             <TBody>
+                {loading && Object.keys(items).length === 0 && <Spinner grow />}
                 <VirtualList
                     items={items}
                     loadMoreItems={loadMoreItems}

@@ -53,6 +53,7 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
 
             try {
                 setLoading(true);
+
                 const result = await fetcher(length, startIndex);
 
                 result.forEach((item, index) => {
