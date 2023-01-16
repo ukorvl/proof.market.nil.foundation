@@ -52,7 +52,7 @@ export const removeBid = (bidToRemoveId: Bid['_key']): Promise<void> =>
         .post('cursor', {
             query: `
             FOR x IN @@relation
-                FILTER x._key == ${bidToRemoveId}
+                FILTER x._key == '${bidToRemoveId}'
                 REMOVE { _key: x._key } IN @@relation
             `,
             bindVars: {

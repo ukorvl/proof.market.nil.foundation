@@ -49,7 +49,7 @@ export const removeAsk = (askToRemoveId: Ask['_key']): Promise<void> =>
     httpFetcher.post('cursor', {
         query: `
             FOR x IN @@relation
-                FILTER x._key == ${askToRemoveId}
+                FILTER x._key == '${askToRemoveId}'
                 REMOVE { _key: x._key } IN @@relation
             `,
         bindVars: {
