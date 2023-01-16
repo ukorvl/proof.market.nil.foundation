@@ -13,7 +13,7 @@ import InfiniteLoader from 'react-window-infinite-loader';
 type VirtualListProps<T> = {
     items: Record<string, T>;
     loadMoreItems: (startIndex: number, stopIndex: number) => Promise<void> | void;
-} & Pick<FixedSizeListProps, 'itemSize' | 'className' | 'children' | 'height'>;
+} & Pick<FixedSizeListProps, 'itemSize' | 'className' | 'children' | 'height' | 'itemCount'>;
 
 /**
  * Vertical virtual list.
@@ -25,11 +25,10 @@ export const VirtualList = <T,>({
     items,
     children,
     loadMoreItems,
+    itemCount,
     ...rest
 }: VirtualListProps<T>): ReactElement => {
-    const itemsLength = 1000;
     const isItemLoaded = (index: number) => !!items[index];
-    const itemCount = itemsLength;
 
     return (
         <InfiniteLoader

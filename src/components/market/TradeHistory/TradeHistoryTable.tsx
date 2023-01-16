@@ -4,7 +4,7 @@
  */
 
 import { ReactElement, memo, ReactNode } from 'react';
-import { Icon, Spinner } from '@nilfoundation/react-components';
+import { Spinner } from '@nilfoundation/react-components';
 import { ListChildComponentProps } from 'react-window';
 import { TradeHistoryData } from 'src/models';
 import { useInfiniteLoadItems } from 'src/hooks';
@@ -18,11 +18,7 @@ import styles from './TradeHistory.module.scss';
  */
 const tradeHistoryTableHeadConfig: Array<Record<'Header', ReactNode>> = [
     {
-        Header: (
-            <>
-                Time <Icon iconName="fa-solid fa-angle-down" />
-            </>
-        ),
+        Header: 'Time',
     },
     {
         Header: 'Cost',
@@ -41,6 +37,8 @@ export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement
     const { items, loadMoreItems, loading } = useInfiniteLoadItems<TradeHistoryData>({
         fetcher: getCompletedTradeOrdersByLimit,
     });
+
+    console.log(items);
 
     const Element = ({ index, style }: ListChildComponentProps<TradeHistoryData>) => {
         const item = items[index];
@@ -76,6 +74,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable(): ReactElement
                 {loading && Object.keys(items).length === 0 && <Spinner grow />}
                 <VirtualList
                     items={items}
+                    itemCount={100}
                     loadMoreItems={loadMoreItems}
                     height={376}
                     itemSize={28}

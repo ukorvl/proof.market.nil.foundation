@@ -26,7 +26,7 @@ export const getCompletedTradeOrdersByLimit = (
                 let asks = (
                     for doc in ask
                     filter doc.status == 'completed'
-                    sort doc.updatedOn desc
+                    sort doc.matched_time desc
                     limit ${start}, ${length}
                     return doc
                 )
@@ -34,15 +34,16 @@ export const getCompletedTradeOrdersByLimit = (
                 let bids = (
                     for doc in bid
                     filter doc.status == 'completed'
-                    sort doc.updatedOn desc
+                    sort doc.matched_time desc
                     limit ${start}, ${length}
                     return doc
                 )
 
                 let orders = append(asks, bids)
+
                 for doc in orders
-                sort doc.updatedOn desc
-                limit ${length}
+                sort doc.matched_time desc
+                limit ${start}, ${length}
                 return {
                     time: doc.matched_time,
                     cost: doc.cost,
