@@ -12,13 +12,21 @@ const requestCache: Record<string, boolean> = {};
  * Hook parameters type.
  */
 type UseInfiniteLoadItemsParams<T> = {
-    fetcher: (length: number, start: number) => Promise<T[]>;
+    fetcher: (
+        length: number,
+        start: number,
+        ...args: never[]
+    ) => Promise<{
+        hasNextPage: boolean;
+        items: T[];
+    }>;
 };
 
 /**
  * Hook return type.
  */
 type UseInfiniteLoadItemsReturnType<T> = {
+    hasNextPage: boolean;
     items: Record<string, T>;
     loading: boolean;
     error: boolean;
@@ -32,11 +40,14 @@ type UseInfiniteLoadItemsReturnType<T> = {
  * @returns .
  */
 export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<T>) => {
+    const [hasNextPage, setHasNextPage] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {
+            stopIndex = stopIndex + 10;
+
             const key = `${startIndex}:${stopIndex}`;
             if (requestCache[key]) {
                 return;
@@ -55,18 +66,27 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
                 setLoading(true);
 
                 const result = await fetcher(length, startIndex);
+                const { items: loadedItems, hasNextPage } = result;
 
-                result.forEach((item, index) => {
+                setHasNextPage(hasNextPage);
+                setLoading(false);
+
+                loadedItems.forEach((item, index) => {
                     items[index + startIndex] = item;
                 });
             } catch {
                 setError(true);
-            } finally {
                 setLoading(false);
             }
         },
-        [fetcher, setError, setLoading],
+        [fetcher, setError, setLoading, setHasNextPage],
     );
 
-    return { items, loading, error, loadMoreItems } as UseInfiniteLoadItemsReturnType<T>;
+    return {
+        hasNextPage,
+        items,
+        loading,
+        error,
+        loadMoreItems,
+    } as UseInfiniteLoadItemsReturnType<T>;
 };

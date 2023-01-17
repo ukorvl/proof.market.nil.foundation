@@ -10,8 +10,8 @@ import InfiniteLoader from 'react-window-infinite-loader';
 /**
  * Props.
  */
-type VirtualListProps<T> = {
-    items: Record<string, T>;
+type VirtualListProps = {
+    isItemLoaded: (i: number) => boolean;
     loadMoreItems: (startIndex: number, stopIndex: number) => Promise<void> | void;
 } & Pick<FixedSizeListProps, 'itemSize' | 'className' | 'children' | 'height' | 'itemCount'>;
 
@@ -21,15 +21,13 @@ type VirtualListProps<T> = {
  * @param {VirtualListProps} props Props.
  * @returns React component.
  */
-export const VirtualList = <T,>({
-    items,
+export const VirtualList = ({
+    isItemLoaded,
     children,
     loadMoreItems,
     itemCount,
     ...rest
-}: VirtualListProps<T>): ReactElement => {
-    const isItemLoaded = (index: number) => !!items[index];
-
+}: VirtualListProps): ReactElement => {
     return (
         <InfiniteLoader
             loadMoreItems={loadMoreItems}

@@ -6,4 +6,3 @@
 export * from './CircuitsApi';
 export * from './BidsApi';
 export * from './AsksApi';
-export * from './TradeOrdersApi';

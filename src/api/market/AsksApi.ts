@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Ask, CreateAsk } from '../../models';
+import { Ask, CreateAsk, TradeHistoryData } from '../../models';
 import { createBearerHttpClient } from '../common';
 
 const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
@@ -57,3 +57,48 @@ export const removeAsk = (askToRemoveId: Ask['id']): Promise<void> =>
             '@relation': 'ask',
         },
     });
+
+/**
+ * Get last n alount of completed asks.
+ *
+ * @param length Amount orders to get.
+ * @param start Start position.
+ * @param circuitId - Selected circuit id to get asks from.
+ * @returns Bids.
+ */
+export const getCompletedAsksByLimit = (
+    length: number,
+    start: number,
+    circuitId: number,
+): Promise<{
+    hasNextPage: boolean;
+    items: TradeHistoryData[];
+}> =>
+    httpFetcher
+        .post('cursor', {
+            query: `
+                let orders = (
+                    for doc in ask
+                        FILTER doc.circuit_id == ${circuitId}
+                        FILTER doc.status == 'completed'
+                        SORT doc.matched_time desc
+                        WINDOW { preceding: 1 }
+                        AGGREGATE d = UNIQUE(KEEP(doc, "_key", "cost"))
+                        LET pricediff = doc.cost - d[0].cost
+                        LET type = pricediff >= 0 ? 'grow' : 'loss'
+                        LIMIT ${start}, ${length}
+                        RETURN {
+                            time: doc.matched_time,
+                            cost: doc.cost,
+                            eval_time: doc.eval_time,
+                            type: type
+                        }
+                )
+
+                return {
+                    items: orders,
+                    hasNextPage: true
+                }
+            `,
+        })
+        .then((x: any) => x.result.at(0));
