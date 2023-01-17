@@ -44,7 +44,7 @@ export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataR
             },
             {
                 Header: 'Generation time',
-                accessor: 'eval_time',
+                accessor: 'generation_time',
                 disableSortBy: true,
             },
             {
@@ -71,13 +71,13 @@ export const useGetTradeHistoryData = (itemsLimit = 25): UseGetTradeHistoryDataR
  * @returns Trade history table data list.
  */
 const mapToTradeHistoryData = (
-    { matched_time, cost, eval_time }: Ask,
+    { matched_time, cost, generation_time }: Ask,
     i: number,
     asks: Ask[],
 ): TradeHistoryData => ({
     timestamp: formatDate(matched_time!, 'DD.MM HH:mm'),
     cost,
-    eval_time,
+    generation_time,
     type: i !== 0 ? getType(asks.at(i - 1)!.cost, cost) : undefined,
 });
 

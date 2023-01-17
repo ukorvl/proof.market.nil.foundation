@@ -30,4 +30,8 @@ export interface TradeOrder extends CreateTradeOrder {
      * Matched time.
      */
     matched_time?: string;
+    /**
+     * Real generation time.
+     */
+    generation_time?: number;
 }
