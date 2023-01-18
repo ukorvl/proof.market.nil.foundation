@@ -37,7 +37,6 @@ jobs:
         echo "REACT_APP_BASE_API_URL=${{ secrets.BASE_API_URL }}" >> .env.local
         echo "REACT_APP_DBMS_DEFAULT_DATABASE=${{ secrets.DBMS_DEFAULT_DATABASE }}" >> .env.local
         echo "REACT_APP_SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> .env.local
-        echo "REACT_APP_FORMSPREE_FORM_ID=${{ secrets.FORMSPREE_FORM_ID }}" >> .env.local
         echo "REACT_APP_READONLY_USER=${{ secrets.READONLY_USER }}" >> .env.local
         echo "REACT_APP_SITE_DEFAULT_TITLE=${{ secrets.SITE_DEFAULT_TITLE }}" >> .env.local
         echo "REACT_APP_GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }}" >> .env.local
