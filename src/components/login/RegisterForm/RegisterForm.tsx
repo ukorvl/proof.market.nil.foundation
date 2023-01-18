@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState, useMemo, useEffect, ChangeEvent } from 'react';
+import { ReactElement, useRef, useState, useEffect } from 'react';
 import {
     InputGroup,
     Icon,
@@ -13,13 +13,16 @@ import {
     Variant,
     Form,
     Spinner,
+    notificationActions,
 } from '@nilfoundation/react-components';
-import { useForm, ValidationError } from '@formspree/react/dist/index.js';
-import { Link } from 'react-router-dom';
-import debounce from 'lodash/debounce';
+import { Link, Navigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+//import debounce from 'lodash/debounce';
 import { Path } from 'src/routing';
-import { SocialLinks } from 'src/components/common';
+import { SocialLinks } from 'src/components';
 import { emailRegExp } from 'src/utils';
+import { RegisterData } from 'src/models';
+import { signUp } from 'src/api';
 import { AuthCard } from '../AuthCard';
 import styles from './RegisterForm.module.scss';
 
@@ -29,53 +32,54 @@ import styles from './RegisterForm.module.scss';
  * @returns React component.
  */
 export const RegisterForm = (): ReactElement => {
-    const [email, setEmail] = useState('');
-    const isEmailValid = useMemo(() => !!email && emailRegExp.test(email), [email]);
-    const emailInputRef = useRef<HTMLInputElement | null>(null);
-    const [state, handleSubmit] = useForm(process.env.REACT_APP_FORMSPREE_FORM_ID!, {
-        data: {
-            subject: `New credentials request from ${window.location.hostname}`,
-        },
+    const userNameInputRef = useRef<HTMLInputElement | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string>();
+    const {
+        handleSubmit,
+        register,
+        formState: { isSubmitting, errors, isSubmitSuccessful, isValid },
+    } = useForm<RegisterData>();
+
+    // const debouncedOnChangeHandler = useRef(
+    //     debounce((e: ChangeEvent<HTMLInputElement>) => {
+    //         setEmail(e.target.value);
+    //     }, 180),
+    // ).current;
+
+    const onSubmitLogin = handleSubmit(async (data: RegisterData): Promise<void> => {
+        setErrorMessage('');
+        try {
+            await signUp(data);
+
+            notificationActions?.create({
+                title: 'Registration success',
+                message: `Successfully register as ${data.username}`,
+                variant: Variant.success,
+            });
+        } catch (e) {
+            setErrorMessage('Register error');
+        }
     });
-    const { submitting, succeeded, errors } = state;
-    const debouncedOnChangeHandler = useRef(
-        debounce((e: ChangeEvent<HTMLInputElement>) => {
-            setEmail(e.target.value);
-        }, 180),
-    ).current;
 
     useEffect(() => {
-        emailInputRef.current && emailInputRef.current.focus();
+        userNameInputRef.current && userNameInputRef.current.focus();
     }, []);
 
-    if (succeeded) {
+    const { ref, ...restRegister } = register('username', { required: true });
+
+    if (isSubmitSuccessful) {
         return (
-            <div className={styles.successMessage}>
-                <h4>Thank you for request!</h4>
-                <Link to={Path.market}>
-                    <Button
-                        block
-                        variant={Variant.primary}
-                        size={Size.lg}
-                    >
-                        Back to market
-                    </Button>
-                </Link>
-            </div>
+            <Navigate
+                replace
+                to={Path.login}
+            />
         );
     }
 
     return (
         <AuthCard>
-            <Form
-                className={styles.form}
-                onSubmit={handleSubmit}
-            >
-                <h4 className={styles.title}>Request your beta-test credentials via email</h4>
-                <div className={`${styles.description} text-muted`}>
-                    If you would like to get involved early, leave email below and we will let you
-                    know when proof market opens!
-                </div>
+            <Form className={styles.form}>
+                <h4 className={styles.title}>Register</h4>
                 <Form.Group hasError={!isEmailValid && !!email}>
                     <InputGroup
                         size={Size.lg}
@@ -91,7 +95,7 @@ export const RegisterForm = (): ReactElement => {
                             aria-label="email"
                             placeholder="your email"
                             autoComplete="off"
-                            ref={emailInputRef}
+                            ref={ref}
                             onChange={debouncedOnChangeHandler}
                         />
                     </InputGroup>
@@ -100,11 +104,11 @@ export const RegisterForm = (): ReactElement => {
                     block
                     variant={Variant.success}
                     size={Size.lg}
-                    disabled={submitting || !isEmailValid}
-                    type="submit"
+                    disabled={isSubmitting || !isValid}
+                    onClick={onSubmitLogin}
                 >
                     Submit
-                    {submitting && <Spinner />}
+                    {isSubmitting && <Spinner />}
                 </Button>
                 {errors.length !== 0 && (
                     <div className="errorMessage text-center">
@@ -115,6 +119,7 @@ export const RegisterForm = (): ReactElement => {
                         />
                     </div>
                 )}
+                {errorMessage && <div className="errorMessage">{errorMessage}</div>}
                 <div className={styles.social}>
                     <h5 className={styles.title}>
                         {

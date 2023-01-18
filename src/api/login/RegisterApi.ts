@@ -16,4 +16,4 @@ const httpFetcher = createBearerHttpClient(apiUrl);
  * @returns .
  */
 export const signUp = (registerData: RegisterData): Promise<RegisterData> =>
-    httpFetcher.post('/signup', registerData);
+    httpFetcher.post('/user/signup', registerData);
