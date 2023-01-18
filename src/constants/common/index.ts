@@ -6,4 +6,5 @@
 export * from './socialLinks';
 export * from './navigationLinks';
 export * from './jsonViewerTheme';
-export * from './mainSiteAddress';
+export * from './mainSiteUrl';
+export * from './documentationUrl';
