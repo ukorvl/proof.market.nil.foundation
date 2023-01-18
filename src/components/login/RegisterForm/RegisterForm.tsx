@@ -89,7 +89,7 @@ export const RegisterForm = (): ReactElement => {
         <AuthCard>
             <Form className={styles.form}>
                 <h4 className={styles.title}>Welcome to Proof Market!</h4>
-                <div className="text-center text-muted">Please, enter your username</div>
+                <div className={`${styles.heading} text-muted`}>Create new account</div>
                 <Form.Group hasError={!!errors['user']}>
                     <InputGroup
                         size={Size.lg}
@@ -123,7 +123,6 @@ export const RegisterForm = (): ReactElement => {
                 >
                     <div ref={inputAnimationRef}>
                         <Form.Group hasError={!!errors['passwd']}>
-                            <div className="text-center text-muted">And create a password</div>
                             <InputGroup
                                 size={Size.lg}
                                 className={styles.control}

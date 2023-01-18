@@ -1,6 +1,6 @@
 .title {
   text-align: center;
-  margin: 0 0 2rem;
+  margin-top: 0;
 }
 
 .description {
@@ -28,4 +28,9 @@
 .bottomBlock {
   position: absolute;
   bottom: 0;
+}
+
+.heading {
+  text-align: center;
+  margin: 1rem 0 5rem;
 }
