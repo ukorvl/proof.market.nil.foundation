@@ -29,12 +29,22 @@ import styles from './RegisterForm.module.scss';
 const usernameRequiredMinLength = 3;
 
 /**
+ * Password input type.
+ */
+type PwdInputType = 'password' | 'text';
+
+/**
  * Register form.
  *
  * @returns React component.
  */
 export const RegisterForm = (): ReactElement => {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
+    const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
+    const switchPwdInputType = () =>
+        setPwdInputType(pwdInputType === 'password' ? 'text' : 'password');
+
     const inputAnimationRef = useRef(null);
     const buttonAnimationRef = useRef(null);
     const userNameInputRef = useRef<HTMLInputElement | null>(null);
@@ -125,13 +135,21 @@ export const RegisterForm = (): ReactElement => {
                                     />
                                 </InputGroup.Addon>
                                 <Input
-                                    type="text"
+                                    type={pwdInputType}
                                     id="password"
                                     placeholder="password"
                                     aria-label="password"
                                     autoComplete="off"
                                     {...register('passwd', { required: true })}
                                 />
+                                <InputGroup.Buttons>
+                                    <Button onClick={switchPwdInputType}>
+                                        <Icon
+                                            iconName={`fa-solid ${pwdInputIconName}`}
+                                            className={styles.icon}
+                                        />
+                                    </Button>
+                                </InputGroup.Buttons>
                             </InputGroup>
                         </Form.Group>
                     </div>
