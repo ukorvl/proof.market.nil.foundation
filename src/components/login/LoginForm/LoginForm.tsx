@@ -163,7 +163,7 @@ export const LoginForm = (): ReactElement => {
                         variant={Variant.success}
                         size={Size.lg}
                     >
-                        Request credentials
+                        Sign up
                     </Button>
                 </Link>
             </Form>
