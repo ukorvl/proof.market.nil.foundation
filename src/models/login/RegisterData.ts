@@ -4,7 +4,7 @@
  */
 
 /**
- * Login data.
+ * Register new user data.
  */
 export type RegisterData = {
     /**
