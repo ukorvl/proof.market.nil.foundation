@@ -3,14 +3,14 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useCallback, useContext } from 'react';
+import { Dispatch, ReactElement, SetStateAction, useCallback, useContext, useState } from 'react';
 import { Controller, ControllerRenderProps, useFormContext } from 'react-hook-form';
 import { FileRejection } from 'react-dropzone';
 import { CreateBid } from 'src/models';
 import { FileUploader as FileUploaderTemplate } from 'src/components';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { BaseFormGroup } from '../CreateTradeOrderForm';
-import './PublicInput.scss';
+import styles from './PublicInput.module.scss';
 
 /**
  * Public_input filed input.
@@ -18,6 +18,7 @@ import './PublicInput.scss';
  * @returns React component.
  */
 export const PublicInput = (): ReactElement => {
+    const [errorMessage, setErrorMessage] = useState('');
     const { processing } = useContext(OrderManagementContext);
     const {
         control,
@@ -31,19 +32,23 @@ export const PublicInput = (): ReactElement => {
             className="publicInput"
         >
             {() => (
-                <Controller<CreateBid, 'input'>
-                    name="input"
-                    control={control}
-                    rules={{
-                        validate: val => val !== null && !!val,
-                    }}
-                    render={({ field: { ref: _, ...rest } }) => (
-                        <FileUploader
-                            {...rest}
-                            disabled={processing}
-                        />
-                    )}
-                />
+                <>
+                    <Controller<CreateBid, 'input'>
+                        name="input"
+                        control={control}
+                        rules={{
+                            validate: val => val !== null && !!val,
+                        }}
+                        render={({ field: { ref: _, ...rest } }) => (
+                            <FileUploader
+                                {...rest}
+                                disabled={processing}
+                                setErrorMessage={setErrorMessage}
+                            />
+                        )}
+                    />
+                    {errorMessage && <div className="errorMessage">{errorMessage}</div>}
+                </>
             )}
         </BaseFormGroup>
     );
@@ -54,6 +59,7 @@ export const PublicInput = (): ReactElement => {
  */
 type FileUploaderProps = {
     disabled?: boolean;
+    setErrorMessage: Dispatch<SetStateAction<string>>;
 } & Omit<ControllerRenderProps<CreateBid, 'input'>, 'ref'>;
 
 /**
@@ -62,10 +68,11 @@ type FileUploaderProps = {
  * @param {FileUploaderProps} props Props.
  * @returns Recat component.
  */
-const FileUploader = ({ onChange, disabled }: FileUploaderProps): ReactElement => {
+const FileUploader = ({ onChange, disabled, setErrorMessage }: FileUploaderProps): ReactElement => {
     const handleJsonFile = useCallback(
         (acceptedFiles: File[], fileRejections: FileRejection[]) => {
             if (fileRejections.length !== 0) {
+                setErrorMessage('Please submit only JSON files');
                 onChange(null);
             }
 
@@ -76,12 +83,19 @@ const FileUploader = ({ onChange, disabled }: FileUploaderProps): ReactElement =
                     return;
                 }
 
-                const obj = JSON.parse(target.result as string);
-                onChange(obj);
+                try {
+                    const obj = JSON.parse(target.result as string);
+                    onChange(obj);
+                    setErrorMessage('');
+                } catch (e) {
+                    setErrorMessage('File is not a valid JSON');
+                    onChange(null);
+                }
             };
 
             reader.onerror = () => {
-                /*Do nothing*/
+                setErrorMessage('Error while reading file');
+                onChange(null);
             };
             reader.onabort = () => {
                 /*Do nothing*/
@@ -90,17 +104,19 @@ const FileUploader = ({ onChange, disabled }: FileUploaderProps): ReactElement =
             const file = acceptedFiles.at(0);
             file && reader.readAsText(file);
         },
-        [onChange],
+        [onChange, setErrorMessage],
     );
 
     return (
         <FileUploaderTemplate
+            className={styles.fileUploader}
             multiple={false}
             disabled={disabled}
             accept={{
                 'application/json': ['.json'],
             }}
             onDrop={handleJsonFile}
+            placeholder="Drag'n drop some json files here, or click to select files"
         />
     );
 };
