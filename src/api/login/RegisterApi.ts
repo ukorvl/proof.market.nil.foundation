@@ -6,7 +6,7 @@
 import { createBearerHttpClient } from '../common';
 import { RegisterData } from '../../models';
 
-const apiUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
+const apiUrl = '_db/market/v0_0';
 const httpFetcher = createBearerHttpClient(apiUrl);
 
 /**

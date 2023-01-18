@@ -3,12 +3,18 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { LoginData } from './LoginData';
-
 /**
  * Login data.
  */
-export type RegisterData = LoginData & {
+export type RegisterData = {
+    /**
+     * User name.
+     */
+    user: string;
+    /**
+     * Password.
+     */
+    passwd: string;
     /**
      * Email.
      */
