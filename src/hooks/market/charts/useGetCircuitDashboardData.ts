@@ -120,7 +120,7 @@ const getProofGenTimeData = <T extends Bid | Ask>(
     ordersGrouppedByDate: Record<string, T[]>,
 ): LineData[] => {
     return Object.keys(ordersGrouppedByDate).map(x => {
-        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
+        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.generation_time);
         const averageEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
 
         return { time: Number(x) as UTCTimestamp, value: averageEvalTime };
