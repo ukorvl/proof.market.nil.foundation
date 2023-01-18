@@ -8,7 +8,7 @@ import { dequal as deepEqual } from 'dequal';
 import { DashboardCard } from 'src/components/common';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
-import { siteMoneyTickerAbbreviation } from 'src/constants';
+import { siteMoneyTicker, siteMoneyTickerAbbreviation } from 'src/constants';
 import { CircuitDetailedInfo } from '../CircuitDetailedInfo';
 import styles from './CircuitInfoPanel.module.scss';
 
@@ -32,7 +32,7 @@ export const CircuitInfoPanel = (): ReactElement => {
         const { name, inputDescription } = currentCircuit;
         return `${name.toUpperCase()}${
             inputDescription ? ` (${inputDescription?.toUpperCase()})` : ''
-        }/${siteMoneyTickerAbbreviation}`;
+        } / ${siteMoneyTicker} (${siteMoneyTickerAbbreviation})`;
     }, [currentCircuit]);
 
     return (
