@@ -5,7 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Dropdown } from '@nilfoundation/react-components';
-import { navigationLinks } from '../../../constants';
+import { documentationUrl, navigationLinks } from 'src/constants';
 import styles from './MobileMenu.module.scss';
 
 /**
@@ -30,6 +30,7 @@ export const MobileMenu = (): ReactElement => {
                         {title}
                     </Dropdown.Item>
                 ))}
+                <Dropdown.Item href={documentationUrl}>Docs</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );
