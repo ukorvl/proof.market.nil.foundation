@@ -9,6 +9,7 @@ import { selectUserBalance, useAppSelector } from 'src/redux';
 import { useLocalStorage } from 'src/hooks';
 import { ClicableIcon } from 'src/components';
 import { longDash } from 'src/utils';
+import { siteMoneyTicker } from 'src/constants';
 import styles from './UserBalance.module.scss';
 
 /**
@@ -67,7 +68,11 @@ export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps
                     </span>
                 </Label>
             )}
-            {displayLoader ? <Spinner grow /> : <span className={styles.currency}>USD</span>}
+            {displayLoader ? (
+                <Spinner grow />
+            ) : (
+                <span className={styles.currency}>{siteMoneyTicker}s</span>
+            )}
         </div>
     );
 };

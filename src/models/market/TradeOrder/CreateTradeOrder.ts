@@ -12,7 +12,7 @@ export interface CreateTradeOrder {
      */
     statement_key: string;
     /**
-     * Cost, USD.
+     * Cost.
      */
     cost: number;
     /**

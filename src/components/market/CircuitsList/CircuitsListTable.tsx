@@ -9,6 +9,7 @@ import { Icon, Input, InputGroup, ListGroup } from '@nilfoundation/react-compone
 import { dequal as deepEqual } from 'dequal';
 import debounce from 'lodash/debounce';
 import { useAppSelector } from 'src/redux';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { ReactTable } from 'src/components';
 import { CurcuitsListItem } from './CircuitsListItem';
@@ -110,7 +111,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
                     _key: x._key,
                     name: `${x.name.toUpperCase()}${
                         x.inputDescription ? ` (${x.inputDescription?.toUpperCase()})` : ''
-                    }/USD`,
+                    }/${siteMoneyTickerAbbreviation}`,
                     cost: info?.current,
                     change: info?.daily_change,
                 };
