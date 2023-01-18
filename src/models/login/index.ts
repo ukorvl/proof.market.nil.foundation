@@ -4,4 +4,5 @@
  */
 
 export * from './LoginData';
-export * from './dto';
+export * from './RegisterData';
+export * from './AuthData';
