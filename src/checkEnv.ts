@@ -9,7 +9,6 @@ const requiredEnv = [
     process.env.REACT_APP_READONLY_USER,
     process.env.REACT_APP_SITE_DEFAULT_TITLE,
     process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO,
-    process.env.REACT_APP_API_VERSION,
 ];
 
 /**
