@@ -9,7 +9,7 @@ import { RegisterData } from '../../models';
 const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 const apiVersion = process.env.REACT_APP_API_VERSION;
 
-const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`);
+const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`, false, false);
 
 /**
  * Register user.
