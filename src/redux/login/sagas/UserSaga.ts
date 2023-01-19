@@ -4,7 +4,7 @@
  */
 
 import { SagaIterator } from '@redux-saga/core';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getUserBalance } from 'src/api';
 import { UserBalance } from 'src/models';
 import {
@@ -14,7 +14,8 @@ import {
     UpdateUserName,
 } from '../actions';
 import { ProtectedCall } from './ProtectedCall';
-import { AddAsk, AddBid } from '../../market';
+import { AddAsk, AddBid, RemoveAsk, RemoveBid } from '../../market';
+import { selectUserName } from '../selectors';
 
 /**
  * User main saga.
@@ -22,18 +23,16 @@ import { AddAsk, AddBid } from '../../market';
  * @yields
  */
 export function* UserSaga(): SagaIterator<void> {
-    yield takeLatest([UpdateUserName, AddAsk, AddBid], GetUserInfoSaga);
+    yield takeLatest([UpdateUserName, AddAsk, AddBid, RemoveAsk, RemoveBid], GetUserInfoSaga);
 }
 
 /**
  * Gets user info after updating user.
  *
- * @param {ReturnType<typeof UpdateUserName>} action Action return type.
  * @yields
  */
-function* GetUserInfoSaga({
-    payload: user,
-}: ReturnType<typeof UpdateUserName>): SagaIterator<void> {
+function* GetUserInfoSaga(): SagaIterator<void> {
+    const user = yield select(selectUserName);
     const isReadonly = user === process.env.REACT_APP_READONLY_USER;
     if (isReadonly || !user) {
         return;
