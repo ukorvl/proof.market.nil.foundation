@@ -17,7 +17,7 @@ export const LastProofProducer = (): ReactElement => {
     const lastProofProducer = useAppSelector(
         s =>
             s.circuitsState.lastProofProducer?.find(
-                x => x.statement_key === `${s.circuitsState.selectedid}`,
+                x => x?.statement_key === `${s.circuitsState.selectedid}`,
             )?.sender,
     );
 
