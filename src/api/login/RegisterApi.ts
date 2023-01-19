@@ -6,8 +6,10 @@
 import { createBearerHttpClient } from '../common';
 import { RegisterData } from '../../models';
 
-const apiUrl = '_db/market/v0_0';
-const httpFetcher = createBearerHttpClient(apiUrl);
+const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const apiVersion = process.env.REACT_APP_API_VERSION;
+
+const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`);
 
 /**
  * Register user.

@@ -71,7 +71,7 @@ export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps
             {displayLoader ? (
                 <Spinner grow />
             ) : (
-                <span className={styles.currency}>{siteMoneyTicker}s</span>
+                !isNoData && <span className={styles.currency}>{siteMoneyTicker}s</span>
             )}
         </div>
     );

@@ -6,13 +6,14 @@
 import { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
-const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const apiVersion = process.env.REACT_APP_API_VERSION;
 
-const apiUrl = `_db/${dbName}/${dbName}/statement`;
+const apiUrl = `_db/${db}/${apiVersion}/statement`;
 const httpFetcher = createBearerHttpClient(apiUrl);
 
 //TODO - remove after api is ready
-const tempFetcher = createBearerHttpClient(`_db/${dbName}/_api/`);
+const tempFetcher = createBearerHttpClient(`_db/${db}/_api/`);
 
 /**
  * Get circuits.
