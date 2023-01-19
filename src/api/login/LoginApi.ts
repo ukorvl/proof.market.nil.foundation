@@ -6,8 +6,8 @@
 import { createBearerHttpClient } from '../common';
 import { LoginData, AuthData } from '../../models';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const httpFetcher = createBearerHttpClient(`${databaseUrl}/_open/auth`);
+const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const httpFetcher = createBearerHttpClient(`_db/${db}/_open/auth`);
 
 /**
  * Login.
