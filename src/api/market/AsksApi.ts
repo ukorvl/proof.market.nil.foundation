@@ -6,11 +6,10 @@
 import { Ask, CreateAsk } from '../../models';
 import { createBearerHttpClient } from '../common';
 
-const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
-const apiVersion = process.env.REACT_APP_API_VERSION;
-
-const httpFetcher = createBearerHttpClient(`_db/${db}/_api/`);
-const newFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}/ask`);
+const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
+const apiUrl = `${databaseUrl}/_api/`;
+const httpFetcher = createBearerHttpClient(apiUrl);
+const createFetcher = createBearerHttpClient('/market/ask');
 
 /**
  * Get asks.
@@ -38,7 +37,7 @@ export const getAsksByCircuitId = (circuitId: string): Promise<Ask[]> =>
  * @param data Ask dto.
  * @returns Ask.
  */
-export const createAsk = (data: CreateAsk): Promise<Ask> => newFetcher.post('', data);
+export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('', data);
 
 /**
  * Remove Ask.
@@ -47,4 +46,13 @@ export const createAsk = (data: CreateAsk): Promise<Ask> => newFetcher.post('', 
  * @returns Ask.
  */
 export const removeAsk = (askToRemoveId: Ask['_key']): Promise<void> =>
-    newFetcher.delete(`/${askToRemoveId}`);
+    httpFetcher.post('cursor', {
+        query: `
+            FOR x IN @@relation
+                FILTER x._key == '${askToRemoveId}'
+                REMOVE { _key: x._key } IN @@relation
+            `,
+        bindVars: {
+            '@relation': 'ask',
+        },
+    });

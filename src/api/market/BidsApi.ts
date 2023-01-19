@@ -6,11 +6,12 @@
 import { Bid, CreateBid } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
-const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
-const apiVersion = process.env.REACT_APP_API_VERSION;
+const dbName = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 
-const httpFetcher = createBearerHttpClient(`_db/${db}/_api/`);
-const newFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}/bid`);
+const apiUrl = `_db/${dbName}/${dbName}/bid`;
+const httpFetcher = createBearerHttpClient(`_db/${dbName}/_api/`);
+
+const createFetcher = createBearerHttpClient(apiUrl);
 
 /**
  * Get bids.
@@ -38,7 +39,8 @@ export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
  * @param data - Bid dto.
  * @returns Bid.
  */
-export const createBid = (data: CreateBid): Promise<Bid> => newFetcher.post('', data);
+export const createBid = (data: CreateBid): Promise<Bid> =>
+    createFetcher.post('', data).then((x: any) => x);
 
 /**
  * Remove Bid.
@@ -47,4 +49,15 @@ export const createBid = (data: CreateBid): Promise<Bid> => newFetcher.post('', 
  * @returns Ask.
  */
 export const removeBid = (bidToRemoveId: Bid['_key']): Promise<void> =>
-    newFetcher.delete(`/${bidToRemoveId}`);
+    httpFetcher
+        .post('cursor', {
+            query: `
+            FOR x IN @@relation
+                FILTER x._key == '${bidToRemoveId}'
+                REMOVE { _key: x._key } IN @@relation
+            `,
+            bindVars: {
+                '@relation': 'bid',
+            },
+        })
+        .then((x: any) => x.result);
