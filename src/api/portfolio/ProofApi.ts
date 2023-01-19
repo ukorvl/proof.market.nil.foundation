@@ -6,9 +6,8 @@
 import { Proof } from '../../models';
 import { createBearerHttpClient } from '../common';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
+const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
+const httpFetcher = createBearerHttpClient(`_db/${db}/_api/`);
 
 /**
  * Get proofs.
