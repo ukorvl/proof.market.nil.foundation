@@ -19,7 +19,20 @@ export const getProofs = (currentUser: string): Promise<Proof> =>
     httpFetcher
         .post('cursor', {
             query: `
+                LET bidsByUser = (
+                    FOR doc in bid
+                    FILTER doc.status == 'completed'
+                    FILTER doc.sender == '${currentUser}'
+                    RETURN doc
+                )
+
                 FOR x IN @@relation
+                    LET contained = (
+                        FOR doc in bidsByUser
+                        FILTER x.bid_key == doc._key
+                        RETURN doc
+                    )
+                    FILTER LENGTH(contained) > 0
                     RETURN UNSET(x, 'proof')
             `,
             bindVars: {
