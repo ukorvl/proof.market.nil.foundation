@@ -5,7 +5,7 @@
   border: 1px solid $c-base-light;
   width: 360px;
   margin-bottom: auto !important;
-  height: 564px;
+  min-height: 564px;
   display: flex;
   flex-flow: column nowrap;
 }
