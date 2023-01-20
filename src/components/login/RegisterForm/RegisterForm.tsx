@@ -17,12 +17,13 @@ import {
 } from '@nilfoundation/react-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
+import debounce from 'lodash/debounce';
 import { useForm } from 'react-hook-form';
 import { Path } from 'src/routing';
 import { socialLinks } from 'src/constants';
 import { SocialLinks } from 'src/components';
 import { RegisterData } from 'src/models';
-import { signUp } from 'src/api';
+import { signUp, checkIsUsernameUnique } from 'src/api';
 import { AuthCard } from '../AuthCard';
 import styles from './RegisterForm.module.scss';
 
@@ -40,6 +41,7 @@ type PwdInputType = 'password' | 'text';
  */
 export const RegisterForm = (): ReactElement => {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [userNameIsUnique, setUserNameIsUnique] = useState(true);
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
     const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
     const switchPwdInputType = () =>
@@ -51,6 +53,7 @@ export const RegisterForm = (): ReactElement => {
     const navigate = useNavigate();
     const {
         handleSubmit,
+        watch,
         register,
         formState: { isSubmitting, errors, isValid, dirtyFields },
     } = useForm<RegisterData>({ mode: 'onChange' });
@@ -83,97 +86,114 @@ export const RegisterForm = (): ReactElement => {
     const showPasswdInput = useMemo(() => !!dirtyFields.user, [dirtyFields.user]);
     const showSubmitButton = useMemo(() => !!dirtyFields.passwd, [dirtyFields.passwd]);
 
-    console.log(dirtyFields, showSubmitButton);
+    const debouncedCheckIsUsernameUnique = useRef(
+        debounce(async (name?: string) => {
+            if (!name) {
+                return;
+            }
+
+            const result = await checkIsUsernameUnique(name);
+            setUserNameIsUnique(result);
+        }, 180),
+    ).current;
+
+    const userInputValue = watch('user');
+    useEffect(() => {
+        debouncedCheckIsUsernameUnique(userInputValue);
+    }, [userInputValue, debouncedCheckIsUsernameUnique]);
 
     return (
         <AuthCard>
             <Form className={styles.form}>
-                <h4 className={styles.title}>Welcome to Proof Market!</h4>
-                <div className={`${styles.heading} text-muted`}>Create new account</div>
-                <Form.Group hasError={!!errors['user']}>
-                    <InputGroup
-                        size={Size.lg}
-                        className={styles.control}
-                    >
-                        <InputGroup.Addon>
-                            <Icon
-                                iconName="fa-solid fa-user"
-                                className={styles.icon}
-                            />
-                        </InputGroup.Addon>
-                        <Input
-                            type="text"
-                            id="userName"
-                            placeholder="username"
-                            aria-label="username"
-                            ref={e => {
-                                ref(e);
-                                userNameInputRef.current = e;
-                            }}
-                            {...restRegister}
-                        />
-                    </InputGroup>
-                </Form.Group>
-                <CSSTransition
-                    classNames="fade"
-                    timeout={300}
-                    in={showPasswdInput}
-                    unmountOnExit
-                    nodeRef={inputAnimationRef}
-                >
-                    <div ref={inputAnimationRef}>
-                        <Form.Group hasError={!!errors['passwd']}>
-                            <InputGroup
-                                size={Size.lg}
-                                className={styles.control}
-                            >
-                                <InputGroup.Addon>
-                                    <Icon
-                                        iconName="fa-solid fa-lock"
-                                        className={styles.icon}
-                                    />
-                                </InputGroup.Addon>
-                                <Input
-                                    type={pwdInputType}
-                                    id="password"
-                                    placeholder="password"
-                                    aria-label="password"
-                                    autoComplete="off"
-                                    {...register('passwd', { required: true })}
+                <div>
+                    <h4 className={styles.title}>Welcome to Proof Market!</h4>
+                    <div className={`${styles.heading} text-muted`}>Create new account</div>
+                    <Form.Group hasError={!!errors['user'] || !userNameIsUnique}>
+                        <InputGroup
+                            size={Size.lg}
+                            className={styles.control}
+                        >
+                            <InputGroup.Addon>
+                                <Icon
+                                    iconName="fa-solid fa-user"
+                                    className={styles.icon}
                                 />
-                                <InputGroup.Buttons>
-                                    <Button onClick={switchPwdInputType}>
+                            </InputGroup.Addon>
+                            <Input
+                                type="text"
+                                id="userName"
+                                placeholder="username"
+                                aria-label="username"
+                                ref={e => {
+                                    ref(e);
+                                    userNameInputRef.current = e;
+                                }}
+                                {...restRegister}
+                            />
+                        </InputGroup>
+                        {!userNameIsUnique && <Form.Hint>Username should be unique</Form.Hint>}
+                    </Form.Group>
+                    <CSSTransition
+                        classNames="fade"
+                        timeout={300}
+                        in={showPasswdInput}
+                        unmountOnExit
+                        nodeRef={inputAnimationRef}
+                    >
+                        <div ref={inputAnimationRef}>
+                            <Form.Group hasError={!!errors['passwd']}>
+                                <InputGroup
+                                    size={Size.lg}
+                                    className={styles.control}
+                                >
+                                    <InputGroup.Addon>
                                         <Icon
-                                            iconName={`fa-solid ${pwdInputIconName}`}
+                                            iconName="fa-solid fa-lock"
                                             className={styles.icon}
                                         />
-                                    </Button>
-                                </InputGroup.Buttons>
-                            </InputGroup>
-                        </Form.Group>
-                    </div>
-                </CSSTransition>
-                <CSSTransition
-                    classNames="fade"
-                    timeout={300}
-                    in={showSubmitButton}
-                    unmountOnExit
-                    nodeRef={buttonAnimationRef}
-                >
-                    <div ref={buttonAnimationRef}>
-                        <Button
-                            block
-                            variant={Variant.success}
-                            size={Size.lg}
-                            disabled={isSubmitting || !isValid}
-                            onClick={onSubmitLogin}
-                        >
-                            Register
-                            {isSubmitting && <Spinner />}
-                        </Button>
-                    </div>
-                </CSSTransition>
-                {errorMessage && <div className="errorMessage">{errorMessage}</div>}
+                                    </InputGroup.Addon>
+                                    <Input
+                                        type={pwdInputType}
+                                        id="password"
+                                        placeholder="password"
+                                        aria-label="password"
+                                        autoComplete="off"
+                                        {...register('passwd', { required: true })}
+                                    />
+                                    <InputGroup.Buttons>
+                                        <Button onClick={switchPwdInputType}>
+                                            <Icon
+                                                iconName={`fa-solid ${pwdInputIconName}`}
+                                                className={styles.icon}
+                                            />
+                                        </Button>
+                                    </InputGroup.Buttons>
+                                </InputGroup>
+                            </Form.Group>
+                        </div>
+                    </CSSTransition>
+                    <CSSTransition
+                        classNames="fade"
+                        timeout={300}
+                        in={showSubmitButton}
+                        unmountOnExit
+                        nodeRef={buttonAnimationRef}
+                    >
+                        <div ref={buttonAnimationRef}>
+                            <Button
+                                block
+                                variant={Variant.success}
+                                size={Size.lg}
+                                disabled={isSubmitting || !isValid || !userNameIsUnique}
+                                onClick={onSubmitLogin}
+                            >
+                                Register
+                                {isSubmitting && <Spinner />}
+                            </Button>
+                        </div>
+                    </CSSTransition>
+                    {errorMessage && <div className="errorMessage">{errorMessage}</div>}
+                </div>
                 <div className={styles.bottomBlock}>
                     <div className={styles.social}>
                         <h5 className={styles.title}>
