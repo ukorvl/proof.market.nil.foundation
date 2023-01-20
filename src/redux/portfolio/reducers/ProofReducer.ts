@@ -50,6 +50,8 @@ export const ProofReducer = createReducer(initialState, builder =>
             error: payload,
         }))
         .addCase(UpdateSelectedProofId, (s, { payload }) => {
-            s.selectedProofId = payload;
+            if (s.proofs.some(x => x._key === payload)) {
+                s.selectedProofId = payload;
+            }
         }),
 );

@@ -56,10 +56,11 @@ export const CircuitsReducer = createReducer(initialState, builder =>
             ...state,
             circuits: payload,
         }))
-        .addCase(UpdateSelectedCircuitId, (state, { payload }) => ({
-            ...state,
-            selectedid: payload,
-        }))
+        .addCase(UpdateSelectedCircuitId, (state, { payload }) => {
+            if (state.circuits.some(x => x._key === payload)) {
+                state.selectedid = payload;
+            }
+        })
         .addCase(UpdateIsLoadingCircuits, (state, { payload }) => ({
             ...state,
             isLoading: payload,

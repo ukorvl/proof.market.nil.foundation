@@ -64,9 +64,9 @@ function* GetProofSaga(): SagaIterator<void> {
  * @yields
  */
 function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectSelectedProofId);
+    const currentProofId = yield select(selectSelectedProofId);
 
-    if (currentCircuitId) {
+    if (currentProofId) {
         return;
     }
 
