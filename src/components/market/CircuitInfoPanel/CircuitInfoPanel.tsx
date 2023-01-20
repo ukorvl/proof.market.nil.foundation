@@ -38,7 +38,7 @@ export const CircuitInfoPanel = (): ReactElement => {
     return (
         <DashboardCard className={styles.panel}>
             <div className={styles.container}>
-                {currentCircuit && <div>{name}</div>}
+                {currentCircuit && <div className={styles.name}>{name}</div>}
                 <div>
                     <div className={`text-muted ${styles.title}`}>Average cost</div>
                     <div>{renderDashOnEmptyValue(stats?.avg_cost)}</div>
