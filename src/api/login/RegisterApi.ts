@@ -9,7 +9,8 @@ import { RegisterData } from '../../models';
 const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 const apiVersion = process.env.REACT_APP_API_VERSION;
 
-const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`, false, false);
+const newFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`, false, false);
+const httpFetcher = createBearerHttpClient(`_db/${db}/_api/`);
 
 /**
  * Register user.
@@ -18,4 +19,21 @@ const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}`, false, fal
  * @returns .
  */
 export const signUp = (registerData: RegisterData): Promise<RegisterData> =>
-    httpFetcher.post('/user/signup', registerData);
+    newFetcher.post('/user/signup', registerData);
+
+/**
+ * Check if username is unique.
+ *
+ * @param userNameToCheck Username to check uniqueness.
+ * @returns True if username is unique.
+ */
+export const checkIsUsernameUnique = (userNameToCheck: string): Promise<boolean> =>
+    httpFetcher
+        .post('cursor', {
+            query: `
+            for doc in user
+            filter doc.user.user == '${userNameToCheck}'
+            return doc
+        `,
+        })
+        .then((x: any) => x.result.length === 0);
