@@ -6,7 +6,7 @@
 /**
  * Login Dto.
  */
-export type LoginDto = {
+export type AuthData = {
     /**
      * Jwt.
      */
