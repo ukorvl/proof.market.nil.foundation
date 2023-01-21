@@ -7,7 +7,6 @@ import { ReactElement, useCallback } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Path } from 'src/routing';
 import { useAuth } from 'src/hooks';
-import { UrlQueryParam } from 'src/enums';
 
 /**
  * Props.
@@ -30,11 +29,6 @@ const ProtectedRoute = ({
     const { isAuthentificated, isReadonly } = useAuth();
     const { pathname } = useLocation();
 
-    const getNavigateTo = useCallback(
-        () => `${redirectPath}/?${UrlQueryParam.ref}=${pathname}`,
-        [pathname, redirectPath],
-    );
-
     return (
         <>
             {isAuthentificated && (readonlyAccess ? true : !isReadonly) ? (
@@ -42,7 +36,8 @@ const ProtectedRoute = ({
             ) : (
                 <Navigate
                     replace
-                    to={getNavigateTo()}
+                    to={redirectPath}
+                    state={{ from: pathname }}
                 />
             )}
         </>
