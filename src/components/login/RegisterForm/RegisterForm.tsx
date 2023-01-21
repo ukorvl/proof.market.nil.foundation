@@ -15,7 +15,7 @@ import {
     Spinner,
     notificationActions,
 } from '@nilfoundation/react-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import debounce from 'lodash/debounce';
 import { useForm } from 'react-hook-form';
@@ -42,6 +42,7 @@ type PwdInputType = 'password' | 'text';
 export const RegisterForm = (): ReactElement => {
     const [errorMessage, setErrorMessage] = useState<string>();
     const [userNameIsUnique, setUserNameIsUnique] = useState(true);
+    const { state } = useLocation();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
     const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
     const switchPwdInputType = () =>
@@ -204,7 +205,10 @@ export const RegisterForm = (): ReactElement => {
                         <SocialLinks socialLinks={socialLinks} />
                     </div>
                     <h5 className="text-center text-muted">{'Already have an account? '}</h5>
-                    <Link to={Path.login}>
+                    <Link
+                        to={Path.login}
+                        state={state}
+                    >
                         <Button
                             block
                             variant={Variant.success}

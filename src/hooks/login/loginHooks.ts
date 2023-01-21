@@ -6,12 +6,11 @@
 import { useCallback, useMemo } from 'react';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { removeItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
 import { selectUserName, SetJwtRevalidateTimeout, UpdateUserName, useAppSelector } from 'src/redux';
-import { Path } from 'src/routing';
 import { calculateRenewJwtTimeGap, getUserFromJwt } from 'src/utils';
-import { UrlQueryParam } from 'src/enums';
+import { Path } from 'src/routing';
 
 const readonlyUser = process.env.REACT_APP_READONLY_USER;
 
@@ -43,13 +42,12 @@ export const useAuth = (): {
 /**
  * Returns callback to process login with jwt token.
  *
+ * @param [redirectPath] Path to redirect user after success login.
  * @returns Login callback.
  */
-export const useLogin = (): ((jwt: string) => void) => {
+export const useLogin = (redirectPath = Path.market): ((jwt: string) => void) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const refUrlParam = searchParams.get(UrlQueryParam.ref);
 
     const processLogin = useCallback(
         (jwt: string) => {
@@ -61,8 +59,7 @@ export const useLogin = (): ((jwt: string) => void) => {
             user && dispatch(UpdateUserName(user));
             dispatch(SetJwtRevalidateTimeout(timeout));
 
-            const navigateTo = refUrlParam || Path.root;
-            navigate(navigateTo, { replace: true });
+            navigate(redirectPath, { replace: true });
 
             if (user === readonlyUser) {
                 return;
@@ -74,7 +71,7 @@ export const useLogin = (): ((jwt: string) => void) => {
                 variant: Variant.success,
             });
         },
-        [dispatch, navigate, refUrlParam],
+        [dispatch, navigate, redirectPath],
     );
 
     return processLogin;
