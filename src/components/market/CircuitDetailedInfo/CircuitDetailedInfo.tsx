@@ -5,7 +5,7 @@
 
 import { ReactElement, memo } from 'react';
 import { useSelector } from 'react-redux';
-import { Icon, Label, Spinner } from '@nilfoundation/react-components';
+import { Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { Circuit } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
