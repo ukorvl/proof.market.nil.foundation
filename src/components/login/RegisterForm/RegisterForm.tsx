@@ -70,9 +70,10 @@ export const RegisterForm = (): ReactElement => {
                 variant: Variant.success,
             });
 
-            navigate(Path.login);
+            navigate(Path.login, { state });
         } catch (e) {
-            setErrorMessage('Register error');
+            const errorMessage = e?.response?.data?.errorMessage ?? 'Register error';
+            setErrorMessage(errorMessage);
         }
     });
 
