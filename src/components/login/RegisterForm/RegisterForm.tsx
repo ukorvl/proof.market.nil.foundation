@@ -72,8 +72,6 @@ export const RegisterForm = (): ReactElement => {
     const showPasswdInput = useMemo(() => !!dirtyFields.user, [dirtyFields.user]);
     const showSubmitButton = useMemo(() => !!dirtyFields.passwd, [dirtyFields.passwd]);
 
-    console.log(dirtyFields, showSubmitButton);
-
     return (
         <AuthCard>
             <Form className={styles.form}>

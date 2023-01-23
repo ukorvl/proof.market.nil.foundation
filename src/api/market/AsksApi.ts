@@ -95,10 +95,9 @@ export const getCompletedAsksByLimit = (
                         }
                 )
 
-                return {
-                    items: orders,
-                    hasNextPage: true
-                }
+                return orders
             `,
         })
-        .then((x: any) => x.result.at(0));
+        .then(({ result }: any) => ({ items: result.at(0) }));
+
+//(pricediff == 0 ? null : 'loss')
