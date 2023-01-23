@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@formspree/react": "^2.4.1",
     "@nilfoundation/dbmsjs": "^7.6.2",
     "@nilfoundation/react-components": "^0.8.1",
     "@reduxjs/toolkit": "^1.8.5",

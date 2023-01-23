@@ -1,6 +1,6 @@
 .title {
   text-align: center;
-  margin-top: 0;
+  margin: 0 0 2rem;
 }
 
 .description {
@@ -17,9 +17,15 @@
 
 .form {
   position: relative;
+  height: 100%;
 }
 
 .successMessage {
-  position: relative;
+  position: absolute;
   top: 10rem;
+}
+
+.bottomBlock {
+  position: absolute;
+  bottom: 0;
 }

@@ -5,3 +5,4 @@
 
 export * from './LoginApi';
 export * from './BalanceApi';
+export * from './RegisterApi';
