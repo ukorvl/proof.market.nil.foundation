@@ -9,7 +9,9 @@ import { usePageVisibility } from 'react-page-visibility';
 import { useDispatch } from 'react-redux';
 import { PageIsHidden, PageIsVisible } from 'src/redux';
 
-const stopApiCallsAfterUserLeavesPageTimeout = 2000;
+const stopApiCallsAfterUserLeavesPageTimeout = 20000;
+
+let firstPageRender = false;
 
 /**
  * Headless component to handle user leaves/returns to page event.
@@ -45,6 +47,11 @@ export const PageVisibilityDetector = (): ReactElement => {
 
     useEffect(() => {
         if (isVisible) {
+            if (!firstPageRender) {
+                firstPageRender = true;
+                return;
+            }
+
             handleUserReturnsToPage();
             return;
         }
