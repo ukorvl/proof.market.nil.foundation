@@ -4,14 +4,12 @@
  */
 
 import { SagaIterator } from 'redux-saga';
-import { delay, call, take, fork, cancel } from 'redux-saga/effects';
-import { UpdateUserName } from '../../login';
+import { delay, call, take, fork, cancel, select } from 'redux-saga/effects';
+import { PageIsHidden, PageIsVisible, selectUserName, UpdateUserName } from '../../login';
 
 /**
  * Helps to revalidate data on interval. Revalidation starts when auth completes.
- * Stops data revalidation when user logs out.
- *
- * TODO - implement pause revalidation when user leaves tab (but doesn't close it).
+ * Stops data revalidation when user logs out or leaves the page.
  *
  * @param fnToRevalidate - Function to revalidate data. Can be Generator or common function.
  * @param revalidateInterval - Interval between calling fn.
@@ -25,7 +23,8 @@ export function* RevalidateSaga<T extends (...args: unknown[]) => unknown>(
     ...args: Parameters<T>
 ): SagaIterator {
     while (true) {
-        const { payload: user } = yield take(UpdateUserName);
+        yield take([UpdateUserName, PageIsVisible]);
+        const user = select(selectUserName);
 
         if (user) {
             yield call(Revalidate, fnToRevalidate, revalidateInterval, ...args);
@@ -46,9 +45,9 @@ export function* Revalidate<T extends (...args: unknown[]) => unknown>(
         }
     });
 
-    const { payload: user } = yield take(UpdateUserName);
+    const { payload, type } = yield take([UpdateUserName, PageIsHidden]);
 
-    if (!user) {
+    if (type === PageIsHidden.type || !payload) {
         yield cancel(task);
     }
 }
