@@ -35,22 +35,3 @@ export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/?in
  * @returns .
  */
 export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`/?statistics`);
-
-/**
- *
- * @returns .
- */
-export const getLastProofProducerData = (): Promise<Array<LastProofProducer> | undefined> =>
-    tempFetcher
-        .post('cursor', {
-            query: `
-                for s in statement
-                let temp = first(for doc in ask
-                filter doc.status == 'completed'
-                filter doc.statement_key == s._key
-                sort doc.updatedOn desc
-                return {statement_key: s._key, sender: doc.sender})
-                return temp
-            `,
-        })
-        .then((x: any) => x.result);
