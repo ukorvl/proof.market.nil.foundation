@@ -5,7 +5,7 @@
 
 import { call, fork, put, select, takeLatest } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getBidsByCircuitId } from 'src/api';
+import { getBids } from 'src/api';
 import { Bid } from 'src/models';
 import { ProtectedCall } from 'src/redux';
 import {
@@ -48,7 +48,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(ProtectedCall, getBidsByCircuitId, circuitId);
+        const bids: Bid[] = yield call(ProtectedCall, getBids, { statement_key: circuitId });
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));

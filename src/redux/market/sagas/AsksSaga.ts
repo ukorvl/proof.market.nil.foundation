@@ -5,7 +5,7 @@
 
 import { call, fork, put, takeLatest, select } from 'redux-saga/effects';
 import { SagaIterator } from '@redux-saga/core';
-import { getAsksByCircuitId } from 'src/api';
+import { getAsks } from 'src/api';
 import { Ask } from 'src/models';
 import { ProtectedCall } from 'src/redux';
 import {
@@ -48,7 +48,7 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(false));
         yield put(UpdateIsLoadingAsks(true));
 
-        const asks: Ask[] = yield call(ProtectedCall, getAsksByCircuitId, circuitId);
+        const asks: Ask[] = yield call(ProtectedCall, getAsks, { statement_key: circuitId });
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));

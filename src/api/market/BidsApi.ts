@@ -3,34 +3,36 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Bid, CreateBid } from 'src/models';
+import { Bid, CreateBid, TradeOrder } from 'src/models';
 import { createBearerHttpClient } from '../common';
+
+/**
+ * Get order parameters.
+ */
+export type GetOrdersParameters = {
+    statement_key?: string;
+    limit?: number;
+    status?: TradeOrder['status'];
+};
 
 const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
 const apiVersion = process.env.REACT_APP_API_VERSION;
 
-const httpFetcher = createBearerHttpClient(`_db/${db}/_api/`);
-const newFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}/bid`);
+const httpFetcher = createBearerHttpClient(`_db/${db}/${apiVersion}/bid`);
 
 /**
- * Get bids.
+ * Get bids by parameters.
  *
- * @param circuitId Circuit id.
+ * @param {GetOrdersParameters} parameters Parameters.
+ * @param limit Response limit.
  * @returns Bids.
  */
-export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    FILTER x.statement_key == '${circuitId}'
-                    RETURN x`,
-            bindVars: {
-                '@relation': 'bid',
-            },
-            batchSize: 10000,
-        })
-        .then((x: any) => x.result);
+export const getBids = (parameters: GetOrdersParameters, limit?: number): Promise<Bid[]> =>
+    httpFetcher.get(
+        `?${limit !== undefined ? `limit=${limit}&` : ''}q=[{${Object.entries(parameters)
+            .map(([x, y]) => `"key": "${x}", "value": "${y}"`)
+            .join('')}}]`,
+    );
 
 /**
  * Create Bid.
@@ -38,7 +40,7 @@ export const getBidsByCircuitId = (circuitId: string): Promise<Bid[]> =>
  * @param data - Bid dto.
  * @returns Bid.
  */
-export const createBid = (data: CreateBid): Promise<Bid> => newFetcher.post('', data);
+export const createBid = (data: CreateBid): Promise<Bid> => httpFetcher.post('', data);
 
 /**
  * Remove Bid.
@@ -47,4 +49,4 @@ export const createBid = (data: CreateBid): Promise<Bid> => newFetcher.post('', 
  * @returns Ask.
  */
 export const removeBid = (bidToRemoveId: Bid['_key']): Promise<void> =>
-    newFetcher.delete(`/${bidToRemoveId}`);
+    httpFetcher.delete(`/${bidToRemoveId}`);
