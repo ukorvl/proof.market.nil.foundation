@@ -8,9 +8,4 @@ import { createAction } from '@reduxjs/toolkit';
 /**
  * Dispatch to trigger effects when page is visible.
  */
-export const PageIsVisible = createAction('@ui_state/PAGE_IS_VISIBLE');
-
-/**
- * Dispatch to trigger effects when page is hidden.
- */
-export const PageIsHidden = createAction('@ui_state/PAGE_IS_HIDDEN');
+export const SetPageIsVisible = createAction<boolean>('@ui_state/SET_PAGE_IS_VISIBLE');

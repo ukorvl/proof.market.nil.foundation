@@ -4,8 +4,9 @@
  */
 
 import { SagaIterator } from 'redux-saga';
-import { delay, call, take, fork, cancel, select } from 'redux-saga/effects';
-import { PageIsHidden, PageIsVisible, selectUserName, UpdateUserName } from '../../login';
+import { delay, call, take, fork, cancel } from 'redux-saga/effects';
+import { UpdateUserName } from '../../login';
+import { StartDataRevalidation, StopDataRevalidation } from '../actions';
 
 /**
  * Helps to revalidate data on interval. Revalidation starts when auth completes.
@@ -23,10 +24,9 @@ export function* RevalidateSaga<T extends (...args: unknown[]) => unknown>(
     ...args: Parameters<T>
 ): SagaIterator {
     while (true) {
-        yield take([UpdateUserName, PageIsVisible]);
-        const user = select(selectUserName);
+        const { payload, type } = yield take([UpdateUserName, StartDataRevalidation]);
 
-        if (user) {
+        if (type === StartDataRevalidation.type || payload) {
             yield call(Revalidate, fnToRevalidate, revalidateInterval, ...args);
         }
     }
@@ -45,9 +45,9 @@ export function* Revalidate<T extends (...args: unknown[]) => unknown>(
         }
     });
 
-    const { payload, type } = yield take([UpdateUserName, PageIsHidden]);
+    const { payload, type } = yield take([UpdateUserName, StopDataRevalidation]);
 
-    if (type === PageIsHidden.type || !payload) {
+    if (type === StopDataRevalidation.type || !payload) {
         yield cancel(task);
     }
 }
