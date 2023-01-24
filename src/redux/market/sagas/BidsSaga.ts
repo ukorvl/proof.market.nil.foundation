@@ -48,7 +48,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(ProtectedCall, getBids, { statement_key: circuitId });
+        const bids: Bid[] = yield call(ProtectedCall, getBids, { statement_key: circuitId }, 1000);
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));

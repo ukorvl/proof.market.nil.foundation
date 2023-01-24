@@ -48,7 +48,7 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(false));
         yield put(UpdateIsLoadingAsks(true));
 
-        const asks: Ask[] = yield call(ProtectedCall, getAsks, { statement_key: circuitId });
+        const asks: Ask[] = yield call(ProtectedCall, getAsks, { statement_key: circuitId }, 1000);
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));
