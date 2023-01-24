@@ -35,6 +35,7 @@ export function* CircuitsSaga(): SagaIterator<void> {
     yield takeLatest(UpdateCircuitsList, SelectCircuitSaga);
     yield fork(RevalidateSaga, GetCircuitsAdditionalData, revalidateCircuitsInfoInterval);
     yield takeLatest(UpdateCircuitsList, GetLastProofProducer);
+    yield fork(RevalidateSaga, GetLastProofProducer, revalidateCircuitsInfoInterval);
 }
 
 /**
@@ -138,7 +139,10 @@ function* GetCircuitsAdditionalData() {
  */
 function* GetLastProofProducer() {
     try {
-        const result: Array<LastProofProducer> | undefined = yield call(getLastProofProducerData);
+        const result: Array<LastProofProducer> | undefined = yield call(
+            ProtectedCall,
+            getLastProofProducerData,
+        );
 
         yield put(UpdateLastProofProducer(result));
     } catch (e) {
