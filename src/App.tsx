@@ -7,7 +7,7 @@ import { ReactElement, Suspense } from 'react';
 import { NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
 import { Helmet } from 'react-helmet-async';
-import { GALocationTracker, NetConnectionHandler } from './components';
+import { GALocationTracker, NetConnectionHandler, PageVisibilityDetector } from './components';
 import { Router } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -31,6 +31,7 @@ function App(): ReactElement {
                 </NetConnectionHandler>
             </NotificationProvider>
             <GALocationTracker />
+            <PageVisibilityDetector />
         </ErrorBoundary>
     );
 }

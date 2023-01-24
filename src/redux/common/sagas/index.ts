@@ -4,3 +4,4 @@
  */
 
 export * from './RevalidateSaga';
+export * from './DataRevalidationSaga';
