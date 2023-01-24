@@ -8,7 +8,7 @@ import { SagaIterator } from '@redux-saga/core';
 import { delay, put, takeLatest } from 'redux-saga/effects';
 import { SetPageIsVisible, StartDataRevalidation, StopDataRevalidation } from '../actions';
 
-const stopApiCallsAfterUserLeavesPageTimeout = 3000;
+const stopApiCallsAfterUserLeavesPageTimeout = 25000;
 
 let dataRevalidationIsStopped = false;
 
