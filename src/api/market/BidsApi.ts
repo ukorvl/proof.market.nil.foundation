@@ -4,7 +4,7 @@
  */
 
 import { Bid, CreateBid, TradeOrder } from 'src/models';
-import { apiBaseUrl, createBearerHttpClient } from '../common';
+import { createBearerHttpClient } from '../common';
 
 /**
  * Get order parameters.
@@ -15,7 +15,7 @@ export type GetOrdersParameters = {
     status?: TradeOrder['status'];
 };
 
-const httpFetcher = createBearerHttpClient(`${apiBaseUrl}/bid`);
+const httpFetcher = createBearerHttpClient('/bid');
 
 /**
  * Get bids by parameters.
