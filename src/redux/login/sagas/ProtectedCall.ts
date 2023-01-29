@@ -35,6 +35,8 @@ export function* ProtectedCall<T extends (...args: any[]) => any>(
     } catch (e) {
         if (e?.code === 'ERR_NETWORK') {
             yield put(SetIsOnline(false));
+        } else {
+            yield put(SetIsOnline(true));
         }
 
         if (e?.response?.data?.code === 401) {
