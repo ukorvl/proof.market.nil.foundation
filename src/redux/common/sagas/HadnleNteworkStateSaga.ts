@@ -15,8 +15,8 @@ let offlineNotificationId: string | undefined = undefined;
  *
  * @yields
  */
-export function* HadnleNteworkStateSaga(): SagaIterator<void> {
-    yield takeLatest(SetIsOnline, HadnleOnlineStatusChange);
+export function* HadnleNetworkStateSaga(): SagaIterator<void> {
+    yield takeLatest(SetIsOnline, HandleOnlineStatusChange);
 }
 
 /**
@@ -24,7 +24,7 @@ export function* HadnleNteworkStateSaga(): SagaIterator<void> {
  *
  * @param {ReturnType<typeof SetIsOnline>} action Action return type.
  */
-function* HadnleOnlineStatusChange({
+function* HandleOnlineStatusChange({
     payload: isOnline,
 }: ReturnType<typeof SetIsOnline>): SagaIterator<void> {
     if (!isOnline) {
