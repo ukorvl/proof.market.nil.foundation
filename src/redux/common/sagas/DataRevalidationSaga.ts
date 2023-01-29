@@ -13,7 +13,7 @@ const stopApiCallsAfterUserLeavesPageTimeout = 3000;
 let dataRevalidationIsStopped = false;
 
 /**
- * User main saga.
+ * Page visibility saga.
  *
  * @yields
  */
