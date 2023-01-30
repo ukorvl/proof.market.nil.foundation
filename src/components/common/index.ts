@@ -16,7 +16,7 @@ export * from './FullScreenView';
 export * from './ClicableIcon';
 export * from './SocialLinks';
 export * from './Copyright';
-export * from './NetConnectionHandler';
 export * from './Overlay';
 export * from './ObjectAsPlainTextViewer';
 export * from './GALocationTracker';
+export * from './PageVisibilityDetector';

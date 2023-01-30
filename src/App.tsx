@@ -7,7 +7,7 @@ import { ReactElement, Suspense } from 'react';
 import { NotificationProvider, Spinner } from '@nilfoundation/react-components';
 import { ErrorBoundary, withProfiler } from '@sentry/react';
 import { Helmet } from 'react-helmet-async';
-import { GALocationTracker, NetConnectionHandler } from './components';
+import { GALocationTracker, PageVisibilityDetector } from './components';
 import { Router } from './routing';
 import ErrorView from './views/ErrorView';
 
@@ -24,13 +24,12 @@ function App(): ReactElement {
                     titleTemplate={`${baseDocumentTitle} | %s`}
                     defaultTitle={baseDocumentTitle}
                 />
-                <NetConnectionHandler>
-                    <Suspense fallback={<Spinner grow />}>
-                        <Router />
-                    </Suspense>
-                </NetConnectionHandler>
+                <Suspense fallback={<Spinner grow />}>
+                    <Router />
+                </Suspense>
             </NotificationProvider>
             <GALocationTracker />
+            <PageVisibilityDetector />
         </ErrorBoundary>
     );
 }
