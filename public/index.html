@@ -2,10 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="robots"
-      content="follow, index"
-    />
+    <% if (process.env.NODE_ENV === 'production') { %>
+      <meta
+        name="robots"
+        content="follow, index"
+      />
+    <% } %>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1"
