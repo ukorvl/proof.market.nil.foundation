@@ -9,7 +9,7 @@ import { getAsks } from 'src/api';
 import { ProtectedCall } from 'src/redux';
 import type { Ask } from 'src/models';
 import {
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
     UpdateAsksList,
     UpdateIsLoadingAsks,
     UpdateAsksError,
@@ -25,7 +25,7 @@ const revalidateAsksDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVA
  * @yields
  */
 export function* AsksSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateSelectedCircuitId, function* () {
+    yield takeLatest(UpdateSelectedCircuitKey, function* () {
         yield put(UpdateAsksList([]));
         yield fork(GetAsksSaga);
     });

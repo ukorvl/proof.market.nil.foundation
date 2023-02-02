@@ -9,7 +9,7 @@ import { getBids } from 'src/api';
 import { ProtectedCall } from 'src/redux';
 import type { Bid } from 'src/models';
 import {
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
     UpdateBidsList,
     UpdateIsLoadingBids,
     UpdateBidsError,
@@ -25,7 +25,7 @@ const revalidateBidsDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVA
  * @yields
  */
 export function* BidsSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateSelectedCircuitId, function* () {
+    yield takeLatest(UpdateSelectedCircuitKey, function* () {
         yield put(UpdateBidsList([]));
         yield fork(GetBidsSaga);
     });

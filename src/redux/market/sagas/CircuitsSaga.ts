@@ -16,7 +16,7 @@ import {
     UpdateIsLoadingCircuitsInfo,
     UpdateIsLoadingCircuitsStats,
     UpdateLastProofProducer,
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectCurrentCircuitKey } from '../selectors';
@@ -76,9 +76,9 @@ function* GetCircuitsSaga({
 function* SelectCircuitSaga({
     payload,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectCurrentCircuitKey);
+    const currentCircuitKey = yield select(selectCurrentCircuitKey);
 
-    if (currentCircuitId) {
+    if (currentCircuitKey) {
         return;
     }
 
@@ -86,7 +86,7 @@ function* SelectCircuitSaga({
         return;
     }
 
-    yield put(UpdateSelectedCircuitId(payload[0]._key));
+    yield put(UpdateSelectedCircuitKey(payload[0]._key));
 }
 
 /**

@@ -14,7 +14,9 @@ export const UpdateCircuitsList = createAction<Circuit[]>('@circuits/UPDATE_CIRC
 /**
  * Update selected circuit id.
  */
-export const UpdateSelectedCircuitId = createAction<string>('@circuits/UPDATE_SELECTED_CIRCUIT_ID');
+export const UpdateSelectedCircuitKey = createAction<string>(
+    '@circuits/UPDATE_SELECTED_CIRCUIT_KEY',
+);
 
 /**
  * Update circuits loading state.

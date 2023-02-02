@@ -6,7 +6,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { selectCurrentCircuitKey, UpdateSelectedCircuitId, useAppSelector } from 'src/redux';
+import { selectCurrentCircuitKey, UpdateSelectedCircuitKey, useAppSelector } from 'src/redux';
 import { RouterParam } from 'src/enums';
 
 /**
@@ -24,7 +24,7 @@ export const useSelectedCircuitKey = (): void => {
         }
 
         if (circuitId !== undefined) {
-            dispatch(UpdateSelectedCircuitId(circuitId));
+            dispatch(UpdateSelectedCircuitKey(circuitId));
             return;
         }
 
