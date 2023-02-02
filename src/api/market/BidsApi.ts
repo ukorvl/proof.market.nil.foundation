@@ -3,17 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import type { Bid, CreateBid, TradeOrder } from 'src/models';
-import { createBearerHttpClient } from '../common';
-
-/**
- * Get order parameters.
- */
-export type GetOrdersParameters = {
-    statement_key?: string;
-    limit?: number;
-    status?: TradeOrder['status'];
-};
+import type { Bid, CreateBid } from 'src/models';
+import type { GetOrdersParameters } from '../common';
+import { createBearerHttpClient, getApiUrlByParameters } from '../common';
 
 const httpFetcher = createBearerHttpClient('/bid');
 
@@ -25,11 +17,7 @@ const httpFetcher = createBearerHttpClient('/bid');
  * @returns Bids.
  */
 export const getBids = (parameters: GetOrdersParameters, limit?: number): Promise<Bid[]> =>
-    httpFetcher.get(
-        `?${limit !== undefined ? `limit=${limit}&` : ''}q=[{${Object.entries(parameters)
-            .map(([x, y]) => `"key": "${x}", "value": "${y}"`)
-            .join('')}}]`,
-    );
+    httpFetcher.get(getApiUrlByParameters(parameters, limit));
 
 /**
  * Create Bid.
@@ -42,8 +30,8 @@ export const createBid = (data: CreateBid): Promise<Bid> => httpFetcher.post('',
 /**
  * Remove Bid.
  *
- * @param bidToRemoveId Bid to remove id.
+ * @param bidToRemoveKey Bid to remove key.
  * @returns Ask.
  */
-export const removeBid = (bidToRemoveId: Bid['_key']): Promise<void> =>
-    httpFetcher.delete(`/${bidToRemoveId}`);
+export const removeBid = (bidToRemoveKey: Bid['_key']): Promise<void> =>
+    httpFetcher.delete(`/${bidToRemoveKey}`);

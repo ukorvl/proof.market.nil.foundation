@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
-import type { GetOrdersParameters } from './BidsApi';
+import { createBearerHttpClient, getApiUrlByParameters } from '../common';
+import type { GetOrdersParameters } from '../common';
 import type { Ask, CreateAsk } from '../../models';
 
 const httpFetcher = createBearerHttpClient('/ask');
@@ -17,11 +17,7 @@ const httpFetcher = createBearerHttpClient('/ask');
  * @returns Asks.
  */
 export const getAsks = (parameters: GetOrdersParameters, limit?: number): Promise<Ask[]> =>
-    httpFetcher.get(
-        `?${limit !== undefined ? `limit=${limit}&` : ''}q=[{${Object.entries(parameters)
-            .map(([x, y]) => `"key": "${x}", "value": "${y}"`)
-            .join('')}}]`,
-    );
+    httpFetcher.get(getApiUrlByParameters(parameters, limit));
 
 /**
  * Create Ask.
