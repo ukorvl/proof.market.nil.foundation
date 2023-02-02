@@ -11,10 +11,10 @@ import {
     UpdateProofList,
     UpdateIsLoadingProofs,
     UpdateProofsError,
-    UpdateSelectedProofId,
+    UpdateSelectedProofKey,
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
-import { selectSelectedProofId } from '../selectors';
+import { selectSelectedProofKey } from '../selectors';
 import type { RootStateType } from '../../RootStateType';
 
 const selectUser = (s: RootStateType) => s.userState.name;
@@ -64,7 +64,7 @@ function* GetProofSaga(): SagaIterator<void> {
  * @yields
  */
 function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): SagaIterator<void> {
-    const currentProofId = yield select(selectSelectedProofId);
+    const currentProofId = yield select(selectSelectedProofKey);
 
     if (currentProofId) {
         return;
@@ -74,5 +74,5 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
         return;
     }
 
-    yield put(UpdateSelectedProofId(payload[0]._key));
+    yield put(UpdateSelectedProofKey(payload[0]._key));
 }

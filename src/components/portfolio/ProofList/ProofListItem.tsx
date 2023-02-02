@@ -7,7 +7,7 @@ import type { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { Path } from 'src/routing';
-import { selectSelectedProofId, useAppSelector } from 'src/redux';
+import { selectSelectedProofKey, useAppSelector } from 'src/redux';
 import type { Proof } from 'src/models';
 import styles from './ProofList.module.scss';
 
@@ -25,7 +25,7 @@ type ProofListItemProps = {
  * @returns React component.
  */
 export const ProofListItem = ({ proof: { _key } }: ProofListItemProps): ReactElement => {
-    const selectedProofId = useAppSelector(selectSelectedProofId);
+    const selectedProofId = useAppSelector(selectSelectedProofKey);
     const isSelected = _key === selectedProofId;
 
     return (

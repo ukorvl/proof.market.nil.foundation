@@ -9,7 +9,7 @@ import {
     UpdateIsLoadingProofs,
     UpdateProofList,
     UpdateProofsError,
-    UpdateSelectedProofId,
+    UpdateSelectedProofKey,
 } from '../actions';
 
 /**
@@ -19,7 +19,7 @@ export type ProofReducerState = {
     proofs: Proof[];
     isLoadingProofs: boolean;
     error: boolean;
-    selectedProofId?: string;
+    selectedProofKey?: string;
 };
 
 /**
@@ -29,7 +29,7 @@ const initialState: ProofReducerState = {
     proofs: [],
     isLoadingProofs: false,
     error: false,
-    selectedProofId: undefined,
+    selectedProofKey: undefined,
 };
 
 /**
@@ -49,9 +49,9 @@ export const ProofReducer = createReducer(initialState, builder =>
             ...state,
             error: payload,
         }))
-        .addCase(UpdateSelectedProofId, (s, { payload }) => {
+        .addCase(UpdateSelectedProofKey, (s, { payload }) => {
             if (s.proofs.some(x => x._key === payload)) {
-                s.selectedProofId = payload;
+                s.selectedProofKey = payload;
             }
         }),
 );

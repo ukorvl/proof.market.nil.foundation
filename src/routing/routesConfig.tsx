@@ -55,7 +55,7 @@ export const routesConfig: RouteObject[] = [
                         element: <MarketView />,
                         children: [
                             {
-                                path: `:${RouterParam.statementId}`,
+                                path: `:${RouterParam.statementKey}`,
                                 element: <MarketView />,
                             },
                         ],
@@ -70,7 +70,7 @@ export const routesConfig: RouteObject[] = [
                         element: <PortfolioView />,
                         children: [
                             {
-                                path: `:${RouterParam.proofId}`,
+                                path: `:${RouterParam.proofKey}`,
                                 element: <PortfolioView />,
                             },
                         ],

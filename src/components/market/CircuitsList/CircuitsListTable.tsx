@@ -110,9 +110,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
 
                 return {
                     _key: x._key,
-                    name: `${x.name.toUpperCase()}${
-                        x.inputDescription ? ` (${x.inputDescription?.toUpperCase()})` : ''
-                    }/${siteMoneyTickerAbbreviation}`,
+                    name: `${x.name.toUpperCase()}/${siteMoneyTickerAbbreviation}`,
                     cost: info?.current,
                     change: info?.daily_change,
                 };

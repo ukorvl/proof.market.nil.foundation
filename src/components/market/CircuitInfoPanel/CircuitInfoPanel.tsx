@@ -30,10 +30,8 @@ export const CircuitInfoPanel = (): ReactElement => {
             return '';
         }
 
-        const { name, inputDescription } = currentCircuit;
-        return `${name.toUpperCase()}${
-            inputDescription ? ` (${inputDescription?.toUpperCase()})` : ''
-        } / ${siteMoneyTicker} (${siteMoneyTickerAbbreviation})`;
+        const { name } = currentCircuit;
+        return `${name.toUpperCase()} / ${siteMoneyTicker} (${siteMoneyTickerAbbreviation})`;
     }, [currentCircuit]);
 
     return (

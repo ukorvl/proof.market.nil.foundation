@@ -3,8 +3,6 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import type { Currency } from 'src/enums';
-
 /**
  * Circuit.
  */
@@ -16,7 +14,7 @@ export type Circuit = {
     /**
      * Name.
      */
-    name: Currency;
+    name: string;
     /**
      * .
      */
@@ -29,14 +27,6 @@ export type Circuit = {
      * Description.
      */
     description?: string;
-    /**
-     * .
-     */
-    inputDescription?: string;
-    /**
-     * .
-     */
-    user_id?: string;
     /**
      * .
      */

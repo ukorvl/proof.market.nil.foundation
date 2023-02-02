@@ -12,7 +12,7 @@ import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/
 export const UpdateCircuitsList = createAction<Circuit[]>('@circuits/UPDATE_CIRCUITS_LIST');
 
 /**
- * Update selected circuit id.
+ * Update selected circuit key.
  */
 export const UpdateSelectedCircuitKey = createAction<string>(
     '@circuits/UPDATE_SELECTED_CIRCUIT_KEY',

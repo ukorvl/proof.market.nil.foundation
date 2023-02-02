@@ -18,7 +18,8 @@ export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner');
 /**
  * Get proof by key.
  *
- * @param proofKey Proof id.
+ * @param proofKey Proof key.
  * @returns Proofs.
  */
-export const getProofById = (proofKey: string): Promise<Proof> => httpFetcher.get(`/${proofKey}`);
+export const getProofById = (proofKey: Proof['_key']): Promise<Proof> =>
+    httpFetcher.get(`/${proofKey}`);
