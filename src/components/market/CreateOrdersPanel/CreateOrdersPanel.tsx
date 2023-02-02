@@ -23,7 +23,7 @@ const socialLinks = links.filter(({ icon }) => ['discord', 'telegram'].includes(
  */
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedKey);
+    const selectedCircuitKey = useAppSelector(s => s.circuitsState.selectedKey);
 
     return (
         <DashboardCard>
@@ -34,7 +34,7 @@ export const CreateOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
-                    {tabFactory(tab, selectedCircuitId)}
+                    {tabFactory(tab, selectedCircuitKey)}
                 </ProtectedContent>
             </div>
         </DashboardCard>
@@ -45,11 +45,11 @@ export const CreateOrdersPanel = (): ReactElement => {
  * Renders tab content conditionally.
  *
  * @param tab Selected tab.
- * @param selectedCircuitId Selected circuit id.
+ * @param selectedCircuitKey Selected circuit key.
  * @returns React Element.
  */
-const tabFactory = (tab: TradeOrderType, selectedCircuitId?: string) => {
-    if (selectedCircuitId === undefined) {
+const tabFactory = (tab: TradeOrderType, selectedCircuitKey?: string) => {
+    if (selectedCircuitKey === undefined) {
         return <h5>Please, select circuit to create orders.</h5>;
     }
 
