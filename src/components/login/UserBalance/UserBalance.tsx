@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 import { Label, Spinner } from '@nilfoundation/react-components';
 import { selectUserBalance, useAppSelector } from 'src/redux';
 import { useLocalStorage } from 'src/hooks';

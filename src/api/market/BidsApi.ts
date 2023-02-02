@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Bid, CreateBid, TradeOrder } from 'src/models';
+import type { Bid, CreateBid, TradeOrder } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 /**

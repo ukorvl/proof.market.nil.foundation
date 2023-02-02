@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Proof } from '../../models';
 import { createBearerHttpClient } from '../common';
+import type { Proof } from '../../models';
 
 const httpFetcher = createBearerHttpClient('/proof');
 

@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const httpFetcher = createBearerHttpClient('/statement');

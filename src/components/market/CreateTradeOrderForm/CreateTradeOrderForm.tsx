@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useContext, useEffect, useRef } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import {
@@ -15,7 +16,6 @@ import {
     Form,
     InputGroup,
 } from '@nilfoundation/react-components';
-import { CreateTradeOrder } from 'src/models';
 import { useAuth } from 'src/hooks';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { Details } from '../../common';

@@ -4,21 +4,21 @@
  */
 
 import { useMemo } from 'react';
-import {
+import { useSelector } from 'react-redux';
+import { dequal as deepEqual } from 'dequal';
+import sum from 'lodash/sum';
+import type {
     CandlestickData,
     HistogramData,
     LineData,
     UTCTimestamp,
     WhitespaceData,
 } from 'lightweight-charts';
-import { useSelector } from 'react-redux';
-import { dequal as deepEqual } from 'dequal';
-import sum from 'lodash/sum';
 import { useAppSelector, selectCompletedAsks } from 'src/redux';
-import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 import { DateUnit } from 'src/enums';
 import colors from 'src/styles/export.module.scss';
+import type { Ask, Bid } from 'src/models';
 
 /**
  * Hook return type.

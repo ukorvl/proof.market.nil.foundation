@@ -4,8 +4,8 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { Proof } from 'src/models';
-import { RootStateType } from 'src/redux';
+import type { Proof } from 'src/models';
+import type { RootStateType } from 'src/redux';
 
 /**
  * Select all proofs from state.

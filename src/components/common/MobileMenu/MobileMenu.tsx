@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Dropdown } from '@nilfoundation/react-components';
 import { documentationUrl, navigationLinks } from 'src/constants';
 import styles from './MobileMenu.module.scss';

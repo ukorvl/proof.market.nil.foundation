@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo } from 'react';
+import type { ReactElement } from 'react';
+import { memo } from 'react';
 import { Media, Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
 import { siteMoneyTickerAbbreviation } from 'src/constants';

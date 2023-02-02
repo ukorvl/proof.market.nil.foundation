@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState, useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
     Image,
     InputGroup,
@@ -19,9 +20,9 @@ import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router-dom';
 import { Path } from 'src/routing';
-import { LoginData } from 'src/models';
 import { login } from 'src/api';
 import { useLogin } from 'src/hooks';
+import type { LoginData } from 'src/models';
 import { AuthCard } from '../AuthCard';
 import styles from './LoginForm.module.scss';
 

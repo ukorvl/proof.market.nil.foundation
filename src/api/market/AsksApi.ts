@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Ask, CreateAsk } from '../../models';
 import { createBearerHttpClient } from '../common';
-import { GetOrdersParameters } from './BidsApi';
+import type { GetOrdersParameters } from './BidsApi';
+import type { Ask, CreateAsk } from '../../models';
 
 const httpFetcher = createBearerHttpClient('/ask');
 

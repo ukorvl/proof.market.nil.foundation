@@ -3,9 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
-import { useDropzone, DropzoneOptions } from 'react-dropzone';
+import type { DropzoneOptions } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import styles from './FileUploader.module.scss';
 
 /**

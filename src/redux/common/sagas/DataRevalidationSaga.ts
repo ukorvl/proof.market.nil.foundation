@@ -4,8 +4,8 @@
  */
 
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { SagaIterator } from '@redux-saga/core';
 import { delay, put, takeLatest } from 'redux-saga/effects';
+import type { SagaIterator } from '@redux-saga/core';
 import { SetPageIsVisible, StartDataRevalidation, StopDataRevalidation } from '../actions';
 
 const stopApiCallsAfterUserLeavesPageTimeout = 25000;

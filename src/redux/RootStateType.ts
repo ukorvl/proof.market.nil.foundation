@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { UserReducerState } from './login';
-import { CircuitsReducerState, BidsReducerState, AsksReducerState } from './market';
-import { ProofReducerState } from './portfolio';
+import type { UserReducerState } from './login';
+import type { CircuitsReducerState, BidsReducerState, AsksReducerState } from './market';
+import type { ProofReducerState } from './portfolio';
 
 /**
  * Root state type.

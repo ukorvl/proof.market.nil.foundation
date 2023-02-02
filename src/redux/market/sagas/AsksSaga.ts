@@ -4,10 +4,10 @@
  */
 
 import { call, fork, put, takeLatest, select } from 'redux-saga/effects';
-import { SagaIterator } from '@redux-saga/core';
+import type { SagaIterator } from '@redux-saga/core';
 import { getAsks } from 'src/api';
-import { Ask } from 'src/models';
 import { ProtectedCall } from 'src/redux';
+import type { Ask } from 'src/models';
 import {
     UpdateSelectedCircuitId,
     UpdateAsksList,

@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Currency } from 'src/enums';
+import type { Currency } from 'src/enums';
 
 /**
  * Circuit.

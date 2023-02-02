@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Layout, Spinner } from '@nilfoundation/react-components';
 import { Outlet } from 'react-router-dom';
 import { Header, Footer, ReadonlyAccessProvider } from '../components';

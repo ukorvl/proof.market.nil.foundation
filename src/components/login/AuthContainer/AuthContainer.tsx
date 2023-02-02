@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { Icon, useBreakpoints } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { Copyright, FullScreenView } from 'src/components';

@@ -4,7 +4,7 @@
  */
 
 import { createBearerHttpClient } from '../common';
-import { LoginData, AuthData } from '../../models';
+import type { LoginData, AuthData } from '../../models';
 
 const httpFetcher = createBearerHttpClient('/user', false, false);
 

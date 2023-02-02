@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, StrictEffect } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
+import type { StrictEffect } from 'redux-saga/effects';
 import { SetIsOnline } from 'src/redux';
 import { UpdateUserName } from '../actions';
 

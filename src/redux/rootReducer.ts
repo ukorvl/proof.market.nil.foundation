@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 import { UserReducer } from './login';
 import { CircuitsReducer, BidsReducer, AsksReducer } from './market';
 import { ProofReducer } from './portfolio';
-import { RootStateType } from './RootStateType';
+import type { RootStateType } from './RootStateType';
 
 /**
  * Root reducer.

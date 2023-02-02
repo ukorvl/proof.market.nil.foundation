@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useState } from 'react';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
 import { useGetManageOrdersData } from 'src/hooks';
-import { ManageOrdersData } from 'src/models';
+import type { ManageOrdersData } from 'src/models';
 import { DashboardCard } from '../../common';
 import { ProtectedContent } from '../../login';
 import { ManageOrdersTab } from './ManageOrdersTab';

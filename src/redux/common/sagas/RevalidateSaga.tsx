@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { SagaIterator } from 'redux-saga';
 import { delay, call, take, fork, cancel } from 'redux-saga/effects';
+import type { SagaIterator } from 'redux-saga';
 import { UpdateUserName } from '../../login';
 import { StartDataRevalidation, StopDataRevalidation } from '../actions';
 

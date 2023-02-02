@@ -4,7 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Proof } from 'src/models';
+import type { Proof } from 'src/models';
 import {
     UpdateIsLoadingProofs,
     UpdateProofList,

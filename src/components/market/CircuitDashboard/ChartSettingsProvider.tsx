@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { DateUnit } from 'src/enums';
 import { useLocalStorage } from 'src/hooks';
 import { ChartSettingsContext } from './ChartSettingsContext';

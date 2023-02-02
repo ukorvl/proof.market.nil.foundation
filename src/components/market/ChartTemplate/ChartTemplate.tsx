@@ -3,8 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useMemo, useRef } from 'react';
-import {
+import type { ReactElement } from 'react';
+import { useContext, useMemo, useRef } from 'react';
+import { Spinner } from '@nilfoundation/react-components';
+import type {
     CandlestickData,
     CandlestickStyleOptions,
     ChartOptions,
@@ -16,7 +18,6 @@ import {
     UTCTimestamp,
     WhitespaceData,
 } from 'lightweight-charts';
-import { Spinner } from '@nilfoundation/react-components';
 import { useChart, useRenderChartData } from 'src/hooks';
 import { formatUTCTimestamp } from 'src/utils';
 import { getDateFormatBasedOnDateUnit } from 'src/enums';

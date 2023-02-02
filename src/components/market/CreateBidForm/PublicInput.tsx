@@ -3,11 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Dispatch, ReactElement, SetStateAction, useCallback, useContext, useState } from 'react';
-import { Controller, ControllerRenderProps, useFormContext } from 'react-hook-form';
-import { FileRejection } from 'react-dropzone';
-import { CreateBid } from 'src/models';
+import type { Dispatch, ReactElement, SetStateAction } from 'react';
+import { useCallback, useContext, useState } from 'react';
+import type { ControllerRenderProps } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
+import type { FileRejection } from 'react-dropzone';
 import { FileUploader as FileUploaderTemplate } from 'src/components';
+import type { CreateBid } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { BaseFormGroup } from '../CreateTradeOrderForm';
 import styles from './PublicInput.module.scss';

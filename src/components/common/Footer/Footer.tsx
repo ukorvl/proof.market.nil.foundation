@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
 import { socialLinks } from 'src/constants';
 import { SocialLinks } from '../SocialLinks';

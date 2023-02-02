@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
+import type { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
 
 /**
  * Props.

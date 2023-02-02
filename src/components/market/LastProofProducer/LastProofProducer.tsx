@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { DashboardCard } from 'src/components';
 import { useAppSelector } from 'src/redux';
 import styles from './LastProofProdcuer.module.scss';

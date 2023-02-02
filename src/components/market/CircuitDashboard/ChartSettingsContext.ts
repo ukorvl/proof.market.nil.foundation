@@ -4,7 +4,7 @@
  */
 
 import { createContext } from 'react';
-import { DateUnit } from 'src/enums';
+import type { DateUnit } from 'src/enums';
 
 /**
  * Context type.

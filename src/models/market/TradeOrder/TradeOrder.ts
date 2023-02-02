@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CreateTradeOrder } from './CreateTradeOrder';
-import { TradeOrderStatus } from './TradeOrderStatus';
+import type { CreateTradeOrder } from './CreateTradeOrder';
+import type { TradeOrderStatus } from './TradeOrderStatus';
 
 /**
  * Trade order.

@@ -4,8 +4,8 @@
  */
 
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { SagaIterator } from '@redux-saga/core';
 import { takeLatest } from 'redux-saga/effects';
+import type { SagaIterator } from '@redux-saga/core';
 import { SetIsOnline } from '../actions';
 
 let offlineNotificationId: string | undefined = undefined;

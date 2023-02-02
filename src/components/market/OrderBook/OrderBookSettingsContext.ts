@@ -4,7 +4,7 @@
  */
 
 import { createContext } from 'react';
-import { OrderBookPriceStep } from 'src/enums';
+import type { OrderBookPriceStep } from 'src/enums';
 
 /**
  * Context type.

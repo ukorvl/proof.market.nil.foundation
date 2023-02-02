@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CSSProperties, KeyboardEventHandler, ReactElement, useContext } from 'react';
-import { Row } from 'react-table';
+import type { CSSProperties, KeyboardEventHandler, ReactElement } from 'react';
+import { useContext } from 'react';
+import type { Row } from 'react-table';
 import { TRow } from 'src/components';
-import { OrderBookTableData } from 'src/models';
+import type { OrderBookTableData } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { OrderBookTableCell } from './OrderBookTableCell';

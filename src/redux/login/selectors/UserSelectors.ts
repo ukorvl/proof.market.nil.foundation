@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { UserBalance } from 'src/models';
-import { RootStateType } from 'src/redux';
+import type { UserBalance } from 'src/models';
+import type { RootStateType } from 'src/redux';
 
 /**
  * Select current user name.

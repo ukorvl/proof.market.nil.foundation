@@ -3,15 +3,16 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback, useMemo, useRef, useState } from 'react';
-import { FilterProps, TableInstance, TableState } from 'react-table';
+import type { ReactElement } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Icon, Input, InputGroup, ListGroup } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import debounce from 'lodash/debounce';
+import type { FilterProps, TableInstance, TableState } from 'react-table';
 import { useAppSelector } from 'src/redux';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
-import { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { ReactTable } from 'src/components';
+import type { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { CurcuitsListItem } from './CircuitsListItem';
 import styles from './CircuitsList.module.scss';
 

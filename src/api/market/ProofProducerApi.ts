@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { LastProofProducer } from 'src/models';
+import type { LastProofProducer } from 'src/models';
 import { createBearerHttpClient } from '../common';
 
 const httpFetcher = createBearerHttpClient('/producer');

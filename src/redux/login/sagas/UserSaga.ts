@@ -3,10 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { SagaIterator } from '@redux-saga/core';
+import type { SagaIterator } from '@redux-saga/core';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getUserBalance } from 'src/api';
-import { UserBalance } from 'src/models';
+import type { UserBalance } from 'src/models';
 import {
     UpdateUserBalance,
     UpdateUserBalanceIsLoading,

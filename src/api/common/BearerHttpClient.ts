@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 import { HttpClient } from './HttpClient';
 import { getItemFromLocalStorage } from '../../packages/LocalStorage';
 import { apiBaseUrl } from './apiHelpers';

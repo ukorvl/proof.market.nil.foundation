@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo } from 'react';
+import type { ReactElement } from 'react';
+import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
-import { Circuit } from 'src/models';
+import type { Circuit } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
 
 /**

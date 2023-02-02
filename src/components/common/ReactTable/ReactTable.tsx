@@ -3,15 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useEffect } from 'react';
-import {
-    ColumnInstance,
-    TableInstance,
-    TableOptions,
-    useFilters,
-    useSortBy,
-    useTable,
-} from 'react-table';
+import type { ReactElement, ReactNode } from 'react';
+import { useEffect } from 'react';
+import { useFilters, useSortBy, useTable } from 'react-table';
+import type { ColumnInstance, TableInstance, TableOptions } from 'react-table';
 import { notEmpty } from 'src/utils';
 import { useDebounce, useInitialTableState } from 'src/hooks';
 import { ReactTableHeader } from './ReactTableHeader';

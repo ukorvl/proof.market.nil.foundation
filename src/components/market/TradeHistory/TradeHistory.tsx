@@ -3,9 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetTradeHistoryData, UseGetTradeHistoryDataReturnType } from 'src/hooks';
+import { useGetTradeHistoryData } from 'src/hooks';
+import type { UseGetTradeHistoryDataReturnType } from 'src/hooks';
 import { DashboardCard } from '../../common';
 import { TradeHistoryTable } from './TradeHistoryTable';
 import styles from './TradeHistory.module.scss';

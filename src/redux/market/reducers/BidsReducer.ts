@@ -4,7 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Bid } from 'src/models';
+import type { Bid } from 'src/models';
 import {
     UpdateBidsList,
     AddBid,

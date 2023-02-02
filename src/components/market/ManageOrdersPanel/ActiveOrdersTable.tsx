@@ -3,16 +3,18 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback, useState } from 'react';
-import { Cell, Column, Row, TableInstance, TableState } from 'react-table';
+import type { ReactElement } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import { useDispatch } from 'react-redux';
-import { ManageOrdersData, TradeOrderType } from 'src/models';
+import type { Cell, Column, Row, TableInstance, TableState } from 'react-table';
+import { TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
 import { RemoveAsk, RemoveBid } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
 import { useAuth } from 'src/hooks';
+import type { ManageOrdersData } from 'src/models';
 import { ToolbarPanel } from './ToolbarPanel';
 
 /**
