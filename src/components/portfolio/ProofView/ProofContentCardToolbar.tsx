@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement, useMemo } from 'react';
+import type { KeyboardEventHandler, ReactElement } from 'react';
+import { useMemo } from 'react';
 import { Button, Icon, Spinner, Variant } from '@nilfoundation/react-components';
-import { Proof } from 'src/models';
 import { getProofById } from 'src/api';
 import { useDownloadJson } from 'src/hooks';
+import type { Proof } from 'src/models';
 import styles from './ProofContentCard.module.scss';
 
 /**

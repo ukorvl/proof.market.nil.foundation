@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactNode, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useRef } from 'react';
 import { Portal } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
 import styles from './FullScreenView.module.scss';

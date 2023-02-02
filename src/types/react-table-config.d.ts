@@ -4,8 +4,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { MouseEventHandler } from 'react';
-import {
+import type { MouseEventHandler } from 'react';
+import type {
     TableInstance,
     UseColumnOrderInstanceProps,
     UseColumnOrderState,

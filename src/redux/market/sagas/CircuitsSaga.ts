@@ -4,9 +4,9 @@
  */
 
 import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
-import { SagaIterator } from '@redux-saga/core';
+import type { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,

@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2023 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 import ReactGa from 'react-ga4';
 import { useLocation } from 'react-router-dom';
 

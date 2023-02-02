@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { dequal as deepEqual } from 'dequal';
 import { DashboardCard } from 'src/components/common';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';

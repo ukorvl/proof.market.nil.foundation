@@ -4,18 +4,18 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { SagaIterator } from '@redux-saga/core';
+import type { SagaIterator } from '@redux-saga/core';
 import { getProofs } from 'src/api';
-import { Proof } from 'src/models';
+import type { Proof } from 'src/models';
 import {
     UpdateProofList,
     UpdateIsLoadingProofs,
     UpdateProofsError,
     UpdateSelectedProofId,
 } from '../actions';
-import { RootStateType } from '../../RootStateType';
 import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectSelectedProofId } from '../selectors';
+import type { RootStateType } from '../../RootStateType';
 
 const selectUser = (s: RootStateType) => s.userState.name;
 

@@ -4,7 +4,7 @@
  */
 
 import { createBearerHttpClient } from '../common';
-import { RegisterData } from '../../models';
+import type { RegisterData } from '../../models';
 
 const apiUrl = '_db/market/v0_0';
 const httpFetcher = createBearerHttpClient(apiUrl);

@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 import { usePageVisibility } from 'react-page-visibility';
 import { useDispatch } from 'react-redux';
 import { SetPageIsVisible } from 'src/redux';

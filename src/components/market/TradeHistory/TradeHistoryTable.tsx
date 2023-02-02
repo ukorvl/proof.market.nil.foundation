@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
-import { Row, TableInstance, TableState } from 'react-table';
-import { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
+import type { ReactElement } from 'react';
+import { memo, useCallback } from 'react';
+import type { Row, TableInstance, TableState } from 'react-table';
 import { ReactTable, TRow, TCell } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
+import type { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
 import styles from './TradeHistory.module.scss';
 
 /**

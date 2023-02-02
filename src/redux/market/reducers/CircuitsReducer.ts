@@ -4,7 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 import {
     UpdateCircuitsList,
     UpdateSelectedCircuitId,

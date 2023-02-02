@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
 import round from 'lodash/round';
-import { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookTableData } from 'src/models';
 import {
     selectBidsList,
     selectAsksList,
@@ -17,6 +16,7 @@ import {
     selectCurrentUserBids,
 } from 'src/redux';
 import { OrderBookPriceStep } from 'src/enums';
+import type { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookTableData } from 'src/models';
 
 /**
  * Hook props.

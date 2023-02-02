@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Proof } from 'src/models';
+import type { Proof } from 'src/models';
 
 /**
  * Update proof list.

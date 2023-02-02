@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import clsx from 'clsx';
 import styles from './PriceChangeIndicator.module.scss';

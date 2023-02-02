@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useRef, useState, useEffect, useMemo } from 'react';
+import type { ReactElement } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import {
     InputGroup,
     Icon,
@@ -20,8 +21,8 @@ import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
 import { Path } from 'src/routing';
 import { SocialLinks } from 'src/components';
-import { RegisterData } from 'src/models';
 import { signUp } from 'src/api';
+import type { RegisterData } from 'src/models';
 import { AuthCard } from '../AuthCard';
 import styles from './RegisterForm.module.scss';
 

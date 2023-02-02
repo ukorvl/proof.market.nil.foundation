@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Button, Dropdown, Icon } from '@nilfoundation/react-components';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, useLogout } from 'src/hooks';

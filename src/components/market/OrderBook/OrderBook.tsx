@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetOrderBookData, UseGetOrderBookDataReturnType, useLocalStorage } from 'src/hooks';
-import { OrderBookPriceStep } from 'src/enums';
+import { useGetOrderBookData, useLocalStorage } from 'src/hooks';
+import type { OrderBookPriceStep } from 'src/enums';
+import type { UseGetOrderBookDataReturnType } from 'src/hooks';
 import { OrderBookTable } from './OrderBookTable';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { DashboardCard } from '../../common';

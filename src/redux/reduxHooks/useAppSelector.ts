@@ -3,8 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { RootStateType } from '../RootStateType';
+import { useSelector } from 'react-redux';
+import type { TypedUseSelectorHook } from 'react-redux';
+import type { RootStateType } from '../RootStateType';
 
 /**
  * Typed use selector.

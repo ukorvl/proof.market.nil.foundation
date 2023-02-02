@@ -4,8 +4,8 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { Bid } from 'src/models';
-import { RootStateType } from 'src/redux';
+import type { Bid } from 'src/models';
+import type { RootStateType } from 'src/redux';
 import { selectUserName } from '../../login';
 
 /**

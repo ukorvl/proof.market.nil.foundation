@@ -4,7 +4,7 @@
  */
 
 import { createContext } from 'react';
-import { CostAndEvalTime } from 'src/models';
+import type { CostAndEvalTime } from 'src/models';
 
 /**
  * Context type.

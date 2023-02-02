@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import { selectCircuits, useAppSelector } from 'src/redux';

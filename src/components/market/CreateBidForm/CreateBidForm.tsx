@@ -3,13 +3,14 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useState } from 'react';
+import type { ReactElement } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { createBid } from 'src/api/market/BidsApi';
+import type { CreateBid } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
 import { PublicInput } from './PublicInput';

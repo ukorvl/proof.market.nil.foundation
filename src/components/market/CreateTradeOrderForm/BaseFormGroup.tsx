@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useRef } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { useRef } from 'react';
 import { Form, uniqueId } from '@nilfoundation/react-components';
 
 /**

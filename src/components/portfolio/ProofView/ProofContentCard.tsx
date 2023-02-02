@@ -3,11 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { selectSelectedProofId, useAppSelector } from 'src/redux';
 import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
-import { Proof } from 'src/models';
+import type { Proof } from 'src/models';
 import { ProofContentCardToolbar } from './ProofContentCardToolbar';
 import styles from './ProofContentCard.module.scss';
 

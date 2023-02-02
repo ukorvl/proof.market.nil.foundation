@@ -3,11 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback } from 'react';
-import { Cell, Column, TableInstance, TableState } from 'react-table';
-import { ManageOrdersData, TradeOrderType } from 'src/models';
+import type { ReactElement } from 'react';
+import { memo, useCallback } from 'react';
+import type { Cell, Column, TableInstance, TableState } from 'react-table';
+import { TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
+import type { ManageOrdersData } from 'src/models';
 
 /**
  * Props.

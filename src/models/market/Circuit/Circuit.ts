@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CircuitDto } from './CircuitDto';
+import type { CircuitDto } from './CircuitDto';
 
 /**
  * Circuit.

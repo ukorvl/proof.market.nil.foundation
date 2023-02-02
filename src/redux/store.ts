@@ -3,9 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { configureStore, Middleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
+import type { Middleware } from '@reduxjs/toolkit';
 import { RootReducer } from './rootReducer';
 import RootSaga from './RootSaga';
 

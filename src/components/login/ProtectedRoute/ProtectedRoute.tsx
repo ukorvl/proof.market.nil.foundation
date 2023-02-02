@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useCallback } from 'react';
+import type { ReactElement } from 'react';
+import { useCallback } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Path } from 'src/routing';
 import { useAuth } from 'src/hooks';

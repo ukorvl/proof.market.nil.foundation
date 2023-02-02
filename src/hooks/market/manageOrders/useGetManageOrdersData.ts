@@ -13,8 +13,9 @@ import {
     selectCurrentUserActiveAsks,
     selectCurrentUserCompletedAsks,
 } from 'src/redux';
-import { Ask, Bid, ManageOrdersData, TradeOrderType } from 'src/models';
+import { TradeOrderType } from 'src/models';
 import { formatDate } from 'src/utils';
+import type { Ask, Bid, ManageOrdersData } from 'src/models';
 
 /**
  * UseGetManageOrdersData hook return type.

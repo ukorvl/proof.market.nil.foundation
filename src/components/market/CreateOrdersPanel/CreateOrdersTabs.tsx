@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext } from 'react';
+import type { ReactElement } from 'react';
+import { useContext } from 'react';
 import { Nav } from '@nilfoundation/react-components';
 import { TradeOrderType } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';

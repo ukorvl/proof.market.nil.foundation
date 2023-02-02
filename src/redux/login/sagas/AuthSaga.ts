@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { SagaIterator } from '@redux-saga/core';
 import { call, cancel, delay, fork, put, select, take, takeLatest } from 'redux-saga/effects';
+import type { SagaIterator } from '@redux-saga/core';
 import { renewJwt } from 'src/api';
 import { getItemFromLocalStorage, setItemIntoLocalStorage } from 'src/packages/LocalStorage';
 import { calculateRenewJwtTimeGap, getUserFromJwt } from 'src/utils';

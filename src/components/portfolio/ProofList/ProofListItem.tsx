@@ -3,12 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { Path } from 'src/routing';
-import { Proof } from 'src/models';
 import { selectSelectedProofId, useAppSelector } from 'src/redux';
+import type { Proof } from 'src/models';
 import styles from './ProofList.module.scss';
 
 /**

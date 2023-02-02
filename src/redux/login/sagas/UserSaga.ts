@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { SagaIterator } from '@redux-saga/core';
 import { call, put, takeLatest } from 'redux-saga/effects';
+import type { SagaIterator } from '@redux-saga/core';
 import { getUserBalance } from 'src/api';
 import { UpdateUserBalance, UpdateUserName } from '../actions';
 import { ProtectedCall } from './ProtectedCall';

@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Button, ButtonProps, Icon } from '@nilfoundation/react-components';
+import { Button, Icon } from '@nilfoundation/react-components';
+import type { ButtonProps } from '@nilfoundation/react-components';
 import styles from './ClicableIcon.module.scss';
 
 /**

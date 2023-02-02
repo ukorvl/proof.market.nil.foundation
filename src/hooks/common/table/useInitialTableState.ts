@@ -5,7 +5,7 @@
 
 import { useCallback } from 'react';
 import { dequal as deepEqual } from 'dequal';
-import { TableState } from 'react-table';
+import type { TableState } from 'react-table';
 import { useLocalStorage } from '../useLocalStorage';
 
 /**

@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Bid } from 'src/models';
+import type { Bid } from 'src/models';
 
 /**
  * Update bids list.

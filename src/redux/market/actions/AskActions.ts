@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Ask } from 'src/models';
+import type { Ask } from 'src/models';
 
 /**
  * Update asks list.

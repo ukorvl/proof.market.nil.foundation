@@ -27,6 +27,10 @@
       { "argsIgnorePattern": "^_" }
     ],
     "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/consistent-type-imports": [
+      1,
+      { "prefer": "type-imports" }
+    ],
     "react/display-name": 1,
     "react/jsx-first-prop-new-line": [
       "warn",
@@ -67,7 +71,7 @@
           "external",
           "internal",
           ["sibling", "parent", "index"],
-          ["object", "type"]
+          ["object"]
         ],
         "pathGroups": [
           {

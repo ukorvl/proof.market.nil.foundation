@@ -7,8 +7,8 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import { useAppSelector, selectCompletedAsks } from 'src/redux';
-import { Ask, TradeHistoryData, TradeHistoryTableColumn, TradeOrderChange } from 'src/models';
 import { formatDate } from 'src/utils';
+import type { Ask, TradeHistoryData, TradeHistoryTableColumn, TradeOrderChange } from 'src/models';
 
 /**
  * UseGetTradeHistoryData hook return type.

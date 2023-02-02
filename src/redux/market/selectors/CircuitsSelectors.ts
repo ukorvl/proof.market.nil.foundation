@@ -4,7 +4,7 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { RootStateType } from '../../RootStateType';
+import type { RootStateType } from '../../RootStateType';
 
 const selectCircuitsList = (s: RootStateType) => s.circuitsState.circuits;
 

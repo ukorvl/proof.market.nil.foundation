@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReportHandler } from 'web-vitals';
+import type { ReportHandler } from 'web-vitals';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export const reportWebVitals = (onPerfEntry?: ReportHandler): void => {

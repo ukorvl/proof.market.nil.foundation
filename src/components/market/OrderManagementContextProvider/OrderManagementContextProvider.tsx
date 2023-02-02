@@ -3,8 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useState } from 'react';
-import { CostAndEvalTime } from 'src/models';
+import type { ReactElement, ReactNode } from 'react';
+import { useState } from 'react';
+import type { CostAndEvalTime } from 'src/models';
 import { OrderManagementContext } from './OrderManagementContext';
 
 /**

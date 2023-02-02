@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement } from 'react';
+import type { KeyboardEventHandler, ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
-import { ColumnInstance } from 'react-table';
+import type { ColumnInstance } from 'react-table';
 import { THeader } from '../Table';
 import styles from './ReactTable.module.scss';
 

@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import {
+import type {
     IChartApi,
     BarPrice,
     BarPrices,

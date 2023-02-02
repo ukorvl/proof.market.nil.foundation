@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { TradeOrderChange } from '../TradeOrder';
+import type { TradeOrderChange } from '../TradeOrder';
 
 /**
  * Last order data.
