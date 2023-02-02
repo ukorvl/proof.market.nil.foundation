@@ -22,7 +22,7 @@ import {
  */
 export type CircuitsReducerState = {
     circuits: Circuit[];
-    selectedid?: string;
+    selectedKey?: string;
     isLoading: boolean;
     error?: boolean;
     circuitsInfo: CircuitInfo[];
@@ -37,7 +37,7 @@ export type CircuitsReducerState = {
  */
 const initialState: CircuitsReducerState = {
     circuits: [],
-    selectedid: undefined,
+    selectedKey: undefined,
     isLoading: false,
     error: false,
     circuitsInfo: [],
@@ -58,7 +58,7 @@ export const CircuitsReducer = createReducer(initialState, builder =>
         }))
         .addCase(UpdateSelectedCircuitId, (state, { payload }) => {
             if (state.circuits.some(x => x._key === payload)) {
-                state.selectedid = payload;
+                state.selectedKey = payload;
             }
         })
         .addCase(UpdateIsLoadingCircuits, (state, { payload }) => ({

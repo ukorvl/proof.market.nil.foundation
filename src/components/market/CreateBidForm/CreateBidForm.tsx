@@ -22,13 +22,13 @@ import { PublicInput } from './PublicInput';
  */
 export const CreateBidForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementContext);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitKey = useAppSelector(s => s.circuitsState.selectedKey);
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState('');
     const form = useForm<CreateBid>({
         mode: 'onChange',
         defaultValues: {
-            statement_key: selectedCircuitId,
+            statement_key: selectedCircuitKey,
         },
     });
 

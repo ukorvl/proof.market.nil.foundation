@@ -24,7 +24,7 @@ import './ManageOrdersPanel.scss';
  */
 export const ManageOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<ManageOrdersTab>(ManageOrdersTab.active);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedKey);
     const { isError, loadingData, activeOrdersData, historyOrdersData } = useGetManageOrdersData();
 
     return (

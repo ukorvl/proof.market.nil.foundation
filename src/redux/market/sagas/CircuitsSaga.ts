@@ -19,7 +19,7 @@ import {
     UpdateSelectedCircuitId,
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
-import { selectCurrentCircuitId } from '../selectors';
+import { selectCurrentCircuitKey } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateCircuitsInfoInterval =
@@ -76,7 +76,7 @@ function* GetCircuitsSaga({
 function* SelectCircuitSaga({
     payload,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectCurrentCircuitId);
+    const currentCircuitId = yield select(selectCurrentCircuitKey);
 
     if (currentCircuitId) {
         return;

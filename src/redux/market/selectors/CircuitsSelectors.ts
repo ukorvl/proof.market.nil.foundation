@@ -14,8 +14,8 @@ const selectCircuitsList = (s: RootStateType) => s.circuitsState.circuits;
  * @param s State.
  * @returns Current selected circuit id.
  */
-export const selectCurrentCircuitId = (s: RootStateType): string | undefined =>
-    s.circuitsState.selectedid;
+export const selectCurrentCircuitKey = (s: RootStateType): string | undefined =>
+    s.circuitsState.selectedKey;
 
 /**
  * Sorted and filtered circuits selector.
@@ -27,6 +27,6 @@ export const selectCircuits = createSelector(selectCircuitsList, circuits => cir
  */
 export const selectCurrentCircuit = createSelector(
     selectCircuits,
-    selectCurrentCircuitId,
+    selectCurrentCircuitKey,
     (circuits, selectedid) => circuits.find(x => x._key === selectedid),
 );

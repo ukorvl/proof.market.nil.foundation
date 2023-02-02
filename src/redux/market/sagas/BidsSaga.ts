@@ -14,7 +14,7 @@ import {
     UpdateIsLoadingBids,
     UpdateBidsError,
 } from '../actions';
-import { selectCurrentCircuitId } from '../selectors';
+import { selectCurrentCircuitKey } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateBidsDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -38,9 +38,9 @@ export function* BidsSaga(): SagaIterator<void> {
  * @yields
  */
 function* GetBidsSaga(): SagaIterator<void> {
-    const circuitId: string | undefined = yield select(selectCurrentCircuitId);
+    const circuitKey: string | undefined = yield select(selectCurrentCircuitKey);
 
-    if (circuitId === undefined) {
+    if (circuitKey === undefined) {
         return;
     }
 
@@ -48,7 +48,7 @@ function* GetBidsSaga(): SagaIterator<void> {
         yield put(UpdateBidsError(false));
         yield put(UpdateIsLoadingBids(true));
 
-        const bids: Bid[] = yield call(ProtectedCall, getBids, { statement_key: circuitId }, 1000);
+        const bids: Bid[] = yield call(ProtectedCall, getBids, { statement_key: circuitKey }, 1000);
 
         if (bids !== undefined) {
             yield put(UpdateBidsList(bids));

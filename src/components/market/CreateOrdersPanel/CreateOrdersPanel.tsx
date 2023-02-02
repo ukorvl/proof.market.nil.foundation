@@ -23,7 +23,7 @@ const socialLinks = links.filter(({ icon }) => ['discord', 'telegram'].includes(
  */
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedKey);
 
     return (
         <DashboardCard>

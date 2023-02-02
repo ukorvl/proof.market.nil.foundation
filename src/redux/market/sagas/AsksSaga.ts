@@ -14,7 +14,7 @@ import {
     UpdateIsLoadingAsks,
     UpdateAsksError,
 } from '../actions';
-import { selectCurrentCircuitId } from '../selectors';
+import { selectCurrentCircuitKey } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateAsksDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -38,7 +38,7 @@ export function* AsksSaga(): SagaIterator<void> {
  * @yields
  */
 function* GetAsksSaga(): SagaIterator<void> {
-    const circuitId: string | undefined = yield select(selectCurrentCircuitId);
+    const circuitId: string | undefined = yield select(selectCurrentCircuitKey);
 
     if (circuitId === undefined) {
         return;
