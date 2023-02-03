@@ -9,7 +9,7 @@ import { Spinner } from '@nilfoundation/react-components';
 import type { ListChildComponentProps } from 'react-window';
 import { Table, TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
 import { formatDate, renderDashOnEmptyValue } from 'src/utils';
-import type { Ask, TradeHistoryData } from 'src/models';
+import type { Ask } from 'src/models';
 import { useInfiniteLoadItems } from 'src/hooks';
 import { getAsks } from 'src/api';
 import styles from './TradeHistory.module.scss';
@@ -56,7 +56,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
 
     const isItemLoaded = (index: number) => !!items[index];
 
-    const Element = ({ index, style }: ListChildComponentProps<TradeHistoryData>) => {
+    const Element = ({ index, style }: ListChildComponentProps<Ask>) => {
         if (!isItemLoaded(index)) {
             return <Spinner grow />;
         }
