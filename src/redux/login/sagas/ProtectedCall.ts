@@ -40,7 +40,7 @@ export function* ProtectedCall<T extends (...args: any[]) => any>(
             yield put(SetIsOnline(true));
         }
 
-        if (e?.response?.data?.code === 401) {
+        if (e?.response?.status === 401) {
             yield put(UpdateUserName(null));
         }
 

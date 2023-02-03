@@ -3,8 +3,9 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
-import { FixedSizeList as List, FixedSizeListProps } from 'react-window';
+import type { ReactElement } from 'react';
+import type { FixedSizeListProps } from 'react-window';
+import { FixedSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 
 /**

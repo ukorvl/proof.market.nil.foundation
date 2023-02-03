@@ -14,10 +14,14 @@ const httpFetcher = createBearerHttpClient('/ask');
  *
  * @param {GetOrdersParameters} parameters Parameters.
  * @param limit Response limit.
+ * @param startFrom Start from.
  * @returns Asks.
  */
-export const getAsks = (parameters: GetOrdersParameters, limit?: number): Promise<Ask[]> =>
-    httpFetcher.get(getApiUrlByParameters(parameters, limit));
+export const getAsks = (
+    parameters: GetOrdersParameters,
+    limit?: number,
+    startFrom?: number,
+): Promise<Ask[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom));
 
 /**
  * Create Ask.

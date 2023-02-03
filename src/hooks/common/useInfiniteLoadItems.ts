@@ -12,14 +12,7 @@ const requestCache: Record<string, boolean> = {};
  * Hook parameters type.
  */
 type UseInfiniteLoadItemsParams<T> = {
-    fetcher: (
-        length: number,
-        start: number,
-        ...args: never[]
-    ) => Promise<{
-        hasNextPage: boolean;
-        items: T[];
-    }>;
+    fetcher: (length: number, start: number, ...args: never[]) => Promise<T[]>;
 };
 
 /**
@@ -40,7 +33,6 @@ type UseInfiniteLoadItemsReturnType<T> = {
  * @returns .
  */
 export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<T>) => {
-    const [hasNextPage, setHasNextPage] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -65,10 +57,7 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
             try {
                 setLoading(true);
 
-                const result = await fetcher(length, startIndex);
-                const { items: loadedItems, hasNextPage } = result;
-
-                setHasNextPage(hasNextPage);
+                const loadedItems = await fetcher(length, startIndex);
                 setLoading(false);
 
                 loadedItems.forEach((item, index) => {
@@ -79,11 +68,10 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
                 setLoading(false);
             }
         },
-        [fetcher, setError, setLoading, setHasNextPage],
+        [fetcher, setError, setLoading],
     );
 
     return {
-        hasNextPage,
         items,
         loading,
         error,

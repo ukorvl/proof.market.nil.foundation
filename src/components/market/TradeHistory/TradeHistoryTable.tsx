@@ -5,11 +5,13 @@
 
 import type { ReactElement } from 'react';
 import { memo } from 'react';
-import { Spinner, Table } from '@nilfoundation/react-components';
-import { TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
+import { Spinner } from '@nilfoundation/react-components';
+import type { ListChildComponentProps } from 'react-window';
+import { Table, TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
 import { formatDate, renderDashOnEmptyValue } from 'src/utils';
-import type { TradeHistoryData } from 'src/models';
+import type { Ask, TradeHistoryData } from 'src/models';
 import { useInfiniteLoadItems } from 'src/hooks';
+import { getAsks } from 'src/api';
 import styles from './TradeHistory.module.scss';
 
 /**
@@ -43,10 +45,10 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
 export const TradeHistoryTable = memo(function TradeHistoryTable({
     selctedCircuitKey,
 }: TradeHistoryTableProps): ReactElement {
-    const { items, loadMoreItems, loading, hasNextPage, error } =
-        useInfiniteLoadItems<TradeHistoryData>({
-            fetcher: (length, start) => getCompletedAsksByLimit(length, start, selctedCircuitId),
-        });
+    const { items, loadMoreItems, loading, error } = useInfiniteLoadItems<Ask>({
+        fetcher: (length, start) =>
+            getAsks({ statement_key: selctedCircuitKey, status: 'completed' }, length, start),
+    });
 
     // const itemsLength = Object.keys(items).length;
     // const isItemLoaded = (index: number) => !hasNextPage || index < itemsLength;
@@ -59,15 +61,15 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
             return <Spinner grow />;
         }
 
-        const { type, time, cost, generation_time } = items[index];
+        const { cost, generation_time, matched_time } = items[index];
 
         return (
             <div
                 style={style}
-                className={`${type}TextColor`}
+                className={`TextColor`}
                 role="row"
             >
-                <TCell>{formatDate(time, 'DD.MM HH:mm')}</TCell>
+                <TCell>{formatDate(matched_time!, 'DD.MM HH:mm')}</TCell>
                 <TCell>{cost.toFixed(4)}</TCell>
                 <TCell>{renderDashOnEmptyValue(generation_time)}</TCell>
             </div>
