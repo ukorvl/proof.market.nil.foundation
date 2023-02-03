@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useState } from 'react';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
 import { ChartType } from 'src/enums';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import { DashboardCard, FullScreenView } from '../../common';

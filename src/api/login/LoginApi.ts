@@ -4,10 +4,9 @@
  */
 
 import { createBearerHttpClient } from '../common';
-import { LoginData, AuthData } from '../../models';
+import type { LoginData, AuthData } from '../../models';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const httpFetcher = createBearerHttpClient(`${databaseUrl}/_open/auth`);
+const httpFetcher = createBearerHttpClient('/user', false, false);
 
 /**
  * Login.
@@ -16,7 +15,7 @@ const httpFetcher = createBearerHttpClient(`${databaseUrl}/_open/auth`);
  * @returns .
  */
 export const login = (loginData: LoginData): Promise<AuthData> =>
-    httpFetcher.post<AuthData, LoginData>('', loginData);
+    httpFetcher.post<AuthData, LoginData>('/signin', loginData);
 
 /**
  * Renew jtw tocken.

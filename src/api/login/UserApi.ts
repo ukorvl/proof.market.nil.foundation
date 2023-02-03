@@ -5,9 +5,7 @@
 
 import { createBearerHttpClient } from '../common';
 
-const db = process.env.REACT_APP_DBMS_DEFAULT_DATABASE;
-const apiUrl = `_db/${db}/${db}/user/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
+const httpFetcher = createBearerHttpClient('/user');
 
 /**
  * Get user balance.
@@ -16,4 +14,4 @@ const httpFetcher = createBearerHttpClient(apiUrl);
  * @returns .
  */
 export const getUserBalance = (user: string): Promise<number | undefined> =>
-    httpFetcher.get(`${user}/balance`);
+    httpFetcher.get(`/${user}/balance`);

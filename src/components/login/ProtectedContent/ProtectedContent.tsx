@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { ReactElement, ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Size, Variant } from '@nilfoundation/react-components';
 import { Path } from 'src/routing';
 import { useAuth } from 'src/hooks';
@@ -35,6 +35,7 @@ export const ProtectedContent = ({
     overlayButtonText = 'Sign in',
 }: ProtectedComponentProps): ReactElement => {
     const { isAuthentificated, isReadonly } = useAuth();
+    const { pathname } = useLocation();
     const navigate = useNavigate();
 
     return (
@@ -46,7 +47,7 @@ export const ProtectedContent = ({
                         <Button
                             variant={Variant.success}
                             size={Size.lg}
-                            onClick={() => navigate(Path.login)}
+                            onClick={() => navigate(Path.login, { state: { from: pathname } })}
                         >
                             {overlayButtonText}
                         </Button>

@@ -3,12 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Label } from '@nilfoundation/react-components';
-import { Cell } from 'react-table';
-import { OrderBookTableData } from 'src/models';
+import type { Cell } from 'react-table';
 import { TCell } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
+import type { OrderBookTableData } from 'src/models';
 
 /**
  * Props.

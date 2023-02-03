@@ -5,14 +5,29 @@
   display: flex;
 }
 
+.balanceContainer {
+  width: 32rem;
+  display: flex !important;
+  flex-flow: column nowrap;
+  align-items: flex-start !important;
+  font-size: inherit !important;
+}
+
+.balanceTitle {
+  color: $c-secondary !important;
+}
+
 .balance {
-  margin: 0 1rem 0 3rem;
-  max-width: 12rem;
+  color: $c-secondary-darker !important;
 }
 
 .dropdown {
   display: inline-block;
   margin-left: 2px;
+
+  li[role="separator"] {
+    background-color: $c-base-light !important;
+  }
 }
 
 .button {

@@ -6,4 +6,4 @@
 export * from './charts';
 export * from './orderBook';
 export * from './manageOrders';
-export * from './useSelectedCircuitId';
+export * from './useSelectedCircuitKey';

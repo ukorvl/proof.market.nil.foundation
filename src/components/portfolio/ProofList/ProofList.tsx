@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { ListGroup, Spinner } from '@nilfoundation/react-components';
 import { selectProofList, useAppSelector } from 'src/redux';
 import { useSelectedProofId } from 'src/hooks';
@@ -58,7 +58,7 @@ const ProofListViewFactory = (
                     {proofList.map(x => (
                         <ProofListItem
                             proof={x}
-                            key={x.id}
+                            key={x._key}
                         />
                     ))}
                 </ListGroup>

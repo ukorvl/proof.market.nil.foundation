@@ -3,15 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import {
-    KeyboardEventHandler,
-    ReactElement,
-    ReactNode,
-    useState,
-    Children,
-    isValidElement,
-    cloneElement,
-} from 'react';
+import type { KeyboardEventHandler, ReactElement, ReactNode } from 'react';
+import { useState, Children, isValidElement, cloneElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
 import styles from './Details.module.scss';
 

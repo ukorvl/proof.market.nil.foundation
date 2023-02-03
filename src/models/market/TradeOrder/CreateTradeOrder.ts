@@ -10,9 +10,9 @@ export interface CreateTradeOrder {
     /**
      * Id of related circuit.
      */
-    circuit_id: number;
+    statement_key: string;
     /**
-     * Cost, USD.
+     * Cost.
      */
     cost: number;
     /**

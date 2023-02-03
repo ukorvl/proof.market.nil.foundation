@@ -4,21 +4,21 @@
  */
 
 import { useMemo } from 'react';
-import {
+import { useSelector } from 'react-redux';
+import { dequal as deepEqual } from 'dequal';
+import sum from 'lodash/sum';
+import type {
     CandlestickData,
     HistogramData,
     LineData,
     UTCTimestamp,
     WhitespaceData,
 } from 'lightweight-charts';
-import { useSelector } from 'react-redux';
-import { dequal as deepEqual } from 'dequal';
-import sum from 'lodash/sum';
 import { useAppSelector, selectCompletedAsks } from 'src/redux';
-import { Ask, Bid } from 'src/models';
 import { getUTCTimestamp } from 'src/utils';
 import { DateUnit } from 'src/enums';
 import colors from 'src/styles/export.module.scss';
+import type { Ask, Bid } from 'src/models';
 
 /**
  * Hook return type.
@@ -70,7 +70,7 @@ export const useGetCircuitDashboardData = (
  */
 const reduceOrdersByDate = <T extends Bid | Ask>(asks: T[], dataRange: DateUnit) => {
     return asks.reduce((previousValue: Record<string, T[]>, currentValue: T) => {
-        const date = getUTCTimestamp(currentValue.timestamp!, dataRange);
+        const date = getUTCTimestamp(currentValue.updatedOn!, dataRange);
 
         if (!previousValue[date]) previousValue[date] = [];
 
@@ -120,7 +120,7 @@ const getProofGenTimeData = <T extends Bid | Ask>(
     ordersGrouppedByDate: Record<string, T[]>,
 ): LineData[] => {
     return Object.keys(ordersGrouppedByDate).map(x => {
-        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.eval_time);
+        const ordersEvalTime = ordersGrouppedByDate[x].map(x => x.generation_time);
         const averageEvalTime = sum(ordersEvalTime) / ordersEvalTime.length;
 
         return { time: Number(x) as UTCTimestamp, value: averageEvalTime };

@@ -1,0 +1,50 @@
+@import "src/styles/constants.scss";
+
+%activeState {
+  background-color: $c-base-light !important;
+  border: 1px dashed $c-secondary-darker !important;
+
+  .icon {
+    opacity: 0.2;
+  }
+
+  .placeholder {
+    color: $c-secondary;
+  }
+}
+
+.container {
+  min-height: 48px;
+  position: relative;
+  background-color: $c-base;
+  border-radius: 4px;
+  border: 1px solid $c-base-light;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    @extend %activeState;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6rem;
+  opacity: 0.1;
+}
+
+.placeholder {
+  color: $c-secondary-darker;
+  vertical-align: middle;
+}
+
+.dragActive {
+  @extend %activeState;
+}

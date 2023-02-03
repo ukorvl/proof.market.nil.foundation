@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useMemo } from 'react';
+import type { ReactElement } from 'react';
+import { useContext, useMemo } from 'react';
 import { useGetCircuitDashboardData } from 'src/hooks';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from '../ChartTemplate';

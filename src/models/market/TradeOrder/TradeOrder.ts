@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CreateTradeOrder } from './CreateTradeOrder';
-import { TradeOrderStatus } from './TradeOrderStatus';
+import type { CreateTradeOrder } from './CreateTradeOrder';
+import type { TradeOrderStatus } from './TradeOrderStatus';
 
 /**
  * Trade order.
@@ -13,7 +13,7 @@ export interface TradeOrder extends CreateTradeOrder {
     /**
      * Id.
      */
-    id: string;
+    _key: string;
     /**
      * Order status.
      */
@@ -25,5 +25,13 @@ export interface TradeOrder extends CreateTradeOrder {
     /**
      * Time of trade order creation.
      */
-    init_time: string;
+    createdOn: string;
+    /**
+     * Matched time.
+     */
+    matched_time?: string;
+    /**
+     * Real generation time.
+     */
+    generation_time?: number;
 }

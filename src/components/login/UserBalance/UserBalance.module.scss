@@ -1,3 +1,5 @@
+@import "src/styles/mixins/overflowEllipsis";
+
 .balance {
   display: flex;
   align-items: center;
@@ -9,9 +11,8 @@
 }
 
 .text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @include overflowEllipsis;
+  margin-right: 0.5rem;
 }
 
 .hiddenText {
@@ -21,5 +22,9 @@
 
 .currency {
   flex-shrink: 0;
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.label {
+  padding-bottom: 0.3rem !important;
 }

@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Ask, Bid } from 'src/models';
+import type { Ask, Bid } from 'src/models';
 
 /**
  *
@@ -12,4 +12,4 @@ import { Ask, Bid } from 'src/models';
  * @returns Comparsion result.
  */
 export const sortTradeOrdersByDate = <T extends Bid | Ask>(first: T, second: T): number =>
-    Date.parse(first.init_time) - Date.parse(second.init_time);
+    Date.parse(first.createdOn) - Date.parse(second.createdOn);

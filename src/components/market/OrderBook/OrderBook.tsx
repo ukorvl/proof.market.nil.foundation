@@ -3,10 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { useGetOrderBookData, UseGetOrderBookDataReturnType, useLocalStorage } from 'src/hooks';
-import { OrderBookPriceStep } from 'src/enums';
+import type { UseGetOrderBookDataReturnType } from 'src/hooks';
+import { useGetOrderBookData, useLocalStorage } from 'src/hooks';
+import type { OrderBookPriceStep } from 'src/enums';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { OrderBookTable } from './OrderBookTable';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { DashboardCard } from '../../common';
@@ -77,7 +79,9 @@ const OrderBookViewFactory = ({
                             <div className={styles.lastDealTitle}>Last deal:</div>
                             {lastOrderData.cost && (
                                 <div className={`${lastOrderData.type}TextColor`}>
-                                    {`${lastOrderData.cost.toFixed(4)} $`}
+                                    {`${lastOrderData.cost.toFixed(
+                                        4,
+                                    )} ${siteMoneyTickerAbbreviation}`}
                                 </div>
                             )}
                         </div>

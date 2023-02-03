@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import sum from 'lodash/sum';
 import round from 'lodash/round';
-import { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookTableData } from 'src/models';
 import {
     selectBidsList,
     selectAsksList,
@@ -17,6 +16,7 @@ import {
     selectCurrentUserBids,
 } from 'src/redux';
 import { OrderBookPriceStep } from 'src/enums';
+import type { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookTableData } from 'src/models';
 
 /**
  * Hook props.
@@ -157,7 +157,7 @@ const createOrderBookData = <T extends Bid | Ask>(
             eval_time: parsedKey?.eval_time,
             ordersAmount: value.length,
             type: orderType,
-            userOrdersAmount: value.filter(x => userOrders.some(y => y.id === x.id)).length,
+            userOrdersAmount: value.filter(x => userOrders.some(y => y._key === x._key)).length,
         });
     });
 

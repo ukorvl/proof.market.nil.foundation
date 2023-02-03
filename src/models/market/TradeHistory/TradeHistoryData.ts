@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { TradeOrderChange } from '../TradeOrder';
+import type { TradeOrderChange } from '../TradeOrder';
 
 /**
  * Trade history data.
@@ -11,6 +11,6 @@ import { TradeOrderChange } from '../TradeOrder';
 export type TradeHistoryData = {
     time: string;
     cost: number;
-    eval_time?: number;
+    generation_time?: number;
     type: TradeOrderChange;
 };

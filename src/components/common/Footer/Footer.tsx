@@ -3,8 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
+import { socialLinks } from 'src/constants';
 import { SocialLinks } from '../SocialLinks';
 import { Copyright } from '../Copyright';
 import styles from './Footer.module.scss';
@@ -18,7 +19,10 @@ export const Footer = (): ReactElement => (
     <Container className={styles.footer}>
         <Row>
             <Col>
-                <SocialLinks bottomIndent />
+                <SocialLinks
+                    socialLinks={socialLinks}
+                    bottomIndent
+                />
             </Col>
         </Row>
         <Row className="text-center">

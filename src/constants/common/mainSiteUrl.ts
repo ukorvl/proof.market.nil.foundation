@@ -6,4 +6,4 @@
 /**
  * Main site url.
  */
-export const mainSiteAddress = 'https://nil.foundation';
+export const mainSiteUrl = 'https://nil.foundation';

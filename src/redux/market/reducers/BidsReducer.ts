@@ -4,7 +4,7 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { Bid } from 'src/models';
+import type { Bid } from 'src/models';
 import {
     UpdateBidsList,
     AddBid,
@@ -53,6 +53,6 @@ export const BidsReducer = createReducer(initialState, builder =>
         }))
         .addCase(RemoveBid, (state, { payload }) => ({
             ...state,
-            asks: state.bids.filter(x => payload !== x.id),
+            asks: state.bids.filter(x => payload !== x._key),
         })),
 );

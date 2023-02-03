@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Proof } from '../../portfolio';
-import { TradeOrder } from '../TradeOrder';
+import type { Proof } from '../../portfolio';
+import type { TradeOrder } from '../TradeOrder';
 
 /**
  * Bid.
@@ -17,9 +17,9 @@ export interface BidDto extends TradeOrder {
     /**
      * Proof (when generated, either - null).
      */
-    proof: Proof['id'] | null;
+    proof: Proof['_key'] | null;
     /**
      * Time, when bid was accepted, either - null.
      */
-    timestamp: string | null;
+    updatedOn: string | null;
 }

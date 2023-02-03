@@ -6,7 +6,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { selectSelectedProofId, UpdateSelectedProofId, useAppSelector } from 'src/redux';
+import { selectSelectedProofKey, UpdateSelectedProofKey, useAppSelector } from 'src/redux';
 import { RouterParam } from 'src/enums';
 
 /**
@@ -14,22 +14,20 @@ import { RouterParam } from 'src/enums';
  */
 export const useSelectedProofId = (): void => {
     const dispatch = useDispatch();
-    const selectedProofId = useAppSelector(selectSelectedProofId);
-    const proofId = useParams()[RouterParam.proofId];
+    const selectedProofId = useAppSelector(selectSelectedProofKey);
+    const proofKey = useParams()[RouterParam.proofKey];
     const navigate = useNavigate();
 
     useEffect(() => {
-        const idAsNumber = Number(proofId);
-
-        if (selectedProofId === idAsNumber) {
+        if (selectedProofId === proofKey) {
             return;
         }
 
-        if (proofId !== undefined) {
-            dispatch(UpdateSelectedProofId(idAsNumber));
+        if (proofKey !== undefined) {
+            dispatch(UpdateSelectedProofKey(proofKey));
             return;
         }
 
         selectedProofId !== undefined && navigate(`${selectedProofId}`);
-    }, [proofId, dispatch, selectedProofId, navigate]);
+    }, [proofKey, dispatch, selectedProofId, navigate]);
 };

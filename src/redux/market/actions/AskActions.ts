@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Ask } from 'src/models';
+import type { Ask } from 'src/models';
 
 /**
  * Update asks list.
@@ -29,4 +29,4 @@ export const UpdateAsksError = createAction<boolean>('@asks/UPDATE_ERROR');
 /**
  * Remove ask.
  */
-export const RemoveAsk = createAction<Ask['id']>('@asks/REMOVE_ASK');
+export const RemoveAsk = createAction<Ask['_key']>('@asks/REMOVE_ASK');

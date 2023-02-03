@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Column } from 'react-table';
-import { ManageOrdersData } from './ManageOrdersData';
+import type { Column } from 'react-table';
+import type { ManageOrdersData } from './ManageOrdersData';
 
 /**
  * Column.

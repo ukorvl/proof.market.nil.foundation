@@ -4,14 +4,22 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import { UpdateUserBalance, UpdateUserName } from '../actions';
+import type { UserBalance } from 'src/models';
+import {
+    UpdateUserBalance,
+    UpdateUserBalanceIsLoading,
+    UpdateUserBalanceIsLoadingError,
+    UpdateUserName,
+} from '../actions';
 
 /**
  * State.
  */
 export type UserReducerState = {
     name: string | null;
-    balance?: number | null;
+    balance?: UserBalance;
+    balanceIsLoading: boolean;
+    loadingBalanceError: boolean;
 };
 
 /**
@@ -19,7 +27,9 @@ export type UserReducerState = {
  */
 const initialState: UserReducerState = {
     name: null,
-    balance: null,
+    balance: undefined,
+    balanceIsLoading: false,
+    loadingBalanceError: false,
 };
 
 /**
@@ -32,5 +42,11 @@ export const UserReducer = createReducer(initialState, builder =>
         })
         .addCase(UpdateUserBalance, (state, { payload }) => {
             state.balance = payload;
+        })
+        .addCase(UpdateUserBalanceIsLoading, (state, { payload }) => {
+            state.balanceIsLoading = payload;
+        })
+        .addCase(UpdateUserBalanceIsLoadingError, (state, { payload }) => {
+            state.loadingBalanceError = payload;
         }),
 );

@@ -3,27 +3,26 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, ReactNode } from 'react';
-import { Spinner } from '@nilfoundation/react-components';
-import { ListChildComponentProps } from 'react-window';
-import { TradeHistoryData } from 'src/models';
-import { useInfiniteLoadItems } from 'src/hooks';
-import { getCompletedAsksByLimit } from 'src/api';
-import { TRow, TCell, Table, THead, TBody, VirtualList, THeader } from 'src/components';
+import type { ReactElement } from 'react';
+import { memo } from 'react';
+import { Spinner, Table } from '@nilfoundation/react-components';
+import { TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
 import { formatDate, renderDashOnEmptyValue } from 'src/utils';
+import type { TradeHistoryData } from 'src/models';
+import { useInfiniteLoadItems } from 'src/hooks';
 import styles from './TradeHistory.module.scss';
 
 /**
  * Props.
  */
 type TradeHistoryTableProps = {
-    selctedCircuitId: number;
+    selctedCircuitKey: string;
 };
 
 /**
  * Table head configuration.
  */
-const tradeHistoryTableHeadConfig: Array<Record<'Header', ReactNode>> = [
+const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
     {
         Header: 'Time',
     },
@@ -42,7 +41,7 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', ReactNode>> = [
  * @returns React component.
  */
 export const TradeHistoryTable = memo(function TradeHistoryTable({
-    selctedCircuitId,
+    selctedCircuitKey,
 }: TradeHistoryTableProps): ReactElement {
     const { items, loadMoreItems, loading, hasNextPage, error } =
         useInfiniteLoadItems<TradeHistoryData>({
@@ -55,14 +54,12 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
 
     const isItemLoaded = (index: number) => !!items[index];
 
-    console.log(items);
-
     const Element = ({ index, style }: ListChildComponentProps<TradeHistoryData>) => {
         if (!isItemLoaded(index)) {
             return <Spinner grow />;
         }
 
-        const { type, time, cost, eval_time } = items[index];
+        const { type, time, cost, generation_time } = items[index];
 
         return (
             <div
@@ -72,7 +69,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
             >
                 <TCell>{formatDate(time, 'DD.MM HH:mm')}</TCell>
                 <TCell>{cost.toFixed(4)}</TCell>
-                <TCell>{renderDashOnEmptyValue(eval_time)}</TCell>
+                <TCell>{renderDashOnEmptyValue(generation_time)}</TCell>
             </div>
         );
     };

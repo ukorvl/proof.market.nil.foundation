@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from 'src/api';
 import { useAuth, useLogin } from 'src/hooks';
 

@@ -1,5 +1,6 @@
 @import "src/styles/mixins/hideScrollbar";
 @import "src/styles/constants.scss";
+@import "src/styles/mixins/overflowEllipsis";
 
 .table {
   display: flex;
@@ -45,9 +46,7 @@
     font-size: 1.2rem;
 
     > span {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      @include overflowEllipsis;
     }
   }
 }

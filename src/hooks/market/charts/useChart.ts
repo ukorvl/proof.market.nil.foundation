@@ -3,8 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { RefObject, useEffect, useState } from 'react';
-import { createChart, ColorType, IChartApi, DeepPartial, ChartOptions } from 'lightweight-charts';
+import type { RefObject } from 'react';
+import { useEffect, useState } from 'react';
+import { createChart, ColorType } from 'lightweight-charts';
+import type { IChartApi, DeepPartial, ChartOptions } from 'lightweight-charts';
 import colors from 'src/styles/export.module.scss';
 
 /**

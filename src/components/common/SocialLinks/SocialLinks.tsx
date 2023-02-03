@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Icon } from '@nilfoundation/react-components';
-import { socialLinks } from '../../../constants';
+import type { socialLinks as links } from 'src/constants';
 import styles from './SocialLinks.module.scss';
 
 /**
@@ -14,6 +14,7 @@ import styles from './SocialLinks.module.scss';
 type SocialLinksProps = {
     className?: string;
     bottomIndent?: boolean;
+    socialLinks: typeof links;
 };
 
 /**
@@ -22,7 +23,11 @@ type SocialLinksProps = {
  * @param {SocialLinksProps} props Props.
  * @returns React component.
  */
-export const SocialLinks = ({ className, bottomIndent }: SocialLinksProps): ReactElement => (
+export const SocialLinks = ({
+    className,
+    bottomIndent,
+    socialLinks,
+}: SocialLinksProps): ReactElement => (
     <ul
         aria-label="Social media links"
         className={`${styles.socialLinks} ${className ?? ''} ${

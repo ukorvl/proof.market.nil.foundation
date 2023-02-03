@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import { Bid } from 'src/models';
+import type { Bid } from 'src/models';
 
 /**
  * Update bids list.
@@ -29,4 +29,4 @@ export const UpdateBidsError = createAction<boolean>('@bids/UPDATE_ERROR');
 /**
  * Remove bid.
  */
-export const RemoveBid = createAction<Bid['id']>('@bids/REMOVE_BID');
+export const RemoveBid = createAction<Bid['_key']>('@bids/REMOVE_BID');

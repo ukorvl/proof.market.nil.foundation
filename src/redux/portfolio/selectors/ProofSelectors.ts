@@ -4,8 +4,8 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { Proof } from 'src/models';
-import { RootStateType } from 'src/redux';
+import type { Proof } from 'src/models';
+import type { RootStateType } from 'src/redux';
 
 /**
  * Select all proofs from state.
@@ -16,19 +16,19 @@ import { RootStateType } from 'src/redux';
 export const selectProofList = (s: RootStateType): Proof[] => s.proofState.proofs;
 
 /**
- * Select selected proof id.
+ * Select selected proof key.
  *
  * @param s State.
- * @returns Selected proof id.
+ * @returns Selected proof key.
  */
-export const selectSelectedProofId = (s: RootStateType): number | undefined =>
-    s.proofState.selectedProofId;
+export const selectSelectedProofKey = (s: RootStateType): string | undefined =>
+    s.proofState.selectedProofKey;
 
 /**
  * Select current selected proof.
  */
 export const selectSelectedProof = createSelector(
     selectProofList,
-    selectSelectedProofId,
-    (proofs, id) => proofs.find(p => p.id === id),
+    selectSelectedProofKey,
+    (proofs, key) => proofs.find(p => p._key === key),
 );

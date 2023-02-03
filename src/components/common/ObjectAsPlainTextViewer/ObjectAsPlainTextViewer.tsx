@@ -3,13 +3,13 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import styles from './ObjectAsPlainTextViewer.module.scss';
 
 /**
  * Props.
  */
-type ObjectAsPlainTextViewerProps<T extends Record<string, string | number | undefined>> = {
+type ObjectAsPlainTextViewerProps<T extends Record<string, unknown>> = {
     data: T;
     className?: string;
 };
@@ -20,7 +20,7 @@ type ObjectAsPlainTextViewerProps<T extends Record<string, string | number | und
  * @param {ObjectAsPlainTextViewerProps} props Props.
  * @returns React component.
  */
-export const ObjectAsPlainTextViewer = <T extends Record<string, string | number | undefined>>({
+export const ObjectAsPlainTextViewer = <T extends Record<string, unknown>>({
     data,
     className,
 }: ObjectAsPlainTextViewerProps<T>): ReactElement => {
@@ -32,8 +32,12 @@ export const ObjectAsPlainTextViewer = <T extends Record<string, string | number
                         key={x}
                         className={styles.item}
                     >
-                        <strong>{x}</strong>
-                        <span>{`: ${y}`}</span>
+                        {!!x && !!y && (
+                            <>
+                                <strong>{x}</strong>
+                                <span>{`: ${y}`}</span>
+                            </>
+                        )}
                     </li>
                 ),
             )}

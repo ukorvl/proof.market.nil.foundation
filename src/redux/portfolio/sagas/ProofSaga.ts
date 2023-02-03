@@ -4,18 +4,18 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { SagaIterator } from '@redux-saga/core';
+import type { SagaIterator } from '@redux-saga/core';
 import { getProofs } from 'src/api';
-import { Proof } from 'src/models';
+import type { Proof } from 'src/models';
 import {
     UpdateProofList,
     UpdateIsLoadingProofs,
     UpdateProofsError,
-    UpdateSelectedProofId,
+    UpdateSelectedProofKey,
 } from '../actions';
-import { RootStateType } from '../../RootStateType';
 import { ProtectedCall, UpdateUserName } from '../../login';
-import { selectSelectedProofId } from '../selectors';
+import { selectSelectedProofKey } from '../selectors';
+import type { RootStateType } from '../../RootStateType';
 
 const selectUser = (s: RootStateType) => s.userState.name;
 
@@ -64,9 +64,9 @@ function* GetProofSaga(): SagaIterator<void> {
  * @yields
  */
 function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectSelectedProofId);
+    const currentProofId = yield select(selectSelectedProofKey);
 
-    if (currentCircuitId) {
+    if (currentProofId) {
         return;
     }
 
@@ -74,5 +74,5 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
         return;
     }
 
-    yield put(UpdateSelectedProofId(payload[0].id));
+    yield put(UpdateSelectedProofKey(payload[0]._key));
 }

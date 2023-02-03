@@ -3,7 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 /**
  * Http client.
@@ -82,6 +83,18 @@ export class HttpClient {
      */
     public async delete<TResponse>(url: string, config?: AxiosRequestConfig): Promise<TResponse> {
         const response = await this.client.delete(url, config);
+        return response.data;
+    }
+
+    /**
+     * HEAD.
+     *
+     * @param url - Url.
+     * @param config - Config.
+     * @memberof HttpClient
+     */
+    public async head<TResponse>(url: string, config?: AxiosRequestConfig): Promise<TResponse> {
+        const response = await this.client.head<TResponse>(url, config);
         return response.data;
     }
 }

@@ -3,14 +3,16 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, memo, useCallback, useMemo, useRef, useState } from 'react';
-import { FilterProps, TableInstance, TableState } from 'react-table';
+import type { ReactElement } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Icon, Input, InputGroup, ListGroup } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import debounce from 'lodash/debounce';
+import type { FilterProps, TableInstance, TableState } from 'react-table';
 import { useAppSelector } from 'src/redux';
-import { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { ReactTable } from 'src/components';
+import type { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { CurcuitsListItem } from './CircuitsListItem';
 import styles from './CircuitsList.module.scss';
 
@@ -71,7 +73,7 @@ const columns: CircuitsListTableColumn[] = [
         disableFilters: true,
     },
     {
-        accessor: 'id',
+        accessor: '_key',
         disableFilters: true,
     },
 ];
@@ -101,16 +103,18 @@ export const CircuitsListTable = memo(function CircuitsListTable({
     const circuitsInfo = useAppSelector(s => s.circuitsState.circuitsInfo, deepEqual);
 
     const tableData: CircuitsListData[] = useMemo(() => {
-        return circuitsList.map(x => {
-            const info = circuitsInfo && circuitsInfo.find(y => y.circuit_id === x.id);
+        return circuitsList
+            .filter(x => !x.isPrivate)
+            .map(x => {
+                const info = circuitsInfo && circuitsInfo.find(y => y._key === x._key);
 
-            return {
-                id: x.id,
-                name: `${x.name.toUpperCase()} (${x.info.toUpperCase()})/USD`,
-                cost: info?.current,
-                change: info?.daily_change,
-            };
-        });
+                return {
+                    _key: x._key,
+                    name: `${x.name.toUpperCase()}/${siteMoneyTickerAbbreviation}`,
+                    cost: info?.current,
+                    change: info?.daily_change,
+                };
+            });
     }, [circuitsList, circuitsInfo]);
 
     const renderRows = useCallback(

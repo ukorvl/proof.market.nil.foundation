@@ -3,13 +3,14 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useContext, useState } from 'react';
+import type { ReactElement } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { CreateBid } from 'src/models';
 import { AddBid, useAppSelector } from 'src/redux';
 import { createBid } from 'src/api/market/BidsApi';
+import type { CreateBid } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { CreateTradeOrderForm } from '../CreateTradeOrderForm';
 import { PublicInput } from './PublicInput';
@@ -21,15 +22,13 @@ import { PublicInput } from './PublicInput';
  */
 export const CreateBidForm = (): ReactElement => {
     const { setProcessing } = useContext(OrderManagementContext);
-    const user = useAppSelector(s => s.userState.name)!;
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitKey = useAppSelector(s => s.circuitsState.selectedKey);
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState('');
     const form = useForm<CreateBid>({
         mode: 'onChange',
         defaultValues: {
-            sender: user,
-            circuit_id: selectedCircuitId,
+            statement_key: selectedCircuitKey,
         },
     });
 

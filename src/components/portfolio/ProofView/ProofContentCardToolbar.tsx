@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { KeyboardEventHandler, ReactElement, useMemo } from 'react';
+import type { KeyboardEventHandler, ReactElement } from 'react';
+import { useMemo } from 'react';
 import { Button, Icon, Spinner, Variant } from '@nilfoundation/react-components';
-import { Proof } from 'src/models';
 import { getProofById } from 'src/api';
 import { useDownloadJson } from 'src/hooks';
+import type { Proof } from 'src/models';
 import styles from './ProofContentCard.module.scss';
 
 /**
@@ -25,11 +26,11 @@ type ProofViewHeaderProps = {
  */
 export const ProofContentCardToolbar = ({ proof }: ProofViewHeaderProps): ReactElement => {
     const fetcher = useMemo(
-        () => (proof?.id !== undefined ? () => getProofById(proof.id) : undefined),
-        [proof?.id],
+        () => (proof?._key !== undefined ? () => getProofById(proof._key) : undefined),
+        [proof?._key],
     );
     const { downloadJson, loading } = useDownloadJson({
-        fileName: `proof-${proof?.id}`,
+        fileName: `proof-${proof?._key}`,
         fetcher,
     });
 

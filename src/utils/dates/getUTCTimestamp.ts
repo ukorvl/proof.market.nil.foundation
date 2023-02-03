@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { UTCTimestamp } from 'lightweight-charts';
-import { DateUnit } from 'src/enums';
+import type { UTCTimestamp } from 'lightweight-charts';
+import type { DateUnit } from 'src/enums';
 import { floorDateTo } from './floorDateTo';
 
 /**

@@ -3,8 +3,8 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
-import { selectCurrentCircuitId, useAppSelector } from 'src/redux';
+import type { ReactElement } from 'react';
+import { selectCurrentCircuitKey, useAppSelector } from 'src/redux';
 import { DashboardCard } from '../../common';
 import { TradeHistoryTable } from './TradeHistoryTable';
 import styles from './TradeHistory.module.scss';
@@ -15,14 +15,14 @@ import styles from './TradeHistory.module.scss';
  * @returns React component.
  */
 export const TradeHistory = (): ReactElement => {
-    const selctedCircuitId = useAppSelector(selectCurrentCircuitId);
+    const selctedCircuitId = useAppSelector(selectCurrentCircuitKey);
 
     return (
         <DashboardCard>
             <h4>Trades</h4>
             <div className={styles.container}>
                 {selctedCircuitId !== undefined ? (
-                    <TradeHistoryTable selctedCircuitId={selctedCircuitId} />
+                    <TradeHistoryTable selctedCircuitKey={selctedCircuitId} />
                 ) : (
                     <h5>Select circuit to display trade history.</h5>
                 )}

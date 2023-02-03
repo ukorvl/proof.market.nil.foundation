@@ -4,7 +4,8 @@
  */
 
 import { lazy } from 'react';
-import { Navigate, RouteObject } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 import { RouterParam } from 'src/enums';
 import ProtectedRoute from 'src/components/login/ProtectedRoute/ProtectedRoute';
 import { Path } from './Paths';
@@ -54,7 +55,7 @@ export const routesConfig: RouteObject[] = [
                         element: <MarketView />,
                         children: [
                             {
-                                path: `:${RouterParam.circuitId}`,
+                                path: `:${RouterParam.statementKey}`,
                                 element: <MarketView />,
                             },
                         ],
@@ -69,7 +70,7 @@ export const routesConfig: RouteObject[] = [
                         element: <PortfolioView />,
                         children: [
                             {
-                                path: `:${RouterParam.proofId}`,
+                                path: `:${RouterParam.proofKey}`,
                                 element: <PortfolioView />,
                             },
                         ],

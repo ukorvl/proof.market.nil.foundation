@@ -10,7 +10,7 @@ export type ProofDto = {
     /**
      * Proof unique id.
      */
-    id: number;
+    _key: string;
     /**
      * Internal id.
      */

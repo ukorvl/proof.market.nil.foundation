@@ -3,48 +3,23 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { Proof } from '../../models';
 import { createBearerHttpClient } from '../common';
+import type { Proof } from '../../models';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
-
-/**
- * Get proofs.
- *
- * @param currentUser Current user.
- * @returns Proofs.
- */
-export const getProofs = (currentUser: string): Promise<Proof> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    RETURN UNSET(x, 'proof')
-            `,
-            bindVars: {
-                '@relation': 'proof',
-            },
-        })
-        .then((x: any) => x.result);
+const httpFetcher = createBearerHttpClient('/proof');
 
 /**
- * Get proof by its id.
+ * Get current user proofs.
  *
- * @param proofId Proof id.
  * @returns Proofs.
  */
-export const getProofById = (proofId: number): Promise<Proof> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    FILTER x.id == ${proofId}
-                    RETURN x
-            `,
-            bindVars: {
-                '@relation': 'proof',
-            },
-        })
-        .then((x: any) => x.result);
+export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner');
+
+/**
+ * Get proof by key.
+ *
+ * @param proofKey Proof key.
+ * @returns Proofs.
+ */
+export const getProofById = (proofKey: Proof['_key']): Promise<Proof> =>
+    httpFetcher.get(`/${proofKey}`);

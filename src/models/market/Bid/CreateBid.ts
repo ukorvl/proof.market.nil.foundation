@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { CreateTradeOrder } from '../TradeOrder';
+import type { CreateTradeOrder } from '../TradeOrder';
 
 /**
  * Bid dto.
@@ -12,5 +12,5 @@ export interface CreateBid extends CreateTradeOrder {
     /**
      * Public input.
      */
-    public_input: Record<string, string>;
+    input: Record<string, string>;
 }

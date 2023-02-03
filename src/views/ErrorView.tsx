@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
-import { mainSiteAddress } from 'src/constants';
+import { mainSiteUrl } from 'src/constants';
 
 /**
  * App Error view.
@@ -27,7 +27,7 @@ const ErrorView = (): ReactElement => (
                     Please, try to reload page or leave message to support.
                 </p>
                 <p>
-                    <a href={mainSiteAddress}>{mainSiteAddress}</a>
+                    <a href={mainSiteUrl}>{mainSiteUrl}</a>
                 </p>
             </Col>
         </Row>

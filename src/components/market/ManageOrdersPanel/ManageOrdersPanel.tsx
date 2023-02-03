@@ -3,11 +3,12 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement, useState } from 'react';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
 import { useGetManageOrdersData } from 'src/hooks';
-import { ManageOrdersData } from 'src/models';
+import type { ManageOrdersData } from 'src/models';
 import { DashboardCard } from '../../common';
 import { ProtectedContent } from '../../login';
 import { ManageOrdersTab } from './ManageOrdersTab';
@@ -23,7 +24,7 @@ import './ManageOrdersPanel.scss';
  */
 export const ManageOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<ManageOrdersTab>(ManageOrdersTab.active);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitKey = useAppSelector(s => s.circuitsState.selectedKey);
     const { isError, loadingData, activeOrdersData, historyOrdersData } = useGetManageOrdersData();
 
     return (
@@ -35,7 +36,7 @@ export const ManageOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
-                    {selectedCircuitId !== undefined ? (
+                    {selectedCircuitKey !== undefined ? (
                         tabFactory(
                             tab,
                             isError,

@@ -3,10 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { Nav } from '@nilfoundation/react-components';
 import { Link, useMatch } from 'react-router-dom';
-import { Path } from 'src/routing';
+import type { Path } from 'src/routing';
 
 /**
  * Props.
