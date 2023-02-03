@@ -11,6 +11,6 @@ import type { TradeOrderChange } from '../TradeOrder';
 export type TradeHistoryData = {
     timestamp: string;
     cost: number;
-    eval_time?: number;
+    generation_time?: number;
     type: TradeOrderChange;
 };

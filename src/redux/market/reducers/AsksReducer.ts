@@ -53,6 +53,6 @@ export const AsksReducer = createReducer(initialState, builder =>
         }))
         .addCase(RemoveAsk, (state, { payload }) => ({
             ...state,
-            asks: state.asks.filter(x => payload !== x.id),
+            asks: state.asks.filter(x => payload !== x._key),
         })),
 );

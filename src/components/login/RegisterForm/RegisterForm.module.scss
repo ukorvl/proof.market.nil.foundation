@@ -1,14 +1,10 @@
 .title {
   text-align: center;
-  margin: 0 0 2rem;
+  margin-top: 0;
 }
 
 .description {
   margin-top: 42px;
-}
-
-.social {
-  margin-top: 76px;
 }
 
 .control {
@@ -16,16 +12,17 @@
 }
 
 .form {
-  position: relative;
   height: 100%;
-}
-
-.successMessage {
-  position: absolute;
-  top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .bottomBlock {
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
+}
+
+.heading {
+  text-align: center;
+  margin: 1rem 0 4rem;
 }

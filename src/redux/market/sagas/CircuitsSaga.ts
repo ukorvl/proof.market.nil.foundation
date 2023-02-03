@@ -6,7 +6,7 @@
 import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
-import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -16,10 +16,10 @@ import {
     UpdateIsLoadingCircuitsInfo,
     UpdateIsLoadingCircuitsStats,
     UpdateLastProofProducer,
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
-import { selectCurrentCircuitId } from '../selectors';
+import { selectCurrentCircuitKey } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateCircuitsInfoInterval =
@@ -76,9 +76,9 @@ function* GetCircuitsSaga({
 function* SelectCircuitSaga({
     payload,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
-    const currentCircuitId = yield select(selectCurrentCircuitId);
+    const currentCircuitKey = yield select(selectCurrentCircuitKey);
 
-    if (currentCircuitId) {
+    if (currentCircuitKey) {
         return;
     }
 
@@ -86,7 +86,7 @@ function* SelectCircuitSaga({
         return;
     }
 
-    yield put(UpdateSelectedCircuitId(payload[0].id));
+    yield put(UpdateSelectedCircuitKey(payload[0]._key));
 }
 
 /**
@@ -138,10 +138,14 @@ function* GetCircuitsAdditionalData() {
  * @yields
  */
 function* GetLastProofProducer() {
-    const result: Array<{ circuit_id: string; sender: string }> | undefined = yield call(
-        ProtectedCall,
-        getLastProofProducerData,
-    );
+    try {
+        const result: Array<LastProofProducer> | undefined = yield call(
+            ProtectedCall,
+            getLastProofProducerData,
+        );
 
-    yield put(UpdateLastProofProducer(result));
+        yield put(UpdateLastProofProducer(result));
+    } catch (e) {
+        throw e;
+    }
 }

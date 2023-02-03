@@ -17,7 +17,7 @@ export const LastProofProducer = (): ReactElement => {
     const lastProofProducer = useAppSelector(
         s =>
             s.circuitsState.lastProofProducer?.find(
-                x => `${x.circuit_id}` === `${s.circuitsState.selectedid}`,
+                x => x?.statement_key === `${s.circuitsState.selectedKey}`,
             )?.sender,
     );
 
@@ -25,7 +25,10 @@ export const LastProofProducer = (): ReactElement => {
         <DashboardCard className={styles.container}>
             <h4>Last proof producer:</h4>
             {lastProofProducer ? (
-                <h5>{lastProofProducer}</h5>
+                <h5>
+                    <span className="text-muted">Username:</span>
+                    {` ${lastProofProducer}`}
+                </h5>
             ) : (
                 <h5>No last proof producer data was found.</h5>
             )}

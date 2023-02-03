@@ -7,6 +7,6 @@
  * React router param.
  */
 export const enum RouterParam {
-    proofId = 'proofId',
-    circuitId = 'circuitId',
+    proofKey = 'proofKey',
+    statementKey = 'statementKey',
 }

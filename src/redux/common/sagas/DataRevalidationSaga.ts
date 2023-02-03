@@ -8,7 +8,7 @@ import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
 import { SetPageIsVisible, StartDataRevalidation, StopDataRevalidation } from '../actions';
 
-const stopApiCallsAfterUserLeavesPageTimeout = 3000;
+const stopApiCallsAfterUserLeavesPageTimeout = 25000;
 
 let dataRevalidationIsStopped = false;
 
@@ -41,7 +41,7 @@ function* HandlePageVisibilityChange({
 
         notificationActions?.create({
             title: 'Network warning',
-            message: 'You may need to wait before data updates',
+            message: 'Please, wait before data updates',
             variant: Variant.warning,
         });
 

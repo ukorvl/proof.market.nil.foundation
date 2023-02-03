@@ -16,17 +16,25 @@ import {
     Spinner,
     notificationActions,
 } from '@nilfoundation/react-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
+import debounce from 'lodash/debounce';
 import { useForm } from 'react-hook-form';
 import { Path } from 'src/routing';
+import { socialLinks } from 'src/constants';
 import { SocialLinks } from 'src/components';
-import { signUp } from 'src/api';
 import type { RegisterData } from 'src/models';
+import { signUp, checkIsUsernameUnique } from 'src/api';
 import { AuthCard } from '../AuthCard';
 import styles from './RegisterForm.module.scss';
 
 const usernameRequiredMinLength = 3;
+const usernameAndPwdMaxLength = 30;
+
+/**
+ * Password input type.
+ */
+type PwdInputType = 'password' | 'text';
 
 /**
  * Register form.
@@ -35,12 +43,20 @@ const usernameRequiredMinLength = 3;
  */
 export const RegisterForm = (): ReactElement => {
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [userNameIsUnique, setUserNameIsUnique] = useState(true);
+    const { state } = useLocation();
+    const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
+    const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
+    const switchPwdInputType = () =>
+        setPwdInputType(pwdInputType === 'password' ? 'text' : 'password');
+
     const inputAnimationRef = useRef(null);
     const buttonAnimationRef = useRef(null);
     const userNameInputRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
     const {
         handleSubmit,
+        watch,
         register,
         formState: { isSubmitting, errors, isValid, dirtyFields },
     } = useForm<RegisterData>({ mode: 'onChange' });
@@ -56,9 +72,10 @@ export const RegisterForm = (): ReactElement => {
                 variant: Variant.success,
             });
 
-            navigate(Path.login);
+            navigate(Path.login, { state });
         } catch (e) {
-            setErrorMessage('Register error');
+            const errorMessage = e?.response?.data?.errorMessage ?? 'Register error';
+            setErrorMessage(errorMessage);
         }
     });
 
@@ -69,94 +86,128 @@ export const RegisterForm = (): ReactElement => {
     const { ref, ...restRegister } = register('user', {
         required: true,
         minLength: usernameRequiredMinLength,
+        maxLength: usernameAndPwdMaxLength,
     });
     const showPasswdInput = useMemo(() => !!dirtyFields.user, [dirtyFields.user]);
     const showSubmitButton = useMemo(() => !!dirtyFields.passwd, [dirtyFields.passwd]);
 
-    console.log(dirtyFields, showSubmitButton);
+    const debouncedCheckIsUsernameUnique = useRef(
+        debounce(async (name?: string) => {
+            if (!name) {
+                return;
+            }
+
+            try {
+                await checkIsUsernameUnique(name);
+                setUserNameIsUnique(false);
+            } catch (e) {
+                if (e?.response?.status === 404) {
+                    setUserNameIsUnique(true);
+                }
+            }
+        }, 180),
+    ).current;
+
+    const userInputValue = watch('user');
+    useEffect(() => {
+        debouncedCheckIsUsernameUnique(userInputValue);
+    }, [userInputValue, debouncedCheckIsUsernameUnique]);
 
     return (
         <AuthCard>
             <Form className={styles.form}>
-                <h4 className={styles.title}>Welcome to Proof Market!</h4>
-                <div className="text-center text-muted">Please, enter your username</div>
-                <Form.Group hasError={!!errors['user']}>
-                    <InputGroup
-                        size={Size.lg}
-                        className={styles.control}
-                    >
-                        <InputGroup.Addon>
-                            <Icon
-                                iconName="fa-solid fa-user"
-                                className={styles.icon}
-                            />
-                        </InputGroup.Addon>
-                        <Input
-                            type="text"
-                            id="userName"
-                            placeholder="username"
-                            aria-label="username"
-                            ref={e => {
-                                ref(e);
-                                userNameInputRef.current = e;
-                            }}
-                            {...restRegister}
-                        />
-                    </InputGroup>
-                </Form.Group>
-                <CSSTransition
-                    classNames="fade"
-                    timeout={300}
-                    in={showPasswdInput}
-                    unmountOnExit
-                    nodeRef={inputAnimationRef}
-                >
-                    <div ref={inputAnimationRef}>
-                        <Form.Group hasError={!!errors['passwd']}>
-                            <div className="text-center text-muted">And create a password</div>
-                            <InputGroup
-                                size={Size.lg}
-                                className={styles.control}
-                            >
-                                <InputGroup.Addon>
-                                    <Icon
-                                        iconName="fa-solid fa-lock"
-                                        className={styles.icon}
-                                    />
-                                </InputGroup.Addon>
-                                <Input
-                                    type="text"
-                                    id="password"
-                                    placeholder="password"
-                                    aria-label="password"
-                                    autoComplete="off"
-                                    {...register('passwd', { required: true })}
-                                />
-                            </InputGroup>
-                        </Form.Group>
-                    </div>
-                </CSSTransition>
-                <CSSTransition
-                    classNames="fade"
-                    timeout={300}
-                    in={showSubmitButton}
-                    unmountOnExit
-                    nodeRef={buttonAnimationRef}
-                >
-                    <div ref={buttonAnimationRef}>
-                        <Button
-                            block
-                            variant={Variant.success}
+                <div>
+                    <h4 className={styles.title}>Welcome to Proof Market!</h4>
+                    <div className={`${styles.heading} text-muted`}>Create new account</div>
+                    <Form.Group hasError={!!errors['user'] || !userNameIsUnique}>
+                        <InputGroup
                             size={Size.lg}
-                            disabled={isSubmitting || !isValid}
-                            onClick={onSubmitLogin}
+                            className={styles.control}
                         >
-                            Register
-                            {isSubmitting && <Spinner />}
-                        </Button>
-                    </div>
-                </CSSTransition>
-                {errorMessage && <div className="errorMessage">{errorMessage}</div>}
+                            <InputGroup.Addon>
+                                <Icon
+                                    iconName="fa-solid fa-user"
+                                    className={styles.icon}
+                                />
+                            </InputGroup.Addon>
+                            <Input
+                                type="text"
+                                id="userName"
+                                placeholder="username"
+                                aria-label="username"
+                                ref={e => {
+                                    ref(e);
+                                    userNameInputRef.current = e;
+                                }}
+                                {...restRegister}
+                            />
+                        </InputGroup>
+                        {!userNameIsUnique && <Form.Hint>Username should be unique</Form.Hint>}
+                    </Form.Group>
+                    <CSSTransition
+                        classNames="fade"
+                        timeout={300}
+                        in={showPasswdInput}
+                        unmountOnExit
+                        nodeRef={inputAnimationRef}
+                    >
+                        <div ref={inputAnimationRef}>
+                            <Form.Group hasError={!!errors['passwd']}>
+                                <InputGroup
+                                    size={Size.lg}
+                                    className={styles.control}
+                                >
+                                    <InputGroup.Addon>
+                                        <Icon
+                                            iconName="fa-solid fa-lock"
+                                            className={styles.icon}
+                                        />
+                                    </InputGroup.Addon>
+                                    <Input
+                                        type={pwdInputType}
+                                        id="password"
+                                        placeholder="password"
+                                        aria-label="password"
+                                        autoComplete="off"
+                                        {...register('passwd', {
+                                            required: true,
+                                            maxLength: usernameAndPwdMaxLength,
+                                        })}
+                                    />
+                                    <InputGroup.Buttons>
+                                        <Button onClick={switchPwdInputType}>
+                                            <Icon
+                                                iconName={`fa-solid ${pwdInputIconName}`}
+                                                className={styles.icon}
+                                            />
+                                        </Button>
+                                    </InputGroup.Buttons>
+                                </InputGroup>
+                            </Form.Group>
+                        </div>
+                    </CSSTransition>
+                    <CSSTransition
+                        classNames="fade"
+                        timeout={300}
+                        in={showSubmitButton}
+                        unmountOnExit
+                        nodeRef={buttonAnimationRef}
+                    >
+                        <div ref={buttonAnimationRef}>
+                            <Button
+                                block
+                                variant={Variant.success}
+                                size={Size.lg}
+                                disabled={isSubmitting || !isValid || !userNameIsUnique}
+                                onClick={onSubmitLogin}
+                            >
+                                Register
+                                {isSubmitting && <Spinner />}
+                            </Button>
+                        </div>
+                    </CSSTransition>
+                    {errorMessage && <div className="errorMessage">{errorMessage}</div>}
+                </div>
                 <div className={styles.bottomBlock}>
                     <div className={styles.social}>
                         <h5 className={styles.title}>
@@ -164,10 +215,13 @@ export const RegisterForm = (): ReactElement => {
                                 "Join our Discord's proof-market channel/Telegram for questions/to stay updated"
                             }
                         </h5>
-                        <SocialLinks />
+                        <SocialLinks socialLinks={socialLinks} />
                     </div>
                     <h5 className="text-center text-muted">{'Already have an account? '}</h5>
-                    <Link to={Path.login}>
+                    <Link
+                        to={Path.login}
+                        state={state}
+                    >
                         <Button
                             block
                             variant={Variant.success}

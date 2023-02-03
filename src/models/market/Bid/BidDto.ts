@@ -17,9 +17,9 @@ export interface BidDto extends TradeOrder {
     /**
      * Proof (when generated, either - null).
      */
-    proof: Proof['id'] | null;
+    proof: Proof['_key'] | null;
     /**
      * Time, when bid was accepted, either - null.
      */
-    timestamp: string | null;
+    updatedOn: string | null;
 }

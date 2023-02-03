@@ -33,6 +33,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.1",
     "sass": "^1.54.3",
+    "source-map-explorer": "^2.5.3",
     "web-vitals": "^3.1.0"
   },
   "scripts": {
@@ -44,7 +45,8 @@
     "lint:ts": "eslint --ext=ts,tsx src",
     "lint:editorconfig": "npx editorconfig-checker",
     "prepare": "husky install",
-    "prebuild": "node ./scripts/checkEnv"
+    "prebuild": "node ./scripts/checkEnv",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "browserslist": {
     "production": [

@@ -5,7 +5,7 @@
 
 import type { ReactElement } from 'react';
 import { Container, Row, Col } from '@nilfoundation/react-components';
-import { mainSiteAddress } from 'src/constants';
+import { mainSiteUrl } from 'src/constants';
 
 /**
  * Offline view.
@@ -27,7 +27,7 @@ const OfflineView = (): ReactElement => (
                     Please, try to reload page or leave message to support.
                 </p>
                 <p>
-                    <a href={mainSiteAddress}>{mainSiteAddress}</a>
+                    <a href={mainSiteUrl}>{mainSiteUrl}</a>
                 </p>
             </Col>
         </Row>

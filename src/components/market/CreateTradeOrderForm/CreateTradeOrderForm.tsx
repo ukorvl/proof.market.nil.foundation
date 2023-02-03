@@ -17,6 +17,7 @@ import {
     InputGroup,
 } from '@nilfoundation/react-components';
 import { useAuth } from 'src/hooks';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import type { CreateTradeOrder } from 'src/models';
 import { Details } from '../../common';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
@@ -91,7 +92,7 @@ export const CreateTradeOrderForm = ({
                                     valueAsNumber: true,
                                 })}
                             />
-                            <InputGroup.Addon>USD</InputGroup.Addon>
+                            <InputGroup.Addon>{siteMoneyTickerAbbreviation}</InputGroup.Addon>
                         </InputGroup>
                     )}
                 </BaseFormGroup>

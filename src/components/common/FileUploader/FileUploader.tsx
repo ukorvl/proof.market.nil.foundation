@@ -4,17 +4,17 @@
  */
 
 import type { ReactElement } from 'react';
-import { useState } from 'react';
 import { Icon } from '@nilfoundation/react-components';
+import type { DropzoneOptions } from 'react-dropzone';
 import { useDropzone } from 'react-dropzone';
-import type { DropzoneOptions, FileRejection, DropEvent } from 'react-dropzone';
-import './FileUploader.scss';
+import styles from './FileUploader.module.scss';
 
 /**
  * Props.
  */
 type FileUploaderProps = {
-    title?: string;
+    placeholder?: string;
+    className?: string;
 } & DropzoneOptions;
 
 /**
@@ -23,45 +23,35 @@ type FileUploaderProps = {
  * @returns React component.
  */
 export const FileUploader = ({
-    title = "Drag'n drop some files here, or click to select files",
-    onDrop,
+    placeholder = "Drag'n drop some files here, or click to select files",
+    className,
     ...restOptions
 }: FileUploaderProps): ReactElement => {
-    const [textMessage, setTextMessage] = useState(title);
-
-    const onDropHandler = (
-        acceptedFiles: File[],
-        fileRejections: FileRejection[],
-        event: DropEvent,
-    ) => {
-        if (Object.keys(fileRejections).length !== 0) {
-            setTextMessage('Please submit valid file type');
-        }
-
-        onDrop && onDrop(acceptedFiles, fileRejections, event);
-    };
-
     const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({
         ...restOptions,
-        onDrop: onDropHandler,
     });
 
     return (
         <div
-            className={`fileUploader ${isDragActive ? 'fileUploader-dragActive' : ''}`}
+            className={`${styles.container} ${isDragActive ? styles.dragActive : ''} ${
+                className ?? ''
+            }`}
             {...getRootProps()}
         >
             <input {...getInputProps()} />
             {acceptedFiles.length !== 0 ? (
-                <span className="fileUploader__files">
+                <span>
                     {acceptedFiles.map(x => (
                         <span key={x.name}>{x.name}</span>
                     ))}
                 </span>
             ) : (
-                <span className="fileUploader__message">{textMessage}</span>
+                <span className={styles.placeholder}>{placeholder}</span>
             )}
-            <Icon iconName="fa-solid fa-circle-arrow-up" />
+            <Icon
+                className={styles.icon}
+                iconName="fa-solid fa-circle-arrow-up"
+            />
         </div>
     );
 };

@@ -12,5 +12,5 @@ export interface AskDto extends TradeOrder {
     /**
      * Time, when bid was accepted, either - null.
      */
-    timestamp: string | null;
+    updatedOn: string | null;
 }

@@ -18,7 +18,7 @@ import {
 } from '@nilfoundation/react-components';
 import { CSSTransition } from 'react-transition-group';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Path } from 'src/routing';
 import { login } from 'src/api';
 import { useLogin } from 'src/hooks';
@@ -39,7 +39,8 @@ type PwdInputType = 'password' | 'text';
 export const LoginForm = (): ReactElement => {
     const nodeRef = useRef(null);
     const userNameInputRef = useRef<HTMLInputElement | null>(null);
-    const processLogin = useLogin();
+    const { state } = useLocation();
+    const processLogin = useLogin(state?.from);
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pwdInputType, setPwdInputType] = useState<PwdInputType>('password');
     const pwdInputIconName = pwdInputType === 'password' ? 'fa-eye-slash' : 'fa-eye';
@@ -158,13 +159,16 @@ export const LoginForm = (): ReactElement => {
                     </div>
                 </CSSTransition>
                 <h5 className="text-muted text-center">{"Don't have an account? "}</h5>
-                <Link to={Path.register}>
+                <Link
+                    to={Path.register}
+                    state={state}
+                >
                     <Button
                         block
                         variant={Variant.success}
                         size={Size.lg}
                     >
-                        Request credentials
+                        Sign up
                     </Button>
                 </Link>
             </Form>

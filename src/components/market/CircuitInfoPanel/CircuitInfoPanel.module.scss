@@ -1,6 +1,7 @@
 @import "src/styles/constants.scss";
 @import "src/styles/mixins/hideScrollbar";
 @import "src/styles/mixins/overflowFade";
+@import "src/styles/mixins/overflowEllipsis";
 
 .panel {
   height: 135px;
@@ -28,4 +29,9 @@
   font-size: 1.2rem;
   padding: 0.2rem 0;
   white-space: nowrap;
+}
+
+.name {
+  @include overflowEllipsis;
+  min-width: 15rem;
 }

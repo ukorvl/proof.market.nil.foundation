@@ -6,8 +6,7 @@
 import { createBearerHttpClient } from '../common';
 import type { RegisterData } from '../../models';
 
-const apiUrl = '_db/market/v0_0';
-const httpFetcher = createBearerHttpClient(apiUrl);
+const httpFetcher = createBearerHttpClient('/user', false, false);
 
 /**
  * Register user.
@@ -16,4 +15,13 @@ const httpFetcher = createBearerHttpClient(apiUrl);
  * @returns .
  */
 export const signUp = (registerData: RegisterData): Promise<RegisterData> =>
-    httpFetcher.post('/user/signup', registerData);
+    httpFetcher.post('/signup', registerData);
+
+/**
+ * Check if username is unique.
+ *
+ * @param userNameToCheck Username to check uniqueness.
+ * @returns True if username is unique.
+ */
+export const checkIsUsernameUnique = (userNameToCheck: string): Promise<boolean> =>
+    httpFetcher.head(`/${userNameToCheck}`);

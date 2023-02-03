@@ -4,7 +4,7 @@
  */
 
 import { createAction } from '@reduxjs/toolkit';
-import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 
 /**
  * Update circuits list.
@@ -12,9 +12,11 @@ import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
 export const UpdateCircuitsList = createAction<Circuit[]>('@circuits/UPDATE_CIRCUITS_LIST');
 
 /**
- * Update selected circuit id.
+ * Update selected circuit key.
  */
-export const UpdateSelectedCircuitId = createAction<number>('@circuits/UPDATE_SELECTED_CIRCUIT_ID');
+export const UpdateSelectedCircuitKey = createAction<string>(
+    '@circuits/UPDATE_SELECTED_CIRCUIT_KEY',
+);
 
 /**
  * Update circuits loading state.
@@ -53,6 +55,6 @@ export const UpdateIsLoadingCircuitsStats = createAction<boolean>(
 /**
  * Update last proof producer.
  */
-export const UpdateLastProofProducer = createAction<
-    Array<{ circuit_id: string; sender: string }> | undefined
->('@circuits/UPDATE_LAST_PROOF_PRODUCER');
+export const UpdateLastProofProducer = createAction<Array<LastProofProducer | null> | undefined>(
+    '@circuits/UPDATE_LAST_PROOF_PRODUCER',
+);

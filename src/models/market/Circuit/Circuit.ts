@@ -3,8 +3,6 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import type { CircuitDto } from './CircuitDto';
-
 /**
  * Circuit.
  */
@@ -12,5 +10,33 @@ export type Circuit = {
     /**
      * Id.
      */
-    id: number;
-} & CircuitDto;
+    _key: string;
+    /**
+     * Name.
+     */
+    name: string;
+    /**
+     * .
+     */
+    createdOn?: number;
+    /**
+     * .
+     */
+    updatedOn?: number;
+    /**
+     * Description.
+     */
+    description?: string;
+    /**
+     * .
+     */
+    sender?: string;
+    /**
+     * Childs.
+     */
+    childs: Array<Circuit>;
+    /**
+     * If equals true, statement should be hidden.
+     */
+    isPrivate?: boolean;
+};

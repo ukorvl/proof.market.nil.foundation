@@ -4,10 +4,10 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
+import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import {
     UpdateCircuitsList,
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
     UpdateIsLoadingCircuits,
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -22,14 +22,14 @@ import {
  */
 export type CircuitsReducerState = {
     circuits: Circuit[];
-    selectedid?: number;
+    selectedKey?: string;
     isLoading: boolean;
     error?: boolean;
     circuitsInfo: CircuitInfo[];
     isLoadingCircuitsInfo: boolean;
     circuitsStats: CircuitStats[];
     isLoadingCircuitsStats: boolean;
-    lastProofProducer?: Array<{ circuit_id: string; sender: string }>;
+    lastProofProducer?: Array<LastProofProducer | null>;
 };
 
 /**
@@ -37,7 +37,7 @@ export type CircuitsReducerState = {
  */
 const initialState: CircuitsReducerState = {
     circuits: [],
-    selectedid: undefined,
+    selectedKey: undefined,
     isLoading: false,
     error: false,
     circuitsInfo: [],
@@ -56,10 +56,11 @@ export const CircuitsReducer = createReducer(initialState, builder =>
             ...state,
             circuits: payload,
         }))
-        .addCase(UpdateSelectedCircuitId, (state, { payload }) => ({
-            ...state,
-            selectedid: payload,
-        }))
+        .addCase(UpdateSelectedCircuitKey, (state, { payload }) => {
+            if (state.circuits.some(x => x._key === payload)) {
+                state.selectedKey = payload;
+            }
+        })
         .addCase(UpdateIsLoadingCircuits, (state, { payload }) => ({
             ...state,
             isLoading: payload,

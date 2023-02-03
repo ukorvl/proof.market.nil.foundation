@@ -3,34 +3,21 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
+import { createBearerHttpClient, getApiUrlByParameters } from '../common';
+import type { GetOrdersParameters } from '../common';
 import type { Ask, CreateAsk } from '../../models';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
-
-const createFetcher = createBearerHttpClient('/market/ask');
+const httpFetcher = createBearerHttpClient('/ask');
 
 /**
- * Get asks.
+ * Get asks by parameters.
  *
- * @param circuitId Circuit id.
+ * @param {GetOrdersParameters} parameters Parameters.
+ * @param limit Response limit.
  * @returns Asks.
  */
-export const getAsksByCircuitId = (circuitId: string): Promise<Ask[]> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                FILTER x.circuit_id == ${circuitId}
-                RETURN x`,
-            bindVars: {
-                '@relation': 'ask',
-            },
-            batchSize: 10000,
-        })
-        .then((x: any) => x.result);
+export const getAsks = (parameters: GetOrdersParameters, limit?: number): Promise<Ask[]> =>
+    httpFetcher.get(getApiUrlByParameters(parameters, limit));
 
 /**
  * Create Ask.
@@ -38,7 +25,7 @@ export const getAsksByCircuitId = (circuitId: string): Promise<Ask[]> =>
  * @param data Ask dto.
  * @returns Ask.
  */
-export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('', data);
+export const createAsk = (data: CreateAsk): Promise<Ask> => httpFetcher.post('', data);
 
 /**
  * Remove Ask.
@@ -46,14 +33,5 @@ export const createAsk = (data: CreateAsk): Promise<Ask> => createFetcher.post('
  * @param askToRemoveId Ask to remove id.
  * @returns Ask.
  */
-export const removeAsk = (askToRemoveId: Ask['id']): Promise<void> =>
-    httpFetcher.post('cursor', {
-        query: `
-            FOR x IN @@relation
-                FILTER x.id == ${askToRemoveId}
-                REMOVE { _key: x._key } IN @@relation
-            `,
-        bindVars: {
-            '@relation': 'ask',
-        },
-    });
+export const removeAsk = (askToRemoveId: Ask['_key']): Promise<void> =>
+    httpFetcher.delete(`/${askToRemoveId}`);

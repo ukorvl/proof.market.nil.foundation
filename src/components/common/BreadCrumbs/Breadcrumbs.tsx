@@ -5,7 +5,7 @@
 
 import { Breadcrumbs as NativeBreadcrumbs } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
-import { mainSiteAddress } from 'src/constants';
+import { mainSiteUrl } from 'src/constants';
 import { Path } from 'src/routing';
 import styles from './Breadcrumbs.module.scss';
 
@@ -18,7 +18,7 @@ export const Breadcrumbs = (): JSX.Element => {
     return (
         <NativeBreadcrumbs className={styles.breadcrumbs}>
             <NativeBreadcrumbs.Item
-                href={mainSiteAddress}
+                href={mainSiteUrl}
                 className={styles.item}
             >
                 <span>

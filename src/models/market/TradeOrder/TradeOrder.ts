@@ -13,7 +13,7 @@ export interface TradeOrder extends CreateTradeOrder {
     /**
      * Id.
      */
-    id: string;
+    _key: string;
     /**
      * Order status.
      */
@@ -25,5 +25,13 @@ export interface TradeOrder extends CreateTradeOrder {
     /**
      * Time of trade order creation.
      */
-    init_time: string;
+    createdOn: string;
+    /**
+     * Matched time.
+     */
+    matched_time?: string;
+    /**
+     * Real generation time.
+     */
+    generation_time?: number;
 }

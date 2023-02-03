@@ -6,45 +6,20 @@
 import { createBearerHttpClient } from '../common';
 import type { Proof } from '../../models';
 
-const databaseUrl = `_db/${process.env.REACT_APP_DBMS_DEFAULT_DATABASE}`;
-const apiUrl = `${databaseUrl}/_api/`;
-const httpFetcher = createBearerHttpClient(apiUrl);
+const httpFetcher = createBearerHttpClient('/proof');
 
 /**
- * Get proofs.
+ * Get current user proofs.
  *
- * @param currentUser Current user.
  * @returns Proofs.
  */
-export const getProofs = (currentUser: string): Promise<Proof> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    RETURN UNSET(x, 'proof')
-            `,
-            bindVars: {
-                '@relation': 'proof',
-            },
-        })
-        .then((x: any) => x.result);
+export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner');
 
 /**
- * Get proof by its id.
+ * Get proof by key.
  *
- * @param proofId Proof id.
+ * @param proofKey Proof key.
  * @returns Proofs.
  */
-export const getProofById = (proofId: number): Promise<Proof> =>
-    httpFetcher
-        .post('cursor', {
-            query: `
-                FOR x IN @@relation
-                    FILTER x.id == ${proofId}
-                    RETURN x
-            `,
-            bindVars: {
-                '@relation': 'proof',
-            },
-        })
-        .then((x: any) => x.result);
+export const getProofById = (proofKey: Proof['_key']): Promise<Proof> =>
+    httpFetcher.get(`/${proofKey}`);

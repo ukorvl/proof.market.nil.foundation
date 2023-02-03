@@ -5,7 +5,7 @@
 
 import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import { selectSelectedProofId, useAppSelector } from 'src/redux';
+import { selectSelectedProofKey, useAppSelector } from 'src/redux';
 import { DashboardCard, ObjectAsPlainTextViewer } from 'src/components';
 import type { Proof } from 'src/models';
 import { ProofContentCardToolbar } from './ProofContentCardToolbar';
@@ -17,9 +17,11 @@ import styles from './ProofContentCard.module.scss';
  * @returns React component.
  */
 export const ProofContentCard = (): ReactElement => {
-    const selectedProofId = useAppSelector(selectSelectedProofId);
+    const selectedProofId = useAppSelector(selectSelectedProofKey);
     const isLoadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
-    const proofData = useAppSelector(s => s.proofState.proofs.find(x => x.id === selectedProofId));
+    const proofData = useAppSelector(s =>
+        s.proofState.proofs.find(x => x._key === selectedProofId),
+    );
 
     return (
         <DashboardCard>

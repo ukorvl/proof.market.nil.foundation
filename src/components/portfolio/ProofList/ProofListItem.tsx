@@ -7,7 +7,7 @@ import type { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { Path } from 'src/routing';
-import { selectSelectedProofId, useAppSelector } from 'src/redux';
+import { selectSelectedProofKey, useAppSelector } from 'src/redux';
 import type { Proof } from 'src/models';
 import styles from './ProofList.module.scss';
 
@@ -24,15 +24,15 @@ type ProofListItemProps = {
  * @param {ProofListItemProps} props Props.
  * @returns React component.
  */
-export const ProofListItem = ({ proof: { id } }: ProofListItemProps): ReactElement => {
-    const selectedProofId = useAppSelector(selectSelectedProofId);
-    const isSelected = id === selectedProofId;
+export const ProofListItem = ({ proof: { _key } }: ProofListItemProps): ReactElement => {
+    const selectedProofId = useAppSelector(selectSelectedProofKey);
+    const isSelected = _key === selectedProofId;
 
     return (
         <ListGroup.Item active={isSelected}>
-            <Link to={`${Path.portfolio}/${id}`}>
+            <Link to={`${Path.portfolio}/${_key}`}>
                 <Media className={isSelected ? styles.selected : ''}>
-                    <Media.Body className={styles.itemBody}>{`id: ${id}`}</Media.Body>
+                    <Media.Body className={styles.itemBody}>{`id: ${_key}`}</Media.Body>
                 </Media>
             </Link>
         </ListGroup.Item>

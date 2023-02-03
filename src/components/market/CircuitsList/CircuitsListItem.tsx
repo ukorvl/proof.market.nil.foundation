@@ -7,7 +7,7 @@ import type { ReactElement } from 'react';
 import { ListGroup, Media } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectCurrentCircuitId } from 'src/redux';
+import { selectCurrentCircuitKey } from 'src/redux';
 import { Path } from 'src/routing';
 import type { CircuitsListData } from 'src/models';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
@@ -27,14 +27,14 @@ type CurcuitsListItemProps = {
  * @returns React component.
  */
 export const CurcuitsListItem = ({
-    data: { id, cost, change, name },
+    data: { _key, cost, change, name },
 }: CurcuitsListItemProps): ReactElement => {
-    const selectedId = useSelector(selectCurrentCircuitId);
-    const isSelected = id === selectedId;
+    const selectedKey = useSelector(selectCurrentCircuitKey);
+    const isSelected = _key === selectedKey;
 
     return (
         <ListGroup.Item active={isSelected}>
-            <Link to={`${Path.market}/${id}`}>
+            <Link to={`${Path.market}/${_key}`}>
                 <Media className={isSelected ? styles.selected : ''}>
                     <Media.Body className={styles.itemBody}>{name}</Media.Body>
                     <CircuitsListItemInfo

@@ -7,6 +7,7 @@ import type { ReactElement } from 'react';
 import { useContext, useMemo } from 'react';
 import type { LineWidth } from 'lightweight-charts';
 import { useGetCircuitDashboardData } from 'src/hooks';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import colors from 'src/styles/export.module.scss';
 import { ChartTemplate } from '../ChartTemplate';
 import { ChartSettingsContext } from '../CircuitDashboard';
@@ -34,7 +35,7 @@ export const ProofCostChart = (): ReactElement => {
     return (
         <ChartTemplate
             loadingData={isLoadingChartData}
-            chartName="Proof cost, USD"
+            chartName={`Proof cost, ${siteMoneyTickerAbbreviation}`}
             seriesData={candlestickChartData}
             seriesType="Candlestick"
             seriesOptions={seriesOptions}

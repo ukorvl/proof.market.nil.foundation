@@ -5,16 +5,16 @@
 
 import { call, fork, put, takeLatest, select } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
-import { getAsksByCircuitId } from 'src/api';
+import { getAsks } from 'src/api';
 import { ProtectedCall } from 'src/redux';
 import type { Ask } from 'src/models';
 import {
-    UpdateSelectedCircuitId,
+    UpdateSelectedCircuitKey,
     UpdateAsksList,
     UpdateIsLoadingAsks,
     UpdateAsksError,
 } from '../actions';
-import { selectCurrentCircuitId } from '../selectors';
+import { selectCurrentCircuitKey } from '../selectors';
 import { RevalidateSaga } from '../../common';
 
 const revalidateAsksDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -25,7 +25,7 @@ const revalidateAsksDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVA
  * @yields
  */
 export function* AsksSaga(): SagaIterator<void> {
-    yield takeLatest(UpdateSelectedCircuitId, function* () {
+    yield takeLatest(UpdateSelectedCircuitKey, function* () {
         yield put(UpdateAsksList([]));
         yield fork(GetAsksSaga);
     });
@@ -38,7 +38,7 @@ export function* AsksSaga(): SagaIterator<void> {
  * @yields
  */
 function* GetAsksSaga(): SagaIterator<void> {
-    const circuitId: string | undefined = yield select(selectCurrentCircuitId);
+    const circuitId: string | undefined = yield select(selectCurrentCircuitKey);
 
     if (circuitId === undefined) {
         return;
@@ -48,7 +48,7 @@ function* GetAsksSaga(): SagaIterator<void> {
         yield put(UpdateAsksError(false));
         yield put(UpdateIsLoadingAsks(true));
 
-        const asks: Ask[] = yield call(ProtectedCall, getAsksByCircuitId, circuitId);
+        const asks: Ask[] = yield call(ProtectedCall, getAsks, { statement_key: circuitId }, 1000);
 
         if (asks !== undefined) {
             yield put(UpdateAsksList(asks));

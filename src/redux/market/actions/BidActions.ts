@@ -29,4 +29,4 @@ export const UpdateBidsError = createAction<boolean>('@bids/UPDATE_ERROR');
 /**
  * Remove bid.
  */
-export const RemoveBid = createAction<Bid['id']>('@bids/REMOVE_BID');
+export const RemoveBid = createAction<Bid['_key']>('@bids/REMOVE_BID');

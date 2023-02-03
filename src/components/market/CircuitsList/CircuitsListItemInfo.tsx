@@ -7,6 +7,7 @@ import type { ReactElement } from 'react';
 import { memo } from 'react';
 import { Media, Spinner } from '@nilfoundation/react-components';
 import { useAppSelector } from 'src/redux';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { PriceChangeIndicator } from '../PriceChangeIndicator';
 import styles from './CircuitsList.module.scss';
 
@@ -34,7 +35,11 @@ export const CircuitsListItemInfo = memo(function CircuitsListItemInfo({
 
     return (
         <Media.Item position="right">
-            {cost && <div>{`$${cost.toFixed(4)}`}</div>}
+            {cost && (
+                <div className={styles.cost}>{`${cost.toFixed(
+                    4,
+                )} ${siteMoneyTickerAbbreviation}`}</div>
+            )}
             {!!change && (
                 <PriceChangeIndicator
                     change={change}

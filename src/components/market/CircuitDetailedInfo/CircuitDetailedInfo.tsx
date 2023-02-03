@@ -6,7 +6,7 @@
 import type { ReactElement } from 'react';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { Icon, Label, Spinner } from '@nilfoundation/react-components';
+import { Spinner } from '@nilfoundation/react-components';
 import { selectCurrentCircuit, useAppSelector } from 'src/redux';
 import type { Circuit } from 'src/models';
 import styles from './CircuitDetailedInfo.module.scss';
@@ -49,7 +49,7 @@ const CircuitInfoViewFactory = ({
                         <span className="text-muted">Description:</span>
                         {data!.description}
                     </div>
-                    <Label
+                    {/* <Label
                         href={data!.repository}
                         target="_blank"
                     >
@@ -58,7 +58,7 @@ const CircuitInfoViewFactory = ({
                             srOnlyText="github repository link"
                         />
                         GitHub Repository
-                    </Label>
+                    </Label> */}
                 </>
             );
         case data === undefined:

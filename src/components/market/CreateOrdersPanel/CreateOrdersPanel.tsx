@@ -7,11 +7,14 @@ import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { useAppSelector } from 'src/redux';
 import { TradeOrderType } from 'src/models';
-import { DashboardCard } from '../../common';
+import { socialLinks as links } from 'src/constants';
+import { DashboardCard, SocialLinks } from '../../common';
 import { ProtectedContent } from '../../login';
 import { CreateBidForm } from '../CreateBidForm';
 import { CreateOrdersTabs } from './CreateOrdersTabs';
 import './CreateOrdersPanel.scss';
+
+const socialLinks = links.filter(({ icon }) => ['discord', 'telegram'].includes(icon));
 
 /**
  * Create orders panel.
@@ -20,7 +23,7 @@ import './CreateOrdersPanel.scss';
  */
 export const CreateOrdersPanel = (): ReactElement => {
     const [tab, setTab] = useState<TradeOrderType>(TradeOrderType.buy);
-    const selectedCircuitId = useAppSelector(s => s.circuitsState.selectedid);
+    const selectedCircuitKey = useAppSelector(s => s.circuitsState.selectedKey);
 
     return (
         <DashboardCard>
@@ -31,7 +34,7 @@ export const CreateOrdersPanel = (): ReactElement => {
                         currentTab={tab}
                         onSetTab={setTab}
                     />
-                    {tabFactory(tab, selectedCircuitId)}
+                    {tabFactory(tab, selectedCircuitKey)}
                 </ProtectedContent>
             </div>
         </DashboardCard>
@@ -42,11 +45,11 @@ export const CreateOrdersPanel = (): ReactElement => {
  * Renders tab content conditionally.
  *
  * @param tab Selected tab.
- * @param selectedCircuitId Selected circuit id.
+ * @param selectedCircuitKey Selected circuit key.
  * @returns React Element.
  */
-const tabFactory = (tab: TradeOrderType, selectedCircuitId?: number) => {
-    if (selectedCircuitId === undefined) {
+const tabFactory = (tab: TradeOrderType, selectedCircuitKey?: string) => {
+    if (selectedCircuitKey === undefined) {
         return <h5>Please, select circuit to create orders.</h5>;
     }
 
@@ -56,14 +59,19 @@ const tabFactory = (tab: TradeOrderType, selectedCircuitId?: number) => {
         case TradeOrderType.sell:
             return (
                 <div className="text-center">
-                    If you want generate proofs, please consider to use our{' '}
+                    If you wish to generate proofs, please see instructions on our{' '}
                     <a
                         target="_blank"
                         rel="noreferrer"
                         href={process.env.REACT_APP_PROOFMARKET_TOOLCHAIN_REPO}
                     >
-                        proof-market toolchain repository
+                        <strong>toolchain repository</strong>
                     </a>
+                    <p></p>
+                    <div>
+                        or join us on Discord or Telegram:
+                        <SocialLinks socialLinks={socialLinks} />
+                    </div>
                 </div>
             );
         default:
