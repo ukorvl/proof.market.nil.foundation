@@ -44,7 +44,7 @@ export const getApiUrlByParameters = (
 
     const stringWithParams = `q=[{${Object.entries(parameters)
         .map(([x, y]) => `"key": "${x}", "value": "${y}"`)
-        .join('')}}]`;
+        .join(', ')}}]`;
 
     return resultStr + stringWithParams;
 };
