@@ -15,14 +15,14 @@ import styles from './TradeHistory.module.scss';
  * @returns React component.
  */
 export const TradeHistory = (): ReactElement => {
-    const selctedCircuitId = useAppSelector(selectCurrentCircuitKey);
+    const selectedCircuitKey = useAppSelector(selectCurrentCircuitKey);
 
     return (
         <DashboardCard>
             <h4>Trades</h4>
             <div className={styles.container}>
-                {selctedCircuitId !== undefined ? (
-                    <TradeHistoryTable selctedCircuitKey={selctedCircuitId} />
+                {selectedCircuitKey !== undefined ? (
+                    <TradeHistoryTable selectedCircuitKey={selectedCircuitKey} />
                 ) : (
                     <h5>Select circuit to display trade history.</h5>
                 )}

@@ -3,43 +3,51 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { getAsks } from 'src/api';
+import type { Ask } from 'src/models';
 
-const items: Record<string, unknown> = {};
+/**
+ * Cache of already loaded indexes.
+ */
 const requestCache: Record<string, boolean> = {};
 
 /**
  * Hook parameters type.
  */
-type UseInfiniteLoadItemsParams<T> = {
-    fetcher: (length: number, start: number, ...args: never[]) => Promise<T[]>;
+type UseInfiniteLoadItemsParams = {
+    selectedCircuitKey: string;
 };
 
 /**
  * Hook return type.
  */
-type UseInfiniteLoadItemsReturnType<T> = {
-    hasNextPage: boolean;
-    items: Record<string, T>;
+type UseInfiniteLoadItemsReturnType = {
+    items: Record<string, Ask>;
     loading: boolean;
     error: boolean;
     loadMoreItems: (startIndex: number, stopIndex: number) => Promise<void>;
 };
 
 /**
- * Hook to manage infinite loading items.
+ * Hook to manage infinite loading trades.
  *
  * @param {UseInfiniteLoadItemsParams} params Params.
  * @returns .
  */
-export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<T>) => {
+export const useInfiniteLoadTrades = ({
+    selectedCircuitKey,
+}: UseInfiniteLoadItemsParams): UseInfiniteLoadItemsReturnType => {
+    const [items, setItems] = useState<Record<string, Ask>>({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    // useEffect(() => {
+    //     setItems({});
+    // }, [selectedCircuitKey]);
+
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {
-            stopIndex = stopIndex + 10;
-
             const key = `${startIndex}:${stopIndex}`;
             if (requestCache[key]) {
                 return;
@@ -57,7 +65,11 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
             try {
                 setLoading(true);
 
-                const loadedItems = await fetcher(length, startIndex);
+                const getTradesFilter: Partial<Ask> = {
+                    statement_key: selectedCircuitKey,
+                    status: 'completed',
+                };
+                const loadedItems = await getAsks(getTradesFilter, stopIndex, startIndex);
                 setLoading(false);
 
                 loadedItems.forEach((item, index) => {
@@ -68,7 +80,7 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
                 setLoading(false);
             }
         },
-        [fetcher, setError, setLoading],
+        [setError, setLoading, items, selectedCircuitKey],
     );
 
     return {
@@ -76,5 +88,5 @@ export const useInfiniteLoadItems = <T>({ fetcher }: UseInfiniteLoadItemsParams<
         loading,
         error,
         loadMoreItems,
-    } as UseInfiniteLoadItemsReturnType<T>;
+    };
 };

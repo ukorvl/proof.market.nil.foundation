@@ -10,15 +10,14 @@ import type { ListChildComponentProps } from 'react-window';
 import { Table, TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
 import { formatDate, renderDashOnEmptyValue } from 'src/utils';
 import type { Ask } from 'src/models';
-import { useInfiniteLoadItems } from 'src/hooks';
-import { getAsks } from 'src/api';
+import { useInfiniteLoadTrades } from 'src/hooks';
 import styles from './TradeHistory.module.scss';
 
 /**
  * Props.
  */
 type TradeHistoryTableProps = {
-    selctedCircuitKey: string;
+    selectedCircuitKey: string;
 };
 
 /**
@@ -43,12 +42,9 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
  * @returns React component.
  */
 export const TradeHistoryTable = memo(function TradeHistoryTable({
-    selctedCircuitKey,
+    selectedCircuitKey,
 }: TradeHistoryTableProps): ReactElement {
-    const { items, loadMoreItems, loading, error } = useInfiniteLoadItems<Ask>({
-        fetcher: (length, start) =>
-            getAsks({ statement_key: selctedCircuitKey, status: 'completed' }, length, start),
-    });
+    const { items, loadMoreItems, loading, error } = useInfiniteLoadTrades({ selectedCircuitKey });
 
     // const itemsLength = Object.keys(items).length;
     // const isItemLoaded = (index: number) => !hasNextPage || index < itemsLength;
