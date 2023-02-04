@@ -5,7 +5,7 @@
 
 import { createBearerHttpClient, getApiUrlByParameters } from '../common';
 import type { GetOrdersParameters } from '../common';
-import type { Ask, CreateAsk } from '../../models';
+import type { Ask } from '../../models';
 
 const httpFetcher = createBearerHttpClient('/ask');
 
@@ -22,14 +22,6 @@ export const getAsks = (
     limit?: number,
     startFrom?: number,
 ): Promise<Ask[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom));
-
-/**
- * Create Ask.
- *
- * @param data Ask dto.
- * @returns Ask.
- */
-export const createAsk = (data: CreateAsk): Promise<Ask> => httpFetcher.post('', data);
 
 /**
  * Remove Ask.

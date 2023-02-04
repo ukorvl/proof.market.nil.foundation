@@ -3,9 +3,23 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import type { BidDto } from './BidDto';
+import type { Proof } from '../../portfolio';
+import type { TradeOrder } from '../TradeOrder';
 
 /**
  * Bid.
  */
-export type Bid = BidDto;
+export interface Bid extends TradeOrder {
+    /**
+     * Public input.
+     */
+    public_input: Record<string, string>;
+    /**
+     * Proof (when generated, either - null).
+     */
+    proof: Proof['_key'] | null;
+    /**
+     * Time, when bid was accepted, either - null.
+     */
+    updatedOn: string | null;
+}

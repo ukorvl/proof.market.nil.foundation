@@ -1,11 +1,16 @@
 /**
  * @file Type declaration.
- * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import type { AskDto } from './AskDto';
+import type { TradeOrder } from '../TradeOrder';
 
 /**
  * Ask.
  */
-export type Ask = AskDto;
+export interface Ask extends TradeOrder {
+    /**
+     * Time, when bid was accepted, either - null.
+     */
+    updatedOn: string | null;
+}

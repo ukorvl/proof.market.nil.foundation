@@ -4,5 +4,4 @@
  */
 
 export * from './Bid';
-export * from './BidDto';
 export * from './CreateBid';
