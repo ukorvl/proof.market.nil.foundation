@@ -3,10 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
+import { call, put, select, takeLatest, fork, all, takeEvery } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
 import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
+import { RouterParam } from 'src/enums';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -20,7 +21,7 @@ import {
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectCurrentCircuitKey } from '../selectors';
-import { RevalidateSaga } from '../../common';
+import { RevalidateSaga, selectUrlParamStatementKey, SetParams } from '../../common';
 
 const revalidateCircuitsInfoInterval =
     Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -36,6 +37,7 @@ export function* CircuitsSaga(): SagaIterator<void> {
     yield fork(RevalidateSaga, GetCircuitsAdditionalData, revalidateCircuitsInfoInterval);
     yield takeLatest(UpdateCircuitsList, GetLastProofProducer);
     yield fork(RevalidateSaga, GetLastProofProducer, revalidateCircuitsInfoInterval);
+    yield takeEvery(SetParams, SelectCircuitOnUrlParamChange);
 }
 
 /**
@@ -86,7 +88,9 @@ function* SelectCircuitSaga({
         return;
     }
 
-    yield put(UpdateSelectedCircuitKey(payload[0]._key));
+    const urlParamKey: string = yield select(selectUrlParamStatementKey);
+
+    yield put(UpdateSelectedCircuitKey(urlParamKey ?? payload[0]._key));
 }
 
 /**
@@ -148,4 +152,25 @@ function* GetLastProofProducer() {
     } catch (e) {
         throw e;
     }
+}
+
+/**
+ * Selects circuit if url statement key param changes.
+ *
+ * @param {ReturnType<typeof SetParams>} action - Action.
+ * @yields
+ */
+function* SelectCircuitOnUrlParamChange({ payload: params }: ReturnType<typeof SetParams>) {
+    const urlKeyParam = params[RouterParam.statementKey];
+    const currentCircuitKey: string | undefined = yield select(selectCurrentCircuitKey);
+
+    if (!urlKeyParam) {
+        return;
+    }
+
+    if (currentCircuitKey === urlKeyParam) {
+        return;
+    }
+
+    yield put(UpdateSelectedCircuitKey(urlKeyParam));
 }

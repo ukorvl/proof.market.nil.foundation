@@ -4,8 +4,8 @@
  */
 
 import { createReducer } from '@reduxjs/toolkit';
-import type { Location, Params } from 'react-router-dom';
-import { SetLocation, SetParams } from '../actions';
+import type { Location, NavigateFunction, Params } from 'react-router-dom';
+import { SetLocation, SetParams, SetNavigateFunction } from '../actions';
 
 /**
  * State.
@@ -13,6 +13,7 @@ import { SetLocation, SetParams } from '../actions';
 export type RouterReducerState = {
     location: Location | null;
     params: Readonly<Params<string>> | null;
+    navigate: NavigateFunction | null;
 };
 
 /**
@@ -21,6 +22,7 @@ export type RouterReducerState = {
 const initialState: RouterReducerState = {
     location: null,
     params: null,
+    navigate: null,
 };
 
 /**
@@ -33,5 +35,8 @@ export const RouterReducer = createReducer(initialState, builder =>
         })
         .addCase(SetParams, (state, { payload }) => {
             state.params = payload;
+        })
+        .addCase(SetNavigateFunction, (state, { payload }) => {
+            state.navigate = payload;
         }),
 );
