@@ -3,14 +3,14 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { getAsks } from 'src/api';
 import type { Ask } from 'src/models';
 
 /**
  * Cache of already loaded indexes.
  */
-const requestCache: Record<string, boolean> = {};
+let requestCache: Record<string, boolean> = {};
 
 /**
  * Hook parameters type.
@@ -48,6 +48,14 @@ export const useInfiniteLoadTrades = ({
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    useEffect(() => {
+        setLoadedItemsState({
+            items: [],
+            hasNextPage: true,
+        });
+        requestCache = {};
+    }, [selectedCircuitKey]);
 
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {

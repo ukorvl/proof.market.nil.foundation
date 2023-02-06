@@ -42,9 +42,9 @@ export const getApiUrlByParameters = (
         resultStr += `skipped=${startFrom}&`;
     }
 
-    const stringWithParams = `q=[{${Object.entries(parameters)
-        .map(([x, y]) => `"key": "${x}", "value": "${y}"`)
-        .join(', ')}}]`;
+    const stringWithParams = `q=[${Object.entries(parameters)
+        .map(([x, y]) => `{"key": "${x}", "value": "${y}"}`)
+        .join(', ')}]`;
 
     return resultStr + stringWithParams;
 };
