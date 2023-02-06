@@ -5,3 +5,4 @@
 
 export * from './DataRevalidationActions';
 export * from './UIStateActions';
+export * from './RouterActions';

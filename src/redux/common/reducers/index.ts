@@ -3,6 +3,4 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-export * from './sagas';
-export * from './actions';
-export * from './reducers';
+export * from './RouterReducer';

@@ -54,6 +54,7 @@ export const useInfiniteLoadTrades = ({
             items: [],
             hasNextPage: true,
         });
+        console.log('in useEffect');
         requestCache = {};
     }, [selectedCircuitKey]);
 
@@ -87,6 +88,7 @@ export const useInfiniteLoadTrades = ({
 
                 const loadedItems = await getAsks(getTradesApiFilter, stopIndex, startIndex);
                 setLoading(false);
+                console.log('in api function');
 
                 setLoadedItemsState({
                     hasNextPage: loadedItems.length >= length,
