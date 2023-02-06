@@ -5,6 +5,7 @@
 
 import { call, put, select, takeLatest, fork, all, takeEvery } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
+import type { Location, NavigateFunction } from 'react-router-dom';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
 import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
 import { RouterParam } from 'src/enums';
@@ -21,7 +22,13 @@ import {
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectCurrentCircuitKey } from '../selectors';
-import { RevalidateSaga, selectUrlParamStatementKey, SetParams } from '../../common';
+import {
+    RevalidateSaga,
+    selectLocation,
+    selectNavigate,
+    selectUrlParamStatementKey,
+    SetParams,
+} from '../../common';
 
 const revalidateCircuitsInfoInterval =
     Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -89,8 +96,13 @@ function* SelectCircuitSaga({
     }
 
     const urlParamKey: string = yield select(selectUrlParamStatementKey);
+    const navigate: NavigateFunction = yield select(selectNavigate);
+    const location: Location = yield select(selectLocation);
 
-    yield put(UpdateSelectedCircuitKey(urlParamKey ?? payload[0]._key));
+    const keyToSelect = urlParamKey ?? payload[0]._key;
+
+    yield put(UpdateSelectedCircuitKey(keyToSelect));
+    navigate(`${location.pathname}/${keyToSelect}`);
 }
 
 /**
@@ -163,14 +175,17 @@ function* GetLastProofProducer() {
 function* SelectCircuitOnUrlParamChange({ payload: params }: ReturnType<typeof SetParams>) {
     const urlKeyParam = params[RouterParam.statementKey];
     const currentCircuitKey: string | undefined = yield select(selectCurrentCircuitKey);
-
-    if (!urlKeyParam) {
-        return;
-    }
+    const navigate: NavigateFunction = yield select(selectNavigate);
+    const location: Location = yield select(selectLocation);
 
     if (currentCircuitKey === urlKeyParam) {
         return;
     }
 
-    yield put(UpdateSelectedCircuitKey(urlKeyParam));
+    if (!urlKeyParam && currentCircuitKey) {
+        navigate(`${location.pathname}/${currentCircuitKey}`);
+        return;
+    }
+
+    yield put(UpdateSelectedCircuitKey(urlKeyParam!));
 }

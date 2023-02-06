@@ -16,6 +16,14 @@ import type { RootStateType } from 'src/redux';
 export const selectNavigate = (s: RootStateType) => s.routerState.navigate;
 
 /**
+ * Select location object.
+ *
+ * @param s State.
+ * @returns Location.
+ */
+export const selectLocation = (s: RootStateType) => s.routerState.location;
+
+/**
  * Select statement key url param.
  *
  * @param s State.

@@ -5,9 +5,15 @@
 
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
+import type { NavigateFunction, Location } from 'react-router-dom';
 import { getProofs } from 'src/api';
 import type { Proof } from 'src/models';
-import { SetParams, selectUrlParamProofKey } from 'src/redux/common';
+import {
+    SetParams,
+    selectUrlParamProofKey,
+    selectNavigate,
+    selectLocation,
+} from 'src/redux/common';
 import { RouterParam } from 'src/enums';
 import {
     UpdateProofList,
@@ -78,8 +84,13 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
     }
 
     const urlParamKey: string = yield select(selectUrlParamProofKey);
+    const navigate = yield select(selectNavigate);
+    const location = yield select(selectLocation);
 
-    yield put(UpdateSelectedProofKey(urlParamKey ?? payload[0]._key));
+    const keyToSelect = urlParamKey ?? payload[0]._key;
+
+    yield put(UpdateSelectedProofKey(keyToSelect));
+    navigate(`${location.pathname}/${keyToSelect}`);
 }
 
 /**
@@ -91,14 +102,17 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
 function* SelectProofOnUrlParamChange({ payload: params }: ReturnType<typeof SetParams>) {
     const urlKeyParam = params[RouterParam.statementKey];
     const currentProofKey: string | undefined = yield select(selectSelectedProofKey);
-
-    if (!urlKeyParam) {
-        return;
-    }
+    const navigate: NavigateFunction = yield select(selectNavigate);
+    const location: Location = yield select(selectLocation);
 
     if (currentProofKey === urlKeyParam) {
         return;
     }
 
-    yield put(UpdateSelectedProofKey(urlKeyParam));
+    if (!urlKeyParam && currentProofKey) {
+        navigate(`${location.pathname}/${currentProofKey}`);
+        return;
+    }
+
+    yield put(UpdateSelectedProofKey(urlKeyParam!));
 }
