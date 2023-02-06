@@ -44,31 +44,38 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
 export const TradeHistoryTable = memo(function TradeHistoryTable({
     selectedCircuitKey,
 }: TradeHistoryTableProps): ReactElement {
-    const { items, loadMoreItems, loading, error } = useInfiniteLoadTrades({ selectedCircuitKey });
+    const { items, loadMoreItems, loading, error, hasMore } = useInfiniteLoadTrades({
+        selectedCircuitKey,
+    });
 
-    // const itemsLength = Object.keys(items).length;
-    // const isItemLoaded = (index: number) => !hasNextPage || index < itemsLength;
-    // const itemCount = hasNextPage ? itemsLength + 1 : itemsLength;
-
-    const isItemLoaded = (index: number) => !!items[index];
+    const isItemLoaded = (index: number) => !hasMore || !!items.at(index);
+    const itemCount = hasMore ? items.length + 1 : items.length;
 
     const Element = ({ index, style }: ListChildComponentProps<Ask>) => {
         if (!isItemLoaded(index)) {
-            return <Spinner grow />;
+            return (
+                <TRow style={style}>
+                    <Spinner grow />
+                </TRow>
+            );
         }
 
-        const { cost, generation_time, matched_time } = items[index];
+        const currentItem = items.at(index)!;
+        const { cost, generation_time, matched_time } = currentItem;
+        const nextItem = items.at(index + 1);
+
+        const className = nextItem ? getRowClass(nextItem, currentItem) : '';
 
         return (
-            <div
+            <TRow
                 style={style}
-                className={`TextColor`}
+                className={className}
                 role="row"
             >
                 <TCell>{formatDate(matched_time!, 'DD.MM HH:mm')}</TCell>
                 <TCell>{cost.toFixed(4)}</TCell>
                 <TCell>{renderDashOnEmptyValue(generation_time)}</TCell>
-            </div>
+            </TRow>
         );
     };
 
@@ -82,12 +89,10 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                 </TRow>
             </THead>
             <TBody>
-                {error && Object.keys(items).length === 0 && (
-                    <h5>Error while getting trades data.</h5>
-                )}
+                {error && items.length === 0 && <h5>Error while getting trades data.</h5>}
                 <VirtualList
                     isItemLoaded={isItemLoaded}
-                    itemCount={1000}
+                    itemCount={itemCount}
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
                     loadMoreItems={loading ? () => {} : loadMoreItems}
                     height={376}
@@ -100,3 +105,22 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
         </Table>
     );
 });
+
+/**
+ * Returns classname for row.
+ *
+ * @param prevItem Previous item.
+ * @param currentItem CurrentItem.
+ * @returns ClassName.
+ */
+const getRowClass = (prevItem: Ask, currentItem: Ask): string => {
+    if (prevItem.cost > currentItem.cost) {
+        return 'lossTextColor';
+    }
+
+    if (prevItem.cost < currentItem.cost) {
+        return 'growTextColor';
+    }
+
+    return '';
+};

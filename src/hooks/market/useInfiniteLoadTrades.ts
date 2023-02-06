@@ -3,7 +3,7 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { getAsks } from 'src/api';
 import type { Ask } from 'src/models';
 
@@ -23,10 +23,11 @@ type UseInfiniteLoadItemsParams = {
  * Hook return type.
  */
 type UseInfiniteLoadItemsReturnType = {
-    items: Record<string, Ask>;
+    items: Ask[];
     loading: boolean;
     error: boolean;
     loadMoreItems: (startIndex: number, stopIndex: number) => Promise<void>;
+    hasMore: boolean;
 };
 
 /**
@@ -38,16 +39,21 @@ type UseInfiniteLoadItemsReturnType = {
 export const useInfiniteLoadTrades = ({
     selectedCircuitKey,
 }: UseInfiniteLoadItemsParams): UseInfiniteLoadItemsReturnType => {
-    const [items, setItems] = useState<Record<string, Ask>>({});
+    const [loadedItemsState, setLoadedItemsState] = useState<{
+        hasNextPage: boolean;
+        items: Ask[];
+    }>({
+        hasNextPage: true,
+        items: [],
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    // useEffect(() => {
-    //     setItems({});
-    // }, [selectedCircuitKey]);
-
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {
+            stopIndex += 1;
+            const { items } = loadedItemsState;
+
             const key = `${startIndex}:${stopIndex}`;
             if (requestCache[key]) {
                 return;
@@ -55,7 +61,7 @@ export const useInfiniteLoadTrades = ({
 
             const length = stopIndex - startIndex;
             const visibleRange = [...Array(length).keys()].map(x => x + startIndex);
-            const itemsRetreived = visibleRange.every(index => !!items[index]);
+            const itemsRetreived = visibleRange.every(index => !!items.at(index));
 
             if (itemsRetreived) {
                 requestCache[key] = true;
@@ -64,29 +70,33 @@ export const useInfiniteLoadTrades = ({
 
             try {
                 setLoading(true);
+                setError(false);
 
-                const getTradesFilter: Partial<Ask> = {
+                const getTradesApiFilter: Partial<Ask> = {
                     statement_key: selectedCircuitKey,
                     status: 'completed',
                 };
-                const loadedItems = await getAsks(getTradesFilter, stopIndex, startIndex);
+
+                const loadedItems = await getAsks(getTradesApiFilter, stopIndex, startIndex);
                 setLoading(false);
 
-                loadedItems.forEach((item, index) => {
-                    items[index + startIndex] = item;
+                setLoadedItemsState({
+                    hasNextPage: loadedItems.length >= length,
+                    items: [...items].concat(loadedItems),
                 });
             } catch {
                 setError(true);
                 setLoading(false);
             }
         },
-        [setError, setLoading, items, selectedCircuitKey],
+        [setError, setLoading, loadedItemsState, selectedCircuitKey],
     );
 
     return {
-        items,
+        items: loadedItemsState.items,
         loading,
         error,
         loadMoreItems,
+        hasMore: loadedItemsState.hasNextPage,
     };
 };
