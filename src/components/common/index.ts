@@ -19,4 +19,5 @@ export * from './Copyright';
 export * from './Overlay';
 export * from './ObjectAsPlainTextViewer';
 export * from './GALocationTracker';
+export * from './VirtualList';
 export * from './PageVisibilityDetector';

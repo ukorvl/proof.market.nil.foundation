@@ -14,10 +14,14 @@ const httpFetcher = createBearerHttpClient('/bid');
  *
  * @param {GetOrdersParameters} parameters Parameters.
  * @param limit Response limit.
+ * @param startFrom Start from.
  * @returns Bids.
  */
-export const getBids = (parameters: GetOrdersParameters, limit?: number): Promise<Bid[]> =>
-    httpFetcher.get(getApiUrlByParameters(parameters, limit));
+export const getBids = (
+    parameters: GetOrdersParameters,
+    limit?: number,
+    startFrom?: number,
+): Promise<Bid[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom));
 
 /**
  * Create Bid.

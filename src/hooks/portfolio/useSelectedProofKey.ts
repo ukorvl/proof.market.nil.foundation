@@ -10,16 +10,16 @@ import { selectSelectedProofKey, UpdateSelectedProofKey, useAppSelector } from '
 import { RouterParam } from 'src/enums';
 
 /**
- * Hook to manage selected proof id state.
+ * Hook to manage selected proof key state.
  */
-export const useSelectedProofId = (): void => {
+export const useSelectedProofKey = (): void => {
     const dispatch = useDispatch();
-    const selectedProofId = useAppSelector(selectSelectedProofKey);
+    const selectedProofKey = useAppSelector(selectSelectedProofKey);
     const proofKey = useParams()[RouterParam.proofKey];
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (selectedProofId === proofKey) {
+        if (selectedProofKey === proofKey) {
             return;
         }
 
@@ -28,6 +28,6 @@ export const useSelectedProofId = (): void => {
             return;
         }
 
-        selectedProofId !== undefined && navigate(`${selectedProofId}`);
-    }, [proofKey, dispatch, selectedProofId, navigate]);
+        selectedProofKey !== undefined && navigate(`${selectedProofKey}`);
+    }, [proofKey, dispatch, selectedProofKey, navigate]);
 };

@@ -4,98 +4,124 @@
  */
 
 import type { ReactElement } from 'react';
-import { memo, useCallback } from 'react';
-import type { Row, TableInstance, TableState } from 'react-table';
-import { ReactTable, TRow, TCell } from 'src/components';
-import { renderDashOnEmptyValue } from 'src/utils';
-import type { TradeHistoryData, TradeHistoryTableColumn } from 'src/models';
+import { memo } from 'react';
+import { Spinner } from '@nilfoundation/react-components';
+import type { ListChildComponentProps } from 'react-window';
+import { Table, TRow, TCell, THead, THeader, TBody, VirtualList } from 'src/components';
+import { formatDate, renderDashOnEmptyValue } from 'src/utils';
+import type { Ask } from 'src/models';
+import { useInfiniteLoadTrades } from 'src/hooks';
 import styles from './TradeHistory.module.scss';
 
 /**
  * Props.
  */
 type TradeHistoryTableProps = {
-    columns: TradeHistoryTableColumn[];
-    data: TradeHistoryData[];
+    selectedCircuitKey: string;
 };
 
 /**
- * Initial table state without user interactions.
+ * Table head configuration.
  */
-const defaultTableState: Partial<TableState<TradeHistoryData>> = {
-    sortBy: [
-        {
-            id: 'timestamp',
-            desc: true,
-        },
-    ],
-    hiddenColumns: ['type'],
-};
+const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
+    {
+        Header: 'Time',
+    },
+    {
+        Header: 'Cost',
+    },
+    {
+        Header: 'Generation time',
+    },
+];
 
 /**
- * Order book table.
+ * Trades table.
  *
  * @param {TradeHistoryTableProps} props Props.
  * @returns React component.
  */
 export const TradeHistoryTable = memo(function TradeHistoryTable({
-    columns,
-    data,
+    selectedCircuitKey,
 }: TradeHistoryTableProps): ReactElement {
-    const renderRows = useCallback(
-        ({ rows, prepareRow }: TableInstance<TradeHistoryData>) =>
-            rows.map(row => {
-                prepareRow(row);
-                return (
-                    <TRow
-                        {...row.getRowProps()}
-                        key={row.id}
-                    >
-                        {row.cells.map(cell => {
-                            const { value, column, getCellProps } = cell;
-                            const { key, ...rest } = getCellProps();
+    const { items, loadMoreItems, loading, error, hasMore } = useInfiniteLoadTrades({
+        selectedCircuitKey,
+    });
 
-                            return (
-                                <TCell
-                                    className={getCellClassName(row)}
-                                    key={key}
-                                    {...rest}
-                                >
-                                    {column.id !== 'timestamp'
-                                        ? renderDashOnEmptyValue(value)
-                                        : value}
-                                </TCell>
-                            );
-                        })}
-                    </TRow>
-                );
-            }),
-        [],
-    );
+    const isItemLoaded = (index: number) => !hasMore || !!items.at(index);
+    const itemCount = hasMore ? items.length + 1 : items.length;
+
+    const Element = ({ index, style }: ListChildComponentProps<Ask>) => {
+        if (!isItemLoaded(index)) {
+            return (
+                <TRow style={style}>
+                    <Spinner grow />
+                </TRow>
+            );
+        }
+
+        const currentItem = items.at(index)!;
+        const { cost, generation_time, matched_time } = currentItem;
+        const nextItem = items.at(index + 1);
+
+        const className = nextItem ? getRowClass(nextItem, currentItem) : '';
+
+        return (
+            <TRow
+                style={style}
+                className={className}
+                role="row"
+            >
+                <TCell>{formatDate(matched_time!, 'DD.MM HH:mm')}</TCell>
+                <TCell>{cost.toFixed(4)}</TCell>
+                <TCell>{renderDashOnEmptyValue(generation_time)}</TCell>
+            </TRow>
+        );
+    };
 
     return (
-        <ReactTable
-            name="tradeHistoryTable"
-            className={styles.table}
-            data={data}
-            columns={columns}
-            disableSortRemove={true}
-            renderRows={renderRows}
-            initialState={defaultTableState}
-        />
+        <Table className={styles.table}>
+            <THead sticky>
+                <TRow>
+                    {tradeHistoryTableHeadConfig.map(({ Header }, i) => (
+                        <THeader key={i}>{Header}</THeader>
+                    ))}
+                </TRow>
+            </THead>
+            <TBody>
+                {error && items.length === 0 && <h5>Error while getting trades data.</h5>}
+                {!loading && !error && items.length === 0 && <h5>Empty data.</h5>}
+                <VirtualList
+                    isItemLoaded={isItemLoaded}
+                    itemCount={itemCount}
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    loadMoreItems={loading ? () => {} : loadMoreItems}
+                    height={376}
+                    itemSize={28}
+                    className={styles.virtualList}
+                >
+                    {Element}
+                </VirtualList>
+            </TBody>
+        </Table>
     );
 });
 
 /**
- * Generate className to table cell.
+ * Returns classname for row.
  *
- * @param row Row.
- * @returns Class name.
+ * @param prevItem Previous item.
+ * @param currentItem CurrentItem.
+ * @returns ClassName.
  */
-const getCellClassName = (row: Row<TradeHistoryData>) => {
-    if (row.values.type === undefined) {
-        return undefined;
+const getRowClass = (prevItem: Ask, currentItem: Ask): string => {
+    if (prevItem.cost > currentItem.cost) {
+        return 'lossTextColor';
     }
 
-    return `${row.values.type}TextColor`;
+    if (prevItem.cost < currentItem.cost) {
+        return 'growTextColor';
+    }
+
+    return '';
 };

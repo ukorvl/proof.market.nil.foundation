@@ -6,7 +6,7 @@
 import type { CreateTradeOrder } from '../TradeOrder';
 
 /**
- * Bid dto.
+ * Create bid data.
  */
 export interface CreateBid extends CreateTradeOrder {
     /**

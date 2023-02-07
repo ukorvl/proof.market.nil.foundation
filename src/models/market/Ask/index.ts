@@ -4,5 +4,3 @@
  */
 
 export * from './Ask';
-export * from './AskDto';
-export * from './CreateAsk';

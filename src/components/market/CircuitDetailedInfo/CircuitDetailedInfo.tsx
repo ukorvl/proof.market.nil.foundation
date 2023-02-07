@@ -45,20 +45,22 @@ const CircuitInfoViewFactory = ({
         case data !== undefined:
             return (
                 <>
-                    <div className={styles.description}>
+                    <div className={styles.text}>
                         <span className="text-muted">Description:</span>
                         {data!.description}
                     </div>
-                    {/* <Label
-                        href={data!.repository}
-                        target="_blank"
-                    >
-                        <Icon
-                            iconName="fa-brands fa-github"
-                            srOnlyText="github repository link"
-                        />
-                        GitHub Repository
-                    </Label> */}
+                    {data?.url && (
+                        <div className={styles.text}>
+                            <span className="text-muted">Repository url:</span>
+                            <a
+                                href={data.url}
+                                rel="noreferrer"
+                                target="_blank"
+                            >
+                                {data.url}
+                            </a>
+                        </div>
+                    )}
                 </>
             );
         case data === undefined:

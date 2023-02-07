@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 import { RouterParam } from 'src/enums';
 import ProtectedRoute from 'src/components/login/ProtectedRoute/ProtectedRoute';
+import RouterReduxConnector from 'src/components/common/RouterReduxConnector/RouterReduxConnector';
 import { Path } from './Paths';
 import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
@@ -23,63 +24,68 @@ const RegisterView = lazy(() => import('../views/RegisterView'));
  */
 export const routesConfig: RouteObject[] = [
     {
-        path: Path.root,
-        element: (
-            <Navigate
-                to={Path.market}
-                replace
-            />
-        ),
-    },
-    {
-        element: <AuthLayout />,
+        element: <RouterReduxConnector />,
         children: [
             {
-                path: Path.login,
-                element: <LoginView />,
+                path: Path.root,
+                element: (
+                    <Navigate
+                        to={Path.market}
+                        replace
+                    />
+                ),
             },
             {
-                path: Path.register,
-                element: <RegisterView />,
-            },
-        ],
-    },
-    {
-        element: <MainLayout />,
-        children: [
-            {
-                element: <ProtectedRoute readonlyAccess />,
+                element: <AuthLayout />,
                 children: [
                     {
-                        path: Path.market,
-                        element: <MarketView />,
+                        path: Path.login,
+                        element: <LoginView />,
+                    },
+                    {
+                        path: Path.register,
+                        element: <RegisterView />,
+                    },
+                ],
+            },
+            {
+                element: <MainLayout />,
+                children: [
+                    {
+                        element: <ProtectedRoute readonlyAccess />,
                         children: [
                             {
-                                path: `:${RouterParam.statementKey}`,
+                                path: Path.market,
                                 element: <MarketView />,
+                                children: [
+                                    {
+                                        path: `:${RouterParam.statementKey}`,
+                                        element: <MarketView />,
+                                    },
+                                ],
                             },
                         ],
                     },
-                ],
-            },
-            {
-                element: <ProtectedRoute />,
-                children: [
                     {
-                        path: Path.portfolio,
-                        element: <PortfolioView />,
+                        element: <ProtectedRoute />,
                         children: [
                             {
-                                path: `:${RouterParam.proofKey}`,
+                                path: Path.portfolio,
                                 element: <PortfolioView />,
+                                children: [
+                                    {
+                                        path: `:${RouterParam.proofKey}`,
+                                        element: <PortfolioView />,
+                                    },
+                                ],
                             },
                         ],
                     },
+                    {
+                        path: Path.any, // This should always be the last
+                        element: <Page404 />,
+                    },
                 ],
-            },
-            {
-                path: Path.any, // This should always be the last
-                element: <Page404 />,
             },
         ],
     },

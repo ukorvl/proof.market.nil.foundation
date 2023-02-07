@@ -3,6 +3,7 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
+import type { RouterReducerState } from './common';
 import type { UserReducerState } from './login';
 import type { CircuitsReducerState, BidsReducerState, AsksReducerState } from './market';
 import type { ProofReducerState } from './portfolio';
@@ -16,4 +17,5 @@ export interface RootStateType {
     bidsState: BidsReducerState;
     proofState: ProofReducerState;
     userState: UserReducerState;
+    routerState: RouterReducerState;
 }
