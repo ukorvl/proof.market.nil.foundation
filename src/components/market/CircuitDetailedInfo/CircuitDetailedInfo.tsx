@@ -51,7 +51,7 @@ const CircuitInfoViewFactory = ({
                     </div>
                     {data?.url && (
                         <div className={styles.text}>
-                            <span className="text-muted">Repository url:</span>
+                            <span className="text-muted">Url:</span>
                             <a
                                 href={data.url}
                                 rel="noreferrer"
