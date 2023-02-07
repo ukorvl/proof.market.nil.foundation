@@ -109,10 +109,10 @@ function* SelectProofOnUrlParamChange({ payload: params }: ReturnType<typeof Set
         return;
     }
 
-    if (!urlKeyParam && currentProofKey) {
-        navigate(`${location.pathname}/${currentProofKey}`);
+    if (!urlKeyParam) {
+        currentProofKey && navigate(`${location.pathname}/${currentProofKey}`);
         return;
     }
 
-    yield put(UpdateSelectedProofKey(urlKeyParam!));
+    yield put(UpdateSelectedProofKey(urlKeyParam));
 }

@@ -182,10 +182,10 @@ function* SelectCircuitOnUrlParamChange({ payload: params }: ReturnType<typeof S
         return;
     }
 
-    if (!urlKeyParam && currentCircuitKey) {
-        navigate(`${location.pathname}/${currentCircuitKey}`);
+    if (!urlKeyParam) {
+        currentCircuitKey && navigate(`${location.pathname}/${currentCircuitKey}`);
         return;
     }
 
-    yield put(UpdateSelectedCircuitKey(urlKeyParam!));
+    yield put(UpdateSelectedCircuitKey(urlKeyParam));
 }
