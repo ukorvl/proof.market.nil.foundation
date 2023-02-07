@@ -1,13 +1,14 @@
 @import "src/styles/constants.scss";
+@import "src/styles/mixins/overflowEllipsis";
 
 .container {
   padding: 0 15px;
   background-color: $c-base-darker;
 }
 
-.description {
+.text {
   margin-bottom: 0.5rem;
-  // TODO - add overflow ellipsis
+  @include overflowEllipsis;
 
   span {
     margin-right: 0.5rem;

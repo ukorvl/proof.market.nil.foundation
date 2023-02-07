@@ -3,14 +3,9 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import { getAsks } from 'src/api';
 import type { Ask } from 'src/models';
-
-/**
- * Cache of already loaded indexes.
- */
-let requestCache: Record<string, boolean> = {};
 
 /**
  * Hook parameters type.
@@ -39,6 +34,7 @@ type UseInfiniteLoadItemsReturnType = {
 export const useInfiniteLoadTrades = ({
     selectedCircuitKey,
 }: UseInfiniteLoadItemsParams): UseInfiniteLoadItemsReturnType => {
+    const requestCache = useRef<Record<string, boolean>>({});
     const [loadedItemsState, setLoadedItemsState] = useState<{
         hasNextPage: boolean;
         items: Ask[];
@@ -49,19 +45,14 @@ export const useInfiniteLoadTrades = ({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    useEffect(() => {
-        return () => {
-            requestCache = {};
-        };
-    }, []);
-
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {
             stopIndex += 1;
             const { items } = loadedItemsState;
 
             const key = `${startIndex}:${stopIndex}`;
-            if (requestCache[key]) {
+
+            if (requestCache.current[key]) {
                 return;
             }
 
@@ -70,7 +61,7 @@ export const useInfiniteLoadTrades = ({
             const itemsRetreived = visibleRange.every(index => !!items.at(index));
 
             if (itemsRetreived) {
-                requestCache[key] = true;
+                requestCache.current[key] = true;
                 return;
             }
 

@@ -39,4 +39,8 @@ export type Circuit = {
      * If equals true, statement should be hidden.
      */
     isPrivate?: boolean;
+    /**
+     * Repository url.
+     */
+    url?: string;
 };
