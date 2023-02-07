@@ -3,13 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, select, takeLatest, fork, all, takeEvery } from 'redux-saga/effects';
+import { call, put, select, takeLatest, fork, all } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
-import type { Location, NavigateFunction, NavigateOptions } from 'react-router-dom';
 import { getCircuits, getCircuitsInfo, getCircuitsStats, getLastProofProducerData } from 'src/api';
 import type { Circuit, CircuitInfo, CircuitStats, LastProofProducer } from 'src/models';
-import { RouterParam } from 'src/enums';
-import { Path } from 'src/routing';
 import {
     UpdateCircuitsError,
     UpdateCircuitsInfoList,
@@ -22,20 +19,11 @@ import {
     UpdateSelectedCircuitKey,
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
-import { selectCircuits, selectCurrentCircuitKey } from '../selectors';
-import {
-    RevalidateSaga,
-    selectLocation,
-    selectNavigate,
-    selectUrlParamStatementKey,
-    SetLocation,
-    SetParams,
-} from '../../common';
+import { selectCurrentCircuitKey } from '../selectors';
+import { RevalidateSaga, selectUrlParamStatementKey } from '../../common';
 
 const revalidateCircuitsInfoInterval =
     Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
-
-const navigateOptions: NavigateOptions = { replace: true, relative: 'path' };
 
 /**
  * Circuits main saga.
@@ -88,10 +76,8 @@ function* GetCircuitsSaga({
 function* SelectCircuitSaga({
     payload: circuitsList,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
-    console.log('in SelectCircuitSaga');
     const currentCircuitKey = yield select(selectCurrentCircuitKey);
     const urlParamKey: string = yield select(selectUrlParamStatementKey);
-    const navigate: NavigateFunction = yield select(selectNavigate);
 
     if (currentCircuitKey) {
         return;
@@ -105,7 +91,6 @@ function* SelectCircuitSaga({
     const keyToSelect = shouldSelectFromUrl ? urlParamKey : circuitsList[0]._key;
 
     yield put(UpdateSelectedCircuitKey(keyToSelect));
-    !urlParamKey && navigate(keyToSelect, navigateOptions);
 }
 
 /**

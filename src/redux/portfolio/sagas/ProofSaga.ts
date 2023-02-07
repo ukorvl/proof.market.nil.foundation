@@ -7,7 +7,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
 import { getProofs } from 'src/api';
 import type { Proof } from 'src/models';
-import { selectUrlParamProofKey, selectNavigate, selectLocation } from 'src/redux/common';
+import { selectUrlParamProofKey } from 'src/redux/common';
 import {
     UpdateProofList,
     UpdateIsLoadingProofs,
@@ -64,23 +64,23 @@ function* GetProofSaga(): SagaIterator<void> {
  * @param {ReturnType<typeof UpdateProofList>} action - Action.
  * @yields
  */
-function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): SagaIterator<void> {
+function* SelectProofSaga({
+    payload: proofs,
+}: ReturnType<typeof UpdateProofList>): SagaIterator<void> {
     const currentProofId = yield select(selectSelectedProofKey);
 
     if (currentProofId) {
         return;
     }
 
-    if (!payload.length) {
+    if (!proofs.length) {
         return;
     }
 
     const urlParamKey: string = yield select(selectUrlParamProofKey);
-    const navigate = yield select(selectNavigate);
-    const location = yield select(selectLocation);
 
-    const keyToSelect = urlParamKey ?? payload[0]._key;
+    const shouldSelectFromUrl = proofs.some(x => x._key === urlParamKey);
+    const keyToSelect = shouldSelectFromUrl ? urlParamKey : proofs[0]._key;
 
     yield put(UpdateSelectedProofKey(keyToSelect));
-    !urlParamKey && navigate(`${location.pathname}/${keyToSelect}`);
 }

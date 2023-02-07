@@ -8,14 +8,6 @@ import type {} from 'src/models';
 import type { RootStateType } from 'src/redux';
 
 /**
- * Select navigate function.
- *
- * @param s State.
- * @returns Navigate function.
- */
-export const selectNavigate = (s: RootStateType) => s.routerState.navigate;
-
-/**
  * Select location object.
  *
  * @param s State.
