@@ -36,6 +36,7 @@
     "redux-saga": "^1.2.1",
     "sass": "^1.54.3",
     "source-map-explorer": "^2.5.3",
+    "use-deep-compare-effect": "^1.8.1",
     "web-vitals": "^3.1.0"
   },
   "scripts": {

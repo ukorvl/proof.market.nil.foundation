@@ -4,9 +4,9 @@
  */
 
 import type { ReactElement } from 'react';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { SetLocation, SetNavigateFunction, SetParams } from 'src/redux';
 
 /**
@@ -20,15 +20,15 @@ const RouterReduxConnector = (): ReactElement => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         dispatch(SetNavigateFunction(navigate));
     }, [dispatch, navigate]);
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         dispatch(SetLocation(location));
     }, [dispatch, location]);
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         dispatch(SetParams(params));
     }, [dispatch, params]);
 
