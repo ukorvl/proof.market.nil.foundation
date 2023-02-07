@@ -90,6 +90,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
             </THead>
             <TBody>
                 {error && items.length === 0 && <h5>Error while getting trades data.</h5>}
+                {!loading && !error && items.length === 0 && <h5>Empty data.</h5>}
                 <VirtualList
                     isItemLoaded={isItemLoaded}
                     itemCount={itemCount}

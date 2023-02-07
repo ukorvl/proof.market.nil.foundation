@@ -50,10 +50,6 @@ export const useInfiniteLoadTrades = ({
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        setLoadedItemsState({
-            items: [],
-            hasNextPage: true,
-        });
         requestCache = {};
     }, [selectedCircuitKey]);
 

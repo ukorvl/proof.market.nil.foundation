@@ -25,7 +25,10 @@ export const TradeHistory = (): ReactElement => {
             <div className={styles.container}>
                 {loadingCircuits && selectedCircuitKey === undefined && <Spinner grow />}
                 {selectedCircuitKey !== undefined ? (
-                    <TradeHistoryTable selectedCircuitKey={selectedCircuitKey} />
+                    <TradeHistoryTable
+                        key={selectedCircuitKey}
+                        selectedCircuitKey={selectedCircuitKey}
+                    />
                 ) : (
                     <h5>Select circuit to display trade history.</h5>
                 )}
