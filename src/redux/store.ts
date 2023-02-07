@@ -14,15 +14,12 @@ const sagaMiddleware = createSagaMiddleware();
 const middlewares: Middleware[] = [sagaMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
-    //middlewares.push(logger);
+    middlewares.push(logger);
 }
 
 export const store = configureStore({
     reducer: RootReducer,
-    middleware: getDefaultMiddleware => [
-        ...getDefaultMiddleware({ thunk: false, serializableCheck: false }),
-        ...middlewares,
-    ],
+    middleware: getDefaultMiddleware => [...getDefaultMiddleware({ thunk: false }), ...middlewares],
     devTools: process.env.NODE_ENV !== 'production',
 });
 
