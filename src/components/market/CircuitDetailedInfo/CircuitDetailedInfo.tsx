@@ -61,16 +61,6 @@ const CircuitInfoViewFactory = ({
                             </a>
                         </div>
                     )}
-                    {/* <Label
-                        href={data!.repository}
-                        target="_blank"
-                    >
-                        <Icon
-                            iconName="fa-brands fa-github"
-                            srOnlyText="github repository link"
-                        />
-                        GitHub Repository
-                    </Label> */}
                 </>
             );
         case data === undefined:
