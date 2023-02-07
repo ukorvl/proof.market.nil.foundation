@@ -3,18 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
-import type { NavigateFunction, Location } from 'react-router-dom';
 import { getProofs } from 'src/api';
 import type { Proof } from 'src/models';
-import {
-    SetParams,
-    selectUrlParamProofKey,
-    selectNavigate,
-    selectLocation,
-} from 'src/redux/common';
-import { RouterParam } from 'src/enums';
+import { selectUrlParamProofKey, selectNavigate, selectLocation } from 'src/redux/common';
 import {
     UpdateProofList,
     UpdateIsLoadingProofs,
@@ -35,7 +28,6 @@ const selectUser = (s: RootStateType) => s.userState.name;
 export function* ProofSaga(): SagaIterator<void> {
     yield takeLatest(UpdateUserName, GetProofSaga);
     yield takeLatest(UpdateProofList, SelectProofSaga);
-    yield takeEvery(SetParams, SelectProofOnUrlParamChange);
 }
 
 /**
@@ -90,29 +82,5 @@ function* SelectProofSaga({ payload }: ReturnType<typeof UpdateProofList>): Saga
     const keyToSelect = urlParamKey ?? payload[0]._key;
 
     yield put(UpdateSelectedProofKey(keyToSelect));
-    navigate(`${location.pathname}/${keyToSelect}`);
-}
-
-/**
- * Selects proof if url proof key param changes.
- *
- * @param {ReturnType<typeof SetParams>} action - Action.
- * @yields
- */
-function* SelectProofOnUrlParamChange({ payload: params }: ReturnType<typeof SetParams>) {
-    const urlKeyParam = params[RouterParam.statementKey];
-    const currentProofKey: string | undefined = yield select(selectSelectedProofKey);
-    const navigate: NavigateFunction = yield select(selectNavigate);
-    const location: Location = yield select(selectLocation);
-
-    if (currentProofKey === urlKeyParam) {
-        return;
-    }
-
-    if (!urlKeyParam) {
-        currentProofKey && navigate(`${location.pathname}/${currentProofKey}`);
-        return;
-    }
-
-    yield put(UpdateSelectedProofKey(urlKeyParam));
+    !urlParamKey && navigate(`${location.pathname}/${keyToSelect}`);
 }

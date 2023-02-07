@@ -19,7 +19,10 @@ if (process.env.NODE_ENV === 'development') {
 
 export const store = configureStore({
     reducer: RootReducer,
-    middleware: getDefaultMiddleware => [...getDefaultMiddleware({ thunk: false }), ...middlewares],
+    middleware: getDefaultMiddleware => [
+        ...getDefaultMiddleware({ thunk: false, serializableCheck: false }),
+        ...middlewares,
+    ],
     devTools: process.env.NODE_ENV !== 'production',
 });
 
