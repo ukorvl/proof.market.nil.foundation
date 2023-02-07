@@ -6,6 +6,7 @@
 import type { ReactElement } from 'react';
 import { ListGroup, Spinner } from '@nilfoundation/react-components';
 import { selectProofList, useAppSelector } from 'src/redux';
+import { useSelectedProofKey } from 'src/hooks';
 import { DashboardCard } from 'src/components';
 import { ProofListItem } from './ProofListItem';
 import styles from './ProofList.module.scss';
@@ -19,6 +20,8 @@ export const ProofList = (): ReactElement => {
     const proofList = useAppSelector(selectProofList);
     const loadingProofs = useAppSelector(s => s.proofState.isLoadingProofs);
     const getProofsError = useAppSelector(s => s.proofState.error);
+
+    useSelectedProofKey();
 
     return (
         <DashboardCard>

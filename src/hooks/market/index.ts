@@ -6,4 +6,5 @@
 export * from './charts';
 export * from './orderBook';
 export * from './manageOrders';
+export * from './useSelectedCircuitKey';
 export * from './useInfiniteLoadTrades';
