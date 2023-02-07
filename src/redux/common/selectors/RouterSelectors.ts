@@ -4,7 +4,6 @@
  */
 
 import { RouterParam } from 'src/enums';
-import type {} from 'src/models';
 import type { RootStateType } from 'src/redux';
 
 /**
