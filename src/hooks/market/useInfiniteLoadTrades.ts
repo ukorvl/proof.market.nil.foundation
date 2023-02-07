@@ -50,8 +50,10 @@ export const useInfiniteLoadTrades = ({
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        requestCache = {};
-    }, [selectedCircuitKey]);
+        return () => {
+            requestCache = {};
+        };
+    }, []);
 
     const loadMoreItems = useCallback(
         async (startIndex: number, stopIndex: number) => {
@@ -82,8 +84,8 @@ export const useInfiniteLoadTrades = ({
                 };
 
                 const loadedItems = await getAsks(getTradesApiFilter, stopIndex, startIndex);
-                setLoading(false);
 
+                setLoading(false);
                 setLoadedItemsState({
                     hasNextPage: loadedItems.length >= length,
                     items: [...items].concat(loadedItems),
