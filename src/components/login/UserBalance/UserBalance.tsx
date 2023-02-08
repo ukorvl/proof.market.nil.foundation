@@ -27,7 +27,7 @@ type UserBalanceProps = {
  * @param {UserBalanceProps} props - Props.
  * @returns React component.
  */
-export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps): ReactElement => {
+const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps): ReactElement => {
     const [hidden, setHidden] = useLocalStorage('userBalanceHidden', false);
     const userBalance = useAppSelector(selectUserBalance);
     const loadingUserBalance = useAppSelector(s => s.userState.balanceIsLoading);
@@ -77,3 +77,5 @@ export const UserBalance = ({ className, canToggleVisibility }: UserBalanceProps
         </div>
     );
 };
+
+export default UserBalance;
