@@ -43,5 +43,6 @@
       "url": "/login?utm_source=homescreen",
       "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }
