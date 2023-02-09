@@ -3,11 +3,11 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient, getApiUrlByParameters } from '../common';
+import { createApiClient, getApiUrlByParameters } from '../common';
 import type { GetOrdersParameters } from '../common';
 import type { Ask } from '../../models';
 
-const httpFetcher = createBearerHttpClient('/ask');
+const httpFetcher = createApiClient('/ask');
 
 /**
  * Get asks by parameters.
@@ -21,7 +21,7 @@ export const getAsks = (
     parameters: GetOrdersParameters,
     limit?: number,
     startFrom?: number,
-): Promise<Ask[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom));
+): Promise<Ask[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom)).json();
 
 /**
  * Remove Ask.
@@ -30,4 +30,4 @@ export const getAsks = (
  * @returns Ask.
  */
 export const removeAsk = (askToRemoveId: Ask['_key']): Promise<void> =>
-    httpFetcher.delete(`/${askToRemoveId}`);
+    httpFetcher.delete(askToRemoveId).json();

@@ -4,9 +4,9 @@
  */
 
 import type { LastProofProducer } from 'src/models';
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 
-const httpFetcher = createBearerHttpClient('/producer');
+const httpFetcher = createApiClient('/producer');
 
 /**
  * Get last proof producer data for all circuits.
@@ -14,4 +14,4 @@ const httpFetcher = createBearerHttpClient('/producer');
  * @returns .
  */
 export const getLastProofProducerData = (): Promise<Array<LastProofProducer | null>> =>
-    httpFetcher.get('/last');
+    httpFetcher.get('last').json();
