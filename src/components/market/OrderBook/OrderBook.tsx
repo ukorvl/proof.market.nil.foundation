@@ -4,11 +4,14 @@
  */
 
 import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import type { UseGetOrderBookDataReturnType } from 'src/hooks';
 import { useGetOrderBookData, useLocalStorage } from 'src/hooks';
 import type { OrderBookPriceStep } from 'src/enums';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
+import { selectCurrentCircuitKey, useAppSelector } from 'src/redux';
+import { getOrderBookData } from 'src/api';
 import { OrderBookTable } from './OrderBookTable';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { DashboardCard } from '../../common';
@@ -21,6 +24,7 @@ import styles from './OrderBook.module.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
+    const currentStatementKey = useAppSelector(selectCurrentCircuitKey);
     const [priceStep, setPriceStep] = useLocalStorage<keyof typeof OrderBookPriceStep>(
         'orderBookPriceStep',
         '0.001',
@@ -30,6 +34,13 @@ export const OrderBook = (): ReactElement => {
         true,
     );
     const data = useGetOrderBookData({ priceStep });
+    useEffect(() => {
+        const getData = async () => {
+            currentStatementKey && (await getOrderBookData(currentStatementKey, { priceStep }));
+        };
+
+        getData();
+    }, [currentStatementKey, priceStep]);
 
     return (
         <DashboardCard>
