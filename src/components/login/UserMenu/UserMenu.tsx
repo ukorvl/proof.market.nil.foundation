@@ -4,14 +4,16 @@
  */
 
 import type { ReactElement } from 'react';
-import { Suspense, lazy } from 'react';
+import loadable from '@loadable/component';
 import { Button, Dropdown, Icon, Menu, Spinner } from '@nilfoundation/react-components';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, useLogout } from 'src/hooks';
 import { Path } from 'src/routing';
 import styles from './UserMenu.module.scss';
 
-const UserBalance = lazy(() => import('../UserBalance/UserBalance'));
+const UserBalance = loadable(() => import('../UserBalance/UserBalance'), {
+    fallback: <Spinner grow />,
+});
 
 /**
  * User menu.
@@ -45,9 +47,7 @@ export const UserMenu = (): ReactElement => {
                 <Dropdown.Menu align="right">
                     <Menu.Header className={styles.balanceContainer}>
                         <div className={styles.balanceTitle}>Current balance:</div>
-                        <Suspense fallback={<Spinner grow />}>
-                            <UserBalance className={styles.balance} />
-                        </Suspense>
+                        <UserBalance className={styles.balance} />
                     </Menu.Header>
                     <Menu.Divider />
                     <Dropdown.Item onSelect={processLogout}>Logout</Dropdown.Item>
