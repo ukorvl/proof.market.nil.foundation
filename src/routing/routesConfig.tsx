@@ -14,7 +14,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
 
 const MarketView = lazy(
-    () => import(/* webpackChunkName: "MarketView", webpackPrefetch: true */ '../views/MarketView'),
+    () => import(/* webpackChunkName: "MarketView", webpackPrefetch: 2 */ '../views/MarketView'),
 );
 const LoginView = lazy(
     () => import(/* webpackChunkName: "LoginView", webpackPrefetch: true */ '../views/LoginView'),
