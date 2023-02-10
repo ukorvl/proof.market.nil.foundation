@@ -13,24 +13,14 @@ import { Path } from './Paths';
 import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
 
-const MarketView = lazy(
-    () => import(/* webpackChunkName: "MarketView", webpackPrefetch: 2 */ '../views/MarketView'),
-);
-const LoginView = lazy(
-    () => import(/* webpackChunkName: "LoginView", webpackPrefetch: true */ '../views/LoginView'),
-);
+const MarketView = lazy(() => import(/* webpackChunkName: "MarketView" */ '../views/MarketView'));
+const LoginView = lazy(() => import(/* webpackChunkName: "LoginView" */ '../views/LoginView'));
 const PortfolioView = lazy(
-    () =>
-        import(
-            /* webpackChunkName: "PortfolioView", webpackPrefetch: true */ '../views/PortfolioView'
-        ),
+    () => import(/* webpackChunkName: "PortfolioView" */ '../views/PortfolioView'),
 );
-const Page404 = lazy(
-    () => import(/* webpackChunkName: "Page404", webpackPrefetch: -1 */ '../views/404'),
-);
+const Page404 = lazy(() => import(/* webpackChunkName: "Page404" */ '../views/404'));
 const RegisterView = lazy(
-    () =>
-        import(/* webpackChunkName: "RegisterView", webpackPrefetch: -1 */ '../views/RegisterView'),
+    () => import(/* webpackChunkName: "RegisterView" */ '../views/RegisterView'),
 );
 
 /**

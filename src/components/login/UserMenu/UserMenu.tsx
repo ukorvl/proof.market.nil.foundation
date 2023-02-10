@@ -12,10 +12,7 @@ import { Path } from 'src/routing';
 import styles from './UserMenu.module.scss';
 
 const UserBalance = loadable(
-    () =>
-        import(
-            /* webpackChunkName: "UserBalance", webpackPrefetch: true */ '../UserBalance/UserBalance'
-        ),
+    () => import(/* webpackChunkName: "UserBalance" */ '../UserBalance/UserBalance'),
     {
         fallback: <Spinner grow />,
     },
