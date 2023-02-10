@@ -82,7 +82,7 @@ self.addEventListener('message', event => {
 });
 
 registerRoute(
-    ({ url }) => url.origin === self.location.origin && url.pathname.includes('fontawesome'),
+    ({ url }) => url.pathname.includes('https://ka-f.fontawesome.com'),
     new StaleWhileRevalidate({
         cacheName: 'fontawesome',
         plugins: [new ExpirationPlugin({ maxEntries: 50 })],
