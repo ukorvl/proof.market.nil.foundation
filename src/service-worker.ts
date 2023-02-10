@@ -61,7 +61,9 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
     // Add in any other file extensions or routing criteria as needed.
-    ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
+    ({ url }) =>
+        url.origin === self.location.origin &&
+        (url.pathname.endsWith('.png') || url.pathname.endsWith('.svg')),
     // Customize this strategy as needed, e.g., by changing to CacheFirst.
     new StaleWhileRevalidate({
         cacheName: 'images',
@@ -82,7 +84,7 @@ self.addEventListener('message', event => {
 });
 
 registerRoute(
-    ({ url }) => url.pathname.includes('https://ka-f.fontawesome.com'),
+    ({ url }) => url.origin.includes('https://ka-f.fontawesome.com'),
     new StaleWhileRevalidate({
         cacheName: 'fontawesome',
         plugins: [new ExpirationPlugin({ maxEntries: 50 })],
