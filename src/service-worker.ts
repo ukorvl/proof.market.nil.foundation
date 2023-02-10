@@ -90,3 +90,11 @@ registerRoute(
         plugins: [new ExpirationPlugin({ maxEntries: 50 })],
     }),
 );
+
+registerRoute(
+    ({ url }) => url.origin.includes('https://fonts.googleapis.com'),
+    new StaleWhileRevalidate({
+        cacheName: 'googleFonts',
+        plugins: [new ExpirationPlugin({ maxEntries: 50 })],
+    }),
+);
