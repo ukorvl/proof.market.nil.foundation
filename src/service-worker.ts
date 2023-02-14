@@ -70,7 +70,10 @@ registerRoute(
         plugins: [
             // Ensure that once this runtime cache reaches a maximum size the
             // least-recently used images are removed.
-            new ExpirationPlugin({ maxEntries: 50 }),
+            new ExpirationPlugin({
+                maxEntries: 50,
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+            }),
         ],
     }),
 );
@@ -87,7 +90,12 @@ registerRoute(
     ({ url }) => url.origin.includes('https://ka-f.fontawesome.com'),
     new StaleWhileRevalidate({
         cacheName: 'fontawesome',
-        plugins: [new ExpirationPlugin({ maxEntries: 50 })],
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+            }),
+        ],
     }),
 );
 
@@ -95,6 +103,11 @@ registerRoute(
     ({ url }) => url.origin.includes('https://fonts.googleapis.com'),
     new StaleWhileRevalidate({
         cacheName: 'googleFonts',
-        plugins: [new ExpirationPlugin({ maxEntries: 50 })],
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+            }),
+        ],
     }),
 );
