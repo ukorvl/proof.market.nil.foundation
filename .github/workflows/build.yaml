@@ -47,6 +47,7 @@ jobs:
       run: |
         CI=false
         npm run build
+        ls -lah /build
 
     - name: Pack build results
       run: tar -czf build-${{ github.sha }}.tar.gz build
