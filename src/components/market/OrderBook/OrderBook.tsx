@@ -8,7 +8,7 @@ import { Spinner } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
 import { useLocalStorage } from 'src/hooks';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
-import { selectOrderBookData, useAppSelector } from 'src/redux';
+import { selectLastOrderData, selectOrderBookData, useAppSelector } from 'src/redux';
 import type { LastOrderData, OrderBookData } from 'src/models';
 import { OrderBookTable } from './OrderBookTable';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
@@ -28,6 +28,7 @@ export const OrderBook = (): ReactElement => {
     );
 
     const data = useAppSelector(selectOrderBookData, deepEqual);
+    const lastOrderData = useAppSelector(selectLastOrderData, deepEqual);
     const isLoading = useAppSelector(s => s.orderBookState.isLoading);
     const gettingDataError = useAppSelector(s => s.orderBookState.hasApiError);
 
@@ -43,7 +44,7 @@ export const OrderBook = (): ReactElement => {
                         data,
                         isLoading,
                         isError: gettingDataError,
-                        lastOrderData: { type: 'grow' },
+                        lastOrderData,
                     })}
                 </div>
             </OrderBookSettingsContext.Provider>
@@ -70,7 +71,7 @@ const OrderBookViewFactory = ({
     data: OrderBookData;
     isLoading: boolean;
     isError: boolean;
-    lastOrderData: LastOrderData;
+    lastOrderData?: LastOrderData;
 }) => {
     const { asks, bids } = data;
 
@@ -86,18 +87,20 @@ const OrderBookViewFactory = ({
                         type="asks"
                         data={asks}
                     />
-                    {lastOrderData && (
-                        <div className={styles.lastDeal}>
-                            <div className={styles.lastDealTitle}>Last deal:</div>
-                            {lastOrderData.cost && (
-                                <div className={`${lastOrderData.type}TextColor`}>
-                                    {`${lastOrderData.cost.toFixed(
-                                        4,
-                                    )} ${siteMoneyTickerAbbreviation}`}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    <div className={styles.lastDeal}>
+                        {lastOrderData && (
+                            <>
+                                <div className={styles.lastDealTitle}>Last deal:</div>
+                                {lastOrderData.cost && (
+                                    <div className={`${lastOrderData.type}TextColor`}>
+                                        {`${lastOrderData.cost.toFixed(
+                                            4,
+                                        )} ${siteMoneyTickerAbbreviation}`}
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
                     <OrderBookTable
                         type="bids"
                         data={bids}

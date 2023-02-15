@@ -5,7 +5,7 @@
 
 import { createAction } from '@reduxjs/toolkit';
 import type { OrderBookPriceStep } from 'src/enums';
-import type { OrderBookData } from 'src/models';
+import type { LastOrderData, OrderBookData } from 'src/models';
 
 /**
  * Update orderbook data.
@@ -29,4 +29,11 @@ export const UpdateOrderBookDataError = createAction<boolean>('@orderBook/UPDATE
  */
 export const UpdateOrderBookPriceStep = createAction<keyof typeof OrderBookPriceStep>(
     '@orderBook/UPDATE_PRICE_STEP',
+);
+
+/**
+ * Update orderbook last order data.
+ */
+export const UpdateOrderBookLastOrderData = createAction<LastOrderData | undefined>(
+    '@orderBook/UPDATE_LAST_ORDER_DATA',
 );

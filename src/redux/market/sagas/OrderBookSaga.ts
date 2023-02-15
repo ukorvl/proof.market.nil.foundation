@@ -5,16 +5,17 @@
 
 import { call, fork, put, takeLatest, select } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
-import type { OrderBookDataOptions } from 'src/api';
-import { getOrderBookData } from 'src/api';
+import type { GetOrdersParameters, OrderBookDataOptions } from 'src/api';
+import { getAsks, getOrderBookData } from 'src/api';
 import { ProtectedCall } from 'src/redux';
-import type { OrderBookData } from 'src/models';
+import type { Ask, LastOrderData, OrderBookData } from 'src/models';
 import {
     UpdateSelectedCircuitKey,
     UpdateOrderBookData,
     UpdateOrderBookDataIsLoading,
     UpdateOrderBookDataError,
     UpdateOrderBookPriceStep,
+    UpdateOrderBookLastOrderData,
 } from '../actions';
 import { selectCurrentCircuitKey, selectOrderBookPriceStep } from '../selectors';
 import { RevalidateSaga } from '../../common';
@@ -29,9 +30,14 @@ const revalidateDataDelay = Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVA
 export function* OrderBookSaga(): SagaIterator<void> {
     yield takeLatest([UpdateSelectedCircuitKey, UpdateOrderBookPriceStep], function* () {
         yield put(UpdateOrderBookData({ asks: [], bids: [] }));
+        yield put(UpdateOrderBookLastOrderData(undefined));
+
         yield fork(GetOrderBookDataSaga);
+        yield fork(GetLastOrderDataSaga);
     });
+
     yield fork(RevalidateSaga, GetOrderBookDataSaga, revalidateDataDelay);
+    yield fork(RevalidateSaga, GetLastOrderDataSaga, revalidateDataDelay);
 }
 
 /**
@@ -70,3 +76,61 @@ function* GetOrderBookDataSaga(): SagaIterator<void> {
         yield put(UpdateOrderBookDataIsLoading(false));
     }
 }
+
+/**
+ * Get last order data saga.
+ *
+ * @yields
+ */
+function* GetLastOrderDataSaga(): SagaIterator<void> {
+    const currentStatementKey: string | undefined = yield select(selectCurrentCircuitKey);
+
+    if (currentStatementKey === undefined) {
+        return;
+    }
+
+    try {
+        const apiCallParameters: GetOrdersParameters = {
+            statement_key: currentStatementKey,
+            status: 'completed',
+        };
+
+        const lastTwoCompletedAsks: Ask[] = yield call(
+            ProtectedCall,
+            getAsks,
+            apiCallParameters,
+            2,
+        );
+
+        if (lastTwoCompletedAsks === undefined || lastTwoCompletedAsks.length === 0) {
+            yield put(UpdateOrderBookLastOrderData(undefined));
+
+            return;
+        }
+
+        const lastOrderData = getLastOrderData(lastTwoCompletedAsks);
+        yield put(UpdateOrderBookLastOrderData(lastOrderData));
+    } catch (e) {
+        yield put(UpdateOrderBookLastOrderData(undefined));
+    }
+}
+
+/**
+ * Calculates last order data.
+ *
+ * @param lastTwoCompletedAsks Asks.
+ * @returns Last order data.
+ */
+const getLastOrderData = (lastTwoCompletedAsks: Ask[]): LastOrderData => {
+    const latestCost = lastTwoCompletedAsks.at(0)?.cost;
+    const prevCost = lastTwoCompletedAsks.at(1)?.cost;
+
+    const getType = () => (latestCost! > prevCost! ? 'grow' : 'loss');
+    const type = latestCost && prevCost ? getType() : undefined;
+
+    return {
+        cost: latestCost,
+        eval_time: lastTwoCompletedAsks.at(0)?.eval_time,
+        type,
+    };
+};

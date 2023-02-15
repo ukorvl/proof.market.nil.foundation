@@ -6,7 +6,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import sum from 'lodash/sum';
 import type { OrderBookPriceStep } from 'src/enums';
-import type { OrderBookData } from 'src/models';
+import type { LastOrderData, OrderBookData } from 'src/models';
 import type { RootStateType } from 'src/redux';
 
 /**
@@ -32,3 +32,12 @@ export const selectOrderBookPriceStep = (s: RootStateType): keyof typeof OrderBo
 export const selectOrderBookMaxVolume = createSelector(selectOrderBookData, ({ asks, bids }) =>
     Math.max(sum(asks.map(x => x.ordersAmount)) ?? 0, sum(bids.map(x => x.ordersAmount)) ?? 0),
 );
+
+/**
+ * Select last order data.
+ *
+ * @param s State.
+ * @returns Last order data.
+ */
+export const selectLastOrderData = (s: RootStateType): LastOrderData | undefined =>
+    s.orderBookState.lastOrderData;
