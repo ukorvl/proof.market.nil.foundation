@@ -20,7 +20,7 @@ import {
 } from '../actions';
 import { ProtectedCall, UpdateUserName } from '../../login';
 import { selectCurrentCircuitKey } from '../selectors';
-import { RevalidateSaga, selectUrlParamStatementKey } from '../../common';
+import { RevalidateSaga, selectUrlParamStatementName } from '../../common';
 
 const revalidateCircuitsInfoInterval =
     Number(process.env.REACT_APP_REVALIDATE_DATA_INTERVAL) || 3000;
@@ -77,7 +77,7 @@ function* SelectCircuitSaga({
     payload: circuitsList,
 }: ReturnType<typeof UpdateCircuitsList>): SagaIterator<void> {
     const currentCircuitKey = yield select(selectCurrentCircuitKey);
-    const urlParamKey: string = yield select(selectUrlParamStatementKey);
+    const urlParamStatementName: string = yield select(selectUrlParamStatementName);
 
     if (currentCircuitKey) {
         return;
@@ -87,8 +87,9 @@ function* SelectCircuitSaga({
         return;
     }
 
-    const shouldSelectFromUrl = circuitsList.some(x => x._key === urlParamKey);
-    const keyToSelect = shouldSelectFromUrl ? urlParamKey : circuitsList[0]._key;
+    const circuitWithNameFromUrl = circuitsList.find(x => x.name === urlParamStatementName);
+    const shouldSelectFromUrl = !!circuitWithNameFromUrl;
+    const keyToSelect = shouldSelectFromUrl ? circuitWithNameFromUrl._key : circuitsList[0]._key;
 
     yield put(UpdateSelectedCircuitKey(keyToSelect));
 }

@@ -20,8 +20,8 @@ export const selectLocation = (s: RootStateType) => s.routerState.location;
  * @param s State.
  * @returns Statement key.
  */
-export const selectUrlParamStatementKey = (s: RootStateType) =>
-    selectUrlParamByKey(s, RouterParam.statementKey);
+export const selectUrlParamStatementName = (s: RootStateType) =>
+    selectUrlParamByKey(s, RouterParam.statementName);
 
 /**
  * Select proof key url param.
