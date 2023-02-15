@@ -8,5 +8,5 @@
  */
 export const enum RouterParam {
     proofKey = 'proofKey',
-    statementKey = 'statementKey',
+    statementName = 'statementName',
 }
