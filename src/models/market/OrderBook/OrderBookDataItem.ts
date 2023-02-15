@@ -11,5 +11,4 @@ export type OrderBookDataItem = {
     userOrdersAmount: number;
     cost: number;
     eval_time?: number;
-    type: 'bid' | 'ask';
 };

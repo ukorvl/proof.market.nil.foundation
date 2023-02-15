@@ -6,7 +6,6 @@
 import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
-import type { UseGetOrderBookDataReturnType } from 'src/hooks';
 import { useLocalStorage } from 'src/hooks';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { selectOrderBookData, useAppSelector } from 'src/redux';
@@ -55,7 +54,11 @@ export const OrderBook = (): ReactElement => {
 /**
  * Renders order book view.
  *
- * @param {UseGetOrderBookDataReturnType} props Props.
+ * @param props Props.
+ * @param props.data Orderbook data.
+ * @param props.isLoading Is loading data.
+ * @param props.isError Has getting data error.
+ * @param props.lastOrderData Last order data.
  * @returns React element.
  */
 const OrderBookViewFactory = ({
@@ -70,7 +73,6 @@ const OrderBookViewFactory = ({
     lastOrderData: LastOrderData;
 }) => {
     const { asks, bids } = data;
-    console.log(data);
 
     switch (true) {
         case isLoading && !asks.length && !bids.length:
