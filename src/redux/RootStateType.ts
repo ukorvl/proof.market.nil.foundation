@@ -5,7 +5,12 @@
 
 import type { RouterReducerState } from './common';
 import type { UserReducerState } from './login';
-import type { CircuitsReducerState, BidsReducerState, AsksReducerState } from './market';
+import type {
+    CircuitsReducerState,
+    BidsReducerState,
+    AsksReducerState,
+    OrderBookReducerState,
+} from './market';
 import type { ProofReducerState } from './portfolio';
 
 /**
@@ -18,4 +23,5 @@ export interface RootStateType {
     proofState: ProofReducerState;
     userState: UserReducerState;
     routerState: RouterReducerState;
+    orderBookState: OrderBookReducerState;
 }

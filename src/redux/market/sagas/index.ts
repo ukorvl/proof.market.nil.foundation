@@ -6,3 +6,4 @@
 export * from './CircuitsSaga';
 export * from './BidsSaga';
 export * from './AsksSaga';
+export * from './OrderBookSaga';

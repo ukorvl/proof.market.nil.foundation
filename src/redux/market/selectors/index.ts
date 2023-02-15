@@ -1,8 +1,9 @@
 /**
  * @file Index.
- * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
 export * from './CircuitsSelectors';
 export * from './BidsSelectors';
 export * from './AsksSelectors';
+export * from './OrderBookSelectors';

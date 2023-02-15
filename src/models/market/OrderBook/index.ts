@@ -4,6 +4,7 @@
  */
 
 export * from './OrderBookTableColumn';
-export * from './OrderBookTableData';
+export * from './OrderBookDataItem';
 export * from './CostAndEvalTime';
 export * from './LastOrderData';
+export * from './OrderBookData';

@@ -7,7 +7,8 @@ import type { ReactElement } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 import type { Row, TableInstance, TableState, SortByFn } from 'react-table';
 import { ReactTable } from 'src/components';
-import type { LastOrderData, OrderBookTableColumn, OrderBookTableData } from 'src/models';
+import type { LastOrderData, OrderBookTableColumn, OrderBookDataItem } from 'src/models';
+import { selectOrderBookMaxVolume, useAppSelector } from 'src/redux';
 import { OrderBookTableRow } from './OrderBookTableRow';
 import styles from './OrderBook.module.scss';
 
@@ -16,24 +17,23 @@ import styles from './OrderBook.module.scss';
  */
 type OrderBookTableProps = {
     type: 'bids' | 'asks';
-    data: OrderBookTableData[];
+    data: OrderBookDataItem[];
     lastOrderData?: LastOrderData;
-    maxVolume: number;
 };
 
-type RowWithVolume = Row<OrderBookTableData> & { volume: number };
+type RowWithVolume = Row<OrderBookDataItem> & { volume: number };
 
 /**
  * Initial table state without user interactions.
  */
-const defaultOrderBookState: Partial<TableState<OrderBookTableData>> = {
+const defaultOrderBookState: Partial<TableState<OrderBookDataItem>> = {
     sortBy: [
         {
             id: 'cost',
             desc: true,
         },
     ],
-    hiddenColumns: ['type', 'userOrdersAmount'],
+    hiddenColumns: ['userOrdersAmount'],
 };
 
 /**
@@ -45,8 +45,8 @@ const defaultOrderBookState: Partial<TableState<OrderBookTableData>> = {
 export const OrderBookTable = memo(function OrderBookTable({
     type,
     data,
-    maxVolume,
 }: OrderBookTableProps): ReactElement {
+    const maxVolume = useAppSelector(selectOrderBookMaxVolume);
     const columns = useMemo(
         (): OrderBookTableColumn[] => [
             {
@@ -67,9 +67,6 @@ export const OrderBookTable = memo(function OrderBookTable({
                 sortDescFirst: true,
             },
             {
-                accessor: 'type',
-            },
-            {
                 accessor: 'userOrdersAmount',
             },
         ],
@@ -77,7 +74,7 @@ export const OrderBookTable = memo(function OrderBookTable({
     );
 
     const renderRows = useCallback(
-        ({ rows, prepareRow }: TableInstance<OrderBookTableData>) => {
+        ({ rows, prepareRow }: TableInstance<OrderBookDataItem>) => {
             return (
                 <div className={styles.rowsContainer}>
                     {getDataWithVolumes(rows, maxVolume).map(row =>
@@ -112,7 +109,7 @@ export const OrderBookTable = memo(function OrderBookTable({
  */
 const renderRow = (
     row: RowWithVolume,
-    prepareRow: (r: Row<OrderBookTableData>) => void,
+    prepareRow: (r: Row<OrderBookDataItem>) => void,
     className: string,
 ): ReactElement => {
     prepareRow(row);
@@ -133,10 +130,7 @@ const renderRow = (
  * @param maxVolume Max volume.
  * @returns Data with voulmes.
  */
-const getDataWithVolumes = (
-    data: Row<OrderBookTableData>[],
-    maxVolume: number,
-): RowWithVolume[] => {
+const getDataWithVolumes = (data: Row<OrderBookDataItem>[], maxVolume: number): RowWithVolume[] => {
     let count = 0;
 
     const finalData = data.map(x => {
@@ -159,7 +153,7 @@ const getDataWithVolumes = (
  * @param columnId Sorted column id.
  * @returns Sort function.
  */
-const customSortFunction: SortByFn<OrderBookTableData> = (firstRow, secondRow, columnId) => {
+const customSortFunction: SortByFn<OrderBookDataItem> = (firstRow, secondRow, columnId) => {
     const firstValue = firstRow.values[columnId];
     const secondValue = secondRow.values[columnId];
 

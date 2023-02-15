@@ -1,12 +1,12 @@
 /**
  * @file Type declaration.
- * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
+ * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
 /**
- * Order book table data.
+ * Order book data item.
  */
-export type OrderBookTableData = {
+export type OrderBookDataItem = {
     ordersAmount: number;
     userOrdersAmount: number;
     cost: number;

@@ -5,9 +5,12 @@
 
 import type { OrderBookPriceStep } from 'src/enums';
 import { createBearerHttpClient } from '../common';
-import type { Circuit, OrderBookTableData } from '../../models';
+import type { Circuit, OrderBookData } from '../../models';
 
-type OrderBookDataOptions = {
+/**
+ * Get orderbook data options.
+ */
+export type OrderBookDataOptions = {
     priceStep?: keyof typeof OrderBookPriceStep;
     evalTimeStep?: number;
 };
@@ -24,7 +27,7 @@ const httpFetcher = createBearerHttpClient('/book');
 export const getOrderBookData = (
     statementKey: Circuit['_key'],
     options?: OrderBookDataOptions,
-): Promise<{ asks: OrderBookTableData[]; bids: OrderBookTableData[] }> =>
+): Promise<OrderBookData> =>
     httpFetcher.get(`/${statementKey}${options ? getUrlFromOptions(options) : ''}`);
 
 const getUrlFromOptions = ({ priceStep, evalTimeStep }: OrderBookDataOptions): string => {

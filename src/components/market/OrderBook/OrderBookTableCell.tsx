@@ -8,13 +8,13 @@ import { Label } from '@nilfoundation/react-components';
 import type { Cell } from 'react-table';
 import { TCell } from 'src/components';
 import { renderDashOnEmptyValue } from 'src/utils';
-import type { OrderBookTableData } from 'src/models';
+import type { OrderBookDataItem } from 'src/models';
 
 /**
  * Props.
  */
 type OrderBookTableCellProps = {
-    cell: Cell<OrderBookTableData>;
+    cell: Cell<OrderBookDataItem>;
     userOrdersAmount?: number;
 };
 

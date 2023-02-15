@@ -16,7 +16,7 @@ import {
     selectCurrentUserBids,
 } from 'src/redux';
 import { OrderBookPriceStep } from 'src/enums';
-import type { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookTableData } from 'src/models';
+import type { Ask, Bid, CostAndEvalTime, LastOrderData, OrderBookDataItem } from 'src/models';
 
 /**
  * Hook props.
@@ -30,8 +30,8 @@ export type UseGetOrderBookDataProps = {
  * Hook return type.
  */
 export type UseGetOrderBookDataReturnType = {
-    bids: OrderBookTableData[];
-    asks: OrderBookTableData[];
+    bids: OrderBookDataItem[];
+    asks: OrderBookDataItem[];
     loadingBids: boolean;
     loadingAsks: boolean;
     isError: boolean;
@@ -146,8 +146,8 @@ const createOrderBookData = <T extends Bid | Ask>(
     grouppedOrders: GrouppedOrdersMap,
     orderType: 'bid' | 'ask',
     userOrders: T[],
-): OrderBookTableData[] => {
-    const result: OrderBookTableData[] = [];
+): OrderBookDataItem[] => {
+    const result: OrderBookDataItem[] = [];
 
     grouppedOrders.forEach((value, key) => {
         const parsedKey: CostAndEvalTime = JSON.parse(key);
