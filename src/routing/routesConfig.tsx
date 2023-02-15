@@ -59,7 +59,7 @@ export const routesConfig: RouteObject[] = [
                                 element: <MarketView />,
                                 children: [
                                     {
-                                        path: `:${RouterParam.statementKey}`,
+                                        path: `:${RouterParam.statementName}`,
                                         element: <MarketView />,
                                     },
                                 ],
