@@ -10,7 +10,6 @@ import { dequal as deepEqual } from 'dequal';
 import debounce from 'lodash/debounce';
 import type { FilterProps, TableInstance, TableState } from 'react-table';
 import { useAppSelector } from 'src/redux';
-import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { ReactTable } from 'src/components';
 import type { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { CurcuitsListItem } from './CircuitsListItem';
@@ -110,7 +109,7 @@ export const CircuitsListTable = memo(function CircuitsListTable({
 
                 return {
                     _key: x._key,
-                    name: `${x.name.toUpperCase()}/${siteMoneyTickerAbbreviation}`,
+                    name: x.name,
                     cost: info?.current,
                     change: info?.daily_change,
                 };

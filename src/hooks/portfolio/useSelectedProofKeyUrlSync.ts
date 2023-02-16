@@ -10,9 +10,9 @@ import { selectSelectedProofKey, UpdateSelectedProofKey, useAppSelector } from '
 import { RouterParam } from 'src/enums';
 
 /**
- * Hook to manage selected proof key state.
+ * Hook to sync selected proof key and site url.
  */
-export const useSelectedProofKey = (): void => {
+export const useSelectedProofKeyUrlSync = (): void => {
     const dispatch = useDispatch();
     const selectedProofKey = useAppSelector(selectSelectedProofKey);
     const proofKey = useParams()[RouterParam.proofKey];

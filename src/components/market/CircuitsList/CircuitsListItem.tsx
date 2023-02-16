@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentCircuitKey } from 'src/redux';
 import { Path } from 'src/routing';
 import type { CircuitsListData } from 'src/models';
+import { siteMoneyTickerAbbreviation } from 'src/constants';
 import { CircuitsListItemInfo } from './CircuitsListItemInfo';
 import styles from './CircuitsList.module.scss';
 
@@ -34,9 +35,11 @@ export const CurcuitsListItem = ({
 
     return (
         <ListGroup.Item active={isSelected}>
-            <Link to={`${Path.market}/${_key}`}>
+            <Link to={`${Path.market}/${name}`}>
                 <Media className={isSelected ? styles.selected : ''}>
-                    <Media.Body className={styles.itemBody}>{name}</Media.Body>
+                    <Media.Body className={styles.itemBody}>
+                        {`${name.toUpperCase()}/${siteMoneyTickerAbbreviation}`}
+                    </Media.Body>
                     <CircuitsListItemInfo
                         cost={cost}
                         change={change}
