@@ -55,7 +55,13 @@ function* GetChartsDataSaga(): SagaIterator<void> {
 
         const completedAsks: Ask[] = yield call(ProtectedCall, getAsks, apiCallParameters);
 
-        if (completedAsks !== undefined) {
+        const currentKey = yield select(selectCurrentCircuitKey);
+
+        // TODO - remove after RevalidateSaga refactor
+        // At the moment that fixes updating redux with outtadet api call bug
+        const shouldUpdateChartsData =
+            completedAsks !== undefined && currentStatementKey === currentKey;
+        if (shouldUpdateChartsData) {
             yield put(UpdateChartsData(completedAsks));
         }
     } catch (e) {
