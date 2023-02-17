@@ -3,9 +3,9 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 
-const httpFetcher = createBearerHttpClient('/user');
+const httpFetcher = createApiClient('/user');
 
 /**
  * Get user balance.
@@ -14,4 +14,4 @@ const httpFetcher = createBearerHttpClient('/user');
  * @returns .
  */
 export const getUserBalance = (user: string): Promise<number | undefined> =>
-    httpFetcher.get(`/${user}/balance`);
+    httpFetcher.get(`${user}/balance`).json();

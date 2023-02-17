@@ -4,4 +4,3 @@
  */
 
 export * from './Proof';
-export * from './ProofDto';

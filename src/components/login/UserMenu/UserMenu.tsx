@@ -4,12 +4,19 @@
  */
 
 import type { ReactElement } from 'react';
-import { Button, Dropdown, Icon, Menu } from '@nilfoundation/react-components';
+import loadable from '@loadable/component';
+import { Button, Dropdown, Icon, Menu, Spinner } from '@nilfoundation/react-components';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, useLogout } from 'src/hooks';
 import { Path } from 'src/routing';
-import { UserBalance } from '../UserBalance';
 import styles from './UserMenu.module.scss';
+
+const UserBalance = loadable(
+    () => import(/* webpackChunkName: "UserBalance" */ '../UserBalance/UserBalance'),
+    {
+        fallback: <Spinner grow />,
+    },
+);
 
 /**
  * User menu.

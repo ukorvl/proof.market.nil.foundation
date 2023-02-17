@@ -3,9 +3,24 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import type { ProofDto } from './ProofDto';
-
 /**
  * Proof.
  */
-export type Proof = ProofDto;
+export type Proof = {
+    /**
+     * Proof unique id.
+     */
+    _key: string;
+    /**
+     * Internal id.
+     */
+    _id: string;
+    /**
+     * Id of bid.
+     */
+    bid_id: string;
+    /**
+     * Proof.
+     */
+    proof: string;
+};

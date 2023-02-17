@@ -3,10 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 import type { LoginData, AuthData } from '../../models';
 
-const httpFetcher = createBearerHttpClient('/user', false, false);
+const httpFetcher = createApiClient('/user', false, false);
 
 /**
  * Login.
@@ -15,7 +15,7 @@ const httpFetcher = createBearerHttpClient('/user', false, false);
  * @returns .
  */
 export const login = (loginData: LoginData): Promise<AuthData> =>
-    httpFetcher.post<AuthData, LoginData>('/signin', loginData);
+    httpFetcher.post('signin', { json: loginData }).json();
 
 /**
  * Renew jtw tocken.
@@ -24,4 +24,4 @@ export const login = (loginData: LoginData): Promise<AuthData> =>
  * @returns .
  */
 export const renewJwt = (username: string): Promise<AuthData | Record<string, never>> =>
-    httpFetcher.post('/renew', { username });
+    httpFetcher.post('renew', { json: username }).json();

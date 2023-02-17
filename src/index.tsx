@@ -17,6 +17,7 @@ import { store } from './redux';
 import { configureSentry } from './sentry';
 import { reportWebVitals } from './reportWebVitals';
 import configureGA from './ga';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import './index.scss';
 
 configureSentry();
@@ -34,4 +35,6 @@ render(
     </React.StrictMode>,
     document.getElementById('root'),
 );
+
+serviceWorkerRegistration.registerServiceWorker();
 reportWebVitals();

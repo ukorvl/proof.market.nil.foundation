@@ -3,10 +3,10 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 import type { RegisterData } from '../../models';
 
-const httpFetcher = createBearerHttpClient('/user', false, false);
+const httpFetcher = createApiClient('/user', false, false);
 
 /**
  * Register user.
@@ -15,7 +15,7 @@ const httpFetcher = createBearerHttpClient('/user', false, false);
  * @returns .
  */
 export const signUp = (registerData: RegisterData): Promise<RegisterData> =>
-    httpFetcher.post('/signup', registerData);
+    httpFetcher.post('signup', { json: registerData }).json();
 
 /**
  * Check if username is unique.
@@ -24,4 +24,4 @@ export const signUp = (registerData: RegisterData): Promise<RegisterData> =>
  * @returns True if username is unique.
  */
 export const checkIsUsernameUnique = (userNameToCheck: string): Promise<boolean> =>
-    httpFetcher.head(`/${userNameToCheck}`);
+    httpFetcher.head(userNameToCheck).json();

@@ -3,6 +3,5 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-export * from './HttpClient';
-export * from './BearerHttpClient';
+export * from './apiClient';
 export * from './apiHelpers';
