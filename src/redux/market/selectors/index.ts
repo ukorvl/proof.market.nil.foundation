@@ -7,3 +7,4 @@ export * from './CircuitsSelectors';
 export * from './BidsSelectors';
 export * from './AsksSelectors';
 export * from './OrderBookSelectors';
+export * from './ChartsSelectors';

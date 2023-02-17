@@ -23,15 +23,15 @@ import { selectUserName } from '../selectors';
  * @yields
  */
 export function* UserSaga(): SagaIterator<void> {
-    yield takeLatest([UpdateUserName, AddAsk, AddBid, RemoveAsk, RemoveBid], GetUserInfoSaga);
+    yield takeLatest([UpdateUserName, AddAsk, AddBid, RemoveAsk, RemoveBid], GetUserBalance);
 }
 
 /**
- * Gets user info after updating user.
+ * Gets user balance.
  *
  * @yields
  */
-function* GetUserInfoSaga(): SagaIterator<void> {
+function* GetUserBalance(): SagaIterator<void> {
     const user = yield select(selectUserName);
     const isReadonly = user === process.env.REACT_APP_READONLY_USER;
     if (isReadonly || !user) {

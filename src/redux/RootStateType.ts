@@ -10,6 +10,7 @@ import type {
     BidsReducerState,
     AsksReducerState,
     OrderBookReducerState,
+    ChartsReducerState,
 } from './market';
 import type { ProofReducerState } from './portfolio';
 
@@ -24,4 +25,5 @@ export interface RootStateType {
     userState: UserReducerState;
     routerState: RouterReducerState;
     orderBookState: OrderBookReducerState;
+    chartsState: ChartsReducerState;
 }
