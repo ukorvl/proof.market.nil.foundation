@@ -23,6 +23,7 @@ jobs:
     secrets: inherit
     with:
       environment: github-pages
+      commit: ${{ inputs.commit }}
 
   deploy:
     name: Deploy
