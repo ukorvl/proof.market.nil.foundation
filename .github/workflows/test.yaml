@@ -11,7 +11,7 @@ on:
       commit:
         description: 'Commit SHA1'
         required: false
-        default: 'undefined'
+        default: ''
         type: string
 
 jobs:
