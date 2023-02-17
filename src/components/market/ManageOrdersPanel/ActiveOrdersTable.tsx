@@ -11,7 +11,7 @@ import type { Cell, Column, Row, TableInstance, TableState } from 'react-table';
 import { TradeOrderType } from 'src/models';
 import { ReactTable, TRow, TCell, ClicableIcon } from 'src/components';
 import { removeAsk, removeBid } from 'src/api';
-import { RemoveAsk, RemoveBid } from 'src/redux';
+import { RemoveUserAsk, RemoveUserBid } from 'src/redux';
 import { renderDashOnEmptyValue } from 'src/utils';
 import { useAuth } from 'src/hooks';
 import type { ManageOrdersData } from 'src/models';
@@ -90,7 +90,7 @@ export const ActiveOrdersTable = memo(function ActiveOrdersTable({
         try {
             const { orderId, type } = selectedRow.values;
             const fetcher = type === TradeOrderType.buy ? removeBid : removeAsk;
-            const action = type === TradeOrderType.buy ? RemoveBid : RemoveAsk;
+            const action = type === TradeOrderType.buy ? RemoveUserBid : RemoveUserAsk;
 
             await fetcher(orderId);
             dispatch(action(orderId));

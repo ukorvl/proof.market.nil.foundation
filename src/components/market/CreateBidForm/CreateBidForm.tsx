@@ -8,7 +8,7 @@ import { useContext, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { notificationActions, Variant } from '@nilfoundation/react-components';
-import { AddBid, useAppSelector } from 'src/redux';
+import { AddUserBid, useAppSelector } from 'src/redux';
 import { createBid } from 'src/api/market/BidsApi';
 import type { CreateBid } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
@@ -36,8 +36,8 @@ export const CreateBidForm = (): ReactElement => {
         setErrorMessage('');
         setProcessing(true);
         try {
-            const bid = await createBid(data);
-            dispatch(AddBid(bid));
+            const createdBid = await createBid(data);
+            dispatch(AddUserBid(createdBid));
 
             const { cost, eval_time } = data;
 
