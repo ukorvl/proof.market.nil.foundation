@@ -11,7 +11,11 @@ on:
         type: boolean
         default: true
         description: Update proof.market repository also
-
+      commit:
+        description: 'Commit SHA1'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   build:
@@ -19,6 +23,7 @@ jobs:
     secrets: inherit
     with:
       environment: github-pages
+      commit: ${{ inputs.commit }}
 
   deploy:
     name: Deploy
