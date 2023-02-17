@@ -8,3 +8,4 @@ export * from './BidsSelectors';
 export * from './AsksSelectors';
 export * from './OrderBookSelectors';
 export * from './ChartsSelectors';
+export * from './UserOrdersSelectors';

@@ -8,3 +8,4 @@ export * from './BidsSaga';
 export * from './AsksSaga';
 export * from './OrderBookSaga';
 export * from './ChartsSaga';
+export * from './UserOrdersSaga';

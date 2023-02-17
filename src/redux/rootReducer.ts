@@ -12,6 +12,7 @@ import {
     AsksReducer,
     OrderBookReducer,
     ChartsReducer,
+    UserOrdersReducer,
 } from './market';
 import { ProofReducer } from './portfolio';
 import type { RootStateType } from './RootStateType';
@@ -28,4 +29,5 @@ export const RootReducer = combineReducers<RootStateType>({
     routerState: RouterReducer,
     orderBookState: OrderBookReducer,
     chartsState: ChartsReducer,
+    userOrdersState: UserOrdersReducer,
 });
