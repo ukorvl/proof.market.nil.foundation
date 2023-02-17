@@ -7,7 +7,7 @@ import { call, fork, put, takeLatest, select, all } from 'redux-saga/effects';
 import type { SagaIterator } from '@redux-saga/core';
 import type { GetOrdersParameters } from 'src/api';
 import { getBids, getAsks } from 'src/api';
-import { ProtectedCall, selectUserName } from 'src/redux';
+import { ProtectedCall, selectUserName } from 'src/redux/login';
 import {
     UpdateSelectedCircuitKey,
     UpdateUserAsksList,

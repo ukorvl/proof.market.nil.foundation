@@ -8,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { dequal as deepEqual } from 'dequal';
 import {
     useAppSelector,
-    selectCurrentUserCreatedBids,
-    selectCurrentUserCompletedBids,
-    selectCurrentUserActiveAsks,
-    selectCurrentUserCompletedAsks,
+    selectUserActiveBids,
+    selectUserActiveAsks,
+    selectUserCompletedAsks,
+    selectUserCompletedBids,
 } from 'src/redux';
 import { TradeOrderType } from 'src/models';
 import { formatDate } from 'src/utils';
@@ -33,19 +33,19 @@ export type UseGetManageOrdersDataReturnType = {
  * @returns Data to render manage orders panel.
  */
 export const useGetManageOrdersData = (): UseGetManageOrdersDataReturnType => {
-    const loadingData = useAppSelector(s => s.bidsState.isLoading || s.asksState.isLoading);
-    const createdBids = useSelector(selectCurrentUserCreatedBids, deepEqual);
-    const completedBids = useSelector(selectCurrentUserCompletedBids, deepEqual);
-    const createdAsks = useSelector(selectCurrentUserActiveAsks, deepEqual);
-    const completedAsks = useSelector(selectCurrentUserCompletedAsks, deepEqual);
-    const isError = useAppSelector(s => s.asksState.error || s.bidsState.error);
+    const loadingData = useAppSelector(s => s.userOrdersState.isLoading);
+    const activeBids = useSelector(selectUserActiveBids, deepEqual);
+    const completedBids = useSelector(selectUserCompletedBids, deepEqual);
+    const activeAsks = useSelector(selectUserActiveAsks, deepEqual);
+    const completedAsks = useSelector(selectUserCompletedAsks, deepEqual);
+    const isError = useAppSelector(s => s.userOrdersState.isError);
 
     const activeOrdersData = useMemo(() => {
-        const mappedAsks = createdAsks.map(x => mapToManageOrdersData(x, TradeOrderType.sell));
-        const mappedBids = createdBids.map(x => mapToManageOrdersData(x, TradeOrderType.buy));
+        const mappedAsks = activeAsks.map(x => mapToManageOrdersData(x, TradeOrderType.sell));
+        const mappedBids = activeBids.map(x => mapToManageOrdersData(x, TradeOrderType.buy));
 
         return [...mappedAsks, ...mappedBids];
-    }, [createdAsks, createdBids]);
+    }, [activeAsks, activeBids]);
 
     const historyOrdersData = useMemo(() => {
         const mappedAsks = completedAsks.map(x => mapToManageOrdersData(x, TradeOrderType.sell));

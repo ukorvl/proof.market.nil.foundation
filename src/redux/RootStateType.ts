@@ -7,8 +7,6 @@ import type { RouterReducerState } from './common';
 import type { UserReducerState } from './login';
 import type {
     CircuitsReducerState,
-    BidsReducerState,
-    AsksReducerState,
     OrderBookReducerState,
     ChartsReducerState,
     UserOrdersReducerState,
@@ -20,8 +18,6 @@ import type { ProofReducerState } from './portfolio';
  */
 export interface RootStateType {
     circuitsState: CircuitsReducerState;
-    asksState: AsksReducerState;
-    bidsState: BidsReducerState;
     proofState: ProofReducerState;
     userState: UserReducerState;
     routerState: RouterReducerState;

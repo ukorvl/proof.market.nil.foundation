@@ -14,7 +14,7 @@ import {
     UpdateUserName,
 } from '../actions';
 import { ProtectedCall } from './ProtectedCall';
-import { AddAsk, AddBid, RemoveAsk, RemoveBid } from '../../market';
+import { AddUserBid, RemoveUserAsk, RemoveUserBid } from '../../market';
 import { selectUserName } from '../selectors';
 
 /**
@@ -23,7 +23,7 @@ import { selectUserName } from '../selectors';
  * @yields
  */
 export function* UserSaga(): SagaIterator<void> {
-    yield takeLatest([UpdateUserName, AddAsk, AddBid, RemoveAsk, RemoveBid], GetUserBalance);
+    yield takeLatest([UpdateUserName, AddUserBid, RemoveUserAsk, RemoveUserBid], GetUserBalance);
 }
 
 /**
