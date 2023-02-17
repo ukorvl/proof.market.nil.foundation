@@ -20,11 +20,11 @@ export const getCircuits = (): Promise<Circuit> => httpFetcher.get('').json();
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`?info`).json();
+export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get('?info').json();
 
 /**
  * Get circuits stats.
  *
  * @returns .
  */
-export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`?statistics`).json();
+export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get('?statistics').json();

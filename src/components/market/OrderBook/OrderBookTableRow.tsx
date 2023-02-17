@@ -7,7 +7,7 @@ import type { CSSProperties, KeyboardEventHandler, ReactElement } from 'react';
 import { useContext } from 'react';
 import type { Row } from 'react-table';
 import { TRow } from 'src/components';
-import type { OrderBookTableData } from 'src/models';
+import type { OrderBookDataItem } from 'src/models';
 import { OrderManagementContext } from '../OrderManagementContextProvider';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { OrderBookTableCell } from './OrderBookTableCell';
@@ -16,7 +16,7 @@ import { OrderBookTableCell } from './OrderBookTableCell';
  * Props.
  */
 type OrderBookTableRowProps = {
-    row: Row<OrderBookTableData>;
+    row: Row<OrderBookDataItem>;
     volume: number;
     className?: string;
 };

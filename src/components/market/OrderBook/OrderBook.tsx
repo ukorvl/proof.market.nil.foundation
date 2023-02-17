@@ -5,10 +5,11 @@
 
 import type { ReactElement } from 'react';
 import { Spinner } from '@nilfoundation/react-components';
-import type { UseGetOrderBookDataReturnType } from 'src/hooks';
-import { useGetOrderBookData, useLocalStorage } from 'src/hooks';
-import type { OrderBookPriceStep } from 'src/enums';
+import { dequal as deepEqual } from 'dequal';
+import { useLocalStorage } from 'src/hooks';
 import { siteMoneyTickerAbbreviation } from 'src/constants';
+import { selectLastOrderData, selectOrderBookData, useAppSelector } from 'src/redux';
+import type { LastOrderData, OrderBookData } from 'src/models';
 import { OrderBookTable } from './OrderBookTable';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import { DashboardCard } from '../../common';
@@ -21,26 +22,31 @@ import styles from './OrderBook.module.scss';
  * @returns React component.
  */
 export const OrderBook = (): ReactElement => {
-    const [priceStep, setPriceStep] = useLocalStorage<keyof typeof OrderBookPriceStep>(
-        'orderBookPriceStep',
-        '0.001',
-    );
     const [displayUserOrders, setDisplayUserOrders] = useLocalStorage<boolean>(
         'displayUserOrdersInOrderbook',
         true,
     );
-    const data = useGetOrderBookData({ priceStep });
+
+    const data = useAppSelector(selectOrderBookData, deepEqual);
+    const lastOrderData = useAppSelector(selectLastOrderData, deepEqual);
+    const isLoading = useAppSelector(s => s.orderBookState.isLoading);
+    const gettingDataError = useAppSelector(s => s.orderBookState.hasApiError);
 
     return (
         <DashboardCard>
-            <OrderBookSettingsContext.Provider
-                value={{ priceStep, setPriceStep, displayUserOrders, setDisplayUserOrders }}
-            >
+            <OrderBookSettingsContext.Provider value={{ displayUserOrders, setDisplayUserOrders }}>
                 <div className={styles.header}>
                     <h4>Order book</h4>
-                    <OrderBookToolbar disabled={data.loadingAsks || data.loadingBids} />
+                    <OrderBookToolbar disabled={isLoading} />
                 </div>
-                <div className={styles.orderBook}>{OrderBookViewFactory(data)}</div>
+                <div className={styles.orderBook}>
+                    {OrderBookViewFactory({
+                        data,
+                        isLoading,
+                        isError: gettingDataError,
+                        lastOrderData,
+                    })}
+                </div>
             </OrderBookSettingsContext.Provider>
         </DashboardCard>
     );
@@ -49,20 +55,28 @@ export const OrderBook = (): ReactElement => {
 /**
  * Renders order book view.
  *
- * @param {UseGetOrderBookDataReturnType} props Props.
+ * @param props Props.
+ * @param props.data Orderbook data.
+ * @param props.isLoading Is loading data.
+ * @param props.isError Has getting data error.
+ * @param props.lastOrderData Last order data.
  * @returns React element.
  */
 const OrderBookViewFactory = ({
-    asks,
-    bids,
-    loadingAsks,
-    loadingBids,
+    data,
+    isLoading,
     isError,
     lastOrderData,
-    maxVolume,
-}: UseGetOrderBookDataReturnType) => {
+}: {
+    data: OrderBookData;
+    isLoading: boolean;
+    isError: boolean;
+    lastOrderData?: LastOrderData;
+}) => {
+    const { asks, bids } = data;
+
     switch (true) {
-        case (loadingAsks || loadingBids) && !asks.length && !bids.length:
+        case isLoading && !asks.length && !bids.length:
             return <Spinner grow />;
         case isError:
             return <h5>Error while loading data.</h5>;
@@ -72,24 +86,24 @@ const OrderBookViewFactory = ({
                     <OrderBookTable
                         type="asks"
                         data={asks}
-                        maxVolume={maxVolume}
                     />
-                    {lastOrderData && (
-                        <div className={styles.lastDeal}>
-                            <div className={styles.lastDealTitle}>Last deal:</div>
-                            {lastOrderData.cost && (
-                                <div className={`${lastOrderData.type}TextColor`}>
-                                    {`${lastOrderData.cost.toFixed(
-                                        4,
-                                    )} ${siteMoneyTickerAbbreviation}`}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    <div className={styles.lastDeal}>
+                        {lastOrderData && (
+                            <>
+                                <div className={styles.lastDealTitle}>Last deal:</div>
+                                {lastOrderData.cost && (
+                                    <div className={`${lastOrderData.type}TextColor`}>
+                                        {`${lastOrderData.cost.toFixed(
+                                            4,
+                                        )} ${siteMoneyTickerAbbreviation}`}
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
                     <OrderBookTable
                         type="bids"
                         data={bids}
-                        maxVolume={maxVolume}
                     />
                 </>
             );

@@ -6,4 +6,5 @@
 export * from './CircuitsReducer';
 export * from './AsksReducer';
 export * from './BidsReducer';
+export * from './OrderBookReducer';
 export * from './ChartsReducer';

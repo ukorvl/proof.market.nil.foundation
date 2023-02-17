@@ -6,4 +6,5 @@
 export * from './CircuitsActions';
 export * from './BidActions';
 export * from './AskActions';
+export * from './OrderBookActions';
 export * from './ChartsActions';

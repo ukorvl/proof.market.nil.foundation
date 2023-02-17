@@ -4,9 +4,9 @@
  */
 
 import type { Column } from 'react-table';
-import type { OrderBookTableData } from './OrderBookTableData';
+import type { OrderBookDataItem } from './OrderBookDataItem';
 
 /**
- * Column.
+ * Table column data.
  */
-export type OrderBookTableColumn = Column<OrderBookTableData>;
+export type OrderBookTableColumn = Column<OrderBookDataItem>;

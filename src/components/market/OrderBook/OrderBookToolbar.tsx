@@ -4,10 +4,12 @@
  */
 
 import type { ReactElement } from 'react';
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { Dropdown } from '@nilfoundation/react-components';
+import { useDispatch } from 'react-redux';
 import { OrderBookPriceStep } from 'src/enums';
 import { useAuth } from 'src/hooks';
+import { selectOrderBookPriceStep, UpdateOrderBookPriceStep, useAppSelector } from 'src/redux';
 import { OrderBookSettingsContext } from './OrderBookSettingsContext';
 import styles from './OrderBook.module.scss';
 
@@ -25,9 +27,18 @@ type OrderBookToolbarProps = {
  * @returns React component.
  */
 export const OrderBookToolbar = ({ disabled }: OrderBookToolbarProps): ReactElement => {
-    const { priceStep, setPriceStep, displayUserOrders, setDisplayUserOrders } =
-        useContext(OrderBookSettingsContext);
+    const dispatch = useDispatch();
+
+    const { displayUserOrders, setDisplayUserOrders } = useContext(OrderBookSettingsContext);
     const { isReadonly } = useAuth();
+
+    const priceStep = useAppSelector(selectOrderBookPriceStep);
+    const setPriceStep = useCallback(
+        (priceStep: keyof typeof OrderBookPriceStep) => {
+            dispatch(UpdateOrderBookPriceStep(priceStep));
+        },
+        [dispatch],
+    );
 
     return (
         <>
