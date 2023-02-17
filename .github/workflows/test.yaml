@@ -7,6 +7,12 @@ on:
       - "master"
   # Allows to trigger workflow manually
   workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Commit SHA1'
+        required: false
+        default: 'undefined'
+        type: string
 
 jobs:
   build:

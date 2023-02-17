@@ -11,7 +11,11 @@ on:
         type: boolean
         default: true
         description: Update proof.market repository also
-
+      commit:
+        description: 'Commit SHA1'
+        required: false
+        default: 'undefined'
+        type: string
 
 jobs:
   build:
