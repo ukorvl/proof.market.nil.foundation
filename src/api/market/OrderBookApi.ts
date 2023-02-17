@@ -4,7 +4,7 @@
  */
 
 import type { OrderBookPriceStep } from 'src/enums';
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 import type { Circuit, OrderBookData } from '../../models';
 
 /**
@@ -15,7 +15,7 @@ export type OrderBookDataOptions = {
     evalTimeStep?: number;
 };
 
-const httpFetcher = createBearerHttpClient('/book');
+const httpFetcher = createApiClient('/book');
 
 /**
  * Get orderBook data by statement key.
@@ -28,7 +28,7 @@ export const getOrderBookData = (
     statementKey: Circuit['_key'],
     options?: OrderBookDataOptions,
 ): Promise<OrderBookData> =>
-    httpFetcher.get(`/${statementKey}${options ? getUrlFromOptions(options) : ''}`);
+    httpFetcher.get(`${statementKey}${options ? getUrlFromOptions(options) : ''}`).json();
 
 const getUrlFromOptions = ({ priceStep, evalTimeStep }: OrderBookDataOptions): string => {
     let url = '/?';
