@@ -5,9 +5,9 @@
 
 import type { Bid, CreateBid } from 'src/models';
 import type { GetOrdersParameters } from '../common';
-import { createBearerHttpClient, getApiUrlByParameters } from '../common';
+import { createApiClient, getApiUrlByParameters } from '../common';
 
-const httpFetcher = createBearerHttpClient('/bid');
+const httpFetcher = createApiClient('/bid');
 
 /**
  * Get bids by parameters.
@@ -21,7 +21,7 @@ export const getBids = (
     parameters: GetOrdersParameters,
     limit?: number,
     startFrom?: number,
-): Promise<Bid[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom));
+): Promise<Bid[]> => httpFetcher.get(getApiUrlByParameters(parameters, limit, startFrom)).json();
 
 /**
  * Create Bid.
@@ -29,7 +29,8 @@ export const getBids = (
  * @param data - Bid dto.
  * @returns Bid.
  */
-export const createBid = (data: CreateBid): Promise<Bid> => httpFetcher.post('', data);
+export const createBid = (data: CreateBid): Promise<Bid> =>
+    httpFetcher.post('', { json: data }).json();
 
 /**
  * Remove Bid.
@@ -38,4 +39,4 @@ export const createBid = (data: CreateBid): Promise<Bid> => httpFetcher.post('',
  * @returns Ask.
  */
 export const removeBid = (bidToRemoveKey: Bid['_key']): Promise<void> =>
-    httpFetcher.delete(`/${bidToRemoveKey}`);
+    httpFetcher.delete(bidToRemoveKey).json();

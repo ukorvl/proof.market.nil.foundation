@@ -3,17 +3,17 @@
  * @copyright Yury Korotovskikh 2022 <u.korotovskiy@nil.foundation>
  */
 
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 import type { Proof } from '../../models';
 
-const httpFetcher = createBearerHttpClient('/proof');
+const httpFetcher = createApiClient('/proof');
 
 /**
  * Get current user proofs.
  *
  * @returns Proofs.
  */
-export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner');
+export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner').json();
 
 /**
  * Get proof by key.
@@ -22,4 +22,4 @@ export const getProofs = (): Promise<Proof[]> => httpFetcher.get('/owner');
  * @returns Proofs.
  */
 export const getProofById = (proofKey: Proof['_key']): Promise<Proof> =>
-    httpFetcher.get(`/${proofKey}`);
+    httpFetcher.get(proofKey).json();

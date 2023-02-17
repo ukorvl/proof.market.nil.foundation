@@ -13,11 +13,15 @@ import { Path } from './Paths';
 import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
 
-const MarketView = lazy(() => import('../views/MarketView'));
-const LoginView = lazy(() => import('../views/LoginView'));
-const PortfolioView = lazy(() => import('../views/PortfolioView'));
-const Page404 = lazy(() => import('../views/404'));
-const RegisterView = lazy(() => import('../views/RegisterView'));
+const MarketView = lazy(() => import(/* webpackChunkName: "MarketView" */ '../views/MarketView'));
+const LoginView = lazy(() => import(/* webpackChunkName: "LoginView" */ '../views/LoginView'));
+const PortfolioView = lazy(
+    () => import(/* webpackChunkName: "PortfolioView" */ '../views/PortfolioView'),
+);
+const Page404 = lazy(() => import(/* webpackChunkName: "Page404" */ '../views/404'));
+const RegisterView = lazy(
+    () => import(/* webpackChunkName: "RegisterView" */ '../views/RegisterView'),
+);
 
 /**
  * App routes.

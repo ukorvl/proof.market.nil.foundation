@@ -4,27 +4,27 @@
  */
 
 import type { Circuit, CircuitInfo, CircuitStats } from 'src/models';
-import { createBearerHttpClient } from '../common';
+import { createApiClient } from '../common';
 
-const httpFetcher = createBearerHttpClient('/statement');
+const httpFetcher = createApiClient('/statement');
 
 /**
  * Get circuits.
  *
  * @returns Circuit list.
  */
-export const getCircuits = (): Promise<Circuit> => httpFetcher.get('');
+export const getCircuits = (): Promise<Circuit> => httpFetcher.get('').json();
 
 /**
  * Get circuits info.
  *
  * @returns .
  */
-export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`/?info`);
+export const getCircuitsInfo = (): Promise<CircuitInfo> => httpFetcher.get(`?info`).json();
 
 /**
  * Get circuits stats.
  *
  * @returns .
  */
-export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`/?statistics`);
+export const getCircuitsStats = (): Promise<CircuitStats> => httpFetcher.get(`?statistics`).json();
