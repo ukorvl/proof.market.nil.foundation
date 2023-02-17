@@ -6,3 +6,4 @@
 export * from './CircuitsActions';
 export * from './BidActions';
 export * from './AskActions';
+export * from './ChartsActions';

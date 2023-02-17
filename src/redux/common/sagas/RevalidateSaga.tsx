@@ -32,8 +32,7 @@ export function* RevalidateSaga<T extends (...args: unknown[]) => unknown>(
     }
 }
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export function* Revalidate<T extends (...args: unknown[]) => unknown>(
+function* Revalidate<T extends (...args: unknown[]) => unknown>(
     fnToRevalidate: T,
     revalidateInterval: number,
     ...args: Parameters<T>

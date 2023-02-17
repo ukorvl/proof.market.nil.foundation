@@ -14,7 +14,7 @@ import type {
     UTCTimestamp,
     WhitespaceData,
 } from 'lightweight-charts';
-import { useAppSelector, selectCompletedAsks } from 'src/redux';
+import { useAppSelector, selectChartData } from 'src/redux';
 import { getUTCTimestamp } from 'src/utils';
 import { DateUnit } from 'src/enums';
 import colors from 'src/styles/export.module.scss';
@@ -43,8 +43,8 @@ export const useGetCircuitDashboardData = (
     withVolumes = false,
     dataRange = DateUnit.day,
 ): UseGetCircuitDashboardDataReturnType => {
-    const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.asksState.isLoading);
-    const asks = useSelector(selectCompletedAsks, deepEqual);
+    const loadingData = useAppSelector(s => s.circuitsState.isLoading || s.chartsState.isLoading);
+    const asks = useSelector(selectChartData, deepEqual);
     const grouppedOrders = useMemo(() => {
         return reduceOrdersByDate(asks, dataRange);
     }, [asks, dataRange]);

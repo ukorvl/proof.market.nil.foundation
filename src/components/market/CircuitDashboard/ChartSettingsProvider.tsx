@@ -7,6 +7,7 @@ import type { ReactElement, ReactNode } from 'react';
 import { DateUnit } from 'src/enums';
 import { useLocalStorage } from 'src/hooks';
 import { ChartSettingsContext } from './ChartSettingsContext';
+
 /**
  * Props.
  */
