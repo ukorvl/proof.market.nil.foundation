@@ -17,6 +17,7 @@ const PortfolioView = (): ReactElement => (
     <Container
         as="main"
         fluid
+        data-sb="portfolioView"
     >
         <Helmet>
             <title>Portfolio</title>

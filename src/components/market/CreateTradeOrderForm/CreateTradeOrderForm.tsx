@@ -91,6 +91,7 @@ export const CreateTradeOrderForm = ({
                                     min: 0,
                                     valueAsNumber: true,
                                 })}
+                                data-sb="createOrderCostInput"
                             />
                             <InputGroup.Addon>{siteMoneyTickerAbbreviation}</InputGroup.Addon>
                         </InputGroup>
@@ -120,6 +121,7 @@ export const CreateTradeOrderForm = ({
                                         validate: validateFn,
                                         valueAsNumber: true,
                                     })}
+                                    data-sb="createOrderEvalTimeInput"
                                 />
                                 <InputGroup.Addon>Mins</InputGroup.Addon>
                             </InputGroup>
@@ -140,6 +142,7 @@ export const CreateTradeOrderForm = ({
                                         validate: validateFn,
                                         valueAsNumber: true,
                                     })}
+                                    data-sb="createOrderWaitPeriodInput"
                                 />
                                 <InputGroup.Addon>Mins</InputGroup.Addon>
                             </InputGroup>
@@ -153,6 +156,7 @@ export const CreateTradeOrderForm = ({
                 onClick={onSubmit}
                 size={Size.lg}
                 disabled={!isValid || isSubmitting || !user || isReadonly}
+                data-sb="createTradeOrder"
             >
                 Submit
                 {isSubmitting && <Spinner />}

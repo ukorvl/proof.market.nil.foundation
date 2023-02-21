@@ -18,6 +18,7 @@ const Page404 = (): ReactElement => (
     <Container
         as="main"
         fluid
+        data-sb="404View"
     >
         <Helmet>
             <title>Page not found</title>
