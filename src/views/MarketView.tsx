@@ -27,6 +27,7 @@ const MarketView = (): ReactElement => (
     <Container
         as="main"
         fluid
+        data-sb="mainView"
     >
         <Helmet>
             <title>Market</title>

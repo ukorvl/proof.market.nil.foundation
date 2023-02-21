@@ -167,6 +167,7 @@ export const LoginForm = (): ReactElement => {
                         block
                         variant={Variant.success}
                         size={Size.lg}
+                        data-sb="submitLogin"
                     >
                         Sign up
                     </Button>
