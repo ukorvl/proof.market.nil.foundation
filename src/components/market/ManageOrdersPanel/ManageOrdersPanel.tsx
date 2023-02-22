@@ -30,7 +30,10 @@ export const ManageOrdersPanel = (): ReactElement => {
     return (
         <DashboardCard>
             <h4>Manage orders</h4>
-            <div className="manageOrdersPanel">
+            <div
+                className="manageOrdersPanel"
+                data-sb="manageOrdersPanel"
+            >
                 <ProtectedContent overlayTitle="Authorization is required to manage orders">
                     <ManageOrdersPanelTabs
                         currentTab={tab}
