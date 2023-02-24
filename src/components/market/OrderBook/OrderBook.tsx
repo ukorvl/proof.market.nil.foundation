@@ -84,8 +84,8 @@ const OrderBookViewFactory = ({
             return (
                 <>
                     <OrderBookTable
-                        type="asks"
-                        data={asks}
+                        type="bids"
+                        data={bids}
                     />
                     <div className={styles.lastDeal}>
                         {lastOrderData && (
@@ -102,8 +102,8 @@ const OrderBookViewFactory = ({
                         )}
                     </div>
                     <OrderBookTable
-                        type="bids"
-                        data={bids}
+                        type="asks"
+                        data={asks}
                     />
                 </>
             );
