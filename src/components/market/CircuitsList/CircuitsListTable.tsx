@@ -4,15 +4,15 @@
  */
 
 import type { ReactElement } from 'react';
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { Icon, Input, InputGroup, ListGroup } from '@nilfoundation/react-components';
+import { memo, useCallback, useMemo } from 'react';
+import { ListGroup } from '@nilfoundation/react-components';
 import { dequal as deepEqual } from 'dequal';
-import debounce from 'lodash/debounce';
-import type { FilterProps, TableInstance, TableState } from 'react-table';
+import type { TableInstance, TableState } from 'react-table';
 import { useAppSelector } from 'src/redux';
 import { ReactTable } from 'src/components';
 import type { Circuit, CircuitsListData, CircuitsListTableColumn } from 'src/models';
 import { CurcuitsListItem } from './CircuitsListItem';
+import { CircuitsListTextFilter } from './CircuitsListTextFilter';
 import styles from './CircuitsList.module.scss';
 
 /**
@@ -23,45 +23,13 @@ type CircuitsListTableProps = {
 };
 
 /**
- * Search by text input.
- *
- * @param {FilterProps<CircuitsListData>} props - Filter props.
- * @returns Search by text filter input.
- */
-const ByTextColumnFilter = ({ column: { setFilter } }: FilterProps<CircuitsListData>) => {
-    const [value, setValue] = useState('');
-    const debouncedSearch = useRef(
-        debounce(value => {
-            setFilter(value || undefined);
-        }, 300),
-    ).current;
-
-    return (
-        <InputGroup className={styles.inputGroup}>
-            <InputGroup.Addon>
-                <Icon iconName="fa-solid fa-search" />
-            </InputGroup.Addon>
-            <Input
-                placeholder="Search circuits"
-                type="text"
-                value={value}
-                onChange={e => {
-                    setValue(e.target.value);
-                    debouncedSearch(e.target.value);
-                }}
-            />
-        </InputGroup>
-    );
-};
-
-/**
  * Table columns.
  */
 const columns: CircuitsListTableColumn[] = [
     {
         Header: 'Name',
         accessor: 'name',
-        Filter: ByTextColumnFilter,
+        Filter: CircuitsListTextFilter,
     },
     {
         accessor: 'cost',
