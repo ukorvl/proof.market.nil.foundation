@@ -26,8 +26,6 @@ export type OrderBookReducerState = {
     lastOrderData?: LastOrderData;
 };
 
-const priceStepLocalStorageKey = 'orderBookPriceStep';
-
 /**
  * Initial state.
  */
@@ -35,7 +33,7 @@ const initialState: OrderBookReducerState = {
     data: { asks: [], bids: [] },
     hasApiError: false,
     isLoading: false,
-    priceStep: getItemFromLocalStorage(priceStepLocalStorageKey) ?? '0.001',
+    priceStep: getItemFromLocalStorage('orderBookPriceStep') ?? '0.001',
     lastOrderData: undefined,
 };
 
@@ -56,7 +54,7 @@ export const OrderBookReducer = createReducer(initialState, builder =>
         .addCase(UpdateOrderBookPriceStep, (state, { payload }) => {
             state.priceStep = payload;
 
-            setItemIntoLocalStorage(priceStepLocalStorageKey, payload);
+            setItemIntoLocalStorage('orderBookPriceStep', payload);
         })
         .addCase(UpdateOrderBookLastOrderData, (state, { payload }) => {
             state.lastOrderData = payload;

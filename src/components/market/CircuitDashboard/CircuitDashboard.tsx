@@ -76,7 +76,7 @@ export const CircuitDashboard = (): ReactElement => {
                         chartType={chartType}
                         dataRange={dataRange}
                         displayVolumes={displayVolumes}
-                        height={fullScreen ? windowHeight - 235 : 486}
+                        height={fullScreen ? windowHeight - 235 : 406}
                     />
                 </FullScreenView>
             </div>
