@@ -6,7 +6,7 @@
 import { createApiClient, getApiUrlByParameters } from '../common';
 import type { Proposal, TradeOrder } from '../../models';
 
-const httpFetcher = createApiClient('/ask');
+const httpFetcher = createApiClient('/proposal');
 
 /**
  * Get proposals by parameters.
