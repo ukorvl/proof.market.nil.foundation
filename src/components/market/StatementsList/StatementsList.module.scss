@@ -4,7 +4,9 @@
 @import "@/styles/mixins/overflowFade";
 
 .container {
-  height: 400px;
+  height: 500px;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .inputGroup {
@@ -22,7 +24,8 @@ div.selected {
 .listGroup {
   @include styledList;
   @include hideScrollbar;
-  height: 360px;
+  height: 460px;
+  flex-grow: 1;
   overflow: auto;
   padding-top: 8px;
   @include overflowFade(8px, true);
@@ -31,8 +34,13 @@ div.selected {
 .itemBody {
   vertical-align: middle !important;
   height: calc(48px - 1rem);
+  font-size: 1.25rem !important;
 }
 
 .cost {
   white-space: nowrap;
+}
+
+.tag {
+  font-size: 1rem;
 }

@@ -4,7 +4,7 @@
  */
 
 import type { ReactElement } from 'react';
-import { ListGroup, Media } from '@nilfoundation/react-components';
+import { Label, ListGroup, Media } from '@nilfoundation/react-components';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentStatementKey } from '@/redux';
@@ -28,7 +28,7 @@ type CurcuitsListItemProps = {
  * @returns React component.
  */
 export const CurcuitsListItem = ({
-    data: { _key, cost, change, name },
+    data: { _key, cost, change, name, tag },
 }: CurcuitsListItemProps): ReactElement => {
     const selectedKey = useSelector(selectCurrentStatementKey);
     const isSelected = _key === selectedKey;
@@ -39,6 +39,16 @@ export const CurcuitsListItem = ({
                 <Media className={isSelected ? styles.selected : ''}>
                     <Media.Body className={styles.itemBody}>
                         {`${name.toUpperCase()}/${siteMoneyTickerAbbreviation}`}
+                        {tag && (
+                            <div>
+                                <Label
+                                    rounded
+                                    className={styles.tag}
+                                >
+                                    {tag}
+                                </Label>
+                            </div>
+                        )}
                     </Media.Body>
                     <StatementsListItemInfo
                         cost={cost}
