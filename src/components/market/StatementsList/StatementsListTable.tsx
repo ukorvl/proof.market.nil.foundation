@@ -10,13 +10,16 @@ import { dequal as deepEqual } from 'dequal';
 import type { TableInstance, TableState } from 'react-table';
 import type { Option } from 'baseui/select';
 import { Select } from 'baseui/select';
-import { selectAllStatementsTags, useAppSelector } from '@/redux';
+import { useDispatch } from 'react-redux';
+import { UpdateSelectedStatementTags, selectAllStatementsTags, useAppSelector } from '@/redux';
 import { ReactTable } from '@/components';
 import type { Statement, StatementsListData, StatementsListTableColumn } from '@/models';
-import { useLocalStorage } from '@/hooks';
+import { getRuntimeConfigOrThrow } from '@/utils';
 import { CurcuitsListItem } from './StatementsListItem';
 import { StatementsListTextFilter } from './StatementsListTextFilter';
 import styles from './StatementsList.module.scss';
+
+const { CIRCUIT_DEVELOPER_GUIDE_URL } = getRuntimeConfigOrThrow();
 
 /**
  * Props.
@@ -74,29 +77,31 @@ const defaultTableState: Partial<TableState<StatementsListData>> = {
 export const StatementsListTable = memo(function StatementsListTable({
     statementsList,
 }: StatementsListTableProps): ReactElement {
+    const dispatch = useDispatch();
     const statementsInfo = useAppSelector(s => s.statementsState.statementsInfo, deepEqual);
     const avialiableTags = useAppSelector(selectAllStatementsTags);
+    const selectedTags = useAppSelector(s => s.statementsState.selectedStatementTags);
+
     const selectOptions: Option[] = useMemo(() => {
         return avialiableTags.map(x => ({ label: x, id: x }));
     }, [avialiableTags]);
-
-    const [tags, setTags] = useLocalStorage<Option[]>('selectedStatementsTags', []);
+    const selectValues: Option[] = useMemo(() => {
+        return selectedTags.map(x => ({ label: x, id: x }));
+    }, [selectedTags]);
 
     const tableData: StatementsListData[] = useMemo(() => {
-        return statementsList
-            .filter(x => (tags.length > 0 ? tags.some(y => y.id === x.tag) : true))
-            .map(x => {
-                const info = statementsInfo && statementsInfo.find(y => y._key === x._key);
+        return statementsList.map(x => {
+            const info = statementsInfo && statementsInfo.find(y => y._key === x._key);
 
-                return {
-                    _key: x._key,
-                    name: x.name,
-                    cost: info?.current,
-                    change: info?.daily_change,
-                    tag: x.tag,
-                };
-            });
-    }, [statementsList, statementsInfo, tags]);
+            return {
+                _key: x._key,
+                name: x.name,
+                cost: info?.current,
+                change: info?.daily_change,
+                tag: x.tag,
+            };
+        });
+    }, [statementsList, statementsInfo]);
 
     const renderRows = useCallback(
         ({ rows, prepareRow, visibleColumns }: TableInstance<StatementsListData>) => (
@@ -104,14 +109,30 @@ export const StatementsListTable = memo(function StatementsListTable({
                 {visibleColumns.find(x => x.canFilter)?.render('Filter')}
                 <Select
                     options={selectOptions}
-                    value={tags}
+                    value={selectValues}
                     multi
-                    onChange={params => setTags(params.value as Option[])}
+                    onChange={params => {
+                        dispatch(
+                            UpdateSelectedStatementTags(params.value.map(x => x.id as string)),
+                        );
+                    }}
                     placeholder="Select statements tags"
                 />
                 <ListGroup className={styles.listGroup}>
                     {rows.length === 0 ? (
-                        <span className="text-muted">No statements found</span>
+                        <>
+                            <div className="text-muted">No statements found</div>
+                            <div className="text-muted">
+                                Create your own statement using{' '}
+                                <a
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={CIRCUIT_DEVELOPER_GUIDE_URL}
+                                >
+                                    this guide
+                                </a>
+                            </div>
+                        </>
                     ) : (
                         rows.map(row => {
                             prepareRow(row);
@@ -126,7 +147,7 @@ export const StatementsListTable = memo(function StatementsListTable({
                 </ListGroup>
             </>
         ),
-        [tags, setTags, selectOptions],
+        [selectValues, dispatch, selectOptions],
     );
 
     return (
