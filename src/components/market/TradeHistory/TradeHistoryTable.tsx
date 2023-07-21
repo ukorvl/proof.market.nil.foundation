@@ -44,7 +44,7 @@ const tradeHistoryTableHeadConfig: Array<Record<'Header', string>> = [
 export const TradeHistoryTable = memo(function TradeHistoryTable({
     selectedStatementKey,
 }: TradeHistoryTableProps): ReactElement {
-    const { items, loadMoreItems, loading, error, hasMore } = useInfiniteLoadTrades({
+    const { items, loadMoreItems, loading, error, hasMore, listRef } = useInfiniteLoadTrades({
         selectedStatementKey,
     });
 
@@ -99,6 +99,7 @@ export const TradeHistoryTable = memo(function TradeHistoryTable({
                     height={446}
                     itemSize={28}
                     className={styles.virtualList}
+                    ref={listRef}
                 >
                     {Element}
                 </VirtualList>
