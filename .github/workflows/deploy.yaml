@@ -15,7 +15,9 @@ jobs:
   build:
     uses: ./.github/workflows/build.yaml
     secrets: inherit
-    commit: ${{ inputs.commit || github.sha }}
+    with:
+      commit: ${{ inputs.commit || github.sha }}
+      fill_config: true
 
   deploy:
     name: Deploy
