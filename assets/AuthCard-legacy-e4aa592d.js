@@ -1,0 +1,1 @@
+System.register(["./index-legacy-fcc85aa1.js"],(function(e,t){"use strict";var r,s,a;return{setters:[e=>{r=e.j,s=e.aY,a=e.aZ}],execute:function(){e("A",(({children:e})=>r(s,{className:a.authCard,children:e})))}}}));
