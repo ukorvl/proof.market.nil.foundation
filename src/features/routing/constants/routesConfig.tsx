@@ -3,7 +3,6 @@
  * @copyright Yury Korotovskikh <u.korotovskiy@nil.foundation>
  */
 
-import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 import { RouterParam } from '@/enums';
@@ -15,20 +14,28 @@ import ProposalContent from '@/components/portfolio/PortfolioProposalsInfoConten
 import AuthLayout from '@/layouts/AuthLayout';
 import MainLayout from '@/layouts/MainLayout';
 import { Path } from '../models/Paths';
+import lazyWithRetry from '../utils/lazyWithRetry';
 
-const MarketView = lazy(
+const MarketView = lazyWithRetry(
     () => import(/* webpackChunkName: "MarketView" */ '../../../views/MarketView'),
-);
-const LoginView = lazy(
+    'MarketView',
+  );
+  const LoginView = lazyWithRetry(
     () => import(/* webpackChunkName: "LoginView" */ '../../../views/LoginView'),
-);
-const PortfolioView = lazy(
+    'LoginView',
+  );
+  const PortfolioView = lazyWithRetry(
     () => import(/* webpackChunkName: "PortfolioView" */ '../../../views/PortfolioView'),
-);
-const Page404 = lazy(() => import(/* webpackChunkName: "Page404" */ '../../../views/404'));
-const RegisterView = lazy(
+    'PortfolioView',
+  );
+  const Page404 = lazyWithRetry(
+    () => import(/* webpackChunkName: "Page404" */ '../../../views/404'),
+    'Page404',
+  );
+  const RegisterView = lazyWithRetry(
     () => import(/* webpackChunkName: "RegisterView" */ '../../../views/RegisterView'),
-);
+    'RegisterView',
+  );
 
 /**
  * App routes.

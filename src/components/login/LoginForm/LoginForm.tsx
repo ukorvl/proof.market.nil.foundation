@@ -23,9 +23,9 @@ import { Path } from '@/features/routing';
 import { login } from '@/api';
 import { useLogin } from '@/hooks';
 import type { LoginData } from '@/models';
+import { getApiErrorMessage } from '@/utils';
 import { AuthCard } from '../AuthCard';
 import styles from './LoginForm.module.scss';
-import { getApiErrorMessage } from '@/utils';
 
 /**
  * Password input type.
