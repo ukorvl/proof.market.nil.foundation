@@ -38,18 +38,18 @@ jobs:
         working-directory: public
         run: |
           config='
-            BASE_API_URL = "${{ secrets.BASE_API_URL }}"
-            DBMS_DEFAULT_DATABASE = "${{ secrets.DBMS_DEFAULT_DATABASE }}"
-            API_VERSION = "${{ secrets.API_VERSION }}"
-            REVALIDATE_DATA_INTERVAL = "${{ secrets.REVALIDATE_DATA_INTERVAL }}"
-            READONLY_USER = "${{ secrets.READONLY_USER }}"
-            SITE_DEFAULT_TITLE = "${{ secrets.SITE_DEFAULT_TITLE }}"
-            GA_TRACKING_ID = "${{ secrets.GA_TRACKING_ID }}"
-            PROOFMARKET_TOOLCHAIN_REPO = "${{ secrets.PROOFMARKET_TOOLCHAIN_REPO }}"
-            CIRCUIT_DEVELOPER_GUIDE_URL = "${{ secrets.CIRCUIT_DEVELOPER_GUIDE_URL }}"
-            API_RESPONSE_WAIT_TIMEOUT = "${{ secrets.API_RESPONSE_WAIT_TIMEOUT }}"
-            OTEL_TRACE_EXPORTER_URL = "${{ secrets.OTEL_TRACE_EXPORTER_URL }}"
-            OTEL_SERVICE_NAME = "${{ secrets.OTEL_SERVICE_NAME }}"
+            BASE_API_URL = "${{ vars.BASE_API_URL }}"
+            DBMS_DEFAULT_DATABASE = "${{ vars.DBMS_DEFAULT_DATABASE }}"
+            API_VERSION = "${{ vars.API_VERSION }}"
+            REVALIDATE_DATA_INTERVAL = "${{ vars.REVALIDATE_DATA_INTERVAL }}"
+            READONLY_USER = "${{ vars.READONLY_USER }}"
+            SITE_DEFAULT_TITLE = "${{ vars.SITE_DEFAULT_TITLE }}"
+            GA_TRACKING_ID = "${{ vars.GA_TRACKING_ID }}"
+            PROOFMARKET_TOOLCHAIN_REPO = "${{ vars.PROOFMARKET_TOOLCHAIN_REPO }}"
+            CIRCUIT_DEVELOPER_GUIDE_URL = "${{ vars.CIRCUIT_DEVELOPER_GUIDE_URL }}"
+            API_RESPONSE_WAIT_TIMEOUT = "${{ vars.API_RESPONSE_WAIT_TIMEOUT }}"
+            OTEL_TRACE_EXPORTER_URL = "${{ vars.OTEL_TRACE_EXPORTER_URL }}"
+            OTEL_SERVICE_NAME = "${{ vars.OTEL_SERVICE_NAME }}"
           '
           echo "$config" > runtime-config.toml
           echo runtime-config.toml
