@@ -1,10 +1,14 @@
 name: Release
+# This workflow nis used to make a new release on new tags in master branch.
+
 on:
   push:
     tags:
     - 'v*'
+
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -13,3 +17,4 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         generateReleaseNotes: true
+        token: ${{ secrets.PUSH_THIS_REPO_TOKEN }}
