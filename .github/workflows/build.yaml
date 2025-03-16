@@ -5,12 +5,6 @@ name: Build
 on:
   pull_request:
   workflow_dispatch:
-  inputs:
-      commit:
-        type: string
-      fill_config:
-        type: boolean
-        default: true
   workflow_call:
     inputs:
       commit:
